@@ -150,7 +150,10 @@ module.exports = {
 
             //Сообщение - опыт рангов                       
             interaction.guild.channels.cache.get(process.env.rank_channel).send(
-                `${rank_exp[i_rank].rank_amount}💠`
+`╔═════════♡════════╗
+<@${opener}> +${rank_exp[i_rank].rank_amount}💠
+\`Получено из маленькой коробки.\`
+╚═════════♡════════╝`
             );
 
 
@@ -189,7 +192,10 @@ module.exports = {
 
             //Сообщение - опыт активности                       
             interaction.guild.channels.cache.get(process.env.act_channel).send(
-                `${act_exp[i_act].act_amount}🌀`
+                `╔═════════♡════════╗
+                <@${opener}> +${act_exp[i_act].act_amount}🌀
+                \`Получено из большой коробки.\`
+                ╚═════════♡════════╝`
             );
 
 

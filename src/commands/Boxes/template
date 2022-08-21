@@ -14,10 +14,10 @@ module.exports = {
             .fetch("876045350673186826") //ID коробки
             .catch(console.error);
 
-        if (roles.cache.has("876045350673186826")) { //Проверка роли коробки
+        if (roles.cache.has("876045350673186826") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
             const cmd_name = `command` //Название команды
             await roles.remove(role).catch(console.error); //Удалить роль коробки
-
+            const opener = `<@${roles.id}>`
             //Лут из коробок
             //Случайный предмет
             //name - Название предмета
@@ -25,51 +25,51 @@ module.exports = {
             //roleID - ID роли, которая связана с данным лутом.
 
             //Список предметов
-            let loot = [
+            let loot1 = [
                 {
-                    loot_name: `name 1`,
-                    dropChanceLOOT: 10,
-                    loot_roleID: ""
+                    loot1_name: `name 1`,
+                    dropChanceLOOT1: 10,
+                    loot1_roleID: ""
                 },
                 {
-                    loot_name: `name 2`,
-                    dropChanceLOOT: 20,
-                    loot_roleID: ""
+                    loot1_name: `name 2`,
+                    dropChanceLOOT1: 20,
+                    loot1_roleID: ""
                 },
                 {
-                    loot_name: `name 3`,
-                    dropChanceLOOT: 30,
-                    loot_roleID: ""
+                    loot1_name: `name 3`,
+                    dropChanceLOOT1: 30,
+                    loot1_roleID: ""
                 },
                 {
-                    loot_name: `name 4`,
-                    dropChanceLOOT: 20,
-                    loot_roleID: ""
+                    loot1_name: `name 4`,
+                    dropChanceLOOT1: 20,
+                    loot1_roleID: ""
                 },
                 {
-                    loot_name: `name 5`,
-                    dropChanceLOOT: 20,
-                    loot_roleID: ""
+                    loot1_name: `name 5`,
+                    dropChanceLOOT1: 20,
+                    loot1_roleID: ""
                 }
             ];
 
             //рандом предметов
-            let sum_loot = 0;
-            for (let i_loot = 0; i_loot < loot.length; i_loot++) {
-                sum_loot += loot[i_loot].dropChanceLOOT;
+            let sum_loot1 = 0;
+            for (let i_loot1 = 0; i_loot1 < loot1.length; i_loot1++) {
+                sum_loot1 += loot1[i_loot1].dropChanceLOOT1;
             }
-            let r_loot = Math.floor(Math.random() * sum_loot);
-            let i_loot = 0;
-            for (let s = loot[0].dropChanceLOOT; s <= r_loot; s += loot[i_loot].dropChanceLOOT) {
-                i_loot++;
+            let r_loot1 = Math.floor(Math.random() * sum_loot1);
+            let i_loot1 = 0;
+            for (let s = loot1[0].dropChanceLOOT1; s <= r_loot1; s += loot1[i_loot1].dropChanceLOOT1) {
+                i_loot1++;
             }
 
             //Отправка сообщения о луте              
             const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
-                .send(`${loot[i_loot].loot_name}`)
-            if (!roles.cache.has(loot[i_loot].loot_roleID)) {
+                .send(`${loot1[i_loot1].loot1_name}`)
+            if (!roles.cache.has(loot1[i_loot1].loot1_roleID)) {
                 await r_loot_msg.react("✅")
-                await roles.add(loot[i_loot].loot_roleID).catch(console.error)
+                await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error)
             } else {
                 await r_loot_msg.react("❌")
             };
@@ -192,7 +192,11 @@ module.exports = {
                 `${act_exp[i_act].act_amount}🌀`
             );
 
-
+console.log(`Количество предметов:
+${loot1.length} - Лут 1, шт. предмет.
+${rumbik.length} - Количество вариантов румбиков.
+${rank_exp.length} - Количество вариантов опыта рангов
+${act_exp.length} - Количество вариантов опыта активности`)
             console.log(`${interaction.member.displayName} использовал команду "/${cmd_name}"`)
             await interaction.deleteReply()
         } else {

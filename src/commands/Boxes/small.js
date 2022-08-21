@@ -14,10 +14,10 @@ module.exports = {
             .fetch("876045350673186826") //ID коробки
             .catch(console.error);
 
-        if (roles.cache.has("876045350673186826")) { //Проверка роли коробки
+        if (roles.cache.has("876045350673186826") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
             const cmd_name = `big` //Название команды
             await roles.remove(role).catch(console.error); //Удалить роль коробки
-
+            const opener = `<@${roles.id}>`
             //Лут из коробок
             //Случайный предмет
             //name - Название предмета

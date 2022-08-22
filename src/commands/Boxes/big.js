@@ -17,6 +17,7 @@ module.exports = {
             .catch(console.error);
         if (roles.cache.has("521248091853291540") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
             const cmd_name = `big` //Название команды
+            const timestamp = Math.round(interaction.createdTimestamp / 1000)
             await roles.remove(role).catch(console.error); //Удалить роль коробки
             const opener = interaction.member.id;
 

@@ -9,16 +9,17 @@ module.exports = {
         const message = await interaction.deferReply({
             fetchReply: true,
         });
-
-
+        
+        const timestamp = Math.round(interaction.createdTimestamp / 1000)
+        const opener = interaction.member.id;
+        const cmd_name = `king` //Название команды
         const { roles } = interaction.member //Участник команды
+
         const role = await interaction.guild.roles  //Постоянная для role
             .fetch("584673040470769667") //ID коробки
             .catch(console.error);
         if (roles.cache.has("584673040470769667") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
-            const cmd_name = `king` //Название команды
             await roles.remove(role).catch(console.error); //Удалить роль коробки
-            const opener = interaction.member.id;
 
 
             //Лут из коробок
@@ -218,11 +219,10 @@ ${loot2[i_loot2].loot2_description}`)
             if (!roles.cache.has(loot1[i_loot1].loot1_roleID)) {
                 if (loot1[i_loot1].loot1_name == `💳 Подписка VIP на 7 дней`) {
                     await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error);
-                    interaction.guild.channels.cache.get(process.env.temp_channel).send(`- <@${opener}> - убрать ${loot1[i_loot1].loot1_name}.`);
-                    //<t:${interaction.createdTimestamp + 604800}:f></t:$>
+                    interaction.guild.channels.cache.get(process.env.temp_channel).send(`<t:${timestamp + 608000}:f> (<t:${timestamp + 608000}:R>) - <@${opener}> - убрать \`${loot1[i_loot1].loot1_name}\`.`);
                     await r_loot_msg.react("✅")
                 } else if (loot1[i_loot1].loot1_name == `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
-                    interaction.guild.channels.cache.get(process.env.box_channel).send(`<@491343958660874242> - Необходимо выдать роль <@${opener}`);
+                    interaction.guild.channels.cache.get(process.env.box_channel).send(`<@491343958660874242> - Необходимо выдать роль <@${opener}> - <t:${timestamp}:f>`);
                     await r_loot_msg.react("🕓")
                 } else {
                     await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error);
@@ -230,7 +230,7 @@ ${loot2[i_loot2].loot2_description}`)
                 }
             } else {
                 if (loot1[i_loot1].loot1_name == `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
-                    interaction.guild.channels.cache.get(process.env.box_channel).send(`<@491343958660874242> - Необходимо выдать роль <@${opener}> `);
+                    interaction.guild.channels.cache.get(process.env.box_channel).send(`<@491343958660874242> - Необходимо выдать роль <@${opener}> - <t:${timestamp}:f>`);
                     //- <t:${interaction.createdTimestamp}:f>
                     await r_loot_msg.react("🕓")
                 } else {

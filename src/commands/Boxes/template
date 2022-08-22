@@ -16,6 +16,7 @@ module.exports = {
 
         if (roles.cache.has("876045350673186826") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
             const cmd_name = `command` //Название команды
+            const timestamp = Math.round(interaction.createdTimestamp / 1000)
             await roles.remove(role).catch(console.error); //Удалить роль коробки
             const opener = `<@${roles.id}>`
             //Лут из коробок
@@ -110,7 +111,10 @@ module.exports = {
 
             //Сообщение - румбики                       
             interaction.guild.channels.cache.get(process.env.rumb_channel).send(
-                `${rumbik[i_rumb].rumb_amount}<:Rumbik:883638847056003072>`
+`╔═════════♡════════╗
+<@${opener}> +${rumbik[i_rumb].rumb_amount}<:Rumbik:883638847056003072>
+\`Получено из Подарка судьбы.\`
+╚═════════♡════════╝`
             );
 
 

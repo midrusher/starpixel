@@ -21,7 +21,7 @@ module.exports = {
             fetchReply: true,
         });
         await interaction.deleteReply()
-    const cmd_name = `done`
+    const { cmd_name } = `done`
     const mod = interaction.member;
     const user = interaction.options.getUser('пользователь');
     const comment = interaction.options.getString(`комментарий`)

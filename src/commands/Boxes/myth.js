@@ -20,7 +20,7 @@ module.exports = {
             .catch(console.error);
         if (roles.cache.has("781069821953441832") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
             await roles.remove(role).catch(console.error); //Удалить роль коробки
-
+            await interaction.deleteReply()
 
             //Лут из коробок
             //Случайный предмет
@@ -875,11 +875,11 @@ console.log(`
 ||${loot4.length} > Лут 4, шт. предмет.                      ||
 ||${rank_exp.length} > Количество вариантов опыта рангов         ||
 ||${act_exp.length} > Количество вариантов опыта активности     ||
-||${rumbik.length} > Количество вариантов румбиков               ||
+||${rumbik.length} > Количество вариантов румбиков             ||
 ||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
 ||${interaction.member.displayName} использовал команду "/${cmd_name}" ||
 ||^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^||`)
-            await interaction.deleteReply()
+            
         } else {
             await interaction.editReply({
                 content: `У вас отсутствует \`${role.name}\` коробка!`

@@ -22,12 +22,13 @@ module.exports = (client) => {
     const guildId = '320193302844669959';
     const rest = new REST({ version: '9' }).setToken(process.env.token);
     try {
-      console.log('Обновление команд приложения.');
+      console.log(`Обновление команд приложения.`);
 
       await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
         body: client.commandArray,
       });
-      console.log('Команды обновлены.');
+      await rest.put(Routes.applicationCommands(clientId), { body: [] })
+      console.log(`Команды обновлены.`);
     } catch (error) {
       console.error(error);
     }

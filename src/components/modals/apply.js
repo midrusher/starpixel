@@ -1,4 +1,4 @@
-const { execute } = require("../buttons/boxes");
+const { execute } = require("../../events/client/ready");
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType } = require('discord.js');
 
 module.exports = {

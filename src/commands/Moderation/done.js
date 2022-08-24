@@ -17,11 +17,8 @@ module.exports = {
             .setRequired(false)
         ),
      async execute(interaction, client) {
-        const message = await interaction.deferReply({
-            fetchReply: true,
-        });
-        await interaction.deleteReply()
-    const { cmd_name } = `done`
+
+    const cmd_name = `done`
     const mod = interaction.member;
     const user = interaction.options.getUser('пользователь');
     const comment = interaction.options.getString(`комментарий`)
@@ -29,7 +26,24 @@ module.exports = {
 					.setCustomId('done')
 					.setLabel('Спасибо!')
 					.setStyle(ButtonStyle.Primary)
-                    .setEmoji(`👌`)
+                    .setEmoji(`👌`);
+
+                    const done2 = new EmbedBuilder()
+                    .setColor(0xA872FF)
+                    .setAuthor({
+                        name: `Просьба обработана`
+                    })
+                    .setDescription(`Просьбе ${user} была обработана офицером ${mod}!`)
+                    interaction.reply({
+                        embeds: [done2]
+                    })
+                    
+        
+                    console.log(
+`Использована команда /${cmd_name}
+Офицер: ${mod.displayName}
+Пользователю: ${user.tag}
+Комментарий: ${comment}`)
         
         if (!comment) {
             const done = new EmbedBuilder()
@@ -73,21 +87,17 @@ module.exports = {
                 content: `${user}`,
                 embeds: [done],
                 components: [new ActionRowBuilder().addComponents(button_done)]
-            })
-            
-            await wait(600000)
-            await button_done.setDisabled(true)
-            await msg.edit({ 
-                    content: `${user}`, 
-                    embeds: [done],
-                    components: []
-                })
+
+                
+                });
+
+                await wait(600000)
+                await button_done.setDisabled(true)
+                await msg.edit({ 
+                        content: `${user}`, 
+                        embeds: [done],
+                        components: []
+        })};
             
         }
-        console.log(
-`Использована команда /${cmd_name}
-Офицер: ${mod.displayName}
-Пользователю: ${user.tag}
-Комментарий: ${comment}`)
     }
-};

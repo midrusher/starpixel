@@ -1,6 +1,7 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const fs = require('fs');
+const chalk = require(`chalk`)
 
 module.exports = (client) => {
   client.handleCommands = async () => {
@@ -22,13 +23,13 @@ module.exports = (client) => {
     const guildId = '320193302844669959';
     const rest = new REST({ version: '9' }).setToken(process.env.token);
     try {
-      console.log(`Обновление команд приложения.`);
+      console.log(chalk.blue(`[Бот Starpixel] Обновление команд приложения...`));
 
       await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
         body: client.commandArray,
       });
       await rest.put(Routes.applicationCommands(clientId), { body: [] })
-      console.log(`Команды обновлены.`);
+      console.log(chalk.blue(`[Бот Starpixel] Команды обновлены.`));
     } catch (error) {
       console.error(error);
     }

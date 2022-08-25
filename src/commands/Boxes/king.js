@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { execute } = require('../../events/client/ready');
 const wait = require('node:timers/promises').setTimeout;
+const { User } = require(`../../schemas/userdata`)
 
 module.exports = {
     data: new SlashCommandBuilder()

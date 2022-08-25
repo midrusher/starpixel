@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const { User } = require(`../../schemas/userdata`)
 const { execute } = require('../../events/client/ready');
 
 module.exports = {

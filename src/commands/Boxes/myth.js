@@ -1,13 +1,17 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { execute } = require('../../events/client/ready');
-const { User } = require(`../../schemas/userdata`)
+const { User } = require(`../../schemas/userdata`);
+const chalk = require(`chalk`);
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`myth`)  //Название команды
         .setDescription(`Открыть Подарок судьбы.`), //Описание команды
     async execute(interaction, client) {
+        const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
         const message = await interaction.deferReply({
+            
             fetchReply: true,
         });
         
@@ -742,36 +746,44 @@ interaction.guild.channels.cache.get(process.env.rumb_channel).send(
 \`Получено из Подарка судьбы.\`
 ╚═════════♡════════╝`
 );
-
+if (roles.cache.has("553593133884112900") || roles.cache.has("553593136027533313") ||
+            roles.cache.has("553593976037310489") || roles.cache.has("780487593485008946") || 
+            roles.cache.has("849695880688173087") || roles.cache.has("992122876394225814") || 
+            roles.cache.has("992123014831419472") || roles.cache.has("992123019793276961")) {
+                userData.rumbik += rumbik[i_rumb].rumb_amount
+            } else {
+                
+                userData.rumbik += 0
+            }
 
             //Опыт рангов (если необходимо)
             let rank_exp = [
                 {
-                    rank_amount: "150💠",
+                    rank_amount: 150,
                     dropChanceRANK: 4499
                 },
                 {
-                    rank_amount: "160💠",
+                    rank_amount: 160,
                     dropChanceRANK: 2500
                 },
                 {
-                    rank_amount: "170💠",
+                    rank_amount: 170,
                     dropChanceRANK: 1600
                 },
                 {
-                    rank_amount: "180💠",
+                    rank_amount: 180,
                     dropChanceRANK: 700
                 },
                 {
-                    rank_amount: "190💠",
+                    rank_amount: 190,
                     dropChanceRANK: 500
                 },
                 {
-                    rank_amount: "200💠",
+                    rank_amount: 200,
                     dropChanceRANK: 200
                 },
                 {
-                    rank_amount: "1000💠     @here",
+                    rank_amount: 1000,
                     dropChanceRANK: 1
                 },
 
@@ -791,11 +803,11 @@ interaction.guild.channels.cache.get(process.env.rumb_channel).send(
             //Сообщение - опыт рангов                       
             interaction.guild.channels.cache.get(process.env.rank_channel).send(
 `╔═════════♡════════╗
-<@${opener}> +${rank_exp[i_rank].rank_amount}
+<@${opener}> +${rank_exp[i_rank].rank_amount}💠
 \`Получено из Подарка судьбы.\`
 ╚═════════♡════════╝`
             );
-
+            userData.rank += rank_exp[i_rank].rank_amount //ДОБАВИТЬ В ДРУГИЕ
 
 
             //Опыт активности
@@ -864,22 +876,17 @@ interaction.guild.channels.cache.get(process.env.rumb_channel).send(
 \`Получено из Подарка судьбы.\`
 ╚═════════♡════════╝`
             );
-
-
-
-console.log(`
-||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
-||Количество предметов:                         ||
-||${loot1.length} > Лут 1, шт. предмет.                      ||
-||${loot2.length} > Лут 2, шт. предмет.                      ||
-||${loot3.length} > Лут 3, шт. предмет.                      ||
-||${loot4.length} > Лут 4, шт. предмет.                      ||
-||${rank_exp.length} > Количество вариантов опыта рангов         ||
-||${act_exp.length} > Количество вариантов опыта активности     ||
-||${rumbik.length} > Количество вариантов румбиков             ||
-||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
-||${interaction.member.displayName} использовал команду "/${cmd_name}" ||
-||^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^||`)
+            userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
+            if(userData.exp >= (5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100)) {
+                userData.exp -= 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
+                userData.level += 1;
+                interaction.channel.send(
+                    `:black_medium_small_square:
+<@${user.id}> повысил уровень активности до ${userData.level} уровня! :tada:
+:black_medium_small_square:`);
+                }
+                userData.save();
+                console.log(chalk.magentaBright(`[${interaction.user.tag} открыл подарок судьбы]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} румбиков, ${loot2[i_loot2].loot2_name}, ${loot1[i_loot1].loot1_name}, ${loot3[i_loot3].loot3_name} и ${loot4[i_loot4].loot4_name}`))
             
         } else {
             await interaction.editReply({

@@ -2,15 +2,18 @@ const mongoose = require(`mongoose`);
 
 const User = new mongoose.Schema({
     id: { type: String, unique: true, required: true },
+    name: { type: String, unique: true },
     rumbik: { type: Number, default: 0 },
-    rank: { type: Number, default: 0 },
+    rank: { type: Number, default: 0, max: 25000 },
     exp: { type: Number, default: 0 },
+    totalexp: { type: Number, default: 0 },
     level: { type: Number, default: 0},
     tickets: { type: Number, default: 0},
     cooldowns: {
         daily: { type: Date },
         weekly: { type: Date },
-        monthly: { type: Date }
+        monthly: { type: Date },
+        msgCreateExp: { type: Date }
     },
     perks: {
         rank_boost: { type: Number, default: 0, max: 6 },

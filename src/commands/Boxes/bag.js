@@ -1,12 +1,16 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { execute } = require('../../events/client/ready');
-const { User } = require(`../../schemas/userdata`)
+const { User } = require(`../../schemas/userdata`);
+const chalk = require(`chalk`);
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`bag`)  //Название команды
         .setDescription(`Открыть мешочек.`), //Описание команды
     async execute(interaction, client) {
+        const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
+
         const message = await interaction.deferReply({
             fetchReply: true,
         });
@@ -66,16 +70,24 @@ module.exports = {
 \`Получено из мешочка.\`
 ╚═════════♡════════╝`
             );
+            userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
+
+            const levelbefore = userData.level;
+
+            while(userData.exp >= (5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100)) {
+                userData.exp -= 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
+                userData.level += 1;
+            }
+            if (levelbefore < userData.level) {
+                interaction.channel.send(
+                    `:black_medium_small_square:
+<@${user.id}> повысил уровень активности до ${userData.level} уровня! :tada:
+:black_medium_small_square:`);
+                }
+                userData.save();
 
 
-
-console.log(`
-||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
-||Количество предметов:                         ||
-||${act_exp.length} > Количество вариантов опыта активности     ||
-||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
-||${interaction.member.displayName} использовал команду "/${cmd_name}" ||
-||^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^||`)
+console.log(chalk.magentaBright(`[${interaction.user.tag} открыл мешочек]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности`))
             
         } else {
             await interaction.editReply({

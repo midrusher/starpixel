@@ -1,13 +1,17 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { execute } = require('../../events/client/ready');
 const wait = require('node:timers/promises').setTimeout;
-const { User } = require(`../../schemas/userdata`)
+const { User } = require(`../../schemas/userdata`);
+const chalk = require(`chalk`);
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`big`)  //Название команды
         .setDescription(`Открыть большую коробку.`), //Описание команды
     async execute(interaction, client) {
+        const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
+
         const message = await interaction.deferReply({
             fetchReply: true,
         });
@@ -69,6 +73,8 @@ module.exports = {
 \`Получено из большой коробки.\`
 ╚═════════♡════════╝`
             );
+            userData.rank += rank_exp[i_rank].rank_amount //ДОБАВИТЬ В ДРУГИЕ
+            
 
 
 
@@ -115,7 +121,18 @@ module.exports = {
 \`Получено из большой коробки.\`
 ╚═════════♡════════╝`
             );
+            userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
+            
 
+            if(userData.exp >= (5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100)) {
+                userData.exp -= 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
+                userData.level += 1;
+                interaction.channel.send(
+                    `:black_medium_small_square:
+<@${user.id}> повысил уровень активности до ${userData.level} уровня! :tada:
+:black_medium_small_square:`);
+                }
+                userData.save();
             //Список предметов
             let loot1 = [
                 {
@@ -455,16 +472,10 @@ ${loot2[i_loot2].loot2_description}
                 })
             }
 
-            console.log(`
-||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
-||Количество предметов:                         ||
-||${loot1.length} > Лут 1, шт. предмет.                      ||
-||${loot2.length} > Лут 2, шт. предмет.                      ||
-||${rank_exp.length} > Количество вариантов опыта рангов         ||
-||${act_exp.length} > Количество вариантов опыта активности     ||
-||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
-||${interaction.member.displayName} использовал команду "/${cmd_name}" ||
-||^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^||`)
+            
+
+
+            console.log(chalk.magentaBright(`[${interaction.user.tag} открыл большую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, ${loot1[i_loot1].loot1_name} и ${loot2[i_loot2].loot2_name}`))
 
         } else {
             await interaction.editReply({

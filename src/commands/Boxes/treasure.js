@@ -1,12 +1,15 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { User } = require(`../../schemas/userdata`)
 const { execute } = require('../../events/client/ready');
+const chalk = require(`chalk`);
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`treasure`)  //Название команды
         .setDescription(`Открыть сокровища.`), //Описание команды
     async execute(interaction, client) {
+        const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
         const message = await interaction.deferReply({
             fetchReply: true,
         });
@@ -196,6 +199,16 @@ interaction.guild.channels.cache.get(process.env.rumb_channel).send(
 \`Получено из сокровища.\`
 ╚═════════♡════════╝`
 );
+
+if (roles.cache.has("553593133884112900") || roles.cache.has("553593136027533313") ||
+            roles.cache.has("553593976037310489") || roles.cache.has("780487593485008946") || 
+            roles.cache.has("849695880688173087") || roles.cache.has("992122876394225814") || 
+            roles.cache.has("992123014831419472") || roles.cache.has("992123019793276961")) {
+                userData.rumbik += rumbik[i_rumb].rumb_amount
+            } else {
+                
+                userData.rumbik += 0
+            }
             //Опыт рангов (если необходимо)
             let rank_exp = [
                 {
@@ -236,32 +249,32 @@ interaction.guild.channels.cache.get(process.env.rumb_channel).send(
 ╚═════════♡════════╝`
             );
 
-
+            userData.rank += rank_exp[i_rank].rank_amount //ДОБАВИТЬ В ДРУГИЕ
 
             //Опыт активности
             let act_exp = [
                 {
-                    act_amount: "100🌀",
+                    act_amount: 100,
                     dropChanceACT: 40000
                 },
                 {
-                    act_amount: "350🌀",
+                    act_amount: 350,
                     dropChanceACT: 20000
                 },
                 {
-                    act_amount: "1000🌀",
+                    act_amount: 1000,
                     dropChanceACT: 3000
                 },
                 {
-                    act_amount: "500🌀",
+                    act_amount: 500,
                     dropChanceACT: 7000
                 },
                 {
-                    act_amount: "300🌀",
+                    act_amount: 300,
                     dropChanceACT: 30000
                 },
                 {
-                    act_amount: "10000🌀    @here",
+                    act_amount: 10000,
                     dropChanceACT: 1
                 },
             ]
@@ -280,23 +293,23 @@ interaction.guild.channels.cache.get(process.env.rumb_channel).send(
             //Сообщение - опыт активности                       
             interaction.guild.channels.cache.get(process.env.act_channel).send(
 `╔═════════♡════════╗
-<@${opener}> +${act_exp[i_act].act_amount}
+<@${opener}> +${act_exp[i_act].act_amount}🌀
 \`Получено из сокровища.\`
 ╚═════════♡════════╝`
             );
+            userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
+            
+            if(userData.exp >= (5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100)) {
+                userData.exp -= 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
+                userData.level += 1;
+                interaction.channel.send(
+                    `:black_medium_small_square:
+<@${user.id}> повысил уровень активности до ${userData.level} уровня! :tada:
+:black_medium_small_square:`);
+                }
+                userData.save();
 
-
-
-console.log(`
-||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
-||Количество предметов:                         ||
-||${loot2.length} > Лут 1, шт. предмет.                      ||
-||${rank_exp.length} > Количество вариантов опыта рангов         ||
-||${act_exp.length} > Количество вариантов опыта активности     ||
-||${rumbik.length} > Количество вариантов румбиков             ||
-||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
-||${interaction.member.displayName} использовал команду "/${cmd_name}" ||
-||^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^||`)
+                console.log(chalk.magentaBright(`[${interaction.user.tag} открыл сокровище]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} и ${loot2[i_loot2].loot2_name}`))
             
         } else {
             await interaction.editReply({

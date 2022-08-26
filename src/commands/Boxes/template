@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { execute } = require('../../events/client/ready');
+const chalk = require(`chalk`);
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,7 +19,7 @@ module.exports = {
             const cmd_name = `command` //Название команды
             const timestamp = Math.round(interaction.createdTimestamp / 1000)
             await roles.remove(role).catch(console.error); //Удалить роль коробки
-            const opener = `<@${roles.id}>`
+            const opener = interaction.member.id;
             //Лут из коробок
             //Случайный предмет
             //name - Название предмета

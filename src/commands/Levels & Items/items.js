@@ -14,7 +14,7 @@ module.exports = {
         ),
     async execute(interaction, client) {
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
-        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id })
+        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username })
         const embed = new EmbedBuilder()
             .setColor(0xA872FF)
             .setAuthor({
@@ -24,7 +24,10 @@ module.exports = {
             .setTimestamp(Date.now())
             .setDescription(
 `**Румбики** - ${userData.rumbik}<:Rumbik:883638847056003072>
-**Опыт рангов** - ${userData.rank}💠`)
+**Опыт рангов** - ${userData.rank}💠
+
+**ПЕРКИ**
+`)
 
 return interaction.reply({
     embeds: [ embed ]

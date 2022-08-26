@@ -1,6 +1,6 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, Attachment, EmbedBuilder } = require('discord.js');
 const { execute } = require('../../events/client/ready');
-const { User } = require(`../../schemas/userdata`)
+const { User } = require(`../../schemas/userdata`);
 
 
 module.exports = {
@@ -14,7 +14,15 @@ module.exports = {
         ),
     async execute(interaction, client) {
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
-        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id })
+        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username })
+        const neededXP = 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
+
+
+        if (userData.totalexp == 0) return interaction.reply({
+            content: `У ${user} нет опыта активности.`,
+            ephemeral: true
+        });
+
         const embed = new EmbedBuilder()
             .setColor(0xA872FF)
             .setAuthor({
@@ -24,11 +32,10 @@ module.exports = {
             .setTimestamp(Date.now())
             .setDescription(
 `**УРОВЕНЬ** - ${userData.level}
-**Опыт** - ${userData.exp}🌀`)
+**Опыт** - ${userData.exp}/${neededXP}🌀`)
 
-return interaction.reply({
-
-    embeds: [ embed ]
-})
+        return interaction.reply({
+            embeds: [embed]
+        })
     }
 };

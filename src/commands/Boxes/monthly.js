@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require(`../../schemas/userdata`); //ДОБАВИТЬ В ДРУГИЕ
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 const { execute } = require('../../events/client/ready');
+const chalk = require(`chalk`);
 
 
 module.exports = {
@@ -15,7 +16,7 @@ module.exports = {
 
         
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
-        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id }) //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
 
         if (roles.cache.has("504887113649750016")) { //Проверка роли участника гильдии
             if (userData.cooldowns.monthly > Date.now()) //ДОБАВИТЬ В ДРУГИЕ(ГДЕ КУЛДАУН)
@@ -172,11 +173,19 @@ ${loot1[i_loot1].loot1_description}
             interaction.guild.channels.cache.get(process.env.rumb_channel).send(
 `╔═════════♡════════╗
 <@${opener}> +${rumbik[i_rumb].rumb_amount}<:Rumbik:883638847056003072>
-\`Получено из ежемесячной.\`
+\`Получено из ежемесячной коробки.\`
 ╚═════════♡════════╝`
             );
 
-            userData.rumbik += rumbik[i_rumb].rumb_amount
+            if (roles.cache.has("553593133884112900") || roles.cache.has("553593136027533313") ||
+            roles.cache.has("553593976037310489") || roles.cache.has("780487593485008946") || 
+            roles.cache.has("849695880688173087") || roles.cache.has("992122876394225814") || 
+            roles.cache.has("992123014831419472") || roles.cache.has("992123019793276961")) {
+                userData.rumbik += rumbik[i_rumb].rumb_amount
+            } else {
+                
+                userData.rumbik += 0
+            }
 
             //Опыт активности
             let act_exp = [
@@ -219,18 +228,18 @@ ${loot1[i_loot1].loot1_description}
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
             userData.cooldowns.monthly = Date.now() + (1000 * 60 * 60 * 24 * 30) //ДОБАВИТЬ В ДРУГИЕ(ГДЕ КУЛДАУН) * 60 * 24 * 30
-            userData.save();
+            
 
-            console.log(`
-||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
-||Количество предметов:                         ||
-||${loot1.length} > Лут 1, шт. предмет.                      ||
-||${rank_exp.length} > Количество вариантов опыта рангов         ||
-||${act_exp.length} > Количество вариантов опыта активности     ||
-||${rumbik.length} > Количество вариантов румбиков             ||
-||vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv||
-||${interaction.member.displayName} использовал команду "/${cmd_name}" ||
-||^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^||`)
+            if(userData.exp >= (5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100)) {
+                userData.exp -= 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
+                userData.level += 1;
+                interaction.channel.send(
+                    `:black_medium_small_square:
+<@${user.id}> повысил уровень активности до ${userData.level} уровня! :tada:
+:black_medium_small_square:`);
+                }
+                userData.save();
+                console.log(chalk.magentaBright(`[${interaction.user.tag} открыл ежемесячную коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} и ${loot1[i_loot1].loot1_name}`))
             await interaction.deleteReply()
         } else if (!roles.cache.has("504887113649750016")) {
             interaction.reply({

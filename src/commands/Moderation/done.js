@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, Embed, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, Embed, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 const { execute } = require('../../events/client/ready');
 const wait = require('node:timers/promises').setTimeout;
 
@@ -16,88 +16,133 @@ module.exports = {
             .setDescription(`Комментарий к вопросу`)
             .setRequired(false)
         ),
-     async execute(interaction, client) {
+    async execute(interaction, client) {
 
-    const cmd_name = `done`
-    const mod = interaction.member;
-    const user = interaction.options.getUser('пользователь');
-    const comment = interaction.options.getString(`комментарий`)
-    const button_done = new ButtonBuilder()
-					.setCustomId('done')
-					.setLabel('Спасибо!')
-					.setStyle(ButtonStyle.Primary)
-                    .setEmoji(`👌`);
+        const cmd_name = `done`
+        const mod = interaction.member;
+        const user = interaction.options.getUser('пользователь');
+        const comment = interaction.options.getString(`комментарий`)
+        const button_done = new ButtonBuilder()
+            .setCustomId('done')
+            .setLabel('Спасибо!')
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji(`👌`);
 
-                    const done2 = new EmbedBuilder()
-                    .setColor(0xA872FF)
-                    .setAuthor({
-                        name: `Просьба обработана`
-                    })
-                    .setDescription(`Просьбе ${user} была обработана офицером ${mod}!`)
-                    interaction.reply({
-                        embeds: [done2]
-                    })
-                    
-        
-                    console.log(
-`Использована команда /${cmd_name}
+        const done2 = new EmbedBuilder()
+            .setColor(0xA872FF)
+            .setAuthor({
+                name: `Просьба обработана`
+            })
+            .setDescription(`Просьбе ${user} была обработана офицером ${mod}!`)
+        interaction.reply({
+            embeds: [done2]
+        })
+
+
+        console.log(
+            `Использована команда /${cmd_name}
 Офицер: ${mod.displayName}
 Пользователю: ${user.tag}
 Комментарий: ${comment}`)
-        
+
         if (!comment) {
             const done = new EmbedBuilder()
-            .setAuthor({
-                name: `Спасибо за обращение в вопрос-модерам!`
-            })
-            .setColor(0xA872FF)
-            .setTimestamp(Date.now())
-            .setDescription(`:envelope: Спасибо за обращение в вопрос-модерам. Ваша просьба была обработана!`)
-            .addFields([{
-                name: `С уважением, офицер`, value: `${mod}`
-            }]);
+                .setAuthor({
+                    name: `Спасибо за обращение в вопрос-модерам!`
+                })
+                .setColor(0xA872FF)
+                .setTimestamp(Date.now())
+                .setDescription(`:envelope: Спасибо за обращение в вопрос-модерам. Ваша просьба была обработана!`)
+                .addFields([{
+                    name: `С уважением, офицер`, value: `${mod}`
+                }]);
 
-            const msg = await interaction.guild.channels.cache.get(process.env.main_channel).send({ 
-                content: `${user}`, 
+            const msg = await interaction.guild.channels.cache.get(process.env.test_channel).send({
+                content: `${user}`,
                 embeds: [done],
                 components: [new ActionRowBuilder().addComponents(button_done)]
             })
 
-            await wait(600000)
-            await button_done.setDisabled(true)
-            await msg.edit({ 
-                    content: `${user}`, 
-                    embeds: [done],
-                    components: []
-                })
-            
-        } else { 
-            const done = new EmbedBuilder()
-            .setAuthor({
-                name: `Спасибо за обращение в вопрос-модерам!`
-            })
-            .setDescription(`:envelope: ${comment}`)
-            .setColor(0xA872FF)
-            .setTimestamp(Date.now())
-            .addFields([{
-                name: `С уважением, офицер`, value: `${mod}`
-            }]);
+            const filter = i => i.customId === 'done';
 
-            const msg = await interaction.guild.channels.cache.get(process.env.main_channel).send({ 
+            const collector = msg.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 60000, });
+
+            collector.on('collect', i => {
+                if (i.user.id === user.id) {
+                        button_done.setDisabled(true)   
+                        i.reply({
+                            content: `Если будут вопросы, обращайтесь в канал <#849516805529927700>!`,
+                            ephemeral: true
+                        })
+                        msg.edit({
+                            content: `${user}`,
+                            embeds: [done],
+                            components: [new ActionRowBuilder().addComponents(button_done)]
+                        })
+                } else {
+                    i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
+                }
+            });
+
+            collector.on('end', async collected => {
+                await button_done.setDisabled(true)
+                await msg.edit({
+                    content: `${user}`,
+                    embeds: [done],
+                    components: [new ActionRowBuilder().addComponents(button_done)]
+                })
+            });
+
+        } else {
+            const done = new EmbedBuilder()
+                .setAuthor({
+                    name: `Спасибо за обращение в вопрос-модерам!`
+                })
+                .setDescription(`:envelope: ${comment}`)
+                .setColor(0xA872FF)
+                .setTimestamp(Date.now())
+                .addFields([{
+                    name: `С уважением, офицер`, value: `${mod}`
+                }]);
+
+            const msg = await interaction.guild.channels.cache.get(process.env.test_channel).send({
                 content: `${user}`,
                 embeds: [done],
                 components: [new ActionRowBuilder().addComponents(button_done)]
 
-                
-                });
 
-                await wait(600000)
+            });
+            const filter = i => i.customId === 'done';
+
+            const collector = msg.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 60000, });
+
+            collector.on('collect', i => {
+                if (i.user.id === user.id) {
+                        button_done.setDisabled(true)   
+                        i.reply({
+                            content: `Если будут вопросы, обращайтесь в канал <#849516805529927700>!`,
+                            ephemeral: true
+                        })
+                        msg.edit({
+                            content: `${user}`,
+                            embeds: [done],
+                            components: [new ActionRowBuilder().addComponents(button_done)]
+                        })
+                } else {
+                    i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
+                }
+            });
+
+            collector.on('end', async collected => {
                 await button_done.setDisabled(true)
-                await msg.edit({ 
-                        content: `${user}`, 
-                        embeds: [done],
-                        components: []
-        })};
-            
-        }
+                await msg.edit({
+                    content: `${user}`,
+                    embeds: [done],
+                    components: [new ActionRowBuilder().addComponents(button_done)]
+                })
+            });
+
+        };
+
     }
+}

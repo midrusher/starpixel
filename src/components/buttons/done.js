@@ -7,10 +7,6 @@ module.exports = {
     },
     async execute(interaction, client) {
         
-        interaction.reply({
-        content: `Если будут вопросы, обращайтесь в канал <#849516805529927700>!`,
-        ephemeral: true
-       })
         
     }
 }

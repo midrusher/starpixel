@@ -20,7 +20,7 @@ module.exports = {
                 userData.exp += 0
             userData.totalexp += 0
             } else {
-                let add_exp = Math.floor(Math.random() * 14 + 11) * 1
+                let add_exp = Math.floor(Math.random() * 15 + 11) * 1
 
                 userData.exp += add_exp
                 userData.totalexp += add_exp
@@ -33,8 +33,8 @@ module.exports = {
                     userData.level += 1;
                     message.channel.send(
                         `:black_medium_small_square:
-    <@${user.id}> повысил уровень активности до ${userData.level} уровня! :tada:
-    :black_medium_small_square:`);
+<@${user.id}> повысил уровень активности до ${userData.level} уровня! :tada:
+:black_medium_small_square:`);
                 }
             }
             userData.save();

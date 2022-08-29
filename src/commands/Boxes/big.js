@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, ComponentType } = require('discord.js');
 const { execute } = require('../../events/client/ready');
 const wait = require('node:timers/promises').setTimeout;
 const { User } = require(`../../schemas/userdata`);
@@ -431,11 +431,14 @@ ${loot2[i_loot2].loot2_description}
                     };
                 };
             } else {
-                const boxes = new ButtonBuilder()
+                const boxes = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
                     .setCustomId('boxes')
                     .setLabel('Установить')
                     .setStyle(ButtonStyle.Success)
                     .setEmoji(`⬆️`)
+                )
                 const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
                     .send({
                         content: `◾
@@ -447,7 +450,7 @@ ${loot1[i_loot1].loot1_description}
 Дополнительная косметическая награда из большой коробки: \`${loot2[i_loot2].loot2_name}\`
 ${loot2[i_loot2].loot2_description}
 ◾`,
-                        components: [new ActionRowBuilder().addComponents(boxes)]
+                        components: [boxes]
                     });
                 if (!roles.cache.has(loot1[i_loot1].loot1_roleID) && loot1[i_loot1].loot1_name != `Награды нет.` || !roles.cache.has(loot1[i_loot1].loot1_roleID) && loot1[i_loot1].loot1_name == `Награды нет.` && roles.cache.has("597746051998285834")) {
                     await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error);
@@ -457,9 +460,20 @@ ${loot2[i_loot2].loot2_description}
                         await r_loot_msg.react("🚫")
                     };
                 };
-                await wait(60000);
-                await r_loot_msg.edit({
-                    content: `◾
+                const filter = i => i.customId === 'boxes';
+
+                r_loot_msg.awaitMessageComponent({ filter, componentType: ComponentType.Button, time: 60000 })
+                        .then(async (i) => {
+                            if (i.user.id === interaction.member.user.id) {
+
+                                await boxes.components[0]
+                                .setDisabled(true)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setEmoji(`🕓`)
+                                .setLabel(`Ожидается`)
+
+                            await r_loot_msg.edit({
+                                content: `◾
 <@${opener}> открывает большую коробку от гильдии.
 ╭═────═⌘═────═╮
 \`${loot1[i_loot1].loot1_name}\`
@@ -468,8 +482,54 @@ ${loot1[i_loot1].loot1_description}
 Дополнительная косметическая награда из большой коробки: \`${loot2[i_loot2].loot2_name}\`
 ${loot2[i_loot2].loot2_description}
 ◾`,
-                    components: []
-                })
+                                components: [boxes]
+                            })
+
+                            i.reply({
+                                content: `Ожидайте! Администрация скоро поставит вам значок/рамку!`
+                            })
+                            const reply = await i.fetchReply()
+
+                            const waitembed = new EmbedBuilder()
+                            .setTitle(`Необходимо поставить значок или рамку!`)
+                            .setColor(process.env.bot_color)
+                            .setDescription(
+`Пользователь ${i.member} просит установить ему \`${loot2[i_loot2].loot2_name}\`
+**Канал**: ${reply.channel}
+
+[[Показать сообщение](${reply.url})]`)
+                            .setTimestamp(Date.now())
+                            .setThumbnail(i.member.displayAvatarURL())
+
+                            i.guild.channels.cache.get(process.env.mod_channel).send({
+                                content: `<@${process.env.guild_admin}>`,
+                                embeds: [waitembed]
+                            })
+                                
+                            } else {
+                                i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
+                            }
+                        })
+                        .catch(async (err) => {
+                            await boxes.components[0]
+                                .setDisabled(true)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setLabel(`Отменено`)
+                                .setEmoji(`❌`)
+
+                            await r_loot_msg.edit({
+                                content: `◾
+<@${opener}> открывает большую коробку от гильдии.
+╭═────═⌘═────═╮
+\`${loot1[i_loot1].loot1_name}\`
+${loot1[i_loot1].loot1_description}
+╰═────═⌘═────═╯
+Дополнительная косметическая награда из большой коробки: \`${loot2[i_loot2].loot2_name}\`
+${loot2[i_loot2].loot2_description}
+◾`,
+                                components: [boxes]
+                            })
+                        });
             }
 
             

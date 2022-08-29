@@ -1,10 +1,28 @@
 require('dotenv').config();
 const { tokenTEST, token, databaseToken } = process.env;
 const { connect } = require(`mongoose`)
-const { Client, Collection, GatewayIntentBits, Partials  } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, Partials, ActivityType, } = require('discord.js');
 const fs = require('fs');
 
-const client = new Client({ intents: 131071, partials: [Partials.Channel, Partials.GuildMember, Partials.GuildScheduledEvent, Partials.Message, Partials.Reaction, Partials.ThreadMember, Partials.User] });
+const client = new Client({ 
+    intents: 131071, 
+    partials: [
+        Partials.Channel, 
+        Partials.GuildMember, 
+        Partials.GuildScheduledEvent, 
+        Partials.Message, 
+        Partials.Reaction, 
+        Partials.ThreadMember, 
+        Partials.User
+    ],
+    presence: {
+        status: `online`,
+        activities: [{
+            type: ActivityType.Competing,
+            name: `слежке за участниками гильдии Starpixel!`,
+        }]
+    } 
+});
 
 client.commands = new Collection();
 client.buttons = new Collection();
@@ -29,3 +47,4 @@ client.login(token);
 (async () => {
     await connect(databaseToken).catch(console.error)
 })();
+

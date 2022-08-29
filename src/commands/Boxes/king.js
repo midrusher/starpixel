@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } = require('discord.js');
 const { execute } = require('../../events/client/ready');
 const wait = require('node:timers/promises').setTimeout;
 const { User } = require(`../../schemas/userdata`);
@@ -307,11 +307,13 @@ module.exports = {
 
 
             //Отправка сообщения о луте    
-            const boxes = new ButtonBuilder()
-                    .setCustomId('boxes')
+            const boxesk = new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
+                    .setCustomId('boxesk')
                     .setLabel('Установить')
                     .setStyle(ButtonStyle.Success)
                     .setEmoji(`⬆️`)
+                )
                     
             const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
                 .send({
@@ -324,7 +326,7 @@ ${loot1[i_loot1].loot1_description}.
 ◾ :crown: ◾
 Дополнительная косметическая награда из королевской коробки: \`${loot2[i_loot2].loot2_name}\`
 ${loot2[i_loot2].loot2_description}`,
-components: [new ActionRowBuilder().addComponents(boxes)]
+components: [boxesk]
 });
             if (!roles.cache.has(loot1[i_loot1].loot1_roleID)) {
                 if (loot1[i_loot1].loot1_name == `💳 Подписка VIP на 7 дней`) {
@@ -347,9 +349,20 @@ components: [new ActionRowBuilder().addComponents(boxes)]
                     await r_loot_msg.react("🚫")
                 }
             };
-            await wait(60000);
-            await r_loot_msg.edit({
-                content: `◾ :crown: ◾
+            const filter = i => i.customId === 'boxesk';
+
+                r_loot_msg.awaitMessageComponent({ filter, componentType: ComponentType.Button, time: 60000 })
+                        .then(async (i) => {
+                            if (i.user.id === interaction.member.user.id) {
+
+                                await boxesk.components[0]
+                                .setDisabled(true)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setEmoji(`🕓`)
+                                .setLabel(`Ожидается`)
+
+                            await r_loot_msg.edit({
+                                content: `◾ :crown: ◾
 <@${opener}> открывает королевскую коробку гильдии...
 ╔━═━═━︽︾♚︾︽━═━═━╗
 \`${loot1[i_loot1].loot1_name}\`
@@ -358,8 +371,55 @@ ${loot1[i_loot1].loot1_description}.
 ◾ :crown: ◾
 Дополнительная косметическая награда из королевской коробки: \`${loot2[i_loot2].loot2_name}\`
 ${loot2[i_loot2].loot2_description}`,
-components: []
-            })
+                                components: [boxesk]
+                            })
+
+                            i.reply({
+                                content: `Ожидайте! Администрация скоро поставит вам значок/рамку!`
+                            })
+                            const reply = await i.fetchReply()
+
+                            const waitembed = new EmbedBuilder()
+                            .setTitle(`Необходимо поставить значок или рамку!`)
+                            .setColor(process.env.bot_color)
+                            .setDescription(
+`Пользователь ${i.member} просит установить ему \`${loot2[i_loot2].loot2_name}\`
+**Канал**: ${reply.channel}
+
+[[Показать сообщение](${reply.url})]`)
+                            .setTimestamp(Date.now())
+                            .setThumbnail(i.member.displayAvatarURL())
+
+                            await i.guild.channels.cache.get(process.env.mod_channel).send({
+                                content: `<@${process.env.guild_admin}>`,
+                                embeds: [waitembed]
+                            })
+                                
+                            } else {
+                                i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
+                            }
+                        })
+                        .catch(async (err) => {
+                            console.log(err)
+                            await boxesk.components[0]
+                                .setDisabled(true)
+                                .setStyle(ButtonStyle.Secondary)
+                                .setLabel(`Отменено`)
+                                .setEmoji(`❌`)
+
+                            await r_loot_msg.edit({
+                                content: `◾ :crown: ◾
+<@${opener}> открывает королевскую коробку гильдии...
+╔━═━═━︽︾♚︾︽━═━═━╗
+\`${loot1[i_loot1].loot1_name}\`
+${loot1[i_loot1].loot1_description}.
+╚━═━═━︾︽♔︽︾━═━═━╝
+◾ :crown: ◾
+Дополнительная косметическая награда из королевской коробки: \`${loot2[i_loot2].loot2_name}\`
+${loot2[i_loot2].loot2_description}`,
+                                components: [boxesk]
+                            })
+                        });
 
 
             console.log(chalk.magentaBright(`[${interaction.user.tag} открыл королевскую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, ${loot1[i_loot1].loot1_name} и ${loot2[i_loot2].loot2_name}`))

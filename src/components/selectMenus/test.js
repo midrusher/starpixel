@@ -2,7 +2,7 @@ const { execute } = require("../../events/client/ready");
 
 module.exports = {
     data: {
-        name: `test`
+        name: `testselectMenu`
     },
     async execute(interaction, client) {
         await interaction.reply({

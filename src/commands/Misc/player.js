@@ -11,9 +11,13 @@ module.exports = {
         .setName(`mcplayer`)
         .setDescription(`Основные ссылки и информация о гильдии.`),
     async execute(interaction, client) {
-        const user = interaction.member.user;
-        const userData = await User.findOne({ id: user.id });
-       if (userData) return interaction.reply(`Профиль не найдет`)
-       
+        
+        let role = `1`
+
+        role = `234`
+
+        const smth = `1`
+
+        console.log(`role = ${role}, smth = ${smth}`)
     }
 };

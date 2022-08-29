@@ -3,7 +3,7 @@ const { execute } = require("../../events/client/ready");
 
 module.exports = {
     data: {
-        name: `boxes`
+        name: `testbutton`
     },
     async execute(interaction, client) {
         

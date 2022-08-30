@@ -14,12 +14,12 @@ const User = new mongoose.Schema({
     gexp: { type: Number, default: 0},
     tickets: { type: Number, default: 0},
     cooldowns: {
-        daily: { type: Date },
-        weekly: { type: Date },
-        monthly: { type: Date },
-        msgCreateExp: { type: Date },
-        prof_update: { type: Date }, 
-        prof_create: { type: Date }
+        daily: { type: Date, default: Date.now() },
+        weekly: { type: Date, default: Date.now() },
+        monthly: { type: Date, default: Date.now() },
+        msgCreateExp: { type: Date, default: Date.now() },
+        prof_update: { type: Date, default: Date.now() }, 
+        prof_create: { type: Date, default: Date.now() }
     },
     perks: {
         rank_boost: { type: Number, default: 0, max: 6 },
@@ -30,6 +30,15 @@ const User = new mongoose.Schema({
         sell_items: { type: Number, default: 0, max: 1 },
         ticket_discount: { type: Number, default: 0, max: 5 },
         change_items: { type: Number, default: 0, max: 4 },
+    },
+    achievements: {
+        normal: { type: Number, max: 25, default: 0, min: 0 },
+        mythical: { type: Number, max: 5, default: 0, min: 0 },
+    },
+    buy: { type: Number, default: 0},
+    sell: {
+        comet: { type: Number, default: 0 },
+        constellation: { type: Number, default: 0 },
     }
 })
 

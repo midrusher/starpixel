@@ -9,15 +9,14 @@ const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГ�
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`mcplayer`)
-        .setDescription(`Основные ссылки и информация о гильдии.`),
+        .setDescription(`Основные ссылки и информация о гильдии.`)
+        .addStringOption( option => option
+            .setName(`тайная`)
+            .setDescription(`Тайная команда`)
+        ),
+        
     async execute(interaction, client) {
         
-        let role = `1`
-
-        role = `234`
-
-        const smth = `1`
-
-        console.log(`role = ${role}, smth = ${smth}`)
+        
     }
 };

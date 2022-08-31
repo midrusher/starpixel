@@ -19,7 +19,16 @@ const User = new mongoose.Schema({
         monthly: { type: Date, default: Date.now() },
         msgCreateExp: { type: Date, default: Date.now() },
         prof_update: { type: Date, default: Date.now() }, 
-        prof_create: { type: Date, default: Date.now() }
+        prof_create: { type: Date, default: Date.now() },
+        spet: { type: Date, default: Date.now() },
+        epet: { type: Date, default: Date.now() },
+        lpet: { type: Date, default: Date.now() },
+        mpet: { type: Date, default: Date.now() },
+        earth: { type: Date, default: Date.now() },
+        air: { type: Date, default: Date.now() },
+        water: { type: Date, default: Date.now() },
+        fire: { type: Date, default: Date.now() },
+        
     },
     perks: {
         rank_boost: { type: Number, default: 0, max: 6 },
@@ -39,6 +48,29 @@ const User = new mongoose.Schema({
     sell: {
         comet: { type: Number, default: 0 },
         constellation: { type: Number, default: 0 },
+    },
+    elements: {
+        underground: { type: Number, default: 0, max: 1, min: 0 },
+        fast_grow: { type: Number, default: 0, max: 1, min: 0 },
+        mountains: { type: Number, default: 0, max: 1, min: 0 },
+
+        diving: { type: Number, default: 0, max: 1, min: 0 },
+        resistance: { type: Number, default: 0, max: 1, min: 0 },
+        respiration: { type: Number, default: 0, max: 1, min: 0 },
+
+        fire_resistance: { type: Number, default: 0, max: 1, min: 0 },
+        lightning: { type: Number, default: 0, max: 1, min: 0 },
+        flame: { type: Number, default: 0, max: 1, min: 0 },
+
+        flying: { type: Number, default: 0, max: 1, min: 0 },
+        wind: { type: Number, default: 0, max: 1, min: 0 },
+        eagle_eye: { type: Number, default: 0, max: 1, min: 0 },  
+    }, 
+    infractions: {
+        warns: { type: Number, default: 0 },
+        kicks: { type: Number, default: 0 },
+        bans: { type: Number, default: 0 },
+        timeouts: { type: Number, default: 0 }
     }
 })
 

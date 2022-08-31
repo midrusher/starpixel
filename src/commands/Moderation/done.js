@@ -57,7 +57,7 @@ module.exports = {
                     name: `С уважением, офицер`, value: `${mod}`
                 }]);
 
-            const msg = await interaction.guild.channels.cache.get(process.env.test_channel).send({
+            const msg = await interaction.guild.channels.cache.get(process.env.main_channel).send({
                 content: `${user}`,
                 embeds: [done],
                 components: [new ActionRowBuilder().addComponents(button_done)]
@@ -65,7 +65,7 @@ module.exports = {
 
             const filter = i => i.customId === 'done';
 
-            const collector = msg.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 60000, });
+            const collector = msg.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 600000, });
 
             collector.on('collect', i => {
                 if (i.user.id === user.id) {
@@ -105,7 +105,7 @@ module.exports = {
                     name: `С уважением, офицер`, value: `${mod}`
                 }]);
 
-            const msg = await interaction.guild.channels.cache.get(process.env.test_channel).send({
+            const msg = await interaction.guild.channels.cache.get(process.env.main_channel).send({
                 content: `${user}`,
                 embeds: [done],
                 components: [new ActionRowBuilder().addComponents(button_done)]
@@ -114,7 +114,7 @@ module.exports = {
             });
             const filter = i => i.customId === 'done';
 
-            const collector = msg.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 60000, });
+            const collector = msg.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 600000, });
 
             collector.on('collect', i => {
                 if (i.user.id === user.id) {

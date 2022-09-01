@@ -33,13 +33,12 @@ module.exports = {
         let role = ``
         switch (interaction.options.getSubcommand()) {
             case `spet`: {
-                role = ``
+                role = `553637207911563264`
                 const no_role = new EmbedBuilder()
                     .setAuthor({
                         name: `❗ Отсутствует необходимая роль!`
                     })
-                    .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`320880176416161802`).name}\`!
-Но вы всё ещё можете использовать команду \`/profile update\``)
+                    .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(role).name}\`!`)
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
@@ -97,7 +96,7 @@ module.exports = {
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.act_channel).send(
+                    interaction.guild.channels.cache.get(process.env.elem_channel).send(
                         `:black_medium_small_square:
 ${user} отправился на обучение к Питомцу Земли 🐛.
 ╭──────────╮
@@ -134,13 +133,12 @@ ${pet[i_act].name}
 
                 break;
             case `epet`: {
-                role = ``
+                role = `553638054238093364`
                 const no_role = new EmbedBuilder()
                     .setAuthor({
                         name: `❗ Отсутствует необходимая роль!`
                     })
-                    .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`320880176416161802`).name}\`!
-Но вы всё ещё можете использовать команду \`/profile update\``)
+                    .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(role).name}\`!`)
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
@@ -198,7 +196,7 @@ ${pet[i_act].name}
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.act_channel).send(
+                    interaction.guild.channels.cache.get(process.env.elem_channel).send(
                         `:black_medium_small_square:
 ${user} отправился на обучение к Питомцу Воздуха 🕊️.
 ╭──────────╮
@@ -239,13 +237,12 @@ ${pet[i_act].name}
 
                 break;
             case `lpet`: {
-                role = ``
+                role = `553638061817200650`
                 const no_role = new EmbedBuilder()
                     .setAuthor({
                         name: `❗ Отсутствует необходимая роль!`
                     })
-                    .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`320880176416161802`).name}\`!
-Но вы всё ещё можете использовать команду \`/profile update\``)
+                    .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(role).name}\`!`)
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
@@ -301,7 +298,7 @@ ${pet[i_act].name}
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.act_channel).send(
+                    interaction.guild.channels.cache.get(process.env.elem_channel).send(
                         `:black_medium_small_square:
 ${user} отправился на обучение к Питомцу Воды 🐋.
 ╭──────────╮
@@ -342,13 +339,12 @@ ${pet[i_act].name}
 
                 break;
             case `mpet`: {
-                role = ``
+                role = `605696079819964426`
                 const no_role = new EmbedBuilder()
                     .setAuthor({
                         name: `❗ Отсутствует необходимая роль!`
                     })
-                    .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`320880176416161802`).name}\`!
-Но вы всё ещё можете использовать команду \`/profile update\``)
+                    .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(role).name}\`!`)
                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
                     .setColor(`DarkRed`)
                     .setTimestamp(Date.now())
@@ -404,7 +400,7 @@ ${pet[i_act].name}
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.act_channel).send(
+                    interaction.guild.channels.cache.get(process.env.elem_channel).send(
                         `:black_medium_small_square:
 ${user} отправился на обучение к Питомцу Огня 🐲.
 ╭──────────╮

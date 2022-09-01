@@ -50,28 +50,25 @@ const User = new mongoose.Schema({
         constellation: { type: Number, default: 0 },
     },
     elements: {
+        //Земля
         underground: { type: Number, default: 0, max: 1, min: 0 },
         fast_grow: { type: Number, default: 0, max: 1, min: 0 },
         mountains: { type: Number, default: 0, max: 1, min: 0 },
-
+        //Вода
         diving: { type: Number, default: 0, max: 1, min: 0 },
         resistance: { type: Number, default: 0, max: 1, min: 0 },
         respiration: { type: Number, default: 0, max: 1, min: 0 },
-
+        //Огонь
         fire_resistance: { type: Number, default: 0, max: 1, min: 0 },
         lightning: { type: Number, default: 0, max: 1, min: 0 },
         flame: { type: Number, default: 0, max: 1, min: 0 },
-
+        //Земля
         flying: { type: Number, default: 0, max: 1, min: 0 },
         wind: { type: Number, default: 0, max: 1, min: 0 },
         eagle_eye: { type: Number, default: 0, max: 1, min: 0 },  
     }, 
-    infractions: {
-        warns: { type: Number, default: 0 },
-        kicks: { type: Number, default: 0 },
-        bans: { type: Number, default: 0 },
-        timeouts: { type: Number, default: 0 }
-    }
+    warns: { type: Number, default: 0 },
+    
 })
 
 module.exports = { User: mongoose.model(`User`, User) }

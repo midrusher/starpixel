@@ -340,7 +340,7 @@ module.exports = {
                                     embeds: [delete_embed],
                                     components: [delete_button]
                                 })
-                                userData.remove({ id: userData.id })
+                                userData.deleteOne({ id: userData.id })
                                 
                             } else {
                                 i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });

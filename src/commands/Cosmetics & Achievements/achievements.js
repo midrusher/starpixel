@@ -374,7 +374,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -458,7 +458,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -541,7 +541,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -624,7 +624,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -707,7 +707,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -790,7 +790,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -873,7 +873,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -956,7 +956,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1039,7 +1039,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1122,7 +1122,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1205,7 +1205,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1288,7 +1288,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1371,7 +1371,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1454,7 +1454,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1537,7 +1537,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1620,7 +1620,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1703,7 +1703,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1786,7 +1786,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1869,7 +1869,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -1952,7 +1952,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -2035,7 +2035,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -2118,7 +2118,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -2201,7 +2201,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -2284,7 +2284,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -2368,7 +2368,7 @@ module.exports = {
                                     await user.roles.add(role)
                                     await user.roles.add(reward)
                                     userData.rank += 50
-                                    userData.act += 300
+                                    userData.exp += 300; userData.totalexp += 300
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
@@ -2456,7 +2456,7 @@ module.exports = {
                                             await user.roles.add(role)
                                             await user.roles.add(reward)
                                             userData.rank += 300
-                                            userData.act += 700
+                                            userData.exp += 700; userData.totalexp += 700
                                             userData.achievements.mythical += 1
                                             userData.save()
                                             const condition_meet = new EmbedBuilder()
@@ -2540,7 +2540,7 @@ module.exports = {
                                             await user.roles.add(role)
                                             await user.roles.add(reward)
                                             userData.rank += 300
-                                            userData.act += 700
+                                            userData.exp += 700; userData.totalexp += 700
                                             userData.achievements.normal += 1
                                             userData.save()
                                             const condition_meet = new EmbedBuilder()
@@ -2625,7 +2625,7 @@ module.exports = {
                                             await user.roles.remove(`781069821953441832`)
                                             await user.roles.add(reward)
                                             userData.rank += 300
-                                            userData.act += 700
+                                            userData.exp += 700; userData.totalexp += 700
                                             userData.achievements.normal += 1
                                             userData.save()
                                             const condition_meet = new EmbedBuilder()
@@ -2709,7 +2709,7 @@ module.exports = {
                                             await user.roles.add(role)
                                             await user.roles.add(reward)
                                             userData.rank += 300
-                                            userData.act += 700
+                                            userData.exp += 700; userData.totalexp += 700
                                             userData.achievements.normal += 1
                                             userData.save()
                                             const condition_meet = new EmbedBuilder()
@@ -2793,7 +2793,7 @@ module.exports = {
                                             await user.roles.add(role)
                                             await user.roles.add(reward)
                                             userData.rank += 300
-                                            userData.act += 700
+                                            userData.exp += 700; userData.totalexp += 700
                                             userData.rumbik -= 2000
                                             userData.achievements.normal += 1
                                             userData.save()
@@ -2860,7 +2860,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -2882,7 +2882,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -2904,7 +2904,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -2926,7 +2926,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -2948,7 +2948,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -2970,7 +2970,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -2992,7 +2992,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3014,7 +3014,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3036,7 +3036,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3058,7 +3058,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3080,7 +3080,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3102,7 +3102,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3124,7 +3124,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3146,7 +3146,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3168,7 +3168,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3190,7 +3190,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3212,7 +3212,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3234,7 +3234,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3256,7 +3256,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3278,7 +3278,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3300,7 +3300,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3322,7 +3322,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3344,7 +3344,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3366,7 +3366,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3388,7 +3388,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 50
-                                    memberData.act += 300
+                                    memberData.exp += 300; memberData.totalexp += 300
                                     memberData.achievements.normal += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3417,7 +3417,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 300
-                                    memberData.act += 700
+                                    memberData.exp += 700; memberData.totalexp += 700
                                     memberData.achievements.mythical += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3439,7 +3439,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 300
-                                    memberData.act += 700
+                                    memberData.exp += 700; memberData.totalexp += 700
                                     memberData.achievements.mythical += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3461,7 +3461,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 300
-                                    memberData.act += 700
+                                    memberData.exp += 700; memberData.totalexp += 700
                                     memberData.achievements.mythical += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3483,7 +3483,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 300
-                                    memberData.act += 700
+                                    memberData.exp += 700; memberData.totalexp += 700
                                     memberData.achievements.mythical += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3505,7 +3505,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank += 300
-                                    memberData.act += 700
+                                    memberData.exp += 700; memberData.totalexp += 700
                                     memberData.achievements.mythical += 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3549,7 +3549,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3571,7 +3571,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3593,7 +3593,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3615,7 +3615,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3637,7 +3637,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3659,7 +3659,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3681,7 +3681,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3703,7 +3703,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3725,7 +3725,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3747,7 +3747,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3769,7 +3769,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3791,7 +3791,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3813,7 +3813,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3835,7 +3835,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3857,7 +3857,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3879,7 +3879,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3901,7 +3901,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3923,7 +3923,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3945,7 +3945,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3967,7 +3967,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -3989,7 +3989,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -4011,7 +4011,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -4033,7 +4033,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -4055,7 +4055,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -4077,7 +4077,7 @@ module.exports = {
                                     })
                                     member.roles.remove(role)
                                     memberData.rank -= 50
-                                    memberData.act -= 300
+                                    memberData.exp -= 300; memberData.totalexp -= 300
                                     memberData.achievements.normal -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -4107,7 +4107,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank -= 300
-                                    memberData.act -= 700
+                                    memberData.exp -= 700; memberData.totalexp -= 700
                                     memberData.achievements.mythical -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -4129,7 +4129,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank -= 300
-                                    memberData.act -= 700
+                                    memberData.exp -= 700; memberData.totalexp -= 700
                                     memberData.achievements.mythical -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -4151,7 +4151,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank -= 300
-                                    memberData.act -= 700
+                                    memberData.exp -= 700; memberData.totalexp -= 700
                                     memberData.achievements.mythical -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -4173,7 +4173,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank -= 300
-                                    memberData.act -= 700
+                                    memberData.exp -= 700; memberData.totalexp -= 700
                                     memberData.achievements.mythical -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()
@@ -4195,7 +4195,7 @@ module.exports = {
                                     })
                                     member.roles.add(role)
                                     memberData.rank -= 300
-                                    memberData.act -= 700
+                                    memberData.exp -= 700; memberData.totalexp -= 700
                                     memberData.achievements.mythical -= 1
                                     memberData.save()
                                     const grant_embed = new EmbedBuilder()

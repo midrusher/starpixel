@@ -32,7 +32,8 @@ module.exports = {
             .setTimestamp(Date.now())
             .setDescription(
 `**УРОВЕНЬ** - ${userData.level}
-**Опыт** - ${userData.exp}/${neededXP}🌀`)
+**Опыт** - ${userData.exp}/${neededXP}🌀
+**Всего опыта** - ${userData.totalexp}`)
 
         return interaction.reply({
             embeds: [embed]

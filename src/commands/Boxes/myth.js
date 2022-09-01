@@ -877,14 +877,7 @@ if (roles.cache.has("553593133884112900") || roles.cache.has("553593136027533313
 ╚═════════♡════════╝`
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
-            if(userData.exp >= (5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100)) {
-                userData.exp -= 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
-                userData.level += 1;
-                interaction.channel.send(
-                    `:black_medium_small_square:
-<@${user.id}> повысил уровень активности до ${userData.level} уровня! :tada:
-:black_medium_small_square:`);
-                }
+            userData.totalexp += act_exp[i_act].act_amount
                 userData.save();
                 console.log(chalk.magentaBright(`[${interaction.user.tag} открыл подарок судьбы]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} румбиков, ${loot2[i_loot2].loot2_name}, ${loot1[i_loot1].loot1_name}, ${loot3[i_loot3].loot3_name} и ${loot4[i_loot4].loot4_name}`))
             

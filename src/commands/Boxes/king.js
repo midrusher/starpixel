@@ -2,6 +2,7 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, Compo
 const { execute } = require('../../events/client/ready');
 const wait = require('node:timers/promises').setTimeout;
 const { User } = require(`../../schemas/userdata`);
+const { Temp } = require(`../../schemas/temp_items`);
 const chalk = require(`chalk`);
 
 module.exports = {
@@ -121,15 +122,7 @@ module.exports = {
             );
 
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
-            if(userData.exp >= (5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100)) {
-                userData.exp -= 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
-                userData.level += 1;
-                interaction.channel.send(
-                    `:black_medium_small_square:
-<@${user.id}> повысил уровень активности до ${userData.level} уровня! :tada:
-:black_medium_small_square:`);
-                }
-                userData.save();
+            userData.totalexp += act_exp[i_act].act_amount
             //Список предметов
             let loot1 = [
                 {
@@ -333,6 +326,14 @@ components: [boxesk]
                     await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error);
                     interaction.guild.channels.cache.get(process.env.temp_channel).send(`<t:${timestamp + 608000}:f> (<t:${timestamp + 608000}:R>) - <@${opener}> - убрать \`${loot1[i_loot1].loot1_name}\`.`);
                     await r_loot_msg.react("✅")
+                    const tempItems = new Temp({
+                        userid: user.id,
+                        guildid: interaction.guild.id,
+                        roleid: loot1[i_loot1].loot1_roleID,
+                        expire: Date.now() + (1000 * 60 * 60 * 24 * 7)
+                    })
+                    tempItems.save()
+
                 } else if (loot1[i_loot1].loot1_name == `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
                     interaction.guild.channels.cache.get(process.env.box_channel).send(`<@491343958660874242> - Необходимо выдать роль <@${opener}> - <t:${timestamp}:f>`);
                     await r_loot_msg.react("🕓")
@@ -400,7 +401,6 @@ ${loot2[i_loot2].loot2_description}`,
                             }
                         })
                         .catch(async (err) => {
-                            console.log(err)
                             await boxesk.components[0]
                                 .setDisabled(true)
                                 .setStyle(ButtonStyle.Secondary)
@@ -421,7 +421,7 @@ ${loot2[i_loot2].loot2_description}`,
                             })
                         });
 
-
+            userData.save();
             console.log(chalk.magentaBright(`[${interaction.user.tag} открыл королевскую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, ${loot1[i_loot1].loot1_name} и ${loot2[i_loot2].loot2_name}`))
 
         } else {

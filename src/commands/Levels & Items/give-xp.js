@@ -41,18 +41,6 @@ module.exports = {
             case `Опыт активности`: {
                 userData.exp += interaction.options.getNumber(`количество`);
                 userData.totalexp += interaction.options.getNumber(`количество`);
-                const levelbefore = userData.level;
-
-            while(userData.exp >= (5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100)) {
-                userData.exp -= 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
-                userData.level += 1;
-            }
-            if (levelbefore < userData.level) {
-                interaction.channel.send(
-                    `:black_medium_small_square:
-<@${user.id}> повысил уровень активности до ${userData.level} уровня! :tada:
-:black_medium_small_square:`);
-                }
                 userData.save();
                 interaction.reply(`Выдано ${interaction.options.getNumber(`количество`)}🌀 пользователю ${user}!`)
                 console.log(chalk.green(`[${user.username} получил опыт активности]`) + chalk.gray(`: Теперь у него ${userData.exp} опыта и ${userData.level} уровень.`))

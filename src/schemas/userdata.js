@@ -2,6 +2,17 @@ const mongoose = require(`mongoose`);
 
 const User = new mongoose.Schema({
     id: { type: String, unique: true, required: true },
+    guildid: { type: String, default: `320193302844669959` },
+    displayname: { 
+        rank: { type: String, default: `🦋` },
+        name: { type: String },
+        ramka1: { type: String, default: `` },
+        ramka2: { type: String, default: `` },
+        symbol: { type: String, default: `👤` },
+        premium: { type: String, default: `` },
+        suffix: { type: String, default: `` }
+
+    },
     name: { type: String  },
     nickname: { type: String, },
     uuid: {type: String, },
@@ -14,6 +25,7 @@ const User = new mongoose.Schema({
     gexp: { type: Number, default: 0},
     tickets: { type: Number, default: 0},
     cooldowns: {
+
         daily: { type: Date, default: Date.now() },
         weekly: { type: Date, default: Date.now() },
         monthly: { type: Date, default: Date.now() },

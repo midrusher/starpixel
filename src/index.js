@@ -43,9 +43,16 @@ for (const folder of functionFolders) {
 client.handleEvents();
 client.handleCommands();
 client.handleComponents();
+
 client.temp_roles();
 client.rank_update();
-client.act_update()
+client.act_add();
+client.act_remove();
+
+client.updatenicks();
+client.haspremium();
+
+
 client.login(token);
 (async () => {
     await connect(databaseToken).catch(console.error)

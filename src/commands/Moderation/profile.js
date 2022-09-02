@@ -20,6 +20,11 @@ module.exports = {
                 .setRequired(true)
             )
             .addStringOption(option => option
+                .setName(`имя`)
+                .setDescription(`Реальное имя пользователя`)
+                .setRequired(true)
+            )
+            .addStringOption(option => option
                 .setName(`никнейм`)
                 .setDescription(`Никнейм в Minecraft`)
                 .setRequired(true)
@@ -33,15 +38,17 @@ module.exports = {
             .setName(`delete`)
             .setDescription(`Удалить профиль игрока`)
             .addStringOption(option => option
-                .setName(`uuid`)
-                .setDescription(`UUID в Minecraft`)
+                .setName(`id`)
+                .setDescription(`ID в Discord`)
                 .setRequired(true)
             )
         ),
     async execute(interaction, client) {
         switch (interaction.options.getSubcommand()) {
             case `create`: {
+                const realname = interaction.options.getString(`имя`)
                 const user = interaction.options.getUser(`пользователь`)
+                const playername = interaction.options.getString(`никнейм`)
                 if (!interaction.member.roles.cache.has(`320880176416161802`)) {
                     const embed = new EmbedBuilder()
                         .setAuthor({
@@ -62,9 +69,7 @@ module.exports = {
 
                     const userData = new User({ id: user.id, name: user.username })
                     const creator = await User.findOne({ id: interaction.member.user.id }) || new User({ id: interaction.member.user.id, name: interaction.member.user.username })
-                    creator.uuid = `63f605cf68fa4d6f94fabfc4203e4d22`
-                    creator.nickname = `Doggo_leader`
-                    creator.security_code = `Derjhthjegrt349578384`
+
                     if (creator.cooldowns.prof_create > Date.now()) return interaction.reply({
                         embeds: [
                             new EmbedBuilder()
@@ -79,9 +84,6 @@ module.exports = {
                         ephemeral: true
                     });
                     const memberDM = await interaction.guild.members.fetch(user.id)
-
-                    const playername = interaction.options.getString(`никнейм`)
-
 
                     let response = await fetch(`https://api.hypixel.net/player?key=${api}&name=${playername}`)
                     if (response.ok) {
@@ -108,51 +110,52 @@ module.exports = {
                     }
 
 
-                    const n1 = [`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`, `M`, `N`, `O`, `P`, `Q`, `R`, `S`, `T`, `U`, `V`, `W`, `X`, `Y`, `Z`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`, `j`, `k`, `l`, `m`, `n`, `o`, `p`, `q`, `r`, `s`, `t`, `u`, `v`, `w`, `x`, `y`, `z`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`]
-                    let r1 = n1[Math.floor(Math.random() * n1.length)]
-                    let r2 = n1[Math.floor(Math.random() * n1.length)]
-                    let r3 = n1[Math.floor(Math.random() * n1.length)]
-                    let r4 = n1[Math.floor(Math.random() * n1.length)]
-                    let r5 = n1[Math.floor(Math.random() * n1.length)]
-                    let r6 = n1[Math.floor(Math.random() * n1.length)]
-                    let r7 = n1[Math.floor(Math.random() * n1.length)]
-                    let r8 = n1[Math.floor(Math.random() * n1.length)]
-                    let r9 = n1[Math.floor(Math.random() * n1.length)]
+                    userData.displayname.name = realname
 
+                    const roles = [
+                        `553593731953983498`,
+                        `504887113649750016`,
+                        `721047643370815599`,
+                        `702540345749143661`,
+                        `746440976377184388`,
+                        `722523773961633927`,
+                        `849533128871641119`,
+                        `709753395417972746`,
+                        `722533819839938572`,
+                        `722523856211935243`,
+                    ]
+                    const randombox = [
+                        `819930814388240385`,
+                        `510932601721192458`,
+                        `521248091853291540`,
+                        `584673040470769667`,
+                        `893932177799135253`,
+                        `925799156679856240`,
+                        `1007718117809606736`,
+                        `992820494900412456`
+                    ]
+                    let rloot1 = randombox[Math.floor(Math.random() * randombox.length)];
+                    memberDM.roles.add(roles).catch()
+                    memberDM.roles.add(rloot1).catch()
+                    memberDM.roles.remove(`920346035811917825`).catch()
 
-                    const code = `${r1}${r2}${r3}${r4}${r5}${r6}${r7}${r8}${r9}`
-
-
-
-                    try {
-                        userData.security_code = code;
-                        userData.markModified(`code`)
-                        await memberDM.send(`Ваш код безопасности в гильдии Starpixel: ${code}
-Он может пригодиться вам, если с вашим аккаунтом что-либо случится, а также если вам нужна будет поддержка, связанная с изменением вашего аккаунта. 
-❔ Если вы потеряете код, вы можете создать новый код, если пропишите команду \`/code new\`
-❗ **Никому не сообщайте этот код!** Если вам потребуется использовать код, пропишите команду \`/code use\`.`)
-
-                    } catch (error) {
-                        User.deleteOne({ id: user.id });
-                        await interaction.reply({
-                            content: `У пользователя ${user} закрыты личные сообщения! Попросите его открыть их и повторите попытку снова!`,
-                            ephemeral: true
-                        });
-                        return;
-                    }
                     creator.save()
                     userData.save()
+                    memberDM.setNickname(`「${userData.displayname.rank}」 ${userData.displayname.ramka1}${userData.displayname.name}${userData.displayname.ramka2}${userData.displayname.suffix} ${userData.displayname.symbol}┇ ${userData.displayname.premium}`)
                     const success = new EmbedBuilder()
                         .setAuthor({
                             name: `Профиль успешно создан!`
                         })
                         .setColor(process.env.bot_color)
-                        .setDescription(`Профиль пользователя ${interaction.options.getUser(`пользователь`)} (${userData.nickname}) был успешно создан. Код безопасности был отправлен пользователю в личные сообщения.`)
+                        .setDescription(`Профиль пользователя ${interaction.options.getUser(`пользователь`)} (${userData.nickname}) был успешно создан.`)
                         .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
                         .setTimestamp(Date.now())
 
                     interaction.reply({
                         embeds: [success]
+                    })
+                    await interaction.guild.channels.cache.get(process.env.test_channel).send({
+                        content: `Профиль пользователя ${interaction.options.getUser(`пользователь`)} (${userData.nickname}) был успешно создан. Необходимые роли были добавлены. Случайный приветственный подарок был получен. Никнейм будет в скором времени автоматически установлен!`
                     })
                     console.log(chalk.cyan(`[База данных]`) + chalk.gray(`: Профиль пользователя ${userData.name} (${userData.nickname}) был успешно создан!`))
 
@@ -259,8 +262,9 @@ module.exports = {
                 break;
 
             case `delete`: {
-                const uuid = interaction.options.getString(`uuid`)
-                const userData = await User.findOne({ uuid: uuid })
+                const id = interaction.options.getString(`id`)
+                const user = interaction.guild.members.cache.get(id)
+                const userData = await User.findOne({ id: id })
                 if (!interaction.member.roles.cache.has(`320880176416161802`)) {
                     const embed = new EmbedBuilder()
                         .setAuthor({
@@ -288,38 +292,12 @@ module.exports = {
                         )
                     const delete_embed = new EmbedBuilder()
                         .setColor(`DarkRed`)
-                        .setTitle(`Вы действительно хотите удалить профиль пользователя ${userData.name}?`)
+                        .setTitle(`Вы действительно хотите удалить профиль пользователя ${user.username}?`)
                         .setDescription(`**Это действие необратимо!**
 Проверьте, тот ли профиль вы хотите удалить? Если игрок сейчас находится в гильдии, удалять его профиль **ЗАПРЕЩЕНО**! Если игрок покинул гильдию, то нажмите в течение __10 секунд__ на кнопку ниже, чтобы удалить профиль.
 
 Пользователь потеряет следующую информацию:
 \`Румбики, опыт рангов, опыт и уровень активности, накопленный опыт гильдии, билеты и умения!\``)
-                        .addFields(
-                            {
-                                name: `ПРОВЕРЬТЕ, ТОГО ЛИ ПОЛЬЗОВАТЕЛЯ ВЫ СОБИРАЕТЕСЬ УДАЛИТЬ`,
-                                value: `\u200b`,
-                                inline: false
-                            },
-                            {
-                                name: `Имя пользователя в Discord`,
-                                value: `${userData.name} (<@${userData.id}>)`,
-                                inline: true
-                            },
-                            {
-                                name: `ID пользователя в Discord`,
-                                value: `${userData.id}`,
-                                inline: true
-                            },
-                            {
-                                name: `Никнейм в Minecraft`,
-                                value: `${userData.nickname}`,
-                                inline: true
-                            },
-                            {
-                                name: `UUID в Minecraft`,
-                                value: `${userData.uuid}`,
-                                inline: true
-                            })
                         .setFooter({ text: `Чтобы подтвердить действие, нажмите кнопку 🚫 Удалить в течение 10 секунд.` })
                     interaction.reply({
                         embeds: [delete_embed],
@@ -341,7 +319,7 @@ module.exports = {
                                     components: [delete_button]
                                 })
                                 userData.deleteOne({ id: userData.id })
-                                
+
                             } else {
                                 i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
                             }

@@ -6,7 +6,7 @@ const Guild = new mongoose.Schema({
     secret_word: { 
         name: { type: String },
         hint: { type: String }
-    }
+    },
 
 })
 

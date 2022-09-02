@@ -15,7 +15,7 @@ module.exports = (client) => {
                     result.delete()
                 } else if (member.roles.cache.has(roleid)) {
                     member.roles.remove(roleid)
-                    console.log(chalk.manegta(`[УДАЛЕНЫ ВРЕМЕННЫЕ РОЛИ]`) + chalk.gray(`: Временные роли у пользователей ${results.count() }`))
+                    console.log(chalk.magenta(`[УДАЛЕНЫ ВРЕМЕННЫЕ РОЛИ]`) + chalk.gray(`: Временные роли у пользователей удалены!`))
                     result.delete()
                 } else {
                     console.log(chalk.red(`[ОШИБКА В temp_roles.js]`) + chalk.gray(`: Произошла непредвиденная ошибка.`))

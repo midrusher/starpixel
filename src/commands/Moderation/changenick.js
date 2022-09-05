@@ -48,7 +48,7 @@ module.exports = {
     },
     async execute(interaction, client) {
         const user = interaction.options.getUser(`пользователь`)
-        const userData = await User.findOne({ id: user.id })
+        const userData = await User.findOne({ userid: user.id })
 
 
         const newoption = interaction.options.getString(`значение`) || ``

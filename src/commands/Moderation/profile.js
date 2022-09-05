@@ -42,6 +42,10 @@ module.exports = {
                 .setDescription(`ID в Discord`)
                 .setRequired(true)
             )
+        )
+        .addSubcommand(subcommand => subcommand
+            .setName(`reset`)
+            .setDescription(`Сбросить свой профиль (Владыка+)`)
         ),
     async execute(interaction, client) {
         switch (interaction.options.getSubcommand()) {
@@ -67,8 +71,8 @@ module.exports = {
                 }
                 else if (interaction.member.roles.cache.has(`320880176416161802`)) {
 
-                    const userData = new User({ id: user.id, name: user.username })
-                    const creator = await User.findOne({ id: interaction.member.user.id }) || new User({ id: interaction.member.user.id, name: interaction.member.user.username })
+                    const userData = new User({ userid: user.id, name: user.username })
+                    const creator = await User.findOne({ userid: interaction.member.user.id }) || new User({ userid: interaction.member.user.id, name: interaction.member.user.username })
 
                     if (creator.cooldowns.prof_create > Date.now()) return interaction.reply({
                         embeds: [
@@ -165,7 +169,7 @@ module.exports = {
                 break;
             case `update`: {
                 const user = interaction.member.user;
-                const userData = await User.findOne({ id: user.id });
+                const userData = await User.findOne({ userid: user.id });
                 if (userData.cooldowns.prof_update > Date.now()) return interaction.reply({
                     embeds: [new EmbedBuilder()
                         .setAuthor({
@@ -292,7 +296,7 @@ module.exports = {
                         )
                     const delete_embed = new EmbedBuilder()
                         .setColor(`DarkRed`)
-                        .setTitle(`Вы действительно хотите удалить профиль пользователя ${user.username}?`)
+                        .setTitle(`Вы действительно хотите удалить профиль пользователя ${userData.name}?`)
                         .setDescription(`**Это действие необратимо!**
 Проверьте, тот ли профиль вы хотите удалить? Если игрок сейчас находится в гильдии, удалять его профиль **ЗАПРЕЩЕНО**! Если игрок покинул гильдию, то нажмите в течение __10 секунд__ на кнопку ниже, чтобы удалить профиль.
 
@@ -345,6 +349,168 @@ module.exports = {
                         });
 
                 }
+            }
+                break;
+
+            case `reset`: {
+                const user = interaction.member
+                const no_role = new EmbedBuilder()
+                    .setAuthor({
+                        name: `❗ Отсутствует необходимая роль!`
+                    })
+                    .setDescription(`Вы должны иметь роль \`${interaction.guild.roles.cache.get(`849695880688173087`).name}\` или выше, чтобы использовать это!
+Но вы всё ещё можете использовать команду \`/profile update\``)
+                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                    .setColor(`DarkRed`)
+                    .setTimestamp(Date.now())
+                if (!user.roles.cache.has(`849695880688173087`) && !user.roles.cache.has(`992122876394225814`) && !user.roles.cache.has(`992123014831419472`) && !user.roles.cache.has(`992123019793276961`)) return interaction.reply({
+                    embeds: [no_role],
+                    ephemeral: true
+                });
+                await interaction.deferReply({
+                    fetchReply: true
+                })
+                const userDataRolesClear = await User.findOneAndUpdate({ userid: user.id }, {
+                    $set: {
+                        roles: []
+                    }
+                })
+                userDataRolesClear.save()
+                await interaction.deleteReply()
+                const exceptions = [`567689925143822346`, `883617976790700032`, `883617966174896139`, `320880176416161802`, `563793535250464809`, `504887113649750016`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `660236704971489310`, `740241985155366973`, `730891493375475786`, `764198086738051092`, `856866046387683338`, `849533128871641119`, `584811233035681814`, `584811236085071882`, `584811238178029612`, `584811238626689024`, `610131860445724713`, `584811242498293781`, `584811242703552512`, `584811243496275988`, `584811243794202626`, `584811380117471252`, `585175150501036043`, `585175165315579904`, `585175168251592714`, `585175171154051083`, `610133244393816074`, `610133972034387983`, `585175188187119638`, `610131863683465246`, `610131866963673118`, `610131868045672615`, `610132199848804379`, `610132217204572190`, `694914070632988712`, `694914070746234970`, `694914072960958555`, `694914074630422555`, `694914073376194740`, `694914074550468758`, `694914075460894791`, `697796942134116382`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `850336260265476096`]
+                let i = 0
+
+                for (let exception of exceptions) {
+
+                    exception = exceptions[i]
+                    if (user.roles.cache.has(exception)) {
+                        const userDataUpd = await User.findOneAndUpdate({
+                            userid: user.id
+                        }, {
+                            $push: {
+                                roles: exception
+                            }
+                        })
+                        userDataUpd.save()
+
+                        console.log(chalk.red(`[СБРОС ПРОФИЛЯ]`) + chalk.gray(`: ${user.user.username} сохранил роль ${exception}!`))
+                        i++
+                    } else {
+                        console.log(chalk.red(`[СБРОС ПРОФИЛЯ]`) + chalk.gray(`: ${user.user.username} не имеет роль ${exception}!`))
+                        i++
+                    }
+                }
+
+                await interaction.guild.members.edit(user, {
+                    roles: [`930520087797051452`, `553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`]
+                })
+                const userData = await User.findOne({ userid: user.id })
+
+                userData.rank = 0
+                userData.rumbik = 0
+
+                userData.elements.diving = 0
+                userData.elements.eagle_eye = 0
+                userData.elements.fast_grow = 0
+                userData.elements.fire_resistance = 0
+                userData.elements.flame = 0
+                userData.elements.flying = 0
+                userData.elements.lightning = 0
+                userData.elements.mountains = 0
+                userData.elements.resistance = 0
+                userData.elements.respiration = 0
+                userData.elements.underground = 0
+                userData.elements.wind = 0
+
+                userData.displayname.ramka1 = ``
+                userData.displayname.ramka2 = ``
+                userData.displayname.suffix = ``
+                userData.displayname.rank = `🦋`
+                userData.displayname.symbol = `👤`
+
+                userData.gexp = 0
+                userData.tickets = 0
+
+                userData.perks.act_discount = 0
+                userData.perks.change_items = 0
+                userData.perks.king_discount = 0
+                userData.perks.rank_boost = 0
+                userData.perks.sell_items = 0
+                userData.perks.shop_discount = 0
+                userData.perks.temp_items = 0
+                userData.perks.ticket_discount = 0
+                userData.save()
+                
+                const back_roles = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`back_roles`)
+                            .setEmoji(`⚜`)
+                            .setLabel(`Вернуть сохранённые роли`)
+                            .setStyle(ButtonStyle.Primary)
+                    )
+
+                const msg = await interaction.guild.channels.cache.get(process.env.main_channel).send({
+                    content: `:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:
+
+:tada: ${user} решил сбросить свою статистику и начать развитие в Дискорде гильдии **заново**!           
+Его ждут крутые награды и новые задания. Пожелаем ему удачи!
+
+:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:`,
+                    components: [back_roles]
+                })
+
+                const filter = i => i.customId === 'back_roles';
+
+                msg.awaitMessageComponent({ filter, componentType: ComponentType.Button, time: 3600000 })
+                    .then(async (i) => {
+                        if (i.user.id === interaction.member.user.id) {
+                            const roles = userData.roles
+                            await i.member.roles.add(roles).catch()
+
+                            back_roles.components[0].setDisabled(true)
+                            i.reply({
+                                content: `Вы успешно вернули свои роли!`,
+                                ephemeral: true
+                            })
+                            console.log(chalk.cyan(`[СБРОС ПРОФИЛЯ]`) + chalk.gray(`: ${user.user.username} успешно вернул сохранённые роли!`))
+                            msg.edit({
+                                content: `:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:
+
+:tada: ${user} решил сбросить свою статистику и начать развитие в Дискорде гильдии **заново**!           
+Его ждут крутые награды и новые задания. Пожелаем ему удачи!
+
+:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:`,
+                                components: [back_roles]
+                            })
+
+
+                        } else {
+                            i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
+                        }
+                    })
+                    .catch(async (err) => {
+                        await back_roles.components[0]
+                            .setDisabled(true)
+                            .setLabel(`Роли потеряны!`)
+                            .setStyle(ButtonStyle.Danger)
+
+                        await i.reply({
+                            content: `${user} не нажал на кнопочку вовремя!
+Вы все ещё можете вернуть свои роли, однако вам необходимо обратиться в вопрос-модерам. Помните, что возвращение ролей вручную может занять до 3-х дней!`
+                        })
+                        await msg.edit({
+                            content: `:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:
+
+:tada: ${user} решил сбросить свою статистику и начать развитие в Дискорде гильдии **заново**!           
+Его ждут крутые награды и новые задания. Пожелаем ему удачи!
+
+:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:`,
+                            components: [back_roles]
+                        })
+
+                        console.log(chalk.cyan(`[СБРОС ПРОФИЛЯ]`) + chalk.gray(`: ${user.user.id} потерял свои роли! Возможно, вскоре будет обращение в вопрос модерам!`))
+                    });
             }
                 break;
             default:

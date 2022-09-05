@@ -9,7 +9,7 @@ module.exports = {
         .setDescription(`Открыть сокровища.`), //Описание команды
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
-        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
         const message = await interaction.deferReply({
             fetchReply: true,
         });
@@ -90,31 +90,31 @@ module.exports = {
                 },
                 {
                     loot2_name: `МИФИЧЕСКАЯ 🐉 КАРТИНКА /dragon`,
-                    dropChanceLOOT1: 1,
+                    dropChanceLOOT2: 1,
                     loot2_roleID: "694914077104799764",
                     loot2_description: "Используй её, чтобы разнообразить чат."
                 },
                 {
                     loot2_name: `МИФИЧЕСКАЯ ЭМОЦИЯ 🥺 /pls`,
-                    dropChanceLOOT1: 4,
+                    dropChanceLOOT2: 4,
                     loot2_roleID: "607495941490212885",
                     loot2_description: "Используй её, чтобы лучше показать свои эмоции в чате."
                 },
                 {
                     loot2_name: `МИФИЧЕСКАЯ ЭМОЦИЯ 🥳 /party`,
-                    dropChanceLOOT1: 4,
+                    dropChanceLOOT2: 4,
                     loot2_roleID: "694221126494060604",
                     loot2_description: "Используй её, чтобы лучше показать свои эмоции в чате."
                 },
                 {
                     loot2_name: `МИФИЧЕСКАЯ ЭМОЦИЯ 😎 /cool`,
-                    dropChanceLOOT1: 4,
+                    dropChanceLOOT2: 4,
                     loot2_roleID: "740241984190545971",
                     loot2_description: "Используй её, чтобы лучше показать свои эмоции в чате."
                 },
                 {
                     loot2_name: `🐲 ПИТОМЕЦ /mpet`,
-                    dropChanceLOOT1: 3,
+                    dropChanceLOOT2: 3,
                     loot2_roleID: "605696079819964426",
                     loot2_description: "Обучайся различным навыкам у питомцев."
                 },
@@ -135,78 +135,104 @@ module.exports = {
             //Отправка сообщения о луте              
             const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
                 .send(
-`◾:rosette:◾
+                    `◾:rosette:◾
 <@${opener}> открывает сокровище гильдии.
 ▛▀▀▀▀▀▜ ■ ▛▀▀▀▀▀▜ ■ ▛▀▀▀▀▀▜
 \`${loot2[i_loot2].loot2_name}\`
 ${loot2[i_loot2].loot2_description}
 ▙▄▄▄▄▄▟ ■ ▙▄▄▄▄▄▟■ ▙▄▄▄▄▄▟
 ◾:rosette:◾`)
-if (!roles.cache.has(loot2[i_loot2].loot2_roleID)) {
-    if (loot2[i_loot2].loot2_name == `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
-    interaction.guild.channels.cache.get(process.env.box_channel).send(`<@491343958660874242> - Необходимо выдать роль \`${loot2[i_loot2].loot2_name}\` пользователю <@${opener}> - <t:${timestamp}:f>`);
-    await r_loot_msg.react("🕓")
-} else {
-    await roles.add(loot2[i_loot2].loot2_roleID).catch(console.error);
-    await r_loot_msg.react("✅")
-}
-}  else {
-if (loot2[i_loot2].loot2_name == `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
-    interaction.guild.channels.cache.get(process.env.box_channel).send(`<@491343958660874242> - Необходимо выдать роль <@${opener}> - <t:${timestamp}:f>`);
-    //- <t:${interaction.createdTimestamp}:f>
-    await r_loot_msg.react("🕓")
-} else {
- await r_loot_msg.react("🚫")
-}
-};
+                    if ((!roles.cache.has(`553593136895623208`) && !roles.cache.has(`553593133884112900`) && !roles.cache.has(`553593136027533313`) && !roles.cache.has(`553593976037310489`) && !roles.cache.has(`780487593485008946`) && !roles.cache.has(`849695880688173087`) && !roles.cache.has(`992122876394225814`) && !roles.cache.has(`992123014831419472`) && !roles.cache.has(`992123019793276961`)) && (loot2[i_loot2].loot2_name == `🪐 ᅠМЕРКУРИЙ` || loot2[i_loot2].loot2_name == `🪐 ᅠВЕНЕРА` || loot2[i_loot2].loot2_name == `🪐 ᅠЛУНА` || loot2[i_loot2].loot2_name == `🪐 ᅠМАРС` || loot2[i_loot2].loot2_name == `🪐 ᅠЮПИТЕР` || loot2[i_loot2].loot2_name == `🪐 ᅠСАТУРН` || loot2[i_loot2].loot2_name == `🪐 ᅠУРАН` || loot2[i_loot2].loot2_name == `🪐 ᅠНЕПТУН` || loot2[i_loot2].loot2_name == `🪐 ᅠПЛУТОН`)) {
+                        r_loot_msg.react("🚫")
+                        r_loot_msg.reply({
+                            content: `Вы должны иметь ранг \`${interaction.guild.roles.cache.get(`553593136895623208`).name}\` или выше, чтобы получить данный предмет!`
+                        })
+                    }
 
-//Румбики (если необходимо)
-let rumbik = [
-    {
-        rumb_amount: 10,
-        dropChanceRUMB: 49
-    },
-    {
-        rumb_amount: 15,
-        dropChanceRUMB: 33
-    },
-    {
-        rumb_amount: 20,
-        dropChanceRUMB: 17
-    },
-    {
-        rumb_amount: 30,
-        dropChanceRUMB: 1
-    },
+            else if (!roles.cache.has(loot2[i_loot2].loot2_roleID) && loot2[i_loot2].loot2_name !== `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
 
-]
+                await roles.add(loot2[i_loot2].loot2_roleID).catch(console.error);
+                await r_loot_msg.react("✅")
 
-//Рандом - румбики
-let sum_rumb = 0;
-for (let i_rumb = 0; i_rumb < rumbik.length; i_rumb++) {
-    sum_rumb += rumbik[i_rumb].dropChanceRUMB;
-}
-let r_rumbik = Math.floor(Math.random() * sum_rumb);
-let i_rumb = 0;
-for (let s = rumbik[0].dropChanceRUMB; s <= r_rumbik; s += rumbik[i_rumb].dropChanceRUMB) {
-    i_rumb++;
-}
+            } else if (loot1[i_loot1].loot1_name == `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
 
-//Сообщение - румбики                       
-interaction.guild.channels.cache.get(process.env.rumb_channel).send(
-`╔═════════♡════════╗
+                if (!roles.cache.has(`609085186738618395`)) {
+                    await roles.add(`609085186738618395`).catch()
+                    await r_loot_msg.react("✅")
+                }
+
+                else if (!roles.cache.has(`609086542681604142`)) {
+                    await roles.add(`609086542681604142`).catch()
+                    await r_loot_msg.react("✅")
+                }
+
+                else if (!roles.cache.has(`781069819838464022`)) {
+                    await roles.add(`781069819838464022`).catch()
+                    await r_loot_msg.react("✅")
+                }
+
+                else if (!roles.cache.has(`785252400608182282`)) {
+                    await roles.add(`785252400608182282`).catch()
+                    await r_loot_msg.react("✅")
+                }
+
+                else if (!roles.cache.has(`781069820053160006`)) {
+                    await roles.add(`781069820053160006`).catch()
+                    await r_loot_msg.react("✅")
+                }
+
+                else r_loot_msg.react("🚫")
+            } else {
+                await r_loot_msg.react("🚫")
+            };
+
+            //Румбики (если необходимо)
+            let rumbik = [
+                {
+                    rumb_amount: 10,
+                    dropChanceRUMB: 49
+                },
+                {
+                    rumb_amount: 15,
+                    dropChanceRUMB: 33
+                },
+                {
+                    rumb_amount: 20,
+                    dropChanceRUMB: 17
+                },
+                {
+                    rumb_amount: 30,
+                    dropChanceRUMB: 1
+                },
+
+            ]
+
+            //Рандом - румбики
+            let sum_rumb = 0;
+            for (let i_rumb = 0; i_rumb < rumbik.length; i_rumb++) {
+                sum_rumb += rumbik[i_rumb].dropChanceRUMB;
+            }
+            let r_rumbik = Math.floor(Math.random() * sum_rumb);
+            let i_rumb = 0;
+            for (let s = rumbik[0].dropChanceRUMB; s <= r_rumbik; s += rumbik[i_rumb].dropChanceRUMB) {
+                i_rumb++;
+            }
+
+            //Сообщение - румбики                       
+            interaction.guild.channels.cache.get(process.env.rumb_channel).send(
+                `╔═════════♡════════╗
 <@${opener}> +${rumbik[i_rumb].rumb_amount}<:Rumbik:883638847056003072>
 \`Получено из сокровища.\`
 ╚═════════♡════════╝`
-);
+            );
 
-if (roles.cache.has("553593133884112900") || roles.cache.has("553593136027533313") ||
-            roles.cache.has("553593976037310489") || roles.cache.has("780487593485008946") || 
-            roles.cache.has("849695880688173087") || roles.cache.has("992122876394225814") || 
-            roles.cache.has("992123014831419472") || roles.cache.has("992123019793276961")) {
+            if (roles.cache.has("553593133884112900") || roles.cache.has("553593136027533313") ||
+                roles.cache.has("553593976037310489") || roles.cache.has("780487593485008946") ||
+                roles.cache.has("849695880688173087") || roles.cache.has("992122876394225814") ||
+                roles.cache.has("992123014831419472") || roles.cache.has("992123019793276961")) {
                 userData.rumbik += rumbik[i_rumb].rumb_amount
             } else {
-                
+
                 userData.rumbik += 0
             }
             //Опыт рангов (если необходимо)
@@ -243,7 +269,7 @@ if (roles.cache.has("553593133884112900") || roles.cache.has("553593136027533313
 
             //Сообщение - опыт рангов                       
             interaction.guild.channels.cache.get(process.env.rank_channel).send(
-`╔═════════♡════════╗
+                `╔═════════♡════════╗
 <@${opener}> +${rank_exp[i_rank].rank_amount}💠
 \`Получено из сокровища.\`
 ╚═════════♡════════╝`
@@ -292,18 +318,18 @@ if (roles.cache.has("553593133884112900") || roles.cache.has("553593136027533313
 
             //Сообщение - опыт активности                       
             interaction.guild.channels.cache.get(process.env.act_channel).send(
-`╔═════════♡════════╗
+                `╔═════════♡════════╗
 <@${opener}> +${act_exp[i_act].act_amount}🌀
 \`Получено из сокровища.\`
 ╚═════════♡════════╝`
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
             userData.totalexp += act_exp[i_act].act_amount
-            
-                userData.save();
 
-                console.log(chalk.magentaBright(`[${interaction.user.tag} открыл сокровище]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} и ${loot2[i_loot2].loot2_name}`))
-            
+            userData.save();
+
+            console.log(chalk.magentaBright(`[${interaction.user.tag} открыл сокровище]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} и ${loot2[i_loot2].loot2_name}`))
+
         } else {
             await interaction.editReply({
                 content: `У вас отсутствует \`${role.name}\` коробка!`

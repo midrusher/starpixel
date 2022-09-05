@@ -1,4 +1,5 @@
 require('dotenv').config();
+const winston = require('winston');
 const { tokenTEST, token, databaseToken } = process.env;
 const { connect } = require(`mongoose`)
 const { Client, Collection, GatewayIntentBits, Partials, ActivityType, } = require('discord.js');
@@ -16,7 +17,7 @@ const client = new Client({
         Partials.User
     ],
     presence: {
-        status: `online`,
+        status: `dnd`,
         activities: [{
             type: ActivityType.Competing,
             name: `слежке за участниками гильдии Starpixel!`,
@@ -52,6 +53,7 @@ client.act_remove();
 client.updatenicks();
 client.haspremium();
 
+client.wish_birthday();
 
 client.login(token);
 (async () => {

@@ -10,7 +10,7 @@ module.exports = {
         .setDescription(`Открыть большую коробку.`), //Описание команды
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
-        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
 
         const message = await interaction.deferReply({
             fetchReply: true,
@@ -489,7 +489,7 @@ ${loot2[i_loot2].loot2_description}
                                     userData.displayname.ramka1 = loot2[i_loot2].symbol
                                     userData.displayname.ramka2 = loot2[i_loot2].symbol
                                     userData.save()
-                                } else return i.reply({
+                                } else i.reply({
                                     content: `Вы не можете установить себе данный предмет, так как не получили минимальный ранг. Посмотреть минимальный ранг для данного действия вы можете в канале <#931620901882068992>!`
                                 })
                                 await boxes.components[0]

@@ -11,7 +11,7 @@ module.exports = {
         .setDescription(`Открыть королевскую коробку.`), //Описание команды
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
-        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
         const message = await interaction.deferReply({
             fetchReply: true,
         });
@@ -181,7 +181,7 @@ module.exports = {
                 },
                 {
                     loot1_name: `💳 Подписка VIP на 7 дней`,
-                    dropChanceLOOT1: 1000000,
+                    dropChanceLOOT1: 1,
                     loot1_roleID: "850336260265476096",
                     loot1_description: "Вы получаете дополнительные привилегии."
                 }
@@ -323,8 +323,8 @@ module.exports = {
                     .setLabel('Установить')
                     .setStyle(ButtonStyle.Success)
                     .setEmoji(`⬆️`)
-                )
-                    
+            )
+
             const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
                 .send({
                     content: `◾ :crown: ◾
@@ -336,89 +336,81 @@ ${loot1[i_loot1].loot1_description}.
 ◾ :crown: ◾
 Дополнительная косметическая награда из королевской коробки: \`${loot2[i_loot2].loot2_name}\`
 ${loot2[i_loot2].loot2_description}`,
-components: [boxesk]
-});
-            if (!roles.cache.has(loot1[i_loot1].loot1_roleID)) {
+                    components: [boxesk]
+                });
+            if (!roles.cache.has(loot1[i_loot1].loot1_roleID) && loot1[i_loot1].loot1_name !== `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
                 if (loot1[i_loot1].loot1_name == `💳 Подписка VIP на 7 дней`) {
-                    await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error);
-                    interaction.guild.channels.cache.get(process.env.temp_channel).send(`<t:${timestamp + 608000}:f> (<t:${timestamp + 608000}:R>) - <@${opener}> - убрать \`${loot1[i_loot1].loot1_name}\`.`);
+                    await roles.add(loot1[i_loot1].loot1_roleID).catch();
                     await r_loot_msg.react("✅")
                     const tempItems = new Temp({
                         userid: user.id,
                         guildid: interaction.guild.id,
                         roleid: loot1[i_loot1].loot1_roleID,
-                        expire: Date.now() + (1000 * 60)
+                        expire: Date.now() + (1000 * 60 * 60 * 24 * 7)
                     })
                     tempItems.save()
 
-                } else if (loot1[i_loot1].loot1_name == `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
-                    interaction.guild.channels.cache.get(process.env.box_channel).send(`<@491343958660874242> - Необходимо выдать роль <@${opener}> - <t:${timestamp}:f>`);
-                    await r_loot_msg.react("🕓")
                 } else {
                     await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error);
                     await r_loot_msg.react("✅")
                 }
-            } else {
-                if (loot1[i_loot1].loot1_name == `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
-                    interaction.guild.channels.cache.get(process.env.box_channel).send(`<@491343958660874242> - Необходимо выдать роль <@${opener}> - <t:${timestamp}:f>`);
-                    //- <t:${interaction.createdTimestamp}:f>
-                    await r_loot_msg.react("🕓")
-                } else {
-                    await r_loot_msg.react("🚫")
+            } else if (loot1[i_loot1].loot1_name == `💫 КОСМИЧЕСКАЯ ПЫЛЬ`) {
+
+                if (!roles.cache.has(`609085186738618395`)) {
+                    await roles.add(`609085186738618395`).catch()
+                    await r_loot_msg.react("✅")
+                } 
+                
+                else if (!roles.cache.has(`609086542681604142`)) {
+                    await roles.add(`609086542681604142`).catch()
+                    await r_loot_msg.react("✅")
+                } 
+                
+                else if (!roles.cache.has(`781069819838464022`)) {
+                    await roles.add(`781069819838464022`).catch()
+                    await r_loot_msg.react("✅")
                 }
-            };
+                
+                else if (!roles.cache.has(`785252400608182282`)) {
+                    await roles.add(`785252400608182282`).catch()
+                    await r_loot_msg.react("✅")
+                }
+                
+                else if (!roles.cache.has(`781069820053160006`)) {
+                    await roles.add(`781069820053160006`).catch()
+                    await r_loot_msg.react("✅")
+                } 
+                
+                else r_loot_msg.react("🚫")
+            } else {
+                await r_loot_msg.react("🚫")
+            }
+
             const filter = i => i.customId === 'boxesk';
 
-                r_loot_msg.awaitMessageComponent({ filter, componentType: ComponentType.Button, time: 60000 })
-                        .then(async (i) => {
-                            if (i.user.id === interaction.member.user.id) {
-                                if (loot2[i_loot2].loot2_name.startsWith(`КОСМЕТИЧЕСКИЙ ЭМОДЗИ`) && (roles.cache.has("553593136027533313") || roles.cache.has("553593976037310489") || roles.cache.has("780487593485008946") || roles.cache.has("849695880688173087") || roles.cache.has("992122876394225814") || roles.cache.has("992123019793276961") || roles.cache.has("992123014831419472"))) {
-                                    userData.displayname.symbol = loot2[i_loot2].symbol
-                                    userData.save()
-                                } 
-                                
-                                else if (loot2[i_loot2].loot2_name.startsWith(`РАМКА ДЛЯ НИКА`) && (roles.cache.has("553593976037310489") || roles.cache.has("780487593485008946") || roles.cache.has("849695880688173087") || roles.cache.has("992122876394225814") || roles.cache.has("992123014831419472") || roles.cache.has("992123019793276961"))) {
-                                    userData.displayname.ramka1 = loot2[i_loot2].symbol
-                                    userData.displayname.ramka2 = loot2[i_loot2].symbol
-                                    userData.save()
-                                } else return i.reply({
-                                    content: `Вы не можете установить себе данный предмет, так как не получили минимальный ранг. Посмотреть минимальный ранг для данного действия вы можете в канале <#931620901882068992>!`
-                                })
-                                await boxesk.components[0]
-                                .setDisabled(true)
-                                .setStyle(ButtonStyle.Secondary)
-                                .setEmoji(`🕓`)
-                                .setLabel(`Идёт обработка...`)
+            r_loot_msg.awaitMessageComponent({ filter, componentType: ComponentType.Button, time: 60000 })
+                .then(async (i) => {
+                    if (i.user.id === interaction.member.user.id) {
+                        if (loot2[i_loot2].loot2_name.startsWith(`КОСМЕТИЧЕСКИЙ ЭМОДЗИ`) && (roles.cache.has("553593136027533313") || roles.cache.has("553593976037310489") || roles.cache.has("780487593485008946") || roles.cache.has("849695880688173087") || roles.cache.has("992122876394225814") || roles.cache.has("992123019793276961") || roles.cache.has("992123014831419472"))) {
+                            userData.displayname.symbol = loot2[i_loot2].symbol
+                            userData.save()
+                        }
 
-                            await r_loot_msg.edit({
-                                content: `◾ :crown: ◾
-<@${opener}> открывает королевскую коробку гильдии...
-╔━═━═━︽︾♚︾︽━═━═━╗
-\`${loot1[i_loot1].loot1_name}\`
-${loot1[i_loot1].loot1_description}.
-╚━═━═━︾︽♔︽︾━═━═━╝
-◾ :crown: ◾
-Дополнительная косметическая награда из королевской коробки: \`${loot2[i_loot2].loot2_name}\`
-${loot2[i_loot2].loot2_description}`,
-                                components: [boxesk]
-                            })
-                            i.reply({
-                                content: `Ожидайте! Скоро ваша рамка/значок будет установлена! Если этого не произойдет в течение 15 минут, обратитесь в вопрос-модерам!`
-                            })
-                        
-                            } else {
-                                i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
-                            }
+                        else if (loot2[i_loot2].loot2_name.startsWith(`РАМКА ДЛЯ НИКА`) && (roles.cache.has("553593976037310489") || roles.cache.has("780487593485008946") || roles.cache.has("849695880688173087") || roles.cache.has("992122876394225814") || roles.cache.has("992123014831419472") || roles.cache.has("992123019793276961"))) {
+                            userData.displayname.ramka1 = loot2[i_loot2].symbol
+                            userData.displayname.ramka2 = loot2[i_loot2].symbol
+                            userData.save()
+                        } else i.reply({
+                            content: `Вы не можете установить себе данный предмет, так как не получили минимальный ранг. Посмотреть минимальный ранг для данного действия вы можете в канале <#931620901882068992>!`
                         })
-                        .catch(async (err) => {
-                            await boxesk.components[0]
-                                .setDisabled(true)
-                                .setStyle(ButtonStyle.Secondary)
-                                .setLabel(`Отменено`)
-                                .setEmoji(`❌`)
+                        await boxesk.components[0]
+                            .setDisabled(true)
+                            .setStyle(ButtonStyle.Secondary)
+                            .setEmoji(`🕓`)
+                            .setLabel(`Идёт обработка...`)
 
-                            await r_loot_msg.edit({
-                                content: `◾ :crown: ◾
+                        await r_loot_msg.edit({
+                            content: `◾ :crown: ◾
 <@${opener}> открывает королевскую коробку гильдии...
 ╔━═━═━︽︾♚︾︽━═━═━╗
 \`${loot1[i_loot1].loot1_name}\`
@@ -427,9 +419,36 @@ ${loot1[i_loot1].loot1_description}.
 ◾ :crown: ◾
 Дополнительная косметическая награда из королевской коробки: \`${loot2[i_loot2].loot2_name}\`
 ${loot2[i_loot2].loot2_description}`,
-                                components: [boxesk]
-                            })
-                        });
+                            components: [boxesk]
+                        })
+                        i.reply({
+                            content: `Ожидайте! Скоро ваша рамка/значок будет установлена! Если этого не произойдет в течение 15 минут, обратитесь в вопрос-модерам!`
+                        })
+
+                    } else {
+                        i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
+                    }
+                })
+                .catch(async (err) => {
+                    await boxesk.components[0]
+                        .setDisabled(true)
+                        .setStyle(ButtonStyle.Secondary)
+                        .setLabel(`Отменено`)
+                        .setEmoji(`❌`)
+
+                    await r_loot_msg.edit({
+                        content: `◾ :crown: ◾
+<@${opener}> открывает королевскую коробку гильдии...
+╔━═━═━︽︾♚︾︽━═━═━╗
+\`${loot1[i_loot1].loot1_name}\`
+${loot1[i_loot1].loot1_description}.
+╚━═━═━︾︽♔︽︾━═━═━╝
+◾ :crown: ◾
+Дополнительная косметическая награда из королевской коробки: \`${loot2[i_loot2].loot2_name}\`
+${loot2[i_loot2].loot2_description}`,
+                        components: [boxesk]
+                    })
+                });
 
             userData.save();
             console.log(chalk.magentaBright(`[${interaction.user.tag} открыл королевскую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, ${loot1[i_loot1].loot1_name} и ${loot2[i_loot2].loot2_name}`))

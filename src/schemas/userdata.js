@@ -1,11 +1,11 @@
 const mongoose = require(`mongoose`);
 
 const User = new mongoose.Schema({
-    id: { type: String, unique: true, required: true },
+    userid: { type: String },
     guildid: { type: String, default: `320193302844669959` },
     displayname: { 
         rank: { type: String, default: `🦋` },
-        name: { type: String },
+        name: { type: String, default: `` },
         ramka1: { type: String, default: `` },
         ramka2: { type: String, default: `` },
         symbol: { type: String, default: `👤` },
@@ -29,17 +29,31 @@ const User = new mongoose.Schema({
         daily: { type: Date, default: Date.now() },
         weekly: { type: Date, default: Date.now() },
         monthly: { type: Date, default: Date.now() },
+
         msgCreateExp: { type: Date, default: Date.now() },
+
         prof_update: { type: Date, default: Date.now() }, 
         prof_create: { type: Date, default: Date.now() },
+
         spet: { type: Date, default: Date.now() },
         epet: { type: Date, default: Date.now() },
         lpet: { type: Date, default: Date.now() },
         mpet: { type: Date, default: Date.now() },
+
         earth: { type: Date, default: Date.now() },
         air: { type: Date, default: Date.now() },
         water: { type: Date, default: Date.now() },
         fire: { type: Date, default: Date.now() },
+        
+        sun: { type: Date, default: Date.now() },
+        mercury: { type: Date, default: Date.now() },
+        venera: { type: Date, default: Date.now() },
+        mars: { type: Date, default: Date.now() },
+        jupiter: { type: Date, default: Date.now() },
+        saturn: { type: Date, default: Date.now() },
+        uran: { type: Date, default: Date.now() },
+        neptune: { type: Date, default: Date.now() },
+        
         
     },
     perks: {
@@ -80,6 +94,8 @@ const User = new mongoose.Schema({
         eagle_eye: { type: Number, default: 0, max: 1, min: 0 },  
     }, 
     warns: { type: Number, default: 0 },
+    roles: [String],
+    shop_costs: { type: Number, default: 1 }
     
 })
 

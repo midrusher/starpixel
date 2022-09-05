@@ -9,7 +9,7 @@ module.exports = {
         .setDescription(`Открыть Подарок судьбы.`), //Описание команды
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
-        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
         const message = await interaction.deferReply({
             
             fetchReply: true,

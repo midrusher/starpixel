@@ -14,7 +14,7 @@ module.exports = {
         ),
     async execute(interaction, client) {
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
-        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username })
+        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username })
         const neededXP = 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
 
 
@@ -24,7 +24,7 @@ module.exports = {
         });
 
         const embed = new EmbedBuilder()
-            .setColor(0xA872FF)
+            .setColor(process.env.bot_color)
             .setAuthor({
                 name: `Опыт пользователя ${user.username}`
             })

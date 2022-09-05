@@ -33,7 +33,7 @@ module.exports = {
             ephemeral: true
         })
         const member = interaction.options.getUser(`пользователь`)
-        const memberData = await User.findOne({ id: member.id }) || new User({ id: member.id, name: member.username})
+        const memberData = await User.findOne({ userid: member.id }) || new User({ userid: member.id, name: member.username})
         const reason = interaction.options.getString(`причина`)
         memberData.warns += 1
         memberData.save()

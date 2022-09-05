@@ -8,8 +8,8 @@ module.exports = (client) => {
             const results = await User.find({ guildid: guild.id })
 
             for (const result of results) {
-                const { id, displayname } = result;
-                const member = await guild.members.cache.get(id)
+                const { userid, displayname } = result;
+                const member = await guild.members.cache.get(userid)
                 if (member.roles.cache.has(`850336260265476096`)) {
                     displayname.premium = `💳`
                 } else if (!member.roles.cache.has(`850336260265476096`)) {
@@ -19,6 +19,6 @@ module.exports = (client) => {
                 
             }
 
-        }, 10000)
+        }, 60000)
     }
 }

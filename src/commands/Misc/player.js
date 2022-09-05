@@ -18,12 +18,7 @@ module.exports = {
         ),
 
     async execute(interaction, client) {
-        const user = interaction.options.getUser(`пользователь`)
-        const guild = interaction.guild
-        const guildData = await Guild.findOne({ id: guild.id })
-        const userData = await User.findOne({ id: user.id })
-        const member = await guild.members.fetch(user.id)
-        member.setNickname(`「${guildData.ranks.r6}」Вася вася ┇ `)
-
+        const members = await interaction.guild.members.fetch()
+        await members.filter(m => !m.user.bot && m.roles.cache.has(`504887113649750016`)).forEach(member => member.roles.remove(`992820494900412456`))        
     }
 };

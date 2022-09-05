@@ -3,15 +3,12 @@ const { execute } = require("../../events/client/ready");
 
 module.exports = {
     data: {
-        name: `testbutton`
+        name: `back_rolesssssss`
     },
     async execute(interaction, client) {
         
-        interaction.reply({
-        content: `:exclamation: Необходимо установить значок участнику гильдии!
-        
-${interaction.member}, пожалуйста, ожидайте. Скоро администратор установит вам значок!`
-       })
+       const user = interaction.member.user
+       
         
     }
 }

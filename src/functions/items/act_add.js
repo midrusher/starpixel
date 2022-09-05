@@ -6,9 +6,9 @@ module.exports = (client) => {
         setInterval(async () => {
             const results = await User.find({ exp: { $gt: 0 } })
             for (const result of results) {
-                const { id } = result;
+                const { userid } = result;
                 const guild = await client.guilds.fetch(`320193302844669959`)
-                const member = await guild.members.cache.get(id)
+                const member = await guild.members.cache.get(userid)
 
                 const levelbefore = result.level;
                 if (result.exp >= (5 * (Math.pow(result.level, 2)) + (50 * result.level) + 100)) {
@@ -25,6 +25,6 @@ ${member} повысил уровень активности до ${result.level
                     result.save()
                 }
             }
-        }, 10000)
+        }, 60000)
     }
 }

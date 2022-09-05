@@ -307,7 +307,7 @@ module.exports = {
             })
 
             const user = interaction.member
-            const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username })
+            const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username })
             const not_admin = new EmbedBuilder()
                 .setAuthor({
                     name: `❗ Отсутствует необходимая роль!`

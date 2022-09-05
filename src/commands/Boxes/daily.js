@@ -15,7 +15,7 @@ module.exports = {
         const { roles } = interaction.member //Участник команды
 
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
-        const userData = await User.findOne({ id: user.id }) || new User({ id: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
         
 
         if (roles.cache.has("504887113649750016")) { //Проверка роли участника гильдии

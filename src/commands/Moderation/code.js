@@ -35,7 +35,7 @@ module.exports = {
 
     async execute(interaction, client) {
         const user = interaction.user
-        const userData = await User.findOne({ id: user.id })
+        const userData = await User.findOne({ userid: user.id })
 
         switch (interaction.options.getSubcommand()) {
             case `new`: {
@@ -85,7 +85,7 @@ module.exports = {
 Он может пригодиться вам, если с вашим аккаунтом что-либо случится, а также если вам нужна будет поддержка, связанная с изменением вашего аккаунта. 
 ❔ Если вы потеряете код, вы можете создать новый код, если пропишите команду \`/code new\`
 ❗ **Никому не сообщайте этот код!** Если вам потребуется использовать код, пропишите команду \`/code use\`.`)
-
+console.log(chalk.red(`[ПОЛУЧЕН КОД БЕЗОПАСНОСТИ]`) + chalk.white(`: ${user.username} получил первый код безопасности: ${userData.security_code}`))
                     } catch (error) {
                         await interaction.reply({
                             content: `У вас ${user} закрыты личные сообщения! Откройте их и повторите попытку снова!`,

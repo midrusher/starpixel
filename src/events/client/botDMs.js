@@ -1,5 +1,6 @@
 const chalk = require(`chalk`);
 const { ChannelType, EmbedBuilder } = require("discord.js");
+const { MsgData } = require(`../../schemas/msgdata`)
 
 module.exports = {
     name: 'messageCreate',
@@ -18,7 +19,23 @@ module.exports = {
                 embeds: [message_embed]
             })
             console.log(chalk.yellow(`[${message.author.tag} в личных сообщениях]`) + chalk.white(`: ${message.content}`))
+            if (!message.author.bot) {
+                const random = Math.floor(Math.random() * 9) + 1
+                console.log(random)
+                if (random == 6) {
+                    const msgs = await MsgData.findOne({ guildid: `320193302844669959` })
+                    const r_msg = msgs.messages
+                    let i = Math.floor(Math.random() * msgs.messages.length)
+                    await message.reply({
+                        content: r_msg[i].content
+                    })
+                } else return
+
+
+            }
+
+
         }
-        
+
     }
 }

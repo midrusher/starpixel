@@ -1,7 +1,7 @@
 const mongoose = require(`mongoose`);
 
 const User = new mongoose.Schema({
-    userid: { type: String },
+    userid: { type: String, unique: true },
     guildid: { type: String, default: `320193302844669959` },
     displayname: { 
         rank: { type: String, default: `🦋` },
@@ -16,6 +16,7 @@ const User = new mongoose.Schema({
     name: { type: String  },
     nickname: { type: String, },
     uuid: {type: String, },
+    age: { type: Number, },
     security_code: { type: String, },
     rumbik: { type: Number, default: 0 },
     rank: { type: Number, default: 0, max: 25000 },
@@ -53,6 +54,10 @@ const User = new mongoose.Schema({
         saturn: { type: Date, default: Date.now() },
         uran: { type: Date, default: Date.now() },
         neptune: { type: Date, default: Date.now() },
+
+        premium: { type: Date, default: Date.now() },
+        boost: { type: Date, default: Date.now() },
+        prestige: { type: Date, default: Date.now() },
         
         
     },
@@ -95,7 +100,8 @@ const User = new mongoose.Schema({
     }, 
     warns: { type: Number, default: 0 },
     roles: [String],
-    shop_costs: { type: Number, default: 1 }
+    shop_costs: { type: Number, default: 1 },
+    pers_act_boost: { type: Number, default: 1 },
     
 })
 

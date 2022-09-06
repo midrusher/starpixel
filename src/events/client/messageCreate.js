@@ -13,7 +13,7 @@ module.exports = {
             if (message.author.bot) return
             console.log(chalk.yellow(`[${message.author.tag} в ${message.channel.name}]`) + chalk.white(`: ${message.content}`))
             const user = message.author
-            const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username })
+            const userData = await User.findOne({ userid: user.id })
             if (message.channel.id == `982551755340537866`
                 || message.author.bot
                 || message.member.roles.cache.has(`920346035811917825`)) {

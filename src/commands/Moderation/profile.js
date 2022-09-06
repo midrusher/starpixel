@@ -24,6 +24,11 @@ module.exports = {
                 .setDescription(`Реальное имя пользователя`)
                 .setRequired(true)
             )
+            .addIntegerOption(option => option
+                .setName(`возраст`)
+                .setDescription(`Возраст пользователя`)
+                .setRequired(true)
+                )
             .addStringOption(option => option
                 .setName(`никнейм`)
                 .setDescription(`Никнейм в Minecraft`)
@@ -51,6 +56,12 @@ module.exports = {
         switch (interaction.options.getSubcommand()) {
             case `create`: {
                 const realname = interaction.options.getString(`имя`)
+                const age = interaction.options.getInteger(`возраст`)
+                if (age <= 0) return interaction.reply({
+                    content: `Возраст не может быть отрицательным!`,
+                    ephemeral: true
+                })
+
                 const user = interaction.options.getUser(`пользователь`)
                 const playername = interaction.options.getString(`никнейм`)
                 if (!interaction.member.roles.cache.has(`320880176416161802`)) {
@@ -100,10 +111,10 @@ module.exports = {
                             userData.uuid = json.player.uuid;
                             userData.markModified(`uuid`)
                             userData.cooldowns.prof_update = Date.now() + (1000 * 60 * 60 * 24)
-                            creator.cooldowns.prof_create = Date.now() + (1000 * 90)
+                            creator.cooldowns.prof_create = Date.now() + (1000 * 10)
                             creator.markModified(`prof_create`)
                         } catch (error) {
-                            User.deleteOne({ id: user.id });
+                            userData.delete();
                             interaction.reply({
                                 embeds: [new EmbedBuilder().setAuthor({ name: `Ошибка!` }).setDescription(`Игрок ${playername} не найден! Проверьте правильность введённых данных`).setThumbnail(`https://i.imgur.com/6IE3lz7.png`).setColor(`DarkRed`).setTimestamp(Date.now())],
                                 ephemeral: true
@@ -113,7 +124,7 @@ module.exports = {
                         }
                     }
 
-
+                    userData.age = age
                     userData.displayname.name = realname
 
                     const roles = [
@@ -145,22 +156,25 @@ module.exports = {
 
                     creator.save()
                     userData.save()
-                    memberDM.setNickname(`「${userData.displayname.rank}」 ${userData.displayname.ramka1}${userData.displayname.name}${userData.displayname.ramka2}${userData.displayname.suffix} ${userData.displayname.symbol}┇ ${userData.displayname.premium}`)
+                    //if (memberDM.user.id !== `491343958660874242`) {
+                    //    memberDM.setNickname(`「${userData.displayname.rank}」 ${userData.displayname.ramka1}${userData.displayname.name}${userData.displayname.ramka2}${userData.displayname.suffix} ${userData.displayname.symbol}┇ ${userData.displayname.premium}`)
+                    //}
+                    
                     const success = new EmbedBuilder()
                         .setAuthor({
                             name: `Профиль успешно создан!`
                         })
                         .setColor(process.env.bot_color)
-                        .setDescription(`Профиль пользователя ${interaction.options.getUser(`пользователь`)} (${userData.nickname}) был успешно создан.`)
+                        .setDescription(`Профиль пользователя ${interaction.options.getUser(`пользователь`)} (${userData.nickname}) был успешно создан. В течение определенного времени он будет добавлен в канал с участниками!`)
                         .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
                         .setTimestamp(Date.now())
 
                     interaction.reply({
                         embeds: [success]
                     })
-                    await interaction.guild.channels.cache.get(process.env.test_channel).send({
-                        content: `Профиль пользователя ${interaction.options.getUser(`пользователь`)} (${userData.nickname}) был успешно создан. Необходимые роли были добавлены. Случайный приветственный подарок был получен. Никнейм будет в скором времени автоматически установлен!`
-                    })
+                    /* await interaction.guild.channels.cache.get(process.env.main_channel).send({
+                        content: `Профиль пользователя ${interaction.options.getUser(`пользователь`)} (\`${userData.nickname}\`) был успешно создан. Необходимые роли были добавлены. Случайный приветственный подарок был получен. Никнейм будет в скором времени автоматически установлен!`
+                    }) */
                     console.log(chalk.cyan(`[База данных]`) + chalk.gray(`: Профиль пользователя ${userData.name} (${userData.nickname}) был успешно создан!`))
 
                 }
@@ -268,7 +282,7 @@ module.exports = {
             case `delete`: {
                 const id = interaction.options.getString(`id`)
                 const user = interaction.guild.members.cache.get(id)
-                const userData = await User.findOne({ id: id })
+                const userData = await User.findOne({ userid: id })
                 if (!interaction.member.roles.cache.has(`320880176416161802`)) {
                     const embed = new EmbedBuilder()
                         .setAuthor({
@@ -296,7 +310,7 @@ module.exports = {
                         )
                     const delete_embed = new EmbedBuilder()
                         .setColor(`DarkRed`)
-                        .setTitle(`Вы действительно хотите удалить профиль пользователя ${userData.name}?`)
+                        .setTitle(`Вы действительно хотите удалить профиль пользователя ${user.user.username}?`)
                         .setDescription(`**Это действие необратимо!**
 Проверьте, тот ли профиль вы хотите удалить? Если игрок сейчас находится в гильдии, удалять его профиль **ЗАПРЕЩЕНО**! Если игрок покинул гильдию, то нажмите в течение __10 секунд__ на кнопку ниже, чтобы удалить профиль.
 
@@ -322,7 +336,7 @@ module.exports = {
                                     embeds: [delete_embed],
                                     components: [delete_button]
                                 })
-                                userData.deleteOne({ id: userData.id })
+                                userData.delete()
 
                             } else {
                                 i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });

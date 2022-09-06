@@ -10,15 +10,15 @@ const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГ�
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(`mcplayer`)
-        .setDescription(`Основные ссылки и информация о гильдии.`)
-        .addUserOption(option => option
-            .setName(`пользователь`)
-            .setDescription(`Тайная команда`)
-        ),
+        .setName(`test`)
+        .setDescription(`test`),
 
     async execute(interaction, client) {
-        const members = await interaction.guild.members.fetch()
-        await members.filter(m => !m.user.bot && m.roles.cache.has(`504887113649750016`)).forEach(member => member.roles.remove(`992820494900412456`))        
+        const channel = await interaction.guild.channels.cache.get(`876436260347076608`)
+        const message = await channel.messages.fetch(`1016426386027728916`)
+        await message.edit({
+            content: `nothing t do`,
+            embeds: []
+        })
     }
 };

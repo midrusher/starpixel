@@ -46,7 +46,7 @@ client.handleCommands();
 client.handleComponents();
 
 client.temp_roles();
-client.rank_update();
+//client.rank_update();
 client.act_add();
 client.act_remove();
 
@@ -54,6 +54,7 @@ client.updatenicks();
 client.haspremium();
 
 client.wish_birthday();
+client.update_members()
 
 client.login(token);
 (async () => {

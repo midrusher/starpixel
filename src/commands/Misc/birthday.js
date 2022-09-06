@@ -133,123 +133,149 @@ module.exports = {
                 }
 
                 const age = toOrdinalSuffix(wishYear - Year)
+                console.log(`1`)
+                const bdata = await Birthday.findOne({ guildid: interaction.guild.id, userid: user.id })
 
-                Birthday.findOne({ guildid: interaction.guild.id, userid: user.id }), async (err, data) => {
-                    if (err) throw err
 
-                    if (data) {
-                        data.delete()
-
-                        data = new Birthday({
-                            guildid: interaction.guild.id,
-                            userid: user.id,
-                            day: Day,
-                            month: Month,
-                            year: Year
-                        })
-
-                        await data.save()
-                    } else {
-                        data = new Birthday({
-                            guildid: interaction.guild.id,
-                            userid: user.id,
-                            day: Day,
-                            month: Month,
-                            year: Year
-                        })
-
-                        await data.save()
-                    }
-                    const b_embed = new EmbedBuilder()
-                        .setTitle(`Установлен день рождения`)
-                        .setColor(process.env.bot_color)
-                        .setThumbnail(user.displayAvatarURL())
-                        .setDescription(`🎂 Я поздравлю ${user} с **${age}** днём рождения через ${remDays} дней, **${Day}.${Month}.${wishYear}**!`)
-                    return interaction.editReply({
-                        embeds: [b_embed]
+                console.log(`2`)
+                console.log(`3`)
+                if (bdata) {
+                    console.log(`4`)
+                    bdata.delete()
+                    console.log(`5`)
+                    const newbdata = new Birthday({
+                        guildid: interaction.guild.id,
+                        userid: user.id,
+                        day: Day,
+                        month: Month,
+                        year: Year
                     })
+                    console.log(`6`)
+                    await newbdata.save()
+                    console.log(`7`)
+                } else {
+                    console.log(`8`)
+                    const newbdata = new Birthday({
+                        guildid: interaction.guild.id,
+                        userid: user.id,
+                        day: Day,
+                        month: Month,
+                        year: Year
+                    })
+                    console.log(`9`)
+
+                    await newbdata.save()
+                    console.log(`10`)
                 }
+                console.log(`11`)
+                const b_embed = new EmbedBuilder()
+                    .setTitle(`Установлен день рождения`)
+                    .setColor(process.env.bot_color)
+                    .setThumbnail(user.displayAvatarURL())
+                    .setDescription(`🎂 Я поздравлю ${user} с **${age}** днём рождения через ${remDays} дн/, **${Day}.${Month}.${wishYear}**!`)
+                console.log(`12`)
+                await interaction.editReply({
+                    embeds: [b_embed]
+                })
+                console.log(`13`)
+
             }
 
                 break;
             case `remove`: {
                 const user = interaction.options.getUser(`пользователь`)
-                Birthday.findOne({ guildid: interaction.guild.id, userid: user.id }), async (err, data) => {
-                    if (err) throw err
+                const to_remove = await Birthday.findOne({ guildid: interaction.guild.id, userid: user.id })
+                if (to_remove) {
+                    to_remove.delete()
 
-                    if (data) {
-                        data.delete()
+                    const b_embed = new EmbedBuilder()
+                        .setTitle(`Удалён день рождения`)
+                        .setColor(process.env.bot_color)
+                        .setThumbnail(user.displayAvatarURL())
+                        .setDescription(`✅ - Удалён день рождения пользователя ${user}!`)
+                    await interaction.reply({
+                        embeds: [b_embed],
+                        ephemeral: true
+                    })
 
-                        const b_embed = new EmbedBuilder()
-                            .setTitle(`Удалён день рождения`)
-                            .setColor(process.env.bot_color)
-                            .setThumbnail(user.displayAvatarURL())
-                            .setDescription(`✅ - Удалён день рождения пользователя ${user}!`)
-                        return interaction.reply({
-                            embeds: [b_embed],
-                            ephemeral: true
-                        })
+                } else {
+                    const b_embed = new EmbedBuilder()
+                        .setTitle(`День рождения не установлен`)
+                        .setColor(process.env.bot_color)
+                        .setThumbnail(user.displayAvatarURL())
+                        .setDescription(`❌ - День рождения ${user} не был установлен, поэтому я не смог его удалить!`)
 
-                    } else {
-                        const b_embed = new EmbedBuilder()
-                            .setTitle(`День рождения не установлен`)
-                            .setColor(process.env.bot_color)
-                            .setThumbnail(user.displayAvatarURL())
-                            .setDescription(`❌ - День рождения ${user} не был установлен, поэтому я не смог его удалить!`)
-
-                        return interaction.reply({
-                            embeds: [b_embed],
-                            ephemeral: true
-                        })
-                    }
+                    await interaction.reply({
+                        embeds: [b_embed],
+                        ephemeral: true
+                    })
                 }
+
             }
 
                 break;
             case `list`: {
-                Birthday.find({ guildid: interaction.guild.id }), async (err, data) => {
-                    if (err) throw err
-                    const no_bd = new EmbedBuilder()
-                        .setTitle(`Нет дней рождения`)
-                        .setColor(process.env.bot_color)
-                        .setThumbnail(interaction.guild.iconURL())
-                        .setDescription(`❌ - На данном сервере нет дней рождения, очень жаль :'(`)
-                    if (!data) return interaction.reply({
-                        embeds: [no_bd],
-                        ephemeral: true
-                    })
+                const listData = await Birthday.find({ guildid: interaction.guild.id })
 
-                    await interaction.deferReply()
+                const no_bd = new EmbedBuilder()
+                    .setTitle(`Нет дней рождений`)
+                    .setColor(process.env.bot_color)
+                    .setThumbnail(interaction.guild.iconURL())
+                    .setDescription(`❌ - На данном сервере нет дней рождений, очень жаль :'(`)
+                if (!listData) return interaction.reply({
+                    embeds: [no_bd],
+                    ephemeral: true
+                })
 
-                    const date = new Date()
-                    const currentYear = date.getFullYear()
+                await interaction.deferReply()
 
-                    let index = 1
+                const date = new Date()
+                const currentYear = date.getFullYear()
 
-                    data.sort((a, b) => new Date(`${a.year} ${a.month} ${a.day}`) - new Date(`${b.year} ${b.month} ${b.day}`))
+                let index = 1
+                listData.sort((a, b) => new Date(`${a.year} ${a.month} ${a.day}`) - new Date(`${b.year} ${b.month} ${b.day}`))
 
-                    const birthdayData = data.map((d) => {
-                        return `**${index++}.** \`${d.day}.${d.month}.${d.year}\` - ${client.users.cache.get(d.user)} (${currentYear - d.year})`
-                    }).join("\n")
+                const birthdayData = listData.map((d) => {
+                    return `**${index++}.** \`${d.day}.${d.month}.${d.year}\` - ${client.users.cache.get(d.userid)} (${currentYear - d.year})`
+                }).join("\n")
 
-                    const list = new EmbedBuilder()
-                    .setTitle(`Список дней рождения`)
+                const list = new EmbedBuilder()
+                    .setTitle(`Список дней рождений`)
                     .setThumbnail(interaction.guild.iconURL())
                     .setColor(process.env.bot_color)
                     .setTimestamp(Date.now())
                     .setDescription(`${birthdayData}`)
 
-                    await interaction.editReply({
-                        embeds: [list]
-                    })
-                }
+                await interaction.editReply({
+                    embeds: [list]
+                })
+
             }
 
                 break;
             case `check`: {
                 const user = interaction.options.getUser(`пользователь`)
+                const listData = await Birthday.findOne({ guildid: interaction.guild.id, userid: user.id })
+                const no_bd = new EmbedBuilder()
+                    .setTitle(`Нет дня рождения`)
+                    .setColor(process.env.bot_color)
+                    .setThumbnail(interaction.guild.iconURL())
+                    .setDescription(`❌ - У данного пользователя нет дня рождения, очень жаль :'(`)
+                if (!listData) return interaction.reply({
+                    embeds: [no_bd],
+                    ephemeral: true
+                })
 
+                const list = new EmbedBuilder()
+                    .setTitle(`День рождения ${user.username}`)
+                    .setThumbnail(user.displayAvatarURL())
+                    .setColor(process.env.bot_color)
+                    .setTimestamp(Date.now())
+                    .setDescription(`🎂 - Пользователь ${user} отмечает свой день рождения \`${listData.day}.${listData.month}.${listData.year}\`!`)
 
+                await interaction.reply({
+                    embeds: [list]
+                })
 
             }
 
@@ -262,7 +288,7 @@ module.exports = {
 };
 
 function toOrdinalSuffix(num) {
-    const int = parseInt(num), digits = [int % 10, int % 100], ordinals = [`ым`, `ым`, `им`, `ым`], oPattern = [1, 2, 3, 4], tPattern = [11, 12, 13, 14, 15, 16, 17, 18, 19]
+    const int = parseInt(num), digits = [int % 10, int % 100], ordinals = [`-ым`, `-ым`, `-им`, `-ым`], oPattern = [1, 2, 3, 4], tPattern = [11, 12, 13, 14, 15, 16, 17, 18, 19]
 
     return oPattern.includes(digits[0]) && !tPattern.includes(digits[1])
         ? int + ordinals[digits[0] - 1]

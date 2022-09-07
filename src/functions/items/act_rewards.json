@@ -1,0 +1,368 @@
+[
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 1,
+        "role": "510932601721192458"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 4,
+        "role": "510932601721192458"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "premium",
+        "level": 7,
+        "role": "850336260265476096",
+        "expire": "7d"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 10,
+        "role": "521248091853291540"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 13,
+        "role": "510932601721192458"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 15,
+        "role": "584673040470769667"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "rank_exp",
+        "level": 19,
+        "amount": 50
+    },
+    {
+        "type": "box",
+        "level": 20,
+        "role": "595966177969176579"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 23,
+        "role": "510932601721192458"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 25,
+        "role": "781069821953441832"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 27,
+        "role": "510932601721192458"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 30,
+        "role": "896100103700496436"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 35,
+        "role": "510932601721192458"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 40,
+        "role": "595966177969176579"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 45,
+        "role": "584673040470769667"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 50,
+        "role": "781069821953441832"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "rank_exp",
+        "level": 55,
+        "amount": 100
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 60,
+        "role": "595966177969176579"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "premium",
+        "level": 65,
+        "role": "850336260265476096",
+        "expire": "90d"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 70,
+        "role": "896100103700496436"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 75,
+        "role": "781069821953441832"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 80,
+        "role": "595966177969176579"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "rank_exp",
+        "level": 85,
+        "amount": 150
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 90,
+        "role": "521248091853291540"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "box",
+        "level": 95,
+        "role": "896100103700496436"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "null"
+    },
+    {
+        "type": "leg_reward",
+        "level": 100,
+        "role": "764198086738051092"
+    }
+]

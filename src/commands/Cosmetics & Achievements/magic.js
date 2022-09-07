@@ -307,7 +307,7 @@ module.exports = {
                             })
                         } else if (user) {
                             await interaction.reply({
-                                content: `:frog: ${member} превращает ${member} в лягушку... Какая жалость!`
+                                content: `:frog: ${member} превращает ${user} в лягушку... Какая жалость!`
                             })
                         }
                     }

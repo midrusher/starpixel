@@ -83,16 +83,49 @@ module.exports = {
                 const date = new Date()
                 const currentYear = date.getFullYear()
                 const currentMonth = date.getMonth() + 1
-                const currentDay = date.getDay()
+                const currentDate = date.getDate()
 
                 const Day = interaction.options.getInteger(`день`)
                 const Month = interaction.options.getInteger(`месяц`)
                 const Year = interaction.options.getInteger(`год`)
 
-                if (Day > 31 || Day <= 0) return interaction.reply({
+                const list = {
+                    1: "января",
+                    2: "февраля",
+                    3: "марта",
+                    4: "апреля",
+                    5: "мая",
+                    6: "июня",
+                    7: "июля",
+                    8: "августа",
+                    9: "сентября",
+                    10: "октября",
+                    11: "ноября",
+                    12: "декарбя",
+                    
+                }
+                if (Month == 1 || Month == 3 || Month == 5 || Month == 7 || Month == 8 || Month == 10 || Month == 12) {
+                    if (Day > 31 || Day <= 0) return interaction.reply({
                     content: `День должен быть между 1 и 31!`,
                     ephemeral: true
                 })
+                } else if (Month == 4 || Month == 6 || Month == 9 || Month == 11) {
+                    if (Day > 30 || Day <= 0) return interaction.reply({
+                        content: `День должен быть между 1 и 30!`,
+                        ephemeral: true
+                    })
+                } else if (new Date(Year, 1, 29).getDate() === 29) {
+                    if (Day > 29 || Day <= 0) return interaction.reply({
+                        content: `День должен быть между 1 и 29!`,
+                        ephemeral: true
+                    })
+                } else if (new Date(Year, 1, 29).getDate() !== 29) {
+                    if (Day > 28 || Day <= 0) return interaction.reply({
+                        content: `День должен быть между 1 и 28!`,
+                        ephemeral: true
+                    })
+                }
+                
 
                 if (Month > 12 || Month <= 0) return interaction.reply({
                     content: `Месяц должен быть между 1 и 12!`,
@@ -109,8 +142,7 @@ module.exports = {
                 const oneDay = 1000 * 60 * 60 * 24
 
                 const firstDate = new Date(currentYear, Month, Day)
-                const secondDate = new Date(currentYear, currentMonth, currentDay)
-
+                const secondDate = new Date(currentYear, currentMonth, currentDate)
                 let diffDays = Math.round((firstDate - secondDate) / oneDay)
 
                 let dayCount
@@ -133,16 +165,15 @@ module.exports = {
                 }
 
                 const age = toOrdinalSuffix(wishYear - Year)
-                console.log(`1`)
+            
                 const bdata = await Birthday.findOne({ guildid: interaction.guild.id, userid: user.id })
 
 
-                console.log(`2`)
-                console.log(`3`)
+                
                 if (bdata) {
-                    console.log(`4`)
+                    
                     bdata.delete()
-                    console.log(`5`)
+                    
                     const newbdata = new Birthday({
                         guildid: interaction.guild.id,
                         userid: user.id,
@@ -150,11 +181,11 @@ module.exports = {
                         month: Month,
                         year: Year
                     })
-                    console.log(`6`)
+                    
                     await newbdata.save()
-                    console.log(`7`)
+                    
                 } else {
-                    console.log(`8`)
+                    
                     const newbdata = new Birthday({
                         guildid: interaction.guild.id,
                         userid: user.id,
@@ -162,22 +193,22 @@ module.exports = {
                         month: Month,
                         year: Year
                     })
-                    console.log(`9`)
+                    
 
                     await newbdata.save()
-                    console.log(`10`)
+                    
                 }
-                console.log(`11`)
+                
                 const b_embed = new EmbedBuilder()
                     .setTitle(`Установлен день рождения`)
                     .setColor(process.env.bot_color)
                     .setThumbnail(user.displayAvatarURL())
-                    .setDescription(`🎂 Я поздравлю ${user} с **${age}** днём рождения через ${remDays} дн/, **${Day}.${Month}.${wishYear}**!`)
-                console.log(`12`)
+                    .setDescription(`🎂 Я поздравлю ${user} с **${age}** днём рождения через ${remDays} дн., **${Day} ${list[Month]}, ${wishYear}**!`)
+                
                 await interaction.editReply({
                     embeds: [b_embed]
                 })
-                console.log(`13`)
+                
 
             }
 

@@ -19,6 +19,6 @@ module.exports = (client) => {
 
             console.log(chalk.magenta(`[ИЗМЕНЕНИЕ НИКНЕЙМОВ]`) + chalk.gray(`: Никнеймы всех участников были обновлены!`))
 
-        }, 300000)
+        }, 600000)
     }
 }

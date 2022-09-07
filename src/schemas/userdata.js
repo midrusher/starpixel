@@ -61,6 +61,7 @@ const User = new mongoose.Schema({
         
         
     },
+
     perks: {
         rank_boost: { type: Number, default: 0, max: 6 },
         shop_discount: { type: Number, default: 0, max: 4 },
@@ -71,15 +72,18 @@ const User = new mongoose.Schema({
         ticket_discount: { type: Number, default: 0, max: 5 },
         change_items: { type: Number, default: 0, max: 4 },
     },
+
     achievements: {
         normal: { type: Number, max: 25, default: 0, min: 0 },
         mythical: { type: Number, max: 5, default: 0, min: 0 },
     },
+
     buy: { type: Number, default: 0},
     sell: {
         comet: { type: Number, default: 0 },
         constellation: { type: Number, default: 0 },
     },
+
     elements: {
         //Земля
         underground: { type: Number, default: 0, max: 1, min: 0 },
@@ -101,7 +105,11 @@ const User = new mongoose.Schema({
     warns: { type: Number, default: 0 },
     roles: [String],
     shop_costs: { type: Number, default: 1 },
+    king_costs: { type: Number, default: 1 },
+    act_costs: { type: Number, default: 1 },
     pers_act_boost: { type: Number, default: 1 },
+
+    act_rewards: { type: Number, default: 0 }
     
 })
 

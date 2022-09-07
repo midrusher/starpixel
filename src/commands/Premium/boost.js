@@ -19,7 +19,7 @@ module.exports = {
         ),
 
     async execute(interaction, client) {
-        const member = interaction.options.getUser(`пользователь`)
+        const member = interaction.options.getMember(`пользователь`)
         const user = interaction.member
         const userData = await User.findOne({ userid: user.user.id })
 
@@ -36,7 +36,7 @@ module.exports = {
             ephemeral: true
         })
 
-        /* const cd = new EmbedBuilder()
+        const cd = new EmbedBuilder()
             .setColor(process.env.bot_color)
             .setAuthor({
                 name: `Вы не можете использовать эту команду`
@@ -48,7 +48,7 @@ module.exports = {
         if (userData.cooldowns.boost > Date.now()) return interaction.reply({
             embeds: [cd],
             ephemeral: true
-        }); */
+        });
 
         const wrong_member = new EmbedBuilder()
             .setAuthor({
@@ -63,26 +63,31 @@ module.exports = {
             embeds: [wrong_member],
             ephemeral: true
         })
+
+        await interaction.deferReply({
+            fetchReply: true
+        })
+        interaction.deleteReply()
         const loot = [
             {
                 group: 1,
-                name: `маленькую коробку`,
+                name: `Маленькую коробку`,
                 roleID: `510932601721192458`
             },
             {
                 group: 1,
-                name: `мешочек`,
+                name: `Мешочек`,
                 roleID: `819930814388240385`
             },
             {
                 group: 1,
-                name: `большую коробку`,
+                name: `Большую коробку`,
                 roleID: `521248091853291540`
             }
         ]
 
         const r_loot = loot[Math.floor(Math.random() * loot.length)]
-        const reply = await interaction.reply({
+        const msg = await interaction.channel.send({
             content: `◾
 **БУСТ-БУСТ-БУСТ!**
                 
@@ -90,15 +95,14 @@ module.exports = {
 ${member} получает \`${r_loot.name}\`.
                 
 **БУСТ-БУСТ-БУСТ!**
-◾`,
-            fetchReply: true
+◾`
         })
         if (r_loot.group == 1) {
-            if (!member.roles.cache.has(roleID)) {
-                member.roles.add(roleID)
-                await reply.react(`✅`)
+            if (!member.roles.cache.has(r_loot.roleID)) {
+                member.roles.add(r_loot.roleID)
+                await msg.react(`✅`)
             } else {
-                await reply.react(`🚫`)
+                await msg.react(`🚫`)
             }
         }
 

@@ -49,6 +49,7 @@ client.temp_roles();
 //client.rank_update();
 client.act_add();
 client.act_remove();
+client.act_rewards();
 
 client.updatenicks();
 client.haspremium();

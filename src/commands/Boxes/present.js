@@ -5,8 +5,8 @@ const chalk = require(`chalk`);
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(`small`)  //Название команды
-        .setDescription(`Открыть маленькую коробку.`), //Описание команды
+        .setName(`present`)  //Название команды
+        .setDescription(`Открыть подарок.`), //Описание команды
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
@@ -17,9 +17,9 @@ module.exports = {
 
         const { roles } = interaction.member //Участник команды
         const role = await interaction.guild.roles  //Постоянная для role
-            .fetch("510932601721192458") //ID коробки
+            .fetch("925799156679856240") //ID коробки
             .catch(console.error);
-        if (roles.cache.has("510932601721192458") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
+        if (roles.cache.has("925799156679856240") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
             const cmd_name = `small` //Название команды
             const timestamp = Math.round(interaction.createdTimestamp / 1000)
             await roles.remove(role).catch(console.error); //Удалить роль коробки
@@ -125,13 +125,12 @@ module.exports = {
                     loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
                 },
                 {
-                    loot1_name: `Награды нет.`,
+                    loot1_name: `🐉 КАРТИНКА /dragon`,
                     dropChanceLOOT1: 1,
-                    loot1_roleID: "521248091853291540", //Большая
+                    loot1_roleID: "694914077104799764",
                     loot1_description: ":nazar_amulet: Если у вас есть талисман удачи или Плутон, то эта коробка превратится в большую."
                 }
             ];
-
             //рандом предметов
             let sum_loot1 = 0;
             for (let i_loot1 = 0; i_loot1 < loot1.length; i_loot1++) {
@@ -143,81 +142,61 @@ module.exports = {
                 i_loot1++;
             }
 
+            const songs = [
+                `Новый год к нам мчится`,
+                `А снег идет`,
+                `Знает каждый снеговик снеговика`,
+                `Новый год, он раз в году!`,
+                `На свете есть Волшебный клей`,
+                `Наша елка — просто чудо`,
+                `Хорошо, что каждый год к нам приходит Новый год`,
+                `Не рубили елочку мы на Новый год`,
+                `Под Новый год, как в сказке, полным-полно чудес`,
+                `Снежинки спускаются с неба`,
+                `Белые снежинки кружатся с утра`,
+                `Праздник к нам приходит`,
+
+            ]
+            const r_song = songs[Math.floor(Math.random() * songs.length)]
 
             //Отправка сообщения о луте              
             const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
                 .send(
-`◾
-<@${opener}> открывает маленькую коробку от гильдии.
-╭─────x─────╮
-\`${loot1[i_loot1].loot1_name}\`
-${loot1[i_loot1].loot1_description}
-╰─────x─────╯
-◾`)
-            if (!roles.cache.has(loot1[i_loot1].loot1_roleID) && loot1[i_loot1].loot1_name != `Награды нет.` || !roles.cache.has(loot1[i_loot1].loot1_roleID) && loot1[i_loot1].loot1_name == `Награды нет.` && (roles.cache.has("597746051998285834") || roles.cache.has("572124468189593622"))) {
+                    `<@${opener}> открывает подарок:
+
+╔━═━︽︾︽︾🎅︾︽︾︽━═━╗
+\`${loot1[i_loot1].loot1_name}\`    
+${r_song}!
+╚━═━︽︾︽︾🎅︾︽︾︽━═━╝`)
+            if (!roles.cache.has(loot1[i_loot1].loot1_roleID)) {
                 await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error);
                 await r_loot_msg.react("✅")
             } else {
-                if (loot1[i_loot1].loot1_name == `Награды нет.` && !roles.cache.has("597746051998285834" || "572124468189593622") || roles.cache.has(loot1[i_loot1].loot1_roleID))  {
-                    await r_loot_msg.react("🚫")
-                };
-            };
-
-
-            //Опыт рангов (если необходимо)
-            let rank_exp = [
-                {
-                    rank_amount: 10,
-                    dropChanceRANK: 70
-                },
-                {
-                    rank_amount: 20,
-                    dropChanceRANK: 30
-                }
-
-            ]
-
-            //Рандом - опыт рангов
-            let sum_rank = 0;
-            for (let i_rank = 0; i_rank < rank_exp.length; i_rank++) {
-                sum_rank += rank_exp[i_rank].dropChanceRANK;
-            }
-            let r_rank = Math.floor(Math.random() * sum_rank);
-            let i_rank = 0;
-            for (let s = rank_exp[0].dropChanceRANK; s <= r_rank; s += rank_exp[i_rank].dropChanceRANK) {
-                i_rank++;
+                await r_loot_msg.react("🚫")
             }
 
-            //Сообщение - опыт рангов                       
-            interaction.guild.channels.cache.get(process.env.rank_channel).send(
-`╔═════════♡════════╗
-<@${opener}> +${rank_exp[i_rank].rank_amount}💠
-\`Получено из маленькой коробки.\`
-╚═════════♡════════╝`
-            );
 
-            userData.rank += rank_exp[i_rank].rank_amount + (rank_exp[i_rank].rank_amount * 0.05 * userData.perks.rank_boost) //ДОБАВИТЬ В ДРУГИЕ
 
             //Опыт активности
             let act_exp = [
                 {
-                    act_amount: 40,
+                    act_amount: 400,
                     dropChanceACT: 40
                 },
                 {
-                    act_amount: 70,
+                    act_amount: 700,
                     dropChanceACT: 20
                 },
                 {
-                    act_amount: 100,
+                    act_amount: 1000,
                     dropChanceACT: 3
                 },
                 {
-                    act_amount: 90,
+                    act_amount: 900,
                     dropChanceACT: 7
                 },
                 {
-                    act_amount: 50,
+                    act_amount: 500,
                     dropChanceACT: 30
                 },
 
@@ -236,16 +215,16 @@ ${loot1[i_loot1].loot1_description}
 
             //Сообщение - опыт активности                       
             interaction.guild.channels.cache.get(process.env.act_channel).send(
-`╔═════════♡════════╗
+                `╔═════════♡════════╗
 <@${opener}> +${act_exp[i_act].act_amount}🌀
-\`Получено из маленькой коробки.\`
+\`Получено из подарка.\`
 ╚═════════♡════════╝`
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
             userData.totalexp += act_exp[i_act].act_amount
-                userData.save();
-                console.log(chalk.magentaBright(`[${interaction.user.tag} открыл маленькую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot1[i_loot1].loot1_name}`))
-            
+            userData.save();
+            console.log(chalk.magentaBright(`[${interaction.user.tag} открыл подарок]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности и ${loot1[i_loot1].loot1_name}`))
+
         } else {
             await interaction.editReply({
                 content: `У вас отсутствует \`${role.name}\` коробка!`

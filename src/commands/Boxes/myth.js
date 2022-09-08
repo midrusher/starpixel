@@ -867,7 +867,7 @@ ${loot4[i_loot4].loot4_description}.
 \`Получено из Подарка судьбы.\`
 ╚═════════♡════════╝`
             );
-            userData.rank += rank_exp[i_rank].rank_amount //ДОБАВИТЬ В ДРУГИЕ
+            userData.rank += rank_exp[i_rank].rank_amount + (rank_exp[i_rank].rank_amount * 0.05 * userData.perks.rank_boost) //ДОБАВИТЬ В ДРУГИЕ
 
 
             //Опыт активности

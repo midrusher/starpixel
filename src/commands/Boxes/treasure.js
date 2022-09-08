@@ -275,7 +275,7 @@ ${loot2[i_loot2].loot2_description}
 ╚═════════♡════════╝`
             );
 
-            userData.rank += rank_exp[i_rank].rank_amount //ДОБАВИТЬ В ДРУГИЕ
+            userData.rank += rank_exp[i_rank].rank_amount + (rank_exp[i_rank].rank_amount * 0.05 * userData.perks.rank_boost) //ДОБАВИТЬ В ДРУГИЕ
 
             //Опыт активности
             let act_exp = [

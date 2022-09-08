@@ -24,6 +24,7 @@ const User = new mongoose.Schema({
     totalexp: { type: Number, default: 0 },
     level: { type: Number, default: 0},
     gexp: { type: Number, default: 0},
+    pers_emoji: { type: Boolean, default: false},
     tickets: { type: Number, default: 0},
     cooldowns: {
 
@@ -109,7 +110,13 @@ const User = new mongoose.Schema({
     act_costs: { type: Number, default: 1 },
     pers_act_boost: { type: Number, default: 1 },
 
-    act_rewards: { type: Number, default: 0 }
+    act_rewards: { type: Number, default: 0 },
+
+    medal_1: { type: Number, default: 0 },
+    medal_2: { type: Number, default: 0 },
+    medal_3: { type: Number, default: 0 },
+
+    weekly_exp: { type: Number, default: 0 }
     
 })
 

@@ -143,7 +143,7 @@ ${loot1[i_loot1].loot1_description}
 \`Получено из ежемесячной коробки.\`
 ╚═════════♡════════╝`
             );
-            userData.rank += rank_exp[i_rank].rank_amount //ДОБАВИТЬ В ДРУГИЕ
+            userData.rank += rank_exp[i_rank].rank_amount + (rank_exp[i_rank].rank_amount * 0.05 * userData.perks.rank_boost) //ДОБАВИТЬ В ДРУГИЕ
 
             //Румбики (если необходимо)
             let rumbik = [

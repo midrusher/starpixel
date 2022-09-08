@@ -25,6 +25,7 @@ const client = new Client({
     } 
 });
 
+client.voiceManager = new Collection();
 client.commands = new Collection();
 client.buttons = new Collection();
 client.modals = new Collection();
@@ -50,6 +51,7 @@ client.temp_roles();
 client.act_add();
 client.act_remove();
 client.act_rewards();
+client.top_3_gexp();
 
 client.updatenicks();
 client.haspremium();

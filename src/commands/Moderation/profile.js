@@ -1,12 +1,11 @@
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require('discord.js');
-const { execute } = require('../../events/client/ready');
 const fetch = require(`node-fetch`);
 const wait = require(`node:timers/promises`).setTimeout
 const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
+const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const userdata = require('../../schemas/userdata');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -350,7 +349,6 @@ module.exports = {
                 if (responseA.ok) {
                     try {
                         let json = await responseA.json()
-                        console.log(`${json.guild.members[53].uuid}`)
                         var i = 0
                         while (json.guild.members[i].uuid !== userData.uuid) {
                             console.log(chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.gray(`: Участник ${json.guild.members[i].uuid} не является пользователем ${userData.uuid}`))
@@ -460,7 +458,7 @@ module.exports = {
                                 i.reply({
                                     content: `Профиль пользователя ${userData.name} (${userData.nickname}) был успешно удалён!`
                                 })
-                                console.log(chalk.cyan(`[База данных]`) + chalk.gray(`: Профиль пользователя ${userData.name} (${userData.nickname}) был успешно удалён!`))
+                                console.log(chalk.cyan(`[База данных]`) + chalk.gray(`: Профиль пользователя ${userData.name} (\`${userData.nickname}\`) был успешно удалён!`))
                                 interaction.editReply({
                                     embeds: [delete_embed],
                                     components: [delete_button]
@@ -676,6 +674,7 @@ module.exports = {
                 })
                 const userDatas = await User.find({ guildid: interaction.guild.id })
                 let b = 0
+                let update
                 for (let userData of userDatas) {
                     userData = userDatas[b]
 
@@ -729,7 +728,7 @@ module.exports = {
                                     console.log(chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.red(`: Произошла ошибка при обновлении данных о GEXP пользователя ${userData.uuid} (${userData.nickname})!`));
                                 }
                             } else {
-                                console.log(chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.red(`: Игрок ${userData.uuid} (${userData.nickname}) не состоит ни в какой гильдии на Hypixel!`));
+                                console.log(chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.red(`: Игрок ${userData.uuid} (${userData.nickname}) не состоит в гильдии Starpixel!`));
                             }
                         } else {
                             console.log(chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.red(`: Игрок ${userData.uuid} (${userData.nickname}) не состоит ни в какой гильдии на Hypixel!`));
@@ -737,24 +736,47 @@ module.exports = {
 
 
                     } else {
+
                         console.log(`Гильдия не найдена или игрок не найден.`)
                         interaction.editReply(`Ошибка! Свяжитесь с администрацией гильдии.`)
                     }
+                    update = new EmbedBuilder()
+                        .setTitle(`Идёт обработка всех участников . . .`)
+                        .setColor(process.env.bot_color)
+                        .setDescription(`Идёт обработка и обновление профилей участников гильдии Starpixel!
+
+В данный момент идёт обработка пользователя <@${userData.userid}> - \`${userData.nickname}\` (UUID: \`${userData.uuid}\`) 
+**Прогресс**: ${b + 1}/${userDatas.length} - ${(Math.round(((b + 1) / (userDatas.length)) * 100))}% завершено . . .`)
+                        .setTimestamp(Date.now())
+                        .setThumbnail(`https://visage.surgeplay.com/face/${userData.uuid}.png`)
+
+
                     await interaction.editReply({
-                        content: `Идёт обработка всех участников . . . (${b + 1}/${userDatas.length} - ${(Math.round(((b + 1) / (userDatas.length)) * 100))}% завершено . . .)`
+                        embeds: [update]
                     })
                     userData.save()
                     b++
                     await wait(1100)
                 }
+                update = new EmbedBuilder()
+                    .setTitle(`Обработка завершена!`)
+                    .setColor(process.env.bot_color)
+                    .setDescription(`Обработка и обновление профилей участников завершена!
+
+Теперь никнеймы, идентификаторы и прочее совпадает актуальны! В скором времени канал <#932203255335899177> будет содержать данную информацию
+**Прогресс**: ${b}/${userDatas.length} - ${(Math.round(((b) / (userDatas.length)) * 100))}% завершено . . .`)
+                    .setTimestamp(Date.now())
+                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
                 await interaction.editReply({
-                    content: `Профили всех пользователей были обновлены! (${b}/${userDatas.length} - ${(((b) / userDatas.length).toFixed(2)) * 100}% завершено . . .)`
+                    embeds: [update]
                 })
 
 
 
             }
                 break;
+
+            
             default:
                 break;
         }
@@ -790,11 +812,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -808,11 +830,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -846,11 +868,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -870,11 +892,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -893,11 +915,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -922,11 +944,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -945,11 +967,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -968,11 +990,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -991,11 +1013,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1019,11 +1041,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1047,11 +1069,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1075,11 +1097,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1103,11 +1125,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1131,11 +1153,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1159,11 +1181,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1187,11 +1209,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1215,11 +1237,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1243,11 +1265,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1271,11 +1293,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1299,11 +1321,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1327,11 +1349,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1355,11 +1377,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1383,11 +1405,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1411,11 +1433,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1439,11 +1461,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1467,11 +1489,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1495,11 +1517,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1523,11 +1545,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1551,11 +1573,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1574,11 +1596,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1597,11 +1619,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1620,11 +1642,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]
@@ -1643,11 +1665,11 @@ module.exports = {
                                 userData.save()
 
                                 const success = new EmbedBuilder()
-                                .setTitle(`Установлено новое значение в профиле`)
-                                .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
-                                .setColor(process.env.bot_color)
-                                .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                                .setTimestamp(Date.now())
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
 
                                 await interaction.reply({
                                     embeds: [success]

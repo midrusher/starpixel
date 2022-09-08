@@ -10,13 +10,13 @@ module.exports = {
         .setName(`daily`)  //Название команды
         .setDescription(`Открыть ежедневную коробку.`), //Описание команды
     async execute(interaction, client) {
-        
+
         const cmd_name = `/daily`
         const { roles } = interaction.member //Участник команды
 
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
-        
+
 
         if (roles.cache.has("504887113649750016")) { //Проверка роли участника гильдии
             if (userData.cooldowns.daily > Date.now()) //ДОБАВИТЬ В ДРУГИЕ(ГДЕ КУЛДАУН)
@@ -35,7 +35,7 @@ module.exports = {
                 fetchReply: true,
             });
             const opener = interaction.member.id
-            
+
 
             //Лут из коробок
             //Случайный предмет
@@ -49,18 +49,18 @@ module.exports = {
                     loot1_name: `❕ 🎁 МАЛЕНЬКАЯ /small`,
                     dropChanceLOOT1: 15,
                     loot1_roleID: "510932601721192458",
-                    loot1_description : `Открой, чтобы получить награды.`
+                    loot1_description: `Открой, чтобы получить награды.`
                 },
                 {
                     loot1_name: `💰 МЕШОЧЕК /bag`,
                     dropChanceLOOT1: 35,
                     loot1_roleID: "819930814388240385",
-                    loot1_description : `Открой, чтобы получить опыт активности.`
+                    loot1_description: `Открой, чтобы получить опыт активности.`
                 },
                 {
                     loot1_name: `Награды нет.`,
                     dropChanceLOOT1: 50,
-                    loot1_description : `Коробка пуста.`
+                    loot1_description: `Коробка пуста.`
                 }
             ];
 
@@ -78,7 +78,7 @@ module.exports = {
             //Отправка сообщения о луте              
             const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
                 .send(
-`◾
+                    `◾
 <@${opener}> открывает ежедневную коробку...
 ╭──────────╮
 \`${loot1[i_loot1].loot1_name}\`
@@ -88,7 +88,7 @@ ${loot1[i_loot1].loot1_description}
             if (!roles.cache.has(loot1[i_loot1].loot1_roleID) && loot1[i_loot1].loot1_name !== `Награды нет.`) {
                 await r_loot_msg.react("✅")
                 await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error)
-            } else if (loot1[i_loot1].loot1_name == `Награды нет.` ) {
+            } else if (loot1[i_loot1].loot1_name == `Награды нет.`) {
                 await r_loot_msg.react("❌")
             } else if (roles.cache.has(loot1[i_loot1].loot1_roleID) && loot1[i_loot1].loot1_name !== `Награды нет.`) {
                 await r_loot_msg.react("❌")
@@ -134,7 +134,7 @@ ${loot1[i_loot1].loot1_description}
 \`Получено из ежедневной коробки.\`
 ╚═════════♡════════╝`
             );
-            userData.rank += rank_exp[i_rank].rank_amount //ДОБАВИТЬ В ДРУГИЕ
+            userData.rank += rank_exp[i_rank].rank_amount + (rank_exp[i_rank].rank_amount * 0.05 * userData.perks.rank_boost) //ДОБАВИТЬ В ДРУГИЕ
 
 
 
@@ -177,12 +177,18 @@ ${loot1[i_loot1].loot1_description}
 \`Получено из ежедневной коробки.\`
 ╚═════════♡════════╝`
             );
-            userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
-            userData.totalexp += act_exp[i_act].act_amount
+            if (roles.cache.has(`572124614050840576`)) {
+                userData.exp += (act_exp[i_act].act_amount * 2) //ДОБАВИТЬ В ДРУГИЕ
+                userData.totalexp += (act_exp[i_act].act_amount * 2)
+            } else {
+                userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
+                userData.totalexp += act_exp[i_act].act_amount
+            }
+
             userData.cooldowns.daily = Date.now() + (1000 * 60 * 60 * 16) //ДОБАВИТЬ В ДРУГИЕ(ГДЕ КУЛДАУН)  * 60 * 16
-            
-                userData.save();
-                console.log(chalk.magentaBright(`[${interaction.user.tag} открыл ежедневную коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot1[i_loot1].loot1_name}`))
+
+            userData.save();
+            console.log(chalk.magentaBright(`[${interaction.user.tag} открыл ежедневную коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot1[i_loot1].loot1_name}`))
             await interaction.deleteReply()
         } else if (!roles.cache.has("504887113649750016")) {
             interaction.reply({

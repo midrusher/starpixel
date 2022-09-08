@@ -5,8 +5,8 @@ const chalk = require(`chalk`);
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(`small`)  //Название команды
-        .setDescription(`Открыть маленькую коробку.`), //Описание команды
+        .setName(`spooky`)  //Название команды
+        .setDescription(`Открыть жуткую коробку.`), //Описание команды
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
@@ -17,11 +17,9 @@ module.exports = {
 
         const { roles } = interaction.member //Участник команды
         const role = await interaction.guild.roles  //Постоянная для role
-            .fetch("510932601721192458") //ID коробки
+            .fetch("893932177799135253") //ID коробки
             .catch(console.error);
-        if (roles.cache.has("510932601721192458") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
-            const cmd_name = `small` //Название команды
-            const timestamp = Math.round(interaction.createdTimestamp / 1000)
+        if (roles.cache.has("893932177799135253") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
             await roles.remove(role).catch(console.error); //Удалить роль коробки
             const opener = interaction.member.id;
             await interaction.deleteReply()
@@ -36,99 +34,51 @@ module.exports = {
             let loot1 = [
                 {
                     loot1_name: `🐛ПИТОМЕЦ /spet`,
-                    dropChanceLOOT1: 12,
+                    dropChanceLOOT1: 10,
                     loot1_roleID: "553637207911563264",
                     loot1_description: "Обучайся различным навыкам у питомцев."
                 },
                 {
-                    loot1_name: `🕊️ ПИТОМЕЦ /epet`,
-                    dropChanceLOOT1: 2,
-                    loot1_roleID: "553638054238093364",
+                    loot1_name: `👻 КАРТИНКА /ghost`,
+                    dropChanceLOOT1: 1,
+                    loot1_roleID: "893927886766096384",
                     loot1_description: "Обучайся различным навыкам у питомцев."
                 },
                 {
-                    loot1_name: `СТАНДАРТНАЯ ЭМОЦИЯ 🙄 /oh`,
-                    dropChanceLOOT1: 5,
-                    loot1_roleID: "566528019208863744",
-                    loot1_description: "Используй её, чтобы лучше показать свои эмоции в чате."
-                },
-                {
-                    loot1_name: `СТАНДАРТНАЯ ЭМОЦИЯ 😌 /army`,
-                    dropChanceLOOT1: 5,
-                    loot1_roleID: "571743750049497089",
-                    loot1_description: "Используй её, чтобы лучше показать свои эмоции в чате."
-                },
-                {
                     loot1_name: `СТАНДАРТНАЯ ЭМОЦИЯ 😮 /getup`,
-                    dropChanceLOOT1: 5,
+                    dropChanceLOOT1: 20,
                     loot1_roleID: "571745411929341962",
                     loot1_description: "Используй её, чтобы лучше показать свои эмоции в чате."
                 },
                 {
                     loot1_name: `СТАНДАРТНАЯ ЭМОЦИЯ 😴 /sleep`,
-                    dropChanceLOOT1: 5,
+                    dropChanceLOOT1: 20,
                     loot1_roleID: "571744516894228481",
                     loot1_description: "Используй её, чтобы лучше показать свои эмоции в чате."
                 },
                 {
-                    loot1_name: `⭐ ЗВЕЗДА АЛЬФА`,
-                    dropChanceLOOT1: 5,
-                    loot1_roleID: "553660090184499201",
-                    loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
-                },
-                {
-                    loot1_name: `⭐ ЗВЕЗДА БЕТА`,
-                    dropChanceLOOT1: 5,
-                    loot1_roleID: "553660091677540363",
-                    loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
-                },
-                {
-                    loot1_name: `⭐ ЗВЕЗДА ГАММА`,
-                    dropChanceLOOT1: 5,
-                    loot1_roleID: "553660093523034112",
-                    loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
-                },
-                {
-                    loot1_name: `⭐ ЗВЕЗДА ДЕЛЬТА`,
-                    dropChanceLOOT1: 5,
-                    loot1_roleID: "553660095259475989",
-                    loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
-                },
-                {
-                    loot1_name: `⭐ ЗВЕЗДА ЭПСИЛОН`,
-                    dropChanceLOOT1: 5,
-                    loot1_roleID: "553660095951667217",
-                    loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
-                },
-                {
                     loot1_name: `⭐ ЗВЕЗДА ДЗЕТА`,
-                    dropChanceLOOT1: 5,
+                    dropChanceLOOT1: 10,
                     loot1_roleID: "553660097520205824",
                     loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
                 },
                 {
                     loot1_name: `⭐ ЗВЕЗДА ЭТА`,
-                    dropChanceLOOT1: 5,
+                    dropChanceLOOT1: 10,
                     loot1_roleID: "572417192755462165",
                     loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
                 },
                 {
                     loot1_name: `⭐ ЗВЕЗДА ТЕТА`,
-                    dropChanceLOOT1: 5,
+                    dropChanceLOOT1: 10,
                     loot1_roleID: "595962185641885716",
                     loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
                 },
                 {
                     loot1_name: `⭐ ЗВЕЗДА ЙОТА`,
-                    dropChanceLOOT1: 5,
+                    dropChanceLOOT1: 10,
                     loot1_roleID: "609082751349686282",
                     loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
-                },
-                {
-                    loot1_name: `Награды нет.`,
-                    dropChanceLOOT1: 1,
-                    loot1_roleID: "521248091853291540", //Большая
-                    loot1_description: ":nazar_amulet: Если у вас есть талисман удачи или Плутон, то эта коробка превратится в большую."
                 }
             ];
 
@@ -148,20 +98,16 @@ module.exports = {
             const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
                 .send(
 `◾
-<@${opener}> открывает маленькую коробку от гильдии.
-╭─────x─────╮
+<@${opener}> открывает жуткую коробку:
+╔━═━︽︾︽︾🎃︾︽︾︽━═━╗
 \`${loot1[i_loot1].loot1_name}\`
 ${loot1[i_loot1].loot1_description}
-╰─────x─────╯
+╚━═━︽︾︽︾🎃︾︽︾︽━═━╝
 ◾`)
-            if (!roles.cache.has(loot1[i_loot1].loot1_roleID) && loot1[i_loot1].loot1_name != `Награды нет.` || !roles.cache.has(loot1[i_loot1].loot1_roleID) && loot1[i_loot1].loot1_name == `Награды нет.` && (roles.cache.has("597746051998285834") || roles.cache.has("572124468189593622"))) {
+            if (!roles.cache.has(loot1[i_loot1].loot1_roleID)) {
                 await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error);
                 await r_loot_msg.react("✅")
-            } else {
-                if (loot1[i_loot1].loot1_name == `Награды нет.` && !roles.cache.has("597746051998285834" || "572124468189593622") || roles.cache.has(loot1[i_loot1].loot1_roleID))  {
-                    await r_loot_msg.react("🚫")
-                };
-            };
+            } else await r_loot_msg.react("🚫")
 
 
             //Опыт рангов (если необходимо)
@@ -192,7 +138,7 @@ ${loot1[i_loot1].loot1_description}
             interaction.guild.channels.cache.get(process.env.rank_channel).send(
 `╔═════════♡════════╗
 <@${opener}> +${rank_exp[i_rank].rank_amount}💠
-\`Получено из маленькой коробки.\`
+\`Получено из жуткой коробки.\`
 ╚═════════♡════════╝`
             );
 
@@ -238,7 +184,7 @@ ${loot1[i_loot1].loot1_description}
             interaction.guild.channels.cache.get(process.env.act_channel).send(
 `╔═════════♡════════╗
 <@${opener}> +${act_exp[i_act].act_amount}🌀
-\`Получено из маленькой коробки.\`
+\`Получено из жуткой коробки.\`
 ╚═════════♡════════╝`
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ

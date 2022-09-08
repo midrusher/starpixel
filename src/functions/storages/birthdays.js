@@ -42,9 +42,10 @@ module.exports = (client) => {
                         }).then((m) => {
                             m.react(`🎂`)
                         })
-                       await member.roles.add(`983441364903665714`)
-                       const hpb = new Temp({ userid: member.user.id, guildid: g.id, roleid: `983441364903665714`, expire: Date.now() + (1000 * 60 * 60 * 24)})
-                       hpb.save()
+                        await member.roles.add(`983441364903665714`).catch()
+                        await member.roles.add(`584673040470769667`).catch()
+                        const hpb = new Temp({ userid: member.user.id, guildid: g.id, roleid: `983441364903665714`, expire: Date.now() + (1000 * 60 * 60 * 24) })
+                        hpb.save()
                     }
 
 

@@ -7,7 +7,10 @@ const Guild = new mongoose.Schema({
         name: { type: String },
         hint: { type: String }
     },
-    act_exp_boost: { type: Number, default: 1}
+    act_exp_boost: { type: Number, default: 1},
+    cooldowns: {
+        top_3_gexp: { type: Date, default: Date.now() }
+    }
 
 })
 

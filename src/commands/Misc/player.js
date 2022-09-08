@@ -14,11 +14,11 @@ module.exports = {
         .setDescription(`test`),
 
     async execute(interaction, client) {
-        const channel = await interaction.guild.channels.cache.get(`876436260347076608`)
-        const message = await channel.messages.fetch(`1016426386027728916`)
-        await message.edit({
-            content: `nothing t do`,
-            embeds: []
-        })
+        const channel = await interaction.guild.channels.cache.get(`849597880343461908`)
+        const msg = await channel.messages.fetch(`1017387480430944326`)
+        await msg.react(`🎁`)
+        await msg.react(`😍`)
+        await msg.react(`⭐`)
+        await msg.react(`👍`)
     }
 };

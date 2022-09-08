@@ -37,24 +37,6 @@ module.exports = {
                 userData.save();
             }
 
-            const msgData = await MsgData.findOneAndUpdate({ guildid: message.guild.id }, {
-                $push: {
-                    messages: {
-                        content: message.content,
-                        author: message.author.username,
-                        expire: Date.now() + (1000 * 30)
-                    }
-                }
-            }) || new MsgData({
-                guildid: message.guild.id,
-                messages: {
-                    content: message.content,
-                    author: message.author.username,
-                    expire: Date.now() + (1000 * 30)
-                }
-            })
-
-            msgData.save()
         }
 
 

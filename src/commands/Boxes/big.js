@@ -73,7 +73,7 @@ module.exports = {
 \`Получено из большой коробки.\`
 ╚═════════♡════════╝`
             );
-            userData.rank += rank_exp[i_rank].rank_amount //ДОБАВИТЬ В ДРУГИЕ
+            userData.rank += rank_exp[i_rank].rank_amount + (rank_exp[i_rank].rank_amount * 0.05 * userData.perks.rank_boost)//ДОБАВИТЬ В ДРУГИЕ
             
 
 

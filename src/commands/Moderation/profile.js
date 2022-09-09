@@ -239,7 +239,7 @@ module.exports = {
                             userData.uuid = json.player.uuid;
                             userData.markModified(`uuid`)
                             userData.cooldowns.prof_update = Date.now() + (1000 * 60 * 60 * 24)
-                            creator.cooldowns.prof_create = Date.now() + (1000 * 10)
+                            creator.cooldowns.prof_create = Date.now() + (1000 * 60)
                             creator.markModified(`prof_create`)
                         } catch (error) {
                             userData.delete();
@@ -278,9 +278,9 @@ module.exports = {
                         `992820494900412456`
                     ]
                     let rloot1 = randombox[Math.floor(Math.random() * randombox.length)];
-                    memberDM.roles.add(roles).catch()
-                    memberDM.roles.add(rloot1).catch()
-                    memberDM.roles.remove(`920346035811917825`).catch()
+                    await memberDM.roles.add(roles).catch()
+                    await memberDM.roles.add(rloot1).catch()
+                    await memberDM.roles.remove(`920346035811917825`).catch()
 
                     creator.save()
                     userData.save()

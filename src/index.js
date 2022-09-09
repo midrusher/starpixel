@@ -25,7 +25,6 @@ const client = new Client({
     } 
 });
 
-client.voiceManager = new Collection();
 client.commands = new Collection();
 client.buttons = new Collection();
 client.modals = new Collection();
@@ -42,22 +41,27 @@ for (const folder of functionFolders) {
         require(`./functions/${folder}/${file}`)(client);
 }
 
+//Handlers
 client.handleEvents();
 client.handleCommands();
 client.handleComponents();
 
+//Items
 client.temp_roles();
 //client.rank_update();
 client.act_add();
 client.act_remove();
 client.act_rewards();
-client.top_3_gexp();
 
+//Profiles
 client.updatenicks();
+client.top_3_gexp();
 client.haspremium();
 
+//Storages
 client.wish_birthday();
-client.update_members()
+client.update_members();
+client.statsChannel();
 
 client.login(token);
 (async () => {

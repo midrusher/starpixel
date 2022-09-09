@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
-const { execute } = require('../../events/client/ready');
+const { execute } = require('../../events/client/start_bot/ready');
 const fetch = require(`node-fetch`);
 const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
@@ -21,19 +21,9 @@ module.exports = {
                 .setDescription(`Пользовать, чей день рождения необходимо установить`)
                 .setRequired(true)
             )
-            .addIntegerOption(option => option
-                .setName(`день`)
-                .setDescription(`Число, когда у пользователя день рождения.`)
-                .setRequired(true)
-            )
-            .addIntegerOption(option => option
-                .setName(`месяц`)
-                .setDescription(`Число, когда у пользователя день рождения.`)
-                .setRequired(true)
-            )
-            .addIntegerOption(option => option
-                .setName(`год`)
-                .setDescription(`Год, когда у пользователя день рождения.`)
+            .addStringOption(option => option
+                .setName(`дата`)
+                .setDescription(`Установить день рождения пользователя. Писать в следующем формате: DD.MM.YYYY`)
                 .setRequired(true)
             )
         )
@@ -85,9 +75,13 @@ module.exports = {
                 const currentMonth = date.getMonth() + 1
                 const currentDate = date.getDate()
 
-                const Day = interaction.options.getInteger(`день`)
-                const Month = interaction.options.getInteger(`месяц`)
-                const Year = interaction.options.getInteger(`год`)
+                let strDate = interaction.options.getString(`дата`)
+                let arr = strDate.split(`.`, 3)
+
+
+                const Day = new Number(arr[0])
+                const Month = new Number(arr[1])
+                const Year = new Number(arr[2])
 
                 const list = {
                     1: "января",

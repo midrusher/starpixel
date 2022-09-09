@@ -1,4 +1,4 @@
-const { execute } = require("../../events/client/ready");
+
 
 module.exports = {
     data: {

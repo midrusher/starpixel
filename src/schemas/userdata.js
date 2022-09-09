@@ -19,7 +19,7 @@ const User = new mongoose.Schema({
     age: { type: Number, },
     security_code: { type: String, },
     rumbik: { type: Number, default: 0 },
-    rank: { type: Number, default: 0, max: 25000 },
+    rank: { type: Number, default: 0 },
     exp: { type: Number, default: 0 },
     totalexp: { type: Number, default: 0 },
     level: { type: Number, default: 0},
@@ -116,8 +116,11 @@ const User = new mongoose.Schema({
     medal_2: { type: Number, default: 0 },
     medal_3: { type: Number, default: 0 },
 
-    weekly_exp: { type: Number, default: 0 }
-    
+    weekly_exp: { type: Number, default: 0 },
+    temp_channel: { 
+        created: {type: Boolean, default: false },
+        id: { type: String, default: `` },
+    }
 })
 
 module.exports = { User: mongoose.model(`User`, User) }

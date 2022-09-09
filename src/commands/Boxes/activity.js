@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { execute } = require('../../events/client/ready');
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
 

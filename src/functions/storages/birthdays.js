@@ -25,7 +25,7 @@ module.exports = (client) => {
                     const date = new Date()
                     const currentYear = date.getFullYear()
                     const currentMonth = date.getMonth() + 1
-                    const currentDay = date.getDay()
+                    const currentDate = date.getDate()
 
                     const age = currentYear - Year;
 
@@ -35,7 +35,7 @@ module.exports = (client) => {
 В качестве подарка от гильдии ты получаешь **КОРОЛЕВСКУЮ** коробку и эксклюзивную роль именинника на весь день!`)
                         .setColor(process.env.bot_color)
 
-                    if (Month === currentMonth && Day === currentDay) {
+                    if (Month === currentMonth && Day === currentDate) {
                         await channel.send({
                             content: `@everyone`,
                             embeds: [happy_birthday]

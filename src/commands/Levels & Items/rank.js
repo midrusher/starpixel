@@ -1,12 +1,12 @@
 const { SlashCommandBuilder, Attachment, EmbedBuilder } = require('discord.js');
-const { execute } = require('../../events/client/ready');
+ 
 const { User } = require(`../../schemas/userdata`);
 
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`rank`)
-        .setDescription(`Показать предметы пользователя.`)
+        .setDescription(`Показать опыт активности.`)
         .addUserOption(option => option
             .setName(`пользователь`)
             .setRequired(false)
@@ -14,7 +14,7 @@ module.exports = {
         ),
     async execute(interaction, client) {
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
-        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username })
+        const userData = await User.findOne({ userid: user.id })
         const neededXP = 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
 
 

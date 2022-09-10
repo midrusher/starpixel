@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, Embed, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
-const { execute } = require('../../events/client/ready');
+const { execute } = require('../../events/client/start_bot/ready');
 const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {

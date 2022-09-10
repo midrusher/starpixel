@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { execute } = require('../../events/client/ready');
+const { execute } = require('../../events/client/start_bot/ready');
 const chalk = require(`chalk`);
 
 module.exports = {

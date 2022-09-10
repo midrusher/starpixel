@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
-const { execute } = require('../../events/client/ready');
+const { execute } = require('../../events/client/start_bot/ready');
 const wait = require('node:timers/promises').setTimeout;
 const fetch = require(`node-fetch`);
 const api = process.env.hypixel_apikey;

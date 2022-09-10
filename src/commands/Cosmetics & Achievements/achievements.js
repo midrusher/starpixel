@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require(`../../schemas/userdata`); //ДОБАВИТЬ В ДРУГИЕ
 const { Guild } = require(`../../schemas/guilddata`)
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
-const { execute } = require('../../events/client/ready');
+const { execute } = require('../../events/client/start_bot/ready');
 const chalk = require(`chalk`);
 
 module.exports = {

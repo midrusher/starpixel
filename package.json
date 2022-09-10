@@ -17,7 +17,6 @@
     "@discordjs/rest": "^1.0.1",
     "@discordjs/voice": "^0.11.0",
     "@napi-rs/canvas": "^0.1.29",
-    "canvacord": "^5.4.6",
     "chalk": "^4.1.2",
     "discord-api-types": "^0.37.3",
     "discord.js": "^14.3.0",

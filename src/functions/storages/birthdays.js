@@ -44,8 +44,10 @@ module.exports = (client) => {
                         })
                         await member.roles.add(`983441364903665714`).catch()
                         await member.roles.add(`584673040470769667`).catch()
+                        b.age += 1
                         const hpb = new Temp({ userid: member.user.id, guildid: g.id, roleid: `983441364903665714`, expire: Date.now() + (1000 * 60 * 60 * 24) })
                         hpb.save()
+                        b.save()
                     }
 
 

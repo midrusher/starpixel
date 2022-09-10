@@ -11,9 +11,9 @@ module.exports = (client) => {
 
             Guilds.forEach(async g => {
                 const channel = await g.channels.cache.get(`932203255335899177`)
-                const adminmsg = await channel.messages.fetch(`984888326584664105`)
-                const premmsg = await channel.messages.fetch(`984888399066443826`)
-                const membmsg = await channel.messages.fetch(`984888446541766747`)
+                const adminmsg = await channel.messages.fetch(`1018224160125755553`)
+                const premmsg = await channel.messages.fetch(`1018224161027543221`)
+                const membmsg = await channel.messages.fetch(`1018224178224169000`)
                 const members = await g.members.fetch()
 
 

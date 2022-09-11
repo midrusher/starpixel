@@ -44,7 +44,7 @@ module.exports = {
             ctx = canvas.getContext('2d'),
             bar_width = 600,
             bg = await loadImage(`./src/assets/Cards/Rank card.jpg`),
-            av = await loadImage(interaction.user.displayAvatarURL({ format: 'png', dynamic: false }));
+            av = await loadImage(user.displayAvatarURL({ format: 'png', dynamic: false }));
 
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 

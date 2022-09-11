@@ -17,7 +17,7 @@ const client = new Client({
         Partials.User
     ],
     presence: {
-        status: `dnd`,
+        status: `idle`,
         activities: [{
             type: ActivityType.Competing,
             name: `слежке за участниками гильдии Starpixel!`,

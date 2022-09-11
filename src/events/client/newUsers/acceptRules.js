@@ -7,7 +7,7 @@ const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИ
 module.exports = {
     name: 'guildMemberUpdate',
     async execute(oldMember, newMember) {
-        if (newMember.pending === false) {
+        if (oldMember.pending === true && newMember.pending === false) {
             await newMember.roles.add(`920346035811917825`)
             const guild = newMember.guild
             const channel = guild.channels.fetch(`849608079691350078`)

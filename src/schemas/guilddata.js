@@ -10,6 +10,12 @@ const Guild = new mongoose.Schema({
     act_exp_boost: { type: Number, default: 1},
     cooldowns: {
         top_3_gexp: { type: Date, default: Date.now() }
+    },
+    logs: {
+        webhook_url: { type: String },
+        webhook_token: { type: String },
+        webhook_id: { type: String },
+        log_channel: { type: String }
     }
 
 })

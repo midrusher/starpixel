@@ -62,6 +62,6 @@ module.exports = (client) => {
                 name: `╰📊・В гильдии: ${guild_members}`
             })
 
-        }, 10000)
+        }, 600000)
     }
 }

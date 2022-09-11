@@ -6,6 +6,7 @@ const chalk = require(`chalk`)
 module.exports = (client) => {
   client.handleCommands = async () => {
     const commandFolders = fs.readdirSync('./src/commands');
+    let i = 1
     for (const folder of commandFolders) {
       const commandFiles = fs
         .readdirSync(`./src/commands/${folder}`)
@@ -16,6 +17,8 @@ module.exports = (client) => {
         const command = require(`../../commands/${folder}/${file}`);
         client.commands.set(command.data.name, command);
         commandArray.push(command.data.toJSON());
+        console.log(chalk.hex(`#646464`)(`[ЗАГРУЗКА КОМАНД] ${i++}. ${file} был успешно загружен!`))
+        
       }
     }
 

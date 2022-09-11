@@ -1,6 +1,6 @@
 {
   "name": "starpixel-bot",
-  "version": "1.0.0",
+  "version": "0.1 pre beta",
   "description": "",
   "main": "src/index.js",
   "engines": {

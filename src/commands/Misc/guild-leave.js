@@ -4,7 +4,7 @@ const { execute } = require('../../events/client/start_bot/ready');
 const fetch = require(`node-fetch`);
 const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
-const { Guild } = require(`../../schemas/guilddata`)
+const { Birthday } = require(`../../schemas/birthday`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 
@@ -14,7 +14,7 @@ module.exports = {
         .setDescription(`Покинуть гильдию Starpixel.`),
 
     async execute(interaction, client) {
-        
+
         const user = interaction.member
         if (!user.roles.cache.has(`504887113649750016`)) return interaction.reply({
             content: `Вы не являетесь участником гильдии Starpixel, какую гильдию вы собираетесь покидать? 😂`,
@@ -24,7 +24,8 @@ module.exports = {
             content: `Пожалуйста, перейдите в канал <#${process.env.ask_channel}>, чтобы использовать данную команду!`,
             ephemeral: true
         })
-        const userData = await User.findOne({ userid: user.user.id })
+        const userData = await User.findOne({ userid: member.user.id, guildid: member.guild.id })
+        const bd = await Birthday.findOne({ userid: member.user.id, guildid: member.guild.id })
         const guild_leave = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
@@ -86,9 +87,14 @@ module.exports = {
                         i.reply({
                             content: `${user} покинул гильдию Starpixel!`
                         })
-                        userData.deleteOne({ userid: user.user.id })
+                        if (userData) {
+                            userData.delete()
+                        }
+                        if (bd) {
+                            bd.delete()
+                        }
 
-console.log(chalk.red(`[УЧАСТНИК ПОКИНУЛ ГИЛЬДИЮ]`) + chalk.gray(`: Пользователь ${i.user.username} покинул гильдию Starpixel!`))
+                        console.log(chalk.red(`[УЧАСТНИК ПОКИНУЛ ГИЛЬДИЮ]`) + chalk.gray(`: Пользователь ${i.user.username} покинул гильдию Starpixel!`))
                     } else if (i.customId === `g_stay`) {
                         g_leave_embed
                             .setTitle(`Пользователь решил остаться в гильдии!`)

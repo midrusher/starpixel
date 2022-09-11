@@ -260,6 +260,8 @@ module.exports = {
                 let index = 1
                 listData.sort((a, b) => new Date(`${a.year} ${a.month} ${a.day}`) - new Date(`${b.year} ${b.month} ${b.day}`))
 
+                
+
                 const birthdayData = listData.map((d) => {
                     return `**${index++}.** \`${d.day}.${d.month}.${d.year}\` - ${client.users.cache.get(d.userid)} (${currentYear - d.year})`
                 }).join("\n")

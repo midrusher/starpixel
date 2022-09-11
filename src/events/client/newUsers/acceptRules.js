@@ -10,9 +10,9 @@ module.exports = {
         if (oldMember.pending === true && newMember.pending === false) {
             await newMember.roles.add(`920346035811917825`)
             const guild = newMember.guild
-            const channel = guild.channels.fetch(`849608079691350078`)
+            const channel = guild.channels.cache.get(`849608079691350078`)
             await channel.send({
-                content: `${newMember} принял правила сервера при входе на сервер!`
+                content: `${newMember} принял правила при входе на сервер!`
             })
         }
     }

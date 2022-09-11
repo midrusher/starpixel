@@ -100,6 +100,26 @@ module.exports = {
                     .setMinValue(0)
                 )
             )
+            .addSubcommand(subcommand => subcommand
+                .setName(`boolean`)
+                .setDescription(`Установить значение true / false`)
+                .addStringOption(option => option
+                    .setName(`id`)
+                    .setDescription(`ID пользователя в Discord`)
+                    .setRequired(true)
+                )
+                .addStringOption(option => option
+                    .setName(`опция`)
+                    .setDescription(`Установить опцию, которую необходимо изменить`)
+                    .setRequired(true)
+                    .setAutocomplete(true)
+                )
+                .addBooleanOption(option => option
+                    .setName(`значение`)
+                    .setDescription(`Установить значение для опции`)
+                    .setRequired(true)
+                )
+            )
         ),
 
     async autoComplete(interaction, client) {
@@ -149,7 +169,18 @@ module.exports = {
                     }
 
                         break;
+                    case `boolean`: {
+                        const focusedValue = interaction.options.getFocused();
+                        const choices = [
+                            'Пользовательский значок ранга',
+                        ];
+                        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+                        await interaction.respond(
+                            filtered.map(choice => ({ name: choice, value: choice })),
+                        );
+                    }
 
+                        break;
                     default:
                         break;
                 }
@@ -704,7 +735,7 @@ module.exports = {
                                     while (userData.gexp >= 50000 - (50000 * 0.10 * userData.perks.ticket_discount)) {
                                         userData.gexp -= 50000 - (50000 * 0.10 * userData.perks.ticket_discount)
                                         userData.tickets += 1
-                                        console.log(chalk.magenta(`[Получены билеты]`) + chalk.gray(`: ${user.username} получил 1 билет. Теперь у него ${userData.tickets} билетов`))
+                                        console.log(chalk.magenta(`[Получены билеты]`) + chalk.gray(`: ${user.user.username} получил 1 билет. Теперь у него ${userData.tickets} билетов`))
                                     }
 
                                 } catch (error) {
@@ -1007,7 +1038,7 @@ module.exports = {
                                 })
                             }
                                 break;
-                            
+
                             case `Цены в магазине`: {
                                 const before = userData.shop_costs
 
@@ -1229,7 +1260,37 @@ module.exports = {
                     }
 
                         break;
+                    case 'boolean': {
+                        const user_id = interaction.options.getString(`id`)
+                        const user = await interaction.guild.members.fetch(user_id)
+                        const userData = await User.findOne({ userid: user_id })
+                        const value = interaction.options.getBoolean(`значение`)
 
+                        switch (interaction.options.getString(`опция`)) {
+                            case `Пользовательский значок ранга`: {
+                                const before = userData.displayname.custom_rank
+                                userData.displayname.custom_rank = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                        break
                     default:
                         break;
                 }

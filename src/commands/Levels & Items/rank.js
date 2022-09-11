@@ -69,8 +69,8 @@ module.exports = {
         ctx.font = "bold 48px Sans";
         ctx.fillStyle = "#ffdd35";
         ctx.textAlign = "center";
-        ctx.fillText(`#` + rank, 655, 45, 80);
-        ctx.fillText(`${userData.level}`, 925, 45, 80);
+        ctx.fillText(`#` + rank, 665, 45, 80);
+        ctx.fillText(`${userData.level}`, 935, 45, 80);
 
         ctx.font = "bold 44px Sans";
         ctx.fillStyle = "white";

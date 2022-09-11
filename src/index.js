@@ -48,10 +48,11 @@ client.handleComponents();
 
 //Items
 client.temp_roles();
-//client.rank_update();
+client.rank_update();
 client.act_add();
 client.act_remove();
 client.act_rewards();
+
 
 //Profiles
 client.updatenicks();

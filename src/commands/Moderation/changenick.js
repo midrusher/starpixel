@@ -29,7 +29,7 @@ module.exports = {
         )
     ,
     async autoComplete(interaction, client) {
-
+        
         const focusedValue = interaction.options.getFocused();
         const choices = [
             'Символ ранга',

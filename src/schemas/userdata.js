@@ -10,7 +10,8 @@ const User = new mongoose.Schema({
         ramka2: { type: String, default: `` },
         symbol: { type: String, default: `👤` },
         premium: { type: String, default: `` },
-        suffix: { type: String, default: `` }
+        suffix: { type: String, default: `` },
+        custom_rank: { type: Boolean, default: false }
 
     },
     name: { type: String  },

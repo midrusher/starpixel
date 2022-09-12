@@ -161,7 +161,7 @@ ${opener} открывает коробку активности.
 
         } else {
             await interaction.editReply({
-                content: `У вас отсутствует \`${role.name}\` коробка!`
+                content: `У вас отсутствует коробка \`${role.name}\`!`
             })
         }
     }

@@ -15,10 +15,6 @@ module.exports = {
         .setDescription(`test`),
 
     async execute(interaction, client) {
-        const guild = interaction.guild;
-        const log_data = await Guild.findOne({ id: guild.id })
-        const channel = await guild.channels.cache.get(`982551755340537866`)
-        const webhook = new WebhookClient({ id: log_data.logs.webhook_id, token: log_data.logs.webhook_token})
         
     }
 };

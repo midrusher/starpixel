@@ -163,7 +163,7 @@ console.log(chalk.red(`[ПОЛУЧЕН КОД БЕЗОПАСНОСТИ]`) + chal
                     userData.security_code = code;
                 } catch (error) {
                     await interaction.reply({
-                        content: `У пользователя ${user} закрыты личные сообщения! Попросите его открыть их и повторите попытку снова!`,
+                        content: `У вас закрыты личные сообщения! Откройте их и повторите попытку снова!`,
                         ephemeral: true
                     });
                     return;

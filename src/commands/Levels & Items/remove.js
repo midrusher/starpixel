@@ -39,7 +39,7 @@ module.exports = {
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username })
         switch (interaction.options.getString(`тип`)) {
             case `Опыт активности`: {
-                
+
                 userData.exp -= interaction.options.getNumber(`количество`);
                 userData.totalexp -= interaction.options.getNumber(`количество`);
                 const not_possible = new EmbedBuilder()

@@ -7,7 +7,7 @@ module.exports = (client) => {
     client.act_rewards = async () => {
         setInterval(async () => {
             const results = await User.find({ level: { $gt: 0 } })
-            let i 
+            let i
             for (const result of results) {
                 const { userid, level, act_rewards } = result;
                 i = level
@@ -17,7 +17,7 @@ module.exports = (client) => {
 
                     try {
                         const role = await guild.roles.fetch(rewards[i].role)
-                        
+
                         if (rewards[i].type == "box") {
                             if (!member.roles.cache.has(role)) {
                                 result.act_rewards = level;
@@ -66,7 +66,7 @@ module.exports = (client) => {
                             }
                         }
                     } catch (error) {
-                        console.log(error)
+                        console.log(`Роль за уровень ${i} не существует!`)
                     }
 
 

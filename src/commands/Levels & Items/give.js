@@ -5,7 +5,7 @@ const chalk = require(`chalk`);
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(`give-xp`)
+        .setName(`give`)
         .setDescription(`Выдать предмет пользователю.`)
         .addStringOption(option => option
             .setName(`тип`)

@@ -28,8 +28,8 @@ module.exports = (client) => {
                 else if (hpguild.exp < 4000000) level = 6
                 else if (hpguild.exp < 5500000) level = 7
                 else if (hpguild.exp < 7500000) level = 8
-                else if (hpguild.exp >= 7500000 && hpguild.exp < 15000000) level = Math.floor((hpguild.exp - 7500000) / 2500000) + 9
-                else if (hpguild.exp >= 15000000) level = Math.floor((hpguild.exp - 15000000) / 3000000) + 12
+                else if (hpguild.exp >= 7500000 && hpguild.exp < 20000000) level = Math.floor((hpguild.exp - 7500000) / 2500000) + 9
+                else if (hpguild.exp >= 20000000) level = Math.floor((hpguild.exp - 20000000) / 3000000) + 14
 
                 if (hpguild.exp < 100000) xpneeded = 100000 - hpguild.exp
                 else if (hpguild.exp < 250000) xpneeded = 250000 - hpguild.exp
@@ -40,8 +40,8 @@ module.exports = (client) => {
                 else if (hpguild.exp < 4000000) xpneeded = 4000000 - hpguild.exp
                 else if (hpguild.exp < 5500000) xpneeded = 5500000 - hpguild.exp
                 else if (hpguild.exp < 7500000) xpneeded = 7500000 - hpguild.exp
-                else if (hpguild.exp >= 7500001 && hpguild.exp < 15000000) xpneeded = 15000000 - hpguild.exp
-                else if (hpguild.exp >= 15000000) xpneeded = (Math.round((Math.floor(hpguild.exp / 3000000)) + 1) * 3000000) - hpguild.exp
+                else if (hpguild.exp >= 7500001 && hpguild.exp < 20000000) xpneeded = 20000000 - hpguild.exp
+                else if (hpguild.exp >= 20000000) xpneeded = ((Math.floor((hpguild.exp - 20000000) / 3000000) + 1) * 3000000) - (hpguild.exp - 20000000)
             }
             const percent = 100 - (Math.round((xpneeded / 3000000) * 100))
             

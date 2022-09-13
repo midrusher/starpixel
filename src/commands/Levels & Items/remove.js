@@ -5,7 +5,7 @@ const chalk = require(`chalk`);
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(`remove-xp`)
+        .setName(`remove`)
         .setDescription(`Убрать предмет у пользователя.`)
         .addStringOption(option => option
             .setName(`тип`)

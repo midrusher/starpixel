@@ -5,15 +5,15 @@ const { connect } = require(`mongoose`)
 const { Client, Collection, GatewayIntentBits, Partials, ActivityType, } = require('discord.js');
 const fs = require('fs');
 
-const client = new Client({ 
-    intents: 131071, 
+const client = new Client({
+    intents: 131071,
     partials: [
-        Partials.Channel, 
-        Partials.GuildMember, 
-        Partials.GuildScheduledEvent, 
-        Partials.Message, 
-        Partials.Reaction, 
-        Partials.ThreadMember, 
+        Partials.Channel,
+        Partials.GuildMember,
+        Partials.GuildScheduledEvent,
+        Partials.Message,
+        Partials.Reaction,
+        Partials.ThreadMember,
         Partials.User
     ],
     presence: {
@@ -22,7 +22,7 @@ const client = new Client({
             type: ActivityType.Competing,
             name: `слежке за участниками гильдии Starpixel!`,
         }]
-    } 
+    }
 });
 
 client.commands = new Collection();
@@ -37,7 +37,7 @@ for (const folder of functionFolders) {
     const functionFiles = fs
         .readdirSync(`./src/functions/${folder}`)
         .filter((file) => file.endsWith(`.js`));
-    for ( const file of functionFiles )
+    for (const file of functionFiles)
         require(`./functions/${folder}/${file}`)(client);
 }
 
@@ -63,6 +63,9 @@ client.haspremium();
 client.wish_birthday();
 client.update_members();
 client.statsChannel();
+client.birthdayChannel();
+
+
 
 client.login(token);
 (async () => {

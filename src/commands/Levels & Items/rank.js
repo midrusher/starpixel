@@ -66,25 +66,49 @@ module.exports = {
         ctx.strokeStyle = '#f2e8c9';
         ctx.strokeRect(300, 200, bar_width * userData.exp / neededXP, 0)
 
-        ctx.font = "bold 48px Sans";
+        ctx.font = "bold 36px Sans";
         ctx.fillStyle = "#ffdd35";
         ctx.textAlign = "center";
-        ctx.fillText(`#` + rank, 665, 45, 80);
-        ctx.fillText(`${userData.level}`, 935, 45, 80);
+        ctx.fillText(`#` + rank, 580, 85, 200);
+        ctx.fillText(`${userData.level}`, 830, 85, 200);
 
-        ctx.font = "bold 44px Sans";
+        
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText(user.username, 160, 265, 200);
+        const applyText = (canvas, text) => {
+            // Declare a base size of the font
+            let fontSize = 44;
+        
+            do {
+                // Assign the font to the context and decrement it so it can be measured again
+                ctx.font = `bold ${fontSize -= 2}px Serif`;
+                // Compare pixel width of the text to the canvas minus the approximate avatar size
+            } while (ctx.measureText(text).width > canvas.width - 300);
+        
+            // Return the result to use in the actual canvas
+            return ctx.font;
+        };
+        ctx.font = applyText(canvas, user.username)
+        ctx.fillText(user.username, 210, 265);
 
         ctx.fillStyle = "white";
-        ctx.font = "bold 32px Serif"
-        ctx.fillText(`Ранг`, 580, 45, 200);
-        ctx.fillText(`Уровень`, 830, 45, 200);
+        ctx.font = "underline bold 32px Serif"
+        ctx.textAlign = "center";
+        ctx.fillText(`Ранг:`, 580, 45, 100);
+        ctx.fillText(`Уровень:`, 830, 45, 200);
 
+        ctx.textAlign = "center";
         ctx.fillStyle = "#ff5759";
-        ctx.font = "bold 34px Serif"
-        ctx.fillText(`${userData.exp}/${neededXP} опыта`, 820, 150);
+        ctx.font = "bold 40px Serif"
+        let part1
+        let part2
+        if (userData.exp >= 1000) {
+            part1 = (userData.exp / 1000).toFixed(1) + `k`
+        } else part1 = userData.exp
+        if (neededXP >= 1000) {
+            part2 = (neededXP / 1000).toFixed(1) + `k`
+        } else part2 = neededXP
+        ctx.fillText(`${part1}/${part2}`, 820, 150);
 
         ctx.fillStyle = "#3d158f";
         ctx.font = "bold 34px Serif"
@@ -98,18 +122,7 @@ module.exports = {
         ctx.drawImage(av, 10, 10, 220, 200)
 
 
-        const att = new AttachmentBuilder(canvas.toBuffer(), {name: `rank.png`})
-       /*  const embed = new EmbedBuilder()
-            .setColor(process.env.bot_color)
-            .setAuthor({
-                name: `Опыт пользователя ${user.username}`
-            })
-            .setThumbnail(user.displayAvatarURL())
-            .setTimestamp(Date.now())
-            .setDescription(
-                `**УРОВЕНЬ** - ${userData.level}
-**Опыт** - ${userData.exp}/${neededXP}🌀
-**Всего опыта** - ${userData.totalexp}`) */
+        const att = new AttachmentBuilder(canvas.toBuffer(), { name: `rank.png` })
 
         await interaction.editReply({
             files: [att]

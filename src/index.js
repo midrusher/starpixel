@@ -19,8 +19,8 @@ const client = new Client({
     presence: {
         status: `idle`,
         activities: [{
-            type: ActivityType.Competing,
-            name: `слежке за участниками гильдии Starpixel!`,
+            type: ActivityType.Playing,
+            name: `гильдию Starpixel`,
         }]
     }
 });
@@ -58,6 +58,7 @@ client.act_rewards();
 client.updatenicks();
 client.top_3_gexp();
 client.haspremium();
+client.AutoElements();
 
 //Storages
 client.wish_birthday();

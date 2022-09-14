@@ -1,4 +1,4 @@
-const { Guild } = require(`../../../src/schemas/guilddata`)
+const { Guild } = require(`../../schemas/guilddata`)
 const { User } = require(`../../schemas/userdata`)
 
 const chalk = require(`chalk`)

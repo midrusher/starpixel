@@ -1,5 +1,5 @@
-const { Birthday } = require(`../../../src/schemas/birthday`)
-const { Guild } = require(`../../../src/schemas/guilddata`)
+const { Birthday } = require(`../../schemas/birthday`)
+const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const { EmbedBuilder } = require("discord.js")

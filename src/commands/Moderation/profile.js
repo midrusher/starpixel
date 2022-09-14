@@ -160,9 +160,32 @@ module.exports = {
                             `Обычные достижения`,
                             `Мифические достижения`,
 
+                            `Навык "Перемещение под землёй" (Земля)`,
+                            `Навык "Быстрый рост растений" (Земля)`,
+                            `Навык "Выращивание горных пород" (Земля)`,
+                            `Навык "Плавание на глубине" (Вода)`,
+                            `Навык "Сопротивление течениям" (Вода)`,
+                            `Навык "Подводное дыхание" (Вода)`,
+                            `Навык "Защита от огня" (Огонь)`,
+                            `Навык "Удар молнии" (Огонь)`,
+                            `Навык "Управление пламенем" (Огонь)`,
+                            `Навык "Полет в небесах" (Воздух)`,
+                            `Навык "Повеление ветром" (Воздух)`,
+                            `Навык "Орлиный глаз" (Воздух)`,
+
+                            `Перк "Повышение опыта рангов"`,
+                            `Перк "Скидка в королевском магазине"`,
+                            `Перк "Скидка в магазине активности"`,
+                            `Перк "Скидка в обычном магазине гильдии"`,
+                            `Перк "Увеличение времени действия временных предметов"`,
+                            `Перк "Возможность продавать предметы из профиля"`,
+                            `Перк "Уменьшение опыта гильдии для получения билета"`,
+                            `Перк "Изменение предметов"`,
+
+
 
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+                        const filtered = choices.filter(choice => choice.startsWith(focusedValue)).slice(0, 25);
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );
@@ -1140,6 +1163,10 @@ module.exports = {
                                     content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
                                     ephemeral: true
                                 })
+                                if (value > 25) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 25!`,
+                                    ephemeral: true
+                                })
 
                                 userData.achievements.normal = value
                                 userData.save()
@@ -1162,6 +1189,10 @@ module.exports = {
 
                                 if (value < 0) return interaction.reply({
                                     content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 5) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 5!`,
                                     ephemeral: true
                                 })
 
@@ -1229,6 +1260,7 @@ module.exports = {
                             }
                                 break;
                             case `Медаль 🥉`: {
+                            
                                 const before = userData.medal_3
 
                                 if (value < 0) return interaction.reply({
@@ -1251,6 +1283,549 @@ module.exports = {
                                 })
                             }
                                 break;
+                            case `Навык "Перемещение под землёй" (Земля)`: {
+                                const before = userData.elements.underground
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.underground = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Навык "Быстрый рост растений" (Земля)`: {
+                                const before = userData.elements.fast_grow
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.fast_grow = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Навык "Выращивание горных пород" (Земля)`: {
+                                const before = userData.elements.mountains
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.mountains = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Навык "Плавание на глубине" (Вода)`: {
+                                const before = userData.elements.diving
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.diving = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Навык "Сопротивление течениям" (Вода)`: {
+                                const before = userData.elements.resistance
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.resistance = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                            
+                            
+                                break;
+                            case `Навык "Подводное дыхание" (Вода)`: {
+                                const before = userData.elements.respiration
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.respiration = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Навык "Защита от огня" (Огонь)`: {
+                                const before = userData.elements.fire_resistance
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.fire_resistance = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Навык "Удар молнии" (Огонь)`: {
+                                const before = userData.elements.lightning
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.lightning = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Навык "Управление пламенем" (Огонь)`: {
+                                const before = userData.elements.flame
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.flame = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Навык "Полет в небесах" (Воздух)`: {
+                                const before = userData.elements.flying
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.flying = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Навык "Повеление ветром" (Воздух)`: {
+                                const before = userData.elements.wind
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.wind = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Навык "Орлиный глаз" (Воздух)`: {
+                                const before = userData.elements.eagle_eye
+                                
+                                
+                                
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.elements.eagle_eye = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Перк "Повышение опыта рангов"`: {
+                                const before = userData.perks.rank_boost
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 6) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 6!`,
+                                    ephemeral: true
+                                })
+
+                                userData.perks.rank_boost = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Перк "Скидка в королевском магазине"`: {
+                                const before = userData.perks.king_discount
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 4) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 4!`,
+                                    ephemeral: true
+                                })
+
+                                userData.perks.king_discount = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Перк "Скидка в магазине активности"`: {
+                                const before = userData.perks.act_discount
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 3) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 3!`,
+                                    ephemeral: true
+                                })
+
+                                userData.perks.act_discount = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Перк "Скидка в обычном магазине гильдии"`: {
+                                const before = userData.perks.shop_discount
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 4) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 4!`,
+                                    ephemeral: true
+                                })
+
+                                userData.perks.shop_discount = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Перк "Увеличение времени действия временных предметов"`: {
+                                const before = userData.perks.temp_items
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.perks.temp_items = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Перк "Возможность продавать предметы из профиля"`: {
+                                const before = userData.perks.sell_items
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.perks.sell_items = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Перк "Уменьшение опыта гильдии для получения билета"`: {
+                                const before = userData.perks.ticket_discount
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 5) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 5!`,
+                                    ephemeral: true
+                                })
+
+                                userData.perks.ticket_discount = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
+                            case `Перк "Изменение предметов"`: {
+                                const before = userData.perks.change_items
+
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
+                                if (value > 1) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть больше 1!`,
+                                    ephemeral: true
+                                })
+
+                                userData.perks.change_items = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
 
 
                             default:
@@ -1258,7 +1833,7 @@ module.exports = {
                         }
 
                     }
-
+                        
                         break;
                     case 'boolean': {
                         const user_id = interaction.options.getString(`id`)

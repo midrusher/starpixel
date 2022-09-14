@@ -2346,7 +2346,7 @@ module.exports = {
                                         .setTimestamp(Date.now())
 
                                     let answer = interaction.options.getString(`тайная`);
-                                    if (answer.toLowerCase() !== guildData.secret_word.name) return interaction.reply({
+                                    if (!answer || answer.toLowerCase() !== guildData.secret_word.name) return interaction.reply({
                                         embeds: [no_condition],
                                         ephemeral: true
                                     })

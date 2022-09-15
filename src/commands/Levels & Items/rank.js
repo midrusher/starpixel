@@ -99,7 +99,7 @@ module.exports = {
 
         ctx.textAlign = "center";
         ctx.fillStyle = "#ff5759";
-        ctx.font = "bold 40px Serif"
+        ctx.font = "bold 32px Serif"
         let part1
         let part2
         if (userData.exp >= 1000) {
@@ -111,7 +111,7 @@ module.exports = {
         ctx.fillText(`${part1}/${part2}`, 820, 150);
 
         ctx.fillStyle = "#3d158f";
-        ctx.font = "bold 34px Serif"
+        ctx.font = "bold 32px Serif"
         ctx.fillText(`${((userData.exp * 100) / neededXP).toFixed(0)}%/100%`, 350, 150)
 
         ctx.beginPath();

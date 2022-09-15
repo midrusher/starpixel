@@ -29,6 +29,7 @@ client.commands = new Collection();
 client.buttons = new Collection();
 client.modals = new Collection();
 client.selectMenus = new Collection();
+client.voiceManager = new Collection()
 
 client.commandArray = [];
 
@@ -59,6 +60,7 @@ client.updatenicks();
 client.top_3_gexp();
 client.haspremium();
 client.AutoElements();
+client.AutoStars();
 
 //Storages
 client.wish_birthday();

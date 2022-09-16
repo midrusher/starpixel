@@ -3,7 +3,7 @@ const { ChannelType, EmbedBuilder } = require("discord.js");
 const quiz = require(`./quiz.json`)
 const questions = require(`./questions.json`);
 const { User } = require("../../../schemas/userdata");
-const ch_list = require(`../../discord structure/channels.json`)
+const ch_list = require(`../../../discord structure/channels.json`)
 
 module.exports = {
     name: 'messageCreate',

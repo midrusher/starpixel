@@ -6,7 +6,27 @@ const { Client, Collection, GatewayIntentBits, Partials, ActivityType, } = requi
 const fs = require('fs');
 
 const client = new Client({
-    intents: 131071,
+    intents: [
+        GatewayIntentBits.DirectMessageReactions,
+        GatewayIntentBits.DirectMessageTyping,
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.GuildBans,
+        GatewayIntentBits.GuildEmojisAndStickers,
+        GatewayIntentBits.GuildIntegrations,
+        GatewayIntentBits.GuildInvites,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.GuildMessageTyping,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildPresences,
+        GatewayIntentBits.GuildScheduledEvents,
+        GatewayIntentBits.GuildVoiceStates,
+        GatewayIntentBits.GuildWebhooks,
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.MessageContent
+        
+        
+    ],
     partials: [
         Partials.Channel,
         Partials.GuildMember,

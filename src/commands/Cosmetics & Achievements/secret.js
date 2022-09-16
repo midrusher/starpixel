@@ -6,6 +6,7 @@ const { User } = require(`../../schemas/userdata`);
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -62,7 +63,7 @@ module.exports = {
                 guildData.secret_word.hint = hint
                 guildData.save()
 
-                const msg = await interaction.guild.channels.cache.get(process.env.main_channel).send(
+                const msg = await interaction.guild.channels.cache.get(ch_list.main).send(
                     `Установлена новая тайная команда!    @here
 **Подсказка**: ${guildData.secret_word.hint} (\`/${name.replace(/./g, '_ ')}\`)`
                 )

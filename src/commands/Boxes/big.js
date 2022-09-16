@@ -3,6 +3,7 @@ const { execute } = require('../../events/client/start_bot/ready');
 const wait = require('node:timers/promises').setTimeout;
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -67,7 +68,7 @@ module.exports = {
             }
 
             //Сообщение - опыт рангов                       
-            interaction.guild.channels.cache.get(process.env.rank_channel).send(
+            interaction.guild.channels.cache.get(ch_list.rank).send(
 `╔═════════♡════════╗
 <@${opener}> +${rank_exp[i_rank].rank_amount}💠
 \`Получено из большой коробки.\`
@@ -115,7 +116,7 @@ module.exports = {
             }
 
             //Сообщение - опыт активности                       
-            interaction.guild.channels.cache.get(process.env.act_channel).send(
+            interaction.guild.channels.cache.get(ch_list.act).send(
 `╔═════════♡════════╗
 <@${opener}> +${act_exp[i_act].act_amount}🌀
 \`Получено из большой коробки.\`
@@ -426,7 +427,7 @@ module.exports = {
 
             //Отправка сообщения о луте    
             if (loot2[i_loot2].loot2_name == `Отсутствует.`) {
-                const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
+                const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                     .send(
                         `◾
 <@${opener}> открывает большую коробку от гильдии.
@@ -454,7 +455,7 @@ ${loot2[i_loot2].loot2_description}
                     .setStyle(ButtonStyle.Success)
                     .setEmoji(`⬆️`)
                 )
-                const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
+                const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                     .send({
                         content: `◾
 <@${opener}> открывает большую коробку от гильдии.

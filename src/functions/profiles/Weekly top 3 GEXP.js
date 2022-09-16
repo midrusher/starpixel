@@ -6,6 +6,7 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = (client) => {
     client.top_3_gexp = async () => {
@@ -20,7 +21,7 @@ module.exports = (client) => {
             guildData.save()
             let userDatas = await User.find({ guildid: guild.id })
             let b = 0
-            let msg = await guild.channels.cache.get(process.env.main_channel).send({
+            let msg = await guild.channels.cache.get(ch_list.main).send({
                 content: `Идет генерация топ-3 игроков по GEXP за неделю!`
             })
             for (let userData of userDatas) {

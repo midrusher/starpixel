@@ -3,11 +3,12 @@ const { ChannelType, EmbedBuilder } = require("discord.js");
 const quiz = require(`./quiz.json`)
 const questions = require(`./questions.json`);
 const { User } = require("../../../schemas/userdata");
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     name: 'messageCreate',
     async execute(message, client) {
-        if (message.channel.id == process.env.main_channel) {
+        if (message.channel.id == ch_list.main) {
             const vars = [
                 {
                     name: `none`,

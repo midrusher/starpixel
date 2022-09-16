@@ -7,6 +7,7 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { loadImage, createCanvas } = require(`@napi-rs/canvas`)
 const chalk = require(`chalk`);
+const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 
 module.exports = {
@@ -15,7 +16,12 @@ module.exports = {
         .setDescription(`test`),
 
     async execute(interaction, client) {
-    interaction.reply(`Нет теста на данный момент!`)
-    
+        await interaction.deferReply()
+        await interaction.deleteReply()
+
+        const channel = interaction.guild.channels.cache.get(ch_list.main)
+        setInterval(async () => {
+            await channel.sendTyping() 
+        }, 5000);
     }
 };

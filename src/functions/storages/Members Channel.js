@@ -3,6 +3,7 @@ const { User } = require(`../../schemas/userdata`)
 
 const chalk = require(`chalk`)
 const { EmbedBuilder } = require("discord.js")
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = (client) => {
     client.update_members = async () => {
@@ -144,11 +145,11 @@ ${offres.join('\n')}`)
                         `${membres.join('\n')}`)
                     .addFields({
                         name: `Примечание 1`,
-                        value: `Если вы поменяли ник, убедительная просьба сообщить об этом в <#${process.env.ask_channel}>`,
+                        value: `Если вы поменяли ник, убедительная просьба сообщить об этом в <#${ch_list.ask}>`,
                         inline: true
                     },{
                         name: `Примечание 2`,
-                        value: `Если вы обнаружили ошибку в вашем нике или вашем возрасте, пожалуйста, сообщите нам об этом в <#${process.env.ask_channel}>`,
+                        value: `Если вы обнаружили ошибку в вашем нике или вашем возрасте, пожалуйста, сообщите нам об этом в <#${ch_list.ask}>`,
                         inline: true
                     },)
                 await membmsg.edit({

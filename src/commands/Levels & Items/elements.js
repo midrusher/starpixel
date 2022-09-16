@@ -5,6 +5,7 @@ const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -105,7 +106,7 @@ module.exports = {
                         i_act++;
                     }
 
-                    const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel).send(
+                    const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box).send(
                         `:black_medium_small_square:
 🌳 ${user} использует силы Стихии Земли:
 ╭─────✿✿✿─────╮
@@ -195,7 +196,7 @@ module.exports = {
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.act_channel).send(
+                    interaction.guild.channels.cache.get(ch_list.act).send(
                         `:black_medium_small_square:
 🌪️ ${user} использует силы Стихии Воздуха:
 ╭─────↯─────╮
@@ -279,7 +280,7 @@ module.exports = {
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.rank_channel).send(
+                    interaction.guild.channels.cache.get(ch_list.rank).send(
                         `:black_medium_small_square:
 🌊 ${user} использует силы Стихии Воды:
 ╭─────ஐ─────╮
@@ -362,7 +363,7 @@ module.exports = {
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.rumb_channel).send(
+                    interaction.guild.channels.cache.get(ch_list.rumb).send(
                         `:black_medium_small_square:
 🔥 ${user} использует силы Стихии Огня:
 ╭─────๑۩۩๑─────╮

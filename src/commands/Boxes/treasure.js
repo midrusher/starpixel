@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const { User } = require(`../../schemas/userdata`)
 const { execute } = require('../../events/client/start_bot/ready');
 const chalk = require(`chalk`);
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -133,7 +134,7 @@ module.exports = {
 
 
             //Отправка сообщения о луте              
-            const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
+            const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                 .send(
                     `◾:rosette:◾
 <@${opener}> открывает сокровище гильдии.
@@ -219,7 +220,7 @@ ${loot2[i_loot2].loot2_description}
             }
 
             //Сообщение - румбики                       
-            interaction.guild.channels.cache.get(process.env.rumb_channel).send(
+            interaction.guild.channels.cache.get(ch_list.rumb).send(
                 `╔═════════♡════════╗
 <@${opener}> +${rumbik[i_rumb].rumb_amount}<:Rumbik:883638847056003072>
 \`Получено из сокровища.\`
@@ -268,7 +269,7 @@ ${loot2[i_loot2].loot2_description}
             }
 
             //Сообщение - опыт рангов                       
-            interaction.guild.channels.cache.get(process.env.rank_channel).send(
+            interaction.guild.channels.cache.get(ch_list.rank).send(
                 `╔═════════♡════════╗
 <@${opener}> +${rank_exp[i_rank].rank_amount}💠
 \`Получено из сокровища.\`
@@ -317,7 +318,7 @@ ${loot2[i_loot2].loot2_description}
             }
 
             //Сообщение - опыт активности                       
-            interaction.guild.channels.cache.get(process.env.act_channel).send(
+            interaction.guild.channels.cache.get(ch_list.act).send(
                 `╔═════════♡════════╗
 <@${opener}> +${act_exp[i_act].act_amount}🌀
 \`Получено из сокровища.\`

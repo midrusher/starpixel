@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -75,7 +76,7 @@ module.exports = {
 
 
             //Отправка сообщения о луте              
-            const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
+            const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                 .send(
                     `◾
 <@${opener}> использует тотем счастья. :nazar_amulet:

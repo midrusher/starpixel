@@ -1,5 +1,6 @@
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = (client) => {
     client.act_remove = async () => {
@@ -17,7 +18,7 @@ module.exports = (client) => {
                         result.exp += 5 * (Math.pow(result.level, 2)) + (50 * result.level) + 100
                     }
                     if (levelbefore > result.level) {
-                        guild.channels.cache.get(process.env.main_channel).send(
+                        guild.channels.cache.get(ch_list.main).send(
                             `:black_medium_small_square:
 К сожалению, ${member} понизил свой уровень активности до ${result.level} уровня! 😔
 :black_medium_small_square:`);

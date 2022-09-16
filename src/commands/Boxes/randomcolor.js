@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const { Temp } = require(`../../schemas/temp_items`);
 const chalk = require(`chalk`);
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -84,7 +85,7 @@ module.exports = {
                 ephemeral: true
             })
             //Отправка сообщения о луте              
-            const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
+            const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                 .send(
                     `◾
 <@${opener}> использует выбор цвета...

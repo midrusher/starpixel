@@ -4,6 +4,7 @@ const wait = require('node:timers/promises').setTimeout;
 const { User } = require(`../../schemas/userdata`);
 const { Temp } = require(`../../schemas/temp_items`);
 const chalk = require(`chalk`);
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -68,7 +69,7 @@ module.exports = {
             }
 
             //Сообщение - опыт рангов                       
-            interaction.guild.channels.cache.get(process.env.rank_channel).send(
+            interaction.guild.channels.cache.get(ch_list.rank).send(
                 `╔═════════♡════════╗
 <@${opener}> +${rank_exp[i_rank].rank_amount}💠
 \`Получено из королевской коробки.\`
@@ -114,7 +115,7 @@ module.exports = {
             }
 
             //Сообщение - опыт активности                       
-            interaction.guild.channels.cache.get(process.env.act_channel).send(
+            interaction.guild.channels.cache.get(ch_list.act).send(
                 `╔═════════♡════════╗
 <@${opener}> +${act_exp[i_act].act_amount}🌀
 \`Получено из королевской коробки.\`
@@ -325,7 +326,7 @@ module.exports = {
                     .setEmoji(`⬆️`)
             )
 
-            const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
+            const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                 .send({
                     content: `◾ :crown: ◾
 <@${opener}> открывает королевскую коробку гильдии...

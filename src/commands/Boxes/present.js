@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -160,7 +161,7 @@ module.exports = {
             const r_song = songs[Math.floor(Math.random() * songs.length)]
 
             //Отправка сообщения о луте              
-            const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
+            const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                 .send(
                     `<@${opener}> открывает подарок:
 
@@ -214,7 +215,7 @@ ${r_song}!
             }
 
             //Сообщение - опыт активности                       
-            interaction.guild.channels.cache.get(process.env.act_channel).send(
+            interaction.guild.channels.cache.get(ch_list.act).send(
                 `╔═════════♡════════╗
 <@${opener}> +${act_exp[i_act].act_amount}🌀
 \`Получено из подарка.\`

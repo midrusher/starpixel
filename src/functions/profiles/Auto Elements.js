@@ -1,6 +1,7 @@
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`);
 const { EmbedBuilder } = require(`discord.js`)
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = (client) => {
     client.AutoElements = async () => {
@@ -20,7 +21,7 @@ module.exports = (client) => {
                     .setTimestamp(Date.now())
                     .setDescription(`${member} получил \`${guild.roles.cache.get(`930169139866259496`).name}\`! Пропишите \`/elements water\` для использования стихии!`)
                     await member.roles.add(`930169139866259496`)
-                    await guild.channels.cache.get(process.env.main_channel).send({
+                    await guild.channels.cache.get(ch_list.main).send({
                         embeds: [done]
                     })
                 }
@@ -33,7 +34,7 @@ module.exports = (client) => {
                     .setTimestamp(Date.now())
                     .setDescription(`${member} получил \`${guild.roles.cache.get(`930169145314652170`).name}\`! Пропишите \`/elements air\` для использования стихии!`)
                     await member.roles.add(`930169145314652170`)
-                    await guild.channels.cache.get(process.env.main_channel).send({
+                    await guild.channels.cache.get(ch_list.main).send({
                         embeds: [done]
                     })
                 }
@@ -46,7 +47,7 @@ module.exports = (client) => {
                     .setTimestamp(Date.now())
                     .setDescription(`${member} получил \`${guild.roles.cache.get(`930169143347523604`).name}\`! Пропишите \`/elements earth\` для использования стихии!`)
                     await member.roles.add(`930169143347523604`)
-                    await guild.channels.cache.get(process.env.main_channel).send({
+                    await guild.channels.cache.get(ch_list.main).send({
                         embeds: [done]
                     })
                 }
@@ -59,7 +60,7 @@ module.exports = (client) => {
                     .setTimestamp(Date.now())
                     .setDescription(`${member} получил \`${guild.roles.cache.get(`930169133671280641`).name}\`! Пропишите \`/elements fire\` для использования стихии!`)
                     await member.roles.add(`930169133671280641`)
-                    await guild.channels.cache.get(process.env.main_channel).send({
+                    await guild.channels.cache.get(ch_list.main).send({
                         embeds: [done]
                     })
                 }

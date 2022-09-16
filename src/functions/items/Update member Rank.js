@@ -1,6 +1,7 @@
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
 const { EmbedBuilder } = require("discord.js")
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = (client) => {
     client.rank_update = async () => {
@@ -45,7 +46,7 @@ module.exports = (client) => {
                                     result.save()
                                 }
 
-                                await guild.channels.cache.get(process.env.main_channel).send({
+                                await guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
@@ -74,7 +75,7 @@ module.exports = (client) => {
                                 }
 
 
-                                guild.channels.cache.get(process.env.main_channel).send({
+                                guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
@@ -104,7 +105,7 @@ module.exports = (client) => {
                                 }
 
 
-                                guild.channels.cache.get(process.env.main_channel).send({
+                                guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
@@ -133,7 +134,7 @@ module.exports = (client) => {
                                 }
 
 
-                                guild.channels.cache.get(process.env.main_channel).send({
+                                guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
@@ -162,7 +163,7 @@ module.exports = (client) => {
                                 }
 
 
-                                guild.channels.cache.get(process.env.main_channel).send({
+                                guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
@@ -192,7 +193,7 @@ module.exports = (client) => {
                                 }
 
 
-                                guild.channels.cache.get(process.env.main_channel).send({
+                                guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
@@ -221,7 +222,7 @@ module.exports = (client) => {
                                 }
 
 
-                                guild.channels.cache.get(process.env.main_channel).send({
+                                guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
@@ -251,7 +252,7 @@ module.exports = (client) => {
                                 }
 
 
-                                guild.channels.cache.get(process.env.main_channel).send({
+                                guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank[0].name} & ${newrank[1].name}`))
@@ -280,7 +281,7 @@ module.exports = (client) => {
                                 }
 
 
-                                guild.channels.cache.get(process.env.main_channel).send({
+                                guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
@@ -309,7 +310,7 @@ module.exports = (client) => {
                                 }
 
 
-                                guild.channels.cache.get(process.env.main_channel).send({
+                                guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank[0].name} & ${newrank[1].name}`))
@@ -338,7 +339,7 @@ module.exports = (client) => {
                                 }
 
 
-                                guild.channels.cache.get(process.env.main_channel).send({
+                                guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank[0].name} & ${newrank[1].name}`))

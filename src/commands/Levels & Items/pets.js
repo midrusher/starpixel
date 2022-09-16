@@ -5,6 +5,7 @@ const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -96,7 +97,7 @@ module.exports = {
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.elem_channel).send(
+                    interaction.guild.channels.cache.get(ch_list.elem).send(
                         `:black_medium_small_square:
 ${user} отправился на обучение к Питомцу Земли 🐛.
 ╭──────────╮
@@ -196,7 +197,7 @@ ${pet[i_act].name}
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.elem_channel).send(
+                    interaction.guild.channels.cache.get(ch_list.elem).send(
                         `:black_medium_small_square:
 ${user} отправился на обучение к Питомцу Воздуха 🕊️.
 ╭──────────╮
@@ -298,7 +299,7 @@ ${pet[i_act].name}
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.elem_channel).send(
+                    interaction.guild.channels.cache.get(ch_list.elem).send(
                         `:black_medium_small_square:
 ${user} отправился на обучение к Питомцу Воды 🐋.
 ╭──────────╮
@@ -400,7 +401,7 @@ ${pet[i_act].name}
                         i_act++;
                     }
 
-                    interaction.guild.channels.cache.get(process.env.elem_channel).send(
+                    interaction.guild.channels.cache.get(ch_list.elem).send(
                         `:black_medium_small_square:
 ${user} отправился на обучение к Питомцу Огня 🐲.
 ╭──────────╮

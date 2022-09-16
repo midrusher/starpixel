@@ -6,6 +6,7 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -337,7 +338,7 @@ module.exports = {
                     interaction.reply({
                         embeds: [success]
                     })
-                    await interaction.guild.channels.cache.get(process.env.main_channel).send({
+                    await interaction.guild.channels.cache.get(ch_list.main).send({
                         content: `Профиль пользователя ${interaction.options.getUser(`пользователь`)} (\`${userData.nickname}\`) был успешно создан. Необходимые роли были добавлены. Случайный приветственный подарок был получен. Никнейм будет в скором времени автоматически установлен!`
                     })
                     console.log(chalk.cyan(`[База данных]`) + chalk.gray(`: Профиль пользователя ${userData.name} (${userData.nickname}) был успешно создан!`))
@@ -628,7 +629,7 @@ module.exports = {
                             .setStyle(ButtonStyle.Primary)
                     )
 
-                const msg = await interaction.guild.channels.cache.get(process.env.main_channel).send({
+                const msg = await interaction.guild.channels.cache.get(ch_list.main).send({
                     content: `:black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:    :black_medium_small_square:
 
 :tada: ${user} решил сбросить свою статистику и начать развитие в Дискорде гильдии **заново**!           

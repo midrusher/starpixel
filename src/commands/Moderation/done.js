@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, Embed, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const wait = require('node:timers/promises').setTimeout;
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -57,7 +58,7 @@ module.exports = {
                     name: `С уважением, офицер`, value: `${mod}`
                 }]);
 
-            const msg = await interaction.guild.channels.cache.get(process.env.main_channel).send({
+            const msg = await interaction.guild.channels.cache.get(ch_list.main).send({
                 content: `${user}`,
                 embeds: [done],
                 components: [new ActionRowBuilder().addComponents(button_done)]
@@ -105,7 +106,7 @@ module.exports = {
                     name: `С уважением, офицер`, value: `${mod}`
                 }]);
 
-            const msg = await interaction.guild.channels.cache.get(process.env.main_channel).send({
+            const msg = await interaction.guild.channels.cache.get(ch_list.main).send({
                 content: `${user}`,
                 embeds: [done],
                 components: [new ActionRowBuilder().addComponents(button_done)]

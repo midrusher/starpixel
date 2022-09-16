@@ -1,5 +1,6 @@
 const { ContextMenuCommandBuilder, ApplicationCommandType, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, ModalSubmitInteraction, InteractionType, EmbedBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new ContextMenuCommandBuilder()
@@ -31,7 +32,7 @@ module.exports = {
 [[Показать сообщение](${interaction.targetMessage.url})]`)
 
 
-        await interaction.guild.channels.cache.get(process.env.test_channel).send({
+        await interaction.guild.channels.cache.get(ch_list.staff).send({
             embeds: [report],
         })
     }

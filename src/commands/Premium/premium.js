@@ -7,6 +7,7 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -69,7 +70,7 @@ module.exports = {
         ]
 
         const r_loot = loot[Math.floor(Math.random() * loot.length)]
-        const msg = await interaction.guild.channels.cache.get(process.env.box_channel).send({
+        const msg = await interaction.guild.channels.cache.get(ch_list.box).send({
             content: `◾:star:◾
 ${user} открывает премиум коробку...
 |—————~ஜ۩۞۩ஜ~—————|
@@ -119,7 +120,7 @@ ${user} открывает премиум коробку...
         }
 
         //Сообщение - румбики                       
-        interaction.guild.channels.cache.get(process.env.rumb_channel).send(
+        interaction.guild.channels.cache.get(ch_list.rumb).send(
             `╔═════════♡════════╗
 ${user} +${rumbik[i_rumb].rumb_amount}<:Rumbik:883638847056003072>
 \`Получено из премиум-коробки.\`

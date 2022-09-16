@@ -3,6 +3,7 @@ const { User } = require(`../../schemas/userdata`); //ДОБАВИТЬ В ДРУ
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 const { execute } = require('../../events/client/start_bot/ready');
 const chalk = require(`chalk`);
+const ch_list = require(`../../discord structure/channels.json`)
 
 
 module.exports = {
@@ -95,7 +96,7 @@ module.exports = {
             }
 
             //Отправка сообщения о луте              
-            const r_loot_msg = await interaction.guild.channels.cache.get(process.env.box_channel)
+            const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                 .send(
                     `◾
 <@${opener}> открывает ежемесячную коробку...
@@ -137,7 +138,7 @@ ${loot1[i_loot1].loot1_description}
             }
 
             //Сообщение - опыт рангов                       
-            interaction.guild.channels.cache.get(process.env.rank_channel).send(
+            interaction.guild.channels.cache.get(ch_list.rank).send(
                 `╔═════════♡════════╗
 <@${opener}> +${rank_exp[i_rank].rank_amount}💠
 \`Получено из ежемесячной коробки.\`
@@ -170,7 +171,7 @@ ${loot1[i_loot1].loot1_description}
             }
 
             //Сообщение - румбики                       
-            interaction.guild.channels.cache.get(process.env.rumb_channel).send(
+            interaction.guild.channels.cache.get(ch_list.rumb).send(
 `╔═════════♡════════╗
 <@${opener}> +${rumbik[i_rumb].rumb_amount}<:Rumbik:883638847056003072>
 \`Получено из ежемесячной коробки.\`
@@ -220,7 +221,7 @@ ${loot1[i_loot1].loot1_description}
             }
 
             //Сообщение - опыт активности                       
-            interaction.guild.channels.cache.get(process.env.act_channel).send(
+            interaction.guild.channels.cache.get(ch_list.act).send(
                 `╔═════════♡════════╗
 <@${opener}> +${act_exp[i_act].act_amount}🌀
 \`Получено из ежемесячной коробки.\`

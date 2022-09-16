@@ -28,6 +28,9 @@ module.exports = {
 \`Опыт рангов\` - ${userData.rank}💠
 \`Билеты\` - ${userData.tickets}🏷
 \`Опыт гильдии\` - ${userData.gexp} GEXP
+\`Медаль 🥇\` - ${userData.medal_1} шт.
+\`Медаль 🥈\` - ${userData.medal_2} шт.
+\`Медаль 🥉\` - ${userData.medal_3} шт.
 
 **ПЕРКИ**
 \`🔺 Повышение опыта рангов\` - ${userData.perks.rank_boost}/6

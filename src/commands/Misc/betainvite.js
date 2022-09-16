@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
+const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -65,7 +66,9 @@ module.exports = {
                     })
                     await member.roles.add(`1017131191771615243`)
                 } else if (i.customId === `betadisagree`) {
-
+                    await interaction.guild.channels.cache.get(ch_list.beta).send({
+                        content: `${member} отказался становиться участником бета-тестирования!`
+                    })
                     await i.reply({
                         content: `Нам очень жаль слышать, что вы отказались, но это ваше право! Если вы нажали на эту кнопочку случайно, напишите в вопрос модерам!`
                     })

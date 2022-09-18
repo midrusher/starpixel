@@ -1,6 +1,5 @@
 const { Guild } = require(`../../schemas/guilddata`)
 const { User } = require(`../../schemas/userdata`)
-
 const chalk = require(`chalk`)
 const { EmbedBuilder } = require("discord.js")
 const ch_list = require(`../../discord structure/channels.json`)

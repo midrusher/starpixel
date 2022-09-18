@@ -19,36 +19,36 @@ module.exports = (client) => {
                         const role = await guild.roles.fetch(rewards[i].role)
 
                         if (rewards[i].type == "box") {
-                            if (!member.roles.cache.has(role)) {
+                            if (!member.roles.cache.has(role.id)) {
                                 result.act_rewards = level;
-                                await member.roles.add(role)
+                                await member.roles.add(role.id)
                                 console.log(chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${i} уровень!`))
                                 result.save()
                             }
 
                         } else if (rewards[i].type == "premium") {
-                            if (rewards[i].expire == `7d` && !member.roles.cache.has(role)) {
+                            if (rewards[i].expire == `7d` && !member.roles.cache.has(role.id)) {
                                 result.act_rewards = level;
                                 const newItem = new Temp({
                                     userid: member.user.id,
                                     guildid: guild.id,
-                                    roleid: role,
+                                    roleid: role.id,
                                     expire: Date.now() + (1000 * 60 * 60 * 24 * 7)
                                 })
                                 newItem.save()
-                                await member.roles.add(role)
+                                await member.roles.add(role.id)
                                 console.log(chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${i} уровень!`))
                                 result.save()
-                            } else if (rewards[i].expire == `90d` && !member.roles.cache.has(role)) {
+                            } else if (rewards[i].expire == `90d` && !member.roles.cache.has(role.id)) {
                                 result.act_rewards = level;
                                 const newItem = new Temp({
                                     userid: member.user.id,
                                     guildid: guild.id,
-                                    roleid: role,
+                                    roleid: role.id,
                                     expire: Date.now() + (1000 * 60 * 60 * 24 * 90)
                                 })
                                 newItem.save()
-                                await member.roles.add(role)
+                                await member.roles.add(role.id)
                                 console.log(chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${i} уровень!`))
                                 result.save()
                             }
@@ -58,9 +58,9 @@ module.exports = (client) => {
                             console.log(chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${i} уровень!`))
                             result.save()
                         } else if (rewards[i].type == "leg_reward") {
-                            if (!member.roles.cache.has(role)) {
+                            if (!member.roles.cache.has(role.id)) {
                                 result.act_rewards = level;
-                                await member.roles.add(role)
+                                await member.roles.add(role.id)
                                 console.log(chalk.magenta(`[НАГРАДЫ ЗА УРОВЕНЬ]`) + chalk.gray(`: ${member.user.username} получил награду за ${i} уровень!`))
                                 result.save()
                             }

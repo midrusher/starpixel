@@ -79,6 +79,7 @@ client.act_rewards();
 client.updatenicks();
 client.top_3_gexp();
 client.haspremium();
+client.UpdateNicknames();
 client.AutoElements();
 client.AutoStars();
 

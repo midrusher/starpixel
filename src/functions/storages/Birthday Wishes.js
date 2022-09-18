@@ -1,5 +1,6 @@
 const { Birthday } = require(`../../schemas/birthday`)
 const { Temp } = require(`../../schemas/temp_items`)
+const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const { EmbedBuilder } = require("discord.js")
@@ -16,7 +17,7 @@ module.exports = (client) => {
                 data.forEach(async b => {
                     const channel = g.channels.cache.get(`983440987328229446`)
                     if (!channel) return
-
+                    const userData = await User.findOne({ userid: b.userid, guildid: b.guildid })
                     const member = g.members.cache.get(b.userid) || `Неизвестный пользователь#0000`
                     const Day = b.day
                     const Month = b.month
@@ -44,10 +45,11 @@ module.exports = (client) => {
                         })
                         await member.roles.add(`983441364903665714`).catch()
                         await member.roles.add(`584673040470769667`).catch()
-                        b.age += 1
+                        userData.age += 1
                         const hpb = new Temp({ userid: member.user.id, guildid: g.id, roleid: `983441364903665714`, expire: Date.now() + (1000 * 60 * 60 * 24) })
                         hpb.save()
                         b.save()
+                        userData.save()
                     }
 
 

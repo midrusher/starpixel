@@ -117,7 +117,7 @@ module.exports = {
                     userData.cooldowns.earth = Date.now() + (1000 * 60 * 60 * 24 * 7)
                     userData.save()
                     if (!user.roles.cache.has(pet[i_act].roleID)) {
-                        await roles.add(pet[i_act].roleID).catch(console.error);
+                        await user.roles.add(pet[i_act].roleID).catch(console.error);
                         await r_loot_msg.react("✅")
                     } else {
                         if (user.roles.cache.has(pet[i_act].roleID)) {

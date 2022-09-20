@@ -15,7 +15,6 @@ module.exports = {
         .setDescription(`Открыть премиальную коробку`),
 
     async execute(interaction, client) {
-        const member = interaction.options.getMember(`пользователь`)
         const user = interaction.member
         const userData = await User.findOne({ userid: user.user.id })
 
@@ -74,14 +73,14 @@ module.exports = {
             content: `◾:star:◾
 ${user} открывает премиум коробку...
 |—————~ஜ۩۞۩ஜ~—————|
-\`${r_loot}.\`
+\`${r_loot.name}.\`
 Открой, чтобы получить награды.
 |—————~ஜ۩۞۩ஜ~—————|
 ◾:star:◾`
         })
         if (r_loot.group == 1) {
-            if (!member.roles.cache.has(r_loot.roleID)) {
-                member.roles.add(r_loot.roleID)
+            if (!user.roles.cache.has(r_loot.roleID)) {
+                user.roles.add(r_loot.roleID)
                 await msg.react(`✅`)
             } else {
                 await msg.react(`🚫`)
@@ -126,10 +125,10 @@ ${user} +${rumbik[i_rumb].rumb_amount}<:Rumbik:883638847056003072>
 \`Получено из премиум-коробки.\`
 ╚═════════♡════════╝`
         );
-        if (roles.cache.has("553593133884112900") || roles.cache.has("553593136027533313") ||
-            roles.cache.has("553593976037310489") || roles.cache.has("780487593485008946") ||
-            roles.cache.has("849695880688173087") || roles.cache.has("992122876394225814") ||
-            roles.cache.has("992123014831419472") || roles.cache.has("992123019793276961")) {
+        if (user.roles.cache.has("553593133884112900") || user.roles.cache.has("553593136027533313") ||
+        user.roles.cache.has("553593976037310489") || user.roles.cache.has("780487593485008946") ||
+        user.roles.cache.has("849695880688173087") || user.roles.cache.has("992122876394225814") ||
+        user.roles.cache.has("992123014831419472") || user.roles.cache.has("992123019793276961")) {
             userData.rumbik += rumbik[i_rumb].rumb_amount
         } else {
             userData.rumbik += 0

@@ -18,7 +18,7 @@ const User = new mongoose.Schema({
     nickname: { type: String, },
     uuid: {type: String, },
     age: { type: Number, },
-    security_code: { type: String, },
+    security_code: { type: String, default: `0000`},
     rumbik: { type: Number, default: 0 },
     rank: { type: Number, default: 0 },
     exp: { type: Number, default: 0 },

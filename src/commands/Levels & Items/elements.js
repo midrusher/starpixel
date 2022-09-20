@@ -206,7 +206,7 @@ module.exports = {
                     );
                     userData.exp += pet[i_act].name
                     userData.total += pet[i_act].name
-                    userData.cooldowns.earth = Date.now() + (1000 * 60 * 60 * 24 * 7)
+                    userData.cooldowns.air = Date.now() + (1000 * 60 * 60 * 24 * 7)
                     userData.save()
 
 

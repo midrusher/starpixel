@@ -64,10 +64,39 @@ module.exports = {
             ephemeral: true
         })
 
+        const member_bot = new EmbedBuilder()
+            .setAuthor({
+                name: `❗ Произошла ошибка!`
+            })
+            .setColor(`DarkRed`)
+            .setDescription(`Вы не можете бустить ботов! Хоть они тоже живые, они отказались от такой ответственности. Выберите другого пользователя!`)
+            .setTimestamp(Date.now())
+            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+
+        if (member.user.bot) return interaction.reply({
+            embeds: [member_bot],
+            ephemeral: true
+        })
+
+        const member_guest = new EmbedBuilder()
+            .setAuthor({
+                name: `❗ Произошла ошибка!`
+            })
+            .setColor(`DarkRed`)
+            .setDescription(`Вы не можете бустить гостей гильдии! Выбранный вами пользователь должен быть участников гильдии Starpixel! Выберите другого пользователя!`)
+            .setTimestamp(Date.now())
+            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+
+        if (!member.roles.cache.has(`504887113649750016`)) return interaction.reply({
+            embeds: [member_guest],
+            ephemeral: true
+        })
+
+        
         await interaction.deferReply({
             fetchReply: true
         })
-        interaction.deleteReply()
+        await interaction.deleteReply()
         const loot = [
             {
                 group: 1,

@@ -85,7 +85,7 @@ module.exports = {
 Он может пригодиться вам, если с вашим аккаунтом что-либо случится, а также если вам нужна будет поддержка, связанная с изменением вашего аккаунта. 
 ❔ Если вы потеряете код, вы можете создать новый код, если пропишите команду \`/code new\`
 ❗ **Никому не сообщайте этот код!** Если вам потребуется использовать код, пропишите команду \`/code use\`.`)
-console.log(chalk.red(`[ПОЛУЧЕН КОД БЕЗОПАСНОСТИ]`) + chalk.white(`: ${user.username} получил первый код безопасности: ${userData.security_code}`))
+                        console.log(chalk.red(`[ПОЛУЧЕН КОД БЕЗОПАСНОСТИ]`) + chalk.white(`: ${user.username} получил первый код безопасности: ${userData.security_code}`))
                     } catch (error) {
                         await interaction.reply({
                             content: `У вас ${user} закрыты личные сообщения! Откройте их и повторите попытку снова!`,
@@ -137,6 +137,30 @@ console.log(chalk.red(`[ПОЛУЧЕН КОД БЕЗОПАСНОСТИ]`) + chal
             }
                 break;
             case `first`: {
+                if (userData.security_code !== `0000`) {
+                    let currentCode = userData.security_code
+                    function replaceCode() {
+                        return currentCode.slice(0, 1) + currentCode.slice(2, 5).replace(/./g, `\*`) + currentCode.slice(5, 6)
+                    }
+                    let replaced = replaceCode()
+                    const err_embed = new EmbedBuilder()
+                        .setTitle(`Ошибка!`)
+                        .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                        .setColor(`DarkRed`)
+                        .setTimestamp(Date.now())
+                        .setDescription(`Вы уже установили свой код безопасности \`${replaced}\``)
+                    await interaction.reply({
+                        embeds: [err_embed],
+                        ephemeral: true
+                    })
+                    return
+                }
+
+                await interaction.deferReply({
+                    fetchReply: true,
+                    ephemeral: true
+                })
+
                 const memberDM = await interaction.guild.members.fetch(user.id)
                 const n1 = [`A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`, `M`, `N`, `O`, `P`, `Q`, `R`, `S`, `T`, `U`, `V`, `W`, `X`, `Y`, `Z`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`, `j`, `k`, `l`, `m`, `n`, `o`, `p`, `q`, `r`, `s`, `t`, `u`, `v`, `w`, `x`, `y`, `z`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`]
                 let r1 = n1[Math.floor(Math.random() * n1.length)]
@@ -161,10 +185,12 @@ console.log(chalk.red(`[ПОЛУЧЕН КОД БЕЗОПАСНОСТИ]`) + chal
 ❔ Если вы захотите поменять код, вы можете создать новый, если пропишите команду \`/code new\`
 ❗ **Никому не сообщайте этот код!** Если вам потребуется использовать код, пропишите команду \`/code use\`.`)
                     userData.security_code = code;
+                    await interaction.editReply({
+                        content: `Код был отправлен вам в личные сообщения!`
+                    })
                 } catch (error) {
-                    await interaction.reply({
-                        content: `У вас закрыты личные сообщения! Откройте их и повторите попытку снова!`,
-                        ephemeral: true
+                    await interaction.editReply({
+                        content: `У вас закрыты личные сообщения! Откройте их и повторите попытку снова!`
                     });
                     return;
                 }
@@ -177,3 +203,4 @@ console.log(chalk.red(`[ПОЛУЧЕН КОД БЕЗОПАСНОСТИ]`) + chal
 
     }
 };
+

@@ -2400,7 +2400,11 @@ module.exports = {
                                     })
                                     console.log(chalk.magenta(`[Выполнено достижение]` + chalk.gray(`: ${user.username} выполнил достижение ${interaction.options.getString(`достижение`)}!`)))
                                 } break;
+                                default:
+                                    break;
+                            }
 
+                        }
 
 
 
@@ -2833,11 +2837,6 @@ module.exports = {
                                             break;
                                     }
                                 }
-                                default:
-                                    break;
-                            }
-
-                        }
 
                         default:
                             break;

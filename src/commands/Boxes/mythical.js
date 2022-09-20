@@ -19,7 +19,7 @@ module.exports = {
             .setDescription(`Мифический предмет - Солнце`)
             .addUserOption(option => option
                 .setName(`пользователь`)
-                .setDescription(`Выберите пользователя, которому будет выдан подарок.`)
+                .setDescription(`Выберите пользователя, которому будет выдан подарок`)
                 .setRequired(true)
             )
         )
@@ -29,7 +29,7 @@ module.exports = {
         )
         .addSubcommand(subcommand => subcommand
             .setName(`venera`)
-            .setDescription(`Станьте самым красивым участником гильдии и станьте Венерой гильдии`)
+            .setDescription(`Венера подарит вам эксклюзивный косметический значок`)
         )
         .addSubcommand(subcommand => subcommand
             .setName(`mars`)
@@ -41,16 +41,16 @@ module.exports = {
         )
         .addSubcommand(subcommand => subcommand
             .setName(`saturn`)
-            .setDescription(`Вас кто-то обидел из участников гильдии? Вы можете наказать его, записав в свою книжечку!`)
+            .setDescription(`Вас кто-то обидел из участников гильдии? Вы можете наказать его, записав в свою книжечку`)
             .addUserOption(option => option
                 .setName(`пользователь`)
-                .setDescription(`Выберите пользователя, которого хотите наказать.`)
+                .setDescription(`Выберите пользователя, которого хотите наказать`)
                 .setRequired(true)
             )
         )
         .addSubcommand(subcommand => subcommand
             .setName(`uran`)
-            .setDescription(`Вы можете поставить свой собственный косметический значок!`)
+            .setDescription(`Вы можете поставить свой собственный косметический значок`)
             .addStringOption(option => option
                 .setName(`значок`)
                 .setDescription(`Ваш пользовательский значок после ника`)
@@ -59,7 +59,7 @@ module.exports = {
         )
         .addSubcommand(subcommand => subcommand
             .setName(`neptune`)
-            .setDescription(`Нептун порадует Вас подарками, если вы пропишите эту команду!`)
+            .setDescription(`Получите от Нептуна эксклюзивную косметическую рамку`)
         ),
 
     async execute(interaction, client) {

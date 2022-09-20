@@ -11,7 +11,7 @@ const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГ�
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`changenick`)
-        .setDescription(`Изменить части никнейма пользователя.`)
+        .setDescription(`Изменить части никнейма пользователя`)
         .addUserOption(option => option
             .setName(`пользователь`)
             .setDescription(`Пользователь`)
@@ -19,13 +19,13 @@ module.exports = {
         )
         .addStringOption(option => option
             .setName(`часть`)
-            .setDescription(`Часть никнейма для изменения.`)
+            .setDescription(`Часть никнейма для изменения`)
             .setRequired(true)
             .setAutocomplete(true)
         )
         .addStringOption(option => option
             .setName(`значение`)
-            .setDescription(`Символ, на который нужно изменить.`)
+            .setDescription(`Символ, на который нужно изменить`)
         )
     ,
     async autoComplete(interaction, client) {

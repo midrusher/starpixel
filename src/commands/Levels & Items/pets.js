@@ -25,7 +25,7 @@ module.exports = {
         )
         .addSubcommand(subcommand => subcommand
             .setName(`mpet`)
-            .setDescription(`Отправить питомца воздуха на поиски`)
+            .setDescription(`Отправить питомца огня на поиски`)
         ),
 
     async execute(interaction, client) {

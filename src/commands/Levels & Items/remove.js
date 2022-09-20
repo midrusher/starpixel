@@ -34,6 +34,20 @@ module.exports = {
         );
     },
     async execute(interaction, client) {
+        const embed = new EmbedBuilder()
+            .setAuthor({
+                name: `❗ Отсутствует необходимая роль!`
+            })
+            .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`563793535250464809`).name}\`!
+Но вы всё ещё можете использовать команду \`/profile update\``)
+            .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+            .setColor(`DarkRed`)
+            .setTimestamp(Date.now())
+
+        if (!interaction.member.roles.cache.has(`563793535250464809`)) return interaction.reply({
+            embeds: [embed],
+            ephemeral: true
+        })
 
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username })

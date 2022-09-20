@@ -4,7 +4,7 @@ const { execute } = require('../../events/client/start_bot/ready');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`info`)
-        .setDescription(`Основные ссылки и информация о гильдии.`),
+        .setDescription(`Основные ссылки и информация о гильдии`),
     async execute(interaction, client) {
         
         const msg = new EmbedBuilder()

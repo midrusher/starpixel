@@ -12,7 +12,7 @@ const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГ�
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`birthday`)
-        .setDescription(`Дни рождения участников гильдии.`)
+        .setDescription(`Дни рождения участников гильдии`)
         .addSubcommand(subcommand => subcommand
             .setName(`set`)
             .setDescription(`Установить день рождения пользователю`)
@@ -29,7 +29,7 @@ module.exports = {
         )
         .addSubcommand(subcommand => subcommand
             .setName(`remove`)
-            .setDescription(`Удалить день рождения пользователя.`)
+            .setDescription(`Удалить день рождения пользователя`)
             .addUserOption(option => option
                 .setName(`пользователь`)
                 .setDescription(`Пользовать, чей день рождения необходимо установить`)
@@ -38,7 +38,7 @@ module.exports = {
         )
         .addSubcommand(subcommand => subcommand
             .setName(`list`)
-            .setDescription(`Посмотреть следующие 10 дней рождений.`)
+            .setDescription(`Посмотреть следующие 10 дней рождений`)
         )
         .addSubcommand(subcommand => subcommand
             .setName(`check`)

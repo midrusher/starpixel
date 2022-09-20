@@ -9,17 +9,17 @@ const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГ�
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`code`)
-        .setDescription(`Код безопасности гильдии Starpixel!`)
+        .setDescription(`Код безопасности гильдии Starpixel`)
         .addSubcommand(subcommand => subcommand
             .setName(`first`)
-            .setDescription(`Получить первый код безопасности.`)
+            .setDescription(`Получить первый код безопасности`)
         )
         .addSubcommand(subcommand => subcommand
             .setName(`new`)
             .setDescription(`Сгенерировать новый код безопасности`)
             .addStringOption(option => option
                 .setName(`код`)
-                .setDescription(`Введите введите текущий код безопасности!`)
+                .setDescription(`Введите введите текущий код безопасности`)
                 .setRequired(true)
             )
         )
@@ -28,7 +28,7 @@ module.exports = {
             .setDescription(`Использовать код безопасности`)
             .addStringOption(option => option
                 .setName(`код`)
-                .setDescription(`Введите код безопасности, чтобы использовать его!`)
+                .setDescription(`Введите код безопасности, чтобы использовать его`)
                 .setRequired(true)
             )
         ),
@@ -139,7 +139,7 @@ module.exports = {
             case `first`: {
                 if (userData.security_code !== `0000`) {
                     let currentCode = userData.security_code
-                    
+
                     const err_embed = new EmbedBuilder()
                         .setTitle(`Ошибка!`)
                         .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)

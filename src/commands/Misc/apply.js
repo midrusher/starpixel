@@ -4,7 +4,7 @@ const { execute } = require('../../events/client/start_bot/ready');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`apply`)
-        .setDescription(`Подать заявку в гильдию.`),
+        .setDescription(`Подать заявку в гильдию`),
     async execute(interaction, client) {
             const cmd_name = `apply`
             const apply = new ModalBuilder()

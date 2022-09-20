@@ -6,12 +6,12 @@ const { User } = require(`../../schemas/userdata`);
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`leaderboard`)
-        .setDescription(`Лучшие пользователи по количеству предметов.`)
+        .setDescription(`Лучшие пользователи по количеству предметов`)
         .addStringOption(option => option
             .setName(`тип`)
             .setRequired(true)
             .setAutocomplete(true)
-            .setDescription(`Выберите таблицу лидеров.`)
+            .setDescription(`Выберите таблицу лидеров`)
         ),
     async autoComplete(interaction, client) {
         const focusedValue = interaction.options.getFocused();

@@ -9,7 +9,7 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`weekly`)  //Название команды
-        .setDescription(`Открыть еженедельную коробку.`), //Описание команды
+        .setDescription(`Открыть еженедельную коробку`), //Описание команды
     async execute(interaction, client) {
         const cmd_name = `/weekly`
         const { roles } = interaction.member //Участник команды

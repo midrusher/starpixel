@@ -84,7 +84,7 @@ module.exports = {
                         },
                         {
                             dropChance: 20,
-                            name: "❕ 🌈 ВЫБОР ЦВЕТА /color",
+                            name: "❕ 🌈 ВЫБОР ЦВЕТА /randomcolor",
                             roleID: `896100103700496436`
                         },
                         {

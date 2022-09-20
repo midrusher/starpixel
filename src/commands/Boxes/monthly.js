@@ -9,7 +9,7 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`monthly`)  //Название команды
-        .setDescription(`Открыть ежемесячную коробку.`), //Описание команды
+        .setDescription(`Открыть ежемесячную коробку`), //Описание команды
     async execute(interaction, client) {
         
         const cmd_name = `/monthly`
@@ -77,7 +77,7 @@ module.exports = {
                     loot1_description: `Открой, чтобы получить награды.`
                 },
                 {
-                    loot1_name: `🌈 ВЫБОР ЦВЕТА /color`,
+                    loot1_name: `🌈 ВЫБОР ЦВЕТА /randomcolor`,
                     dropChanceLOOT1: 20,
                     loot1_roleID: "896100103700496436",
                     loot1_description: `Цвет вашего никнейма временно изменится.`

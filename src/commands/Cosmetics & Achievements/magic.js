@@ -11,13 +11,13 @@ const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГ�
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`magic`)
-        .setDescription(`Магия гильдии.`)
+        .setDescription(`Магия гильдии`)
         .addSubcommand(subcommand => subcommand
             .setName(`first`)
             .setDescription(`Магия первого уровня`)
             .addStringOption(option => option
                 .setName(`заклинание`)
-                .setDescription(`Заклинания мага первого уровня.`)
+                .setDescription(`Заклинания мага первого уровня`)
                 .setAutocomplete(true)
                 .setRequired(true)
             )
@@ -32,7 +32,7 @@ module.exports = {
             .setDescription(`Магия второго уровня`)
             .addStringOption(option => option
                 .setName(`заклинание`)
-                .setDescription(`Заклинания мага второго уровня.`)
+                .setDescription(`Заклинания мага второго уровня`)
                 .setAutocomplete(true)
                 .setRequired(true)
             )
@@ -47,7 +47,7 @@ module.exports = {
             .setDescription(`Магия третьего уровня`)
             .addStringOption(option => option
                 .setName(`заклинание`)
-                .setDescription(`Заклинания мага третьего уровня.`)
+                .setDescription(`Заклинания мага третьего уровня`)
                 .setAutocomplete(true)
                 .setRequired(true)
             )
@@ -62,7 +62,7 @@ module.exports = {
             .setDescription(`Магия четвёртого уровня`)
             .addStringOption(option => option
                 .setName(`заклинание`)
-                .setDescription(`Заклинания мага четвёртого уровня.`)
+                .setDescription(`Заклинания мага четвёртого уровня`)
                 .setAutocomplete(true)
                 .setRequired(true)
             )

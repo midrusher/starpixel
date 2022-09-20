@@ -6,16 +6,16 @@ const chalk = require(`chalk`);
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`picture`)
-        .setDescription(`Отправить эмоцию в чат.`)
+        .setDescription(`Отправить картинку в чат.`)
         .addStringOption(option => option
             .setName(`картинка`)
-            .setDescription(`Выберите эмоцию, которую хотите отправить в чат!`)
+            .setDescription(`Выберите картинку, которую хотите отправить в чат`)
             .setAutocomplete(true)
             .setRequired(true)
         )
         .addUserOption(option => option
             .setName(`пользователь`)
-            .setDescription(`Выберите пользователя, к кому хотите применить эмоцию (не все картинки поддерживают данную опцию)`)
+            .setDescription(`Выберите пользователя, к кому хотите применить картинку`)
             .setRequired(false)
         ),
     async autoComplete(interaction, client) {

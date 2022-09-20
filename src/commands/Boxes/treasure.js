@@ -7,7 +7,7 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`treasure`)  //Название команды
-        .setDescription(`Открыть сокровища.`), //Описание команды
+        .setDescription(`Открыть сокровища`), //Описание команды
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ

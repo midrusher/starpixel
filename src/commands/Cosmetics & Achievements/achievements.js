@@ -9,7 +9,7 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`achievement`)
-        .setDescription(`Получить достижения гильдии.`)
+        .setDescription(`Получить достижения гильдии`)
         .addSubcommandGroup(group => group
             .setName(`get`)
             .setDescription(`Обычные достижения`)
@@ -29,7 +29,7 @@ module.exports = {
             )
             .addSubcommand(subcommand => subcommand
                 .setName(`mythical`)
-                .setDescription(`Выдать достижение пользователю`)
+                .setDescription(`Получить мифическое достижение`)
                 .addStringOption(option => option
                     .setName(`достижение`)
                     .setDescription(`Выберите номер достижения`)

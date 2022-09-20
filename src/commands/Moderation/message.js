@@ -6,18 +6,18 @@ const { User } = require(`../../schemas/userdata`);
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`message`)
-        .setDescription(`Отправить сообщение в канал/личные сообщения.`)
+        .setDescription(`Отправить сообщение в канал/личные сообщения`)
         .addSubcommand(subcommand => subcommand
             .setName(`channel`)
-            .setDescription(`Отправить сообщение на канал.`)
+            .setDescription(`Отправить сообщение на канал`)
             .addChannelOption(option => option
                 .setName(`канал`)
-                .setDescription(`Канал, куда нужно отправить сообщение.`)
+                .setDescription(`Канал, куда нужно отправить сообщение`)
                 .setRequired(true)
             )
             .addStringOption(option => option
                 .setName(`сообщение`)
-                .setDescription(`Сообщение, которое нужно отправить.`)
+                .setDescription(`Сообщение, которое нужно отправить`)
                 .setRequired(true)
             )
         )

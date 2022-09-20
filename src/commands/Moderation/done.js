@@ -6,10 +6,10 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`done`)
-        .setDescription(`Ответить на вопрос в канале вопрос модерам.`)
+        .setDescription(`Ответить на вопрос в канале вопрос модерам`)
         .addUserOption(option => option
             .setName('пользователь')
-            .setDescription('Пользователь, которому нужно ответить.')
+            .setDescription('Пользователь, которому нужно ответить')
             .setRequired(true)
         )
         .addStringOption(option => option
@@ -23,6 +23,21 @@ module.exports = {
         const mod = interaction.member;
         const user = interaction.options.getUser('пользователь');
         const comment = interaction.options.getString(`комментарий`)
+        const embed = new EmbedBuilder()
+                .setAuthor({
+                    name: `❗ Отсутствует необходимая роль!`
+                })
+                .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`563793535250464809`).name}\`!
+Но вы всё ещё можете использовать команду \`/profile update\``)
+                .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                .setColor(`DarkRed`)
+                .setTimestamp(Date.now())
+
+        if (!interaction.member.roles.cache.has(`563793535250464809`)) return interaction.reply({
+                embeds: [embed],
+                ephemeral: true
+            })
+        
         const button_done = new ButtonBuilder()
             .setCustomId('done')
             .setLabel('Спасибо!')

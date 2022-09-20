@@ -7,7 +7,7 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`randomcolor`)  //Название команды
-        .setDescription(`Выбрать случайный цвет.`), //Описание команды
+        .setDescription(`Получить случайный цвет`), //Описание команды
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
 

@@ -11,7 +11,7 @@ module.exports = {
             .setDescription(`Установить цвет`)
             .addStringOption(option => option
                 .setName(`цвет`)
-                .setDescription(`Выберите цвет, который хотите поставить.`)
+                .setDescription(`Выберите цвет, который хотите поставить`)
                 .setAutocomplete(true)
                 .setRequired(true))
         )

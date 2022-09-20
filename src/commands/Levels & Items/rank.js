@@ -6,11 +6,11 @@ const { User } = require(`../../schemas/userdata`);
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`rank`)
-        .setDescription(`Показать опыт активности.`)
+        .setDescription(`Показать опыт активности`)
         .addUserOption(option => option
             .setName(`пользователь`)
             .setRequired(false)
-            .setDescription(`Введите любого пользователя.`)
+            .setDescription(`Введите любого пользователя`)
         ),
     async execute(interaction, client) {
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;

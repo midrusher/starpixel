@@ -24,6 +24,6 @@ module.exports = (client) => {
 
             }
 
-        }, 10000)
+        }, 600000)
     }
 }

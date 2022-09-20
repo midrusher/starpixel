@@ -51,7 +51,6 @@ module.exports = (client) => {
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
                             }
-                            break;
                         }
 
 
@@ -81,8 +80,6 @@ module.exports = (client) => {
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
                             }
 
-                            break;
-
                         }
 
                         else if (result.rank >= 150 && result.rank < 500) { //Профессионал
@@ -110,8 +107,6 @@ module.exports = (client) => {
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
                             }
-
-                            break;
                         }
 
                         else if (result.rank >= 500 && result.rank < 1000) { //Мастер
@@ -139,7 +134,6 @@ module.exports = (client) => {
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
                             }
-                            break;
 
                         }
 
@@ -169,8 +163,6 @@ module.exports = (client) => {
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
                             }
 
-                            break;
-
                         }
 
                         else if (result.rank >= 1500 && result.rank < 2500) { //Звездочка
@@ -198,7 +190,6 @@ module.exports = (client) => {
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
                             }
-                            break;
 
                         }
 
@@ -228,7 +219,6 @@ module.exports = (client) => {
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
                             }
 
-                            break;
                         }
 
                         else if (result.rank >= 5000 && result.rank < 10000) {//Владыка
@@ -257,7 +247,6 @@ module.exports = (client) => {
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank[0].name} & ${newrank[1].name}`))
                             }
-                            break;
 
                         }
 
@@ -286,7 +275,6 @@ module.exports = (client) => {
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank.name}.`))
                             }
-                            break;
 
                         }
 
@@ -315,7 +303,6 @@ module.exports = (client) => {
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank[0].name} & ${newrank[1].name}`))
                             }
-                            break;
 
                         }
 
@@ -344,8 +331,6 @@ module.exports = (client) => {
                                 })
                                 console.log(chalk.green(`[${member.user.username} повысил ранг]`) + chalk.gray(`: Теперь он ${newrank[0].name} & ${newrank[1].name}`))
                             }
-
-                            break;
                         }
                     }
 
@@ -353,6 +338,6 @@ module.exports = (client) => {
 
 
             }
-        }, 10000)
+        }, 600000)
     }
 }

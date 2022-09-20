@@ -12,9 +12,7 @@ module.exports = {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
 
-        const message = await interaction.deferReply({
-            fetchReply: true,
-        });
+
 
 
         const { roles } = interaction.member //Участник команды
@@ -26,6 +24,9 @@ module.exports = {
             const timestamp = Math.round(interaction.createdTimestamp / 1000)
             await roles.remove(role).catch(console.error); //Удалить роль коробки
             const opener = interaction.member.id;
+            const message = await interaction.deferReply({
+                fetchReply: true,
+            });
             await interaction.deleteReply()
 
             //Опыт активности
@@ -66,21 +67,22 @@ module.exports = {
 
             //Сообщение - опыт активности                       
             interaction.guild.channels.cache.get(ch_list.act).send(
-`╔═════════♡════════╗
+                `╔═════════♡════════╗
 <@${opener}> +${act_exp[i_act].act_amount}🌀
 \`Получено из мешочка.\`
 ╚═════════♡════════╝`
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
             userData.totalexp += act_exp[i_act].act_amount
-                userData.save();
+            userData.save();
 
 
-console.log(chalk.magentaBright(`[${interaction.user.tag} открыл мешочек]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности`))
-            
+            console.log(chalk.magentaBright(`[${interaction.user.tag} открыл мешочек]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности`))
+
         } else {
-            await interaction.editReply({
-                content: `У вас отсутствует \`${role.name}\`!`
+            await interaction.reply({
+                content: `У вас отсутствует \`${role.name}\`!`,
+                ephemeral: true
             })
         }
     }

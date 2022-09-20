@@ -1,5 +1,6 @@
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`);
+const fetch = require(`node-fetch`)
 const upd_nick_api = process.env.hp_api_upd_nicks_only
 
 module.exports = (client) => {

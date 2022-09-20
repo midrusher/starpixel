@@ -236,7 +236,7 @@ ${loot1[i_loot1].loot1_description}
                 console.log(chalk.magentaBright(`[${interaction.user.tag} открыл ежемесячную коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} и ${loot1[i_loot1].loot1_name}`))
             await interaction.deleteReply()
         } else if (!roles.cache.has("504887113649750016")) {
-            interaction.reply({
+            await interaction.reply({
                 content: `Вы не являетесь участником гильдии Starpixel. Чтобы вступить в гильдию Starpixel, ознакомьтесь с каналами <#921719265139249203> и <#774546154209148928>, а затем напишите \`/apply\` в канале <#921719174819090462>!`,
                 ephemeral: true
             })

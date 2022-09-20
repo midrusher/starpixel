@@ -12,20 +12,18 @@ module.exports = {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
         if (userData.cooldowns.prestige > Date.now()) //ДОБАВИТЬ В ДРУГИЕ(ГДЕ КУЛДАУН)
-                return interaction.reply({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setColor(process.env.bot_color)
-                            .setAuthor({
-                                name: `Вы не можете использовать эту команду`
-                            })
-                            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.prestige - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
-                    ],
-                    ephemeral: true
-                });
-        const message = await interaction.deferReply({
-            fetchReply: true,
-        });
+            return interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setColor(process.env.bot_color)
+                        .setAuthor({
+                            name: `Вы не можете использовать эту команду`
+                        })
+                        .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.prestige - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
+                ],
+                ephemeral: true
+            });
+
 
 
         const { roles } = interaction.member //Участник команды
@@ -34,6 +32,9 @@ module.exports = {
             .catch(console.error);
         if (roles.cache.has("572124606870192143")) { //Проверка роли коробки || правления
             const opener = interaction.member.id;
+            const message = await interaction.deferReply({
+                fetchReply: true,
+            });
             await interaction.deleteReply()
 
             //Лут из коробок
@@ -85,16 +86,17 @@ module.exports = {
 ${loot1[i_loot1].loot1_description}
 ╰═────═────═╯
 ◾`)
-                    if (loot1[i_loot1].loot1_name !== `Награды нет.` && !roles.cache.has(loot1[i_loot1].loot1_roleID)) {
-                        await roles.add(loot1[i_loot1].loot1_roleID).catch()
-                        await r_loot_msg.react(`✅`)
-                    } else await r_loot_msg.react(`🚫`)
-                    
-                    userData.cooldowns.prestige = Date.now() + (1000 * 60 * 60 * 24 * 7)
+            if (loot1[i_loot1].loot1_name !== `Награды нет.` && !roles.cache.has(loot1[i_loot1].loot1_roleID)) {
+                await roles.add(loot1[i_loot1].loot1_roleID).catch()
+                await r_loot_msg.react(`✅`)
+            } else await r_loot_msg.react(`🚫`)
+
+            userData.cooldowns.prestige = Date.now() + (1000 * 60 * 60 * 24 * 7)
 
         } else {
-            await interaction.editReply({
-                content: `У вас отсутствует \`${role.name}\`!`
+            await interaction.reply({
+                content: `У вас отсутствует \`${role.name}\`!`,
+                ephemeral: true
             })
         }
     }

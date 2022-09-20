@@ -13,9 +13,7 @@ module.exports = {
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
-        const message = await interaction.deferReply({
-            fetchReply: true,
-        });
+
 
         const timestamp = Math.round(interaction.createdTimestamp / 1000)
         const opener = interaction.member.id;
@@ -27,6 +25,9 @@ module.exports = {
             .catch(console.error);
         if (roles.cache.has("584673040470769667") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
             await roles.remove(role).catch(console.error); //Удалить роль коробки
+            const message = await interaction.deferReply({
+                fetchReply: true,
+            });
             await interaction.deleteReply()
 
             //Лут из коробок
@@ -360,28 +361,28 @@ ${loot2[i_loot2].loot2_description}`,
                 if (!roles.cache.has(`609085186738618395`)) {
                     await roles.add(`609085186738618395`).catch()
                     await r_loot_msg.react("✅")
-                } 
-                
+                }
+
                 else if (!roles.cache.has(`609086542681604142`)) {
                     await roles.add(`609086542681604142`).catch()
                     await r_loot_msg.react("✅")
-                } 
-                
+                }
+
                 else if (!roles.cache.has(`781069819838464022`)) {
                     await roles.add(`781069819838464022`).catch()
                     await r_loot_msg.react("✅")
                 }
-                
+
                 else if (!roles.cache.has(`785252400608182282`)) {
                     await roles.add(`785252400608182282`).catch()
                     await r_loot_msg.react("✅")
                 }
-                
+
                 else if (!roles.cache.has(`781069820053160006`)) {
                     await roles.add(`781069820053160006`).catch()
                     await r_loot_msg.react("✅")
-                } 
-                
+                }
+
                 else r_loot_msg.react("🚫")
             } else {
                 await r_loot_msg.react("🚫")
@@ -455,8 +456,9 @@ ${loot2[i_loot2].loot2_description}`,
             console.log(chalk.magentaBright(`[${interaction.user.tag} открыл королевскую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, ${loot1[i_loot1].loot1_name} и ${loot2[i_loot2].loot2_name}`))
 
         } else {
-            await interaction.editReply({
-                content: `У вас отсутствует \`${role.name}\` коробка!`
+            await interaction.reply({
+                content: `У вас отсутствует \`${role.name}\` коробка!`,
+                ephemeral: true
             })
         }
     }

@@ -10,9 +10,7 @@ module.exports = {
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
-        const message = await interaction.deferReply({
-            fetchReply: true,
-        });
+
 
 
         const { roles } = interaction.member //Участник команды
@@ -24,6 +22,9 @@ module.exports = {
             const timestamp = Math.round(interaction.createdTimestamp / 1000)
             await roles.remove(role).catch(console.error); //Удалить роль коробки
             const opener = interaction.member;
+            const message = await interaction.deferReply({
+                fetchReply: true,
+            });
             await interaction.deleteReply()
 
             //Лут из коробок
@@ -161,8 +162,9 @@ ${opener} открывает коробку активности.
             console.log(chalk.magentaBright(`[${interaction.user.tag} открыл коробку активности]`) + chalk.gray(`: +${loot1[i_loot1].loot1_name}`))
 
         } else {
-            await interaction.editReply({
-                content: `У вас отсутствует коробка \`${role.name}\`!`
+            await interaction.reply({
+                content: `У вас отсутствует коробка \`${role.name}\`!`,
+                ephemeral: true
             })
         }
     }

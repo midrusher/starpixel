@@ -116,7 +116,8 @@ module.exports = {
             await interaction.deleteReply()
         } else {
             await interaction.reply({
-                content: `У вас отсутствует \`${role.name}\` коробка!`
+                content: `У вас отсутствует роль "\`${role.name}\`!"`,
+                ephemeral: true
             })
         }
     }

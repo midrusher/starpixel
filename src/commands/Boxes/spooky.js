@@ -11,9 +11,7 @@ module.exports = {
     async execute(interaction, client) {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
-        const message = await interaction.deferReply({
-            fetchReply: true,
-        });
+        
 
 
         const { roles } = interaction.member //Участник команды
@@ -23,6 +21,9 @@ module.exports = {
         if (roles.cache.has("893932177799135253") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
             await roles.remove(role).catch(console.error); //Удалить роль коробки
             const opener = interaction.member.id;
+            const message = await interaction.deferReply({
+            fetchReply: true,
+        });
             await interaction.deleteReply()
 
             //Лут из коробок
@@ -194,8 +195,9 @@ ${loot1[i_loot1].loot1_description}
                 console.log(chalk.magentaBright(`[${interaction.user.tag} открыл маленькую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot1[i_loot1].loot1_name}`))
             
         } else {
-            await interaction.editReply({
-                content: `У вас отсутствует \`${role.name}\` коробка!`
+            await interaction.reply({
+                content: `У вас отсутствует \`${role.name}\` коробка!`,
+                ephemeral: true
             })
         }
     }

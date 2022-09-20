@@ -16,12 +16,6 @@ module.exports = {
         .setDescription(`test`),
 
     async execute(interaction, client) {
-        await interaction.deferReply()
-        await interaction.deleteReply()
-
-        const channel = interaction.guild.channels.cache.get(ch_list.main)
-        setInterval(async () => {
-            await channel.sendTyping() 
-        }, 5000);
+        
     }
 };

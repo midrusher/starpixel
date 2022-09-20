@@ -11,11 +11,18 @@ module.exports = {
         const userData = await User.findOne({ userid: user.id, guildid: newState.guild.id })
         const member = newState.guild.members.cache.get(newState.id) || oldState.guild.members.cache.get(oldState.id)
         const guild = newState.guild
-        if (!member.roles.cache.has(`850336260265476096`)) return
         const premChannel = `838300965358010439`
 
         if (newChannel?.id === premChannel) {
-            if (userData.temp_channel.created === false) {
+            if (!member.roles.cache.has(`850336260265476096`)) {
+                await newState.guild.members.cache.get(newState.id).voice.disconnect(`Нет подписки премиум!`)
+                try {
+                    await member.send(`Вы не можете подключаться к данному каналу, так как у вас отсутствует подписка VIP!`)
+                } catch (error) {
+                    console.log(`Не удалось написать сообщение пользователю! tempChannel.js`)
+                }
+                return
+            } else if (userData.temp_channel.created === false) {
                 let channel = await newChannel.guild.channels.create({
                     name: `🔒・Приватный`,
                     type: ChannelType.GuildVoice,
@@ -59,13 +66,14 @@ module.exports = {
             }
 
         }
-
-        if (oldChannel?.id === userData.temp_channel.id) {
+        const ch_data = await User.findOne({ "temp_channel.id" : oldChannel?.id })
+        if (!ch_data) return
+        if (ch_data.temp_channel.id === oldChannel?.id) {
             if (oldChannel.members.size <= 0) {
                 await oldChannel.delete()
-                userData.temp_channel.created = false
-                userData.temp_channel.id = ``
-                userData.save()
+                ch_data.temp_channel.created = false
+                ch_data.temp_channel.id = ``
+                ch_data.save()
             }
         }
     }

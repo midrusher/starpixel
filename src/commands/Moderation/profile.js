@@ -610,6 +610,9 @@ module.exports = {
 
                 userData.gexp = 0
                 userData.tickets = 0
+                userData.medal_1 = 0
+                userData.medal_2 = 0
+                userData.medal_3 = 0
 
                 userData.perks.act_discount = 0
                 userData.perks.change_items = 0

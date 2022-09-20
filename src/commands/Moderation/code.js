@@ -139,16 +139,13 @@ module.exports = {
             case `first`: {
                 if (userData.security_code !== `0000`) {
                     let currentCode = userData.security_code
-                    function replaceCode() {
-                        return currentCode.slice(0, 1) + currentCode.slice(2, 5).replace(/./g, `\*`) + currentCode.slice(5, 6)
-                    }
-                    let replaced = replaceCode()
+                    
                     const err_embed = new EmbedBuilder()
                         .setTitle(`Ошибка!`)
                         .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
                         .setColor(`DarkRed`)
                         .setTimestamp(Date.now())
-                        .setDescription(`Вы уже установили свой код безопасности \`${replaced}\``)
+                        .setDescription(`Вы уже установили свой код безопасности! Найдите его в личных сообщениях с ботом!`)
                     await interaction.reply({
                         embeds: [err_embed],
                         ephemeral: true

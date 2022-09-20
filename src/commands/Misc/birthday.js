@@ -51,24 +51,24 @@ module.exports = {
         ),
 
     async execute(interaction, client) {
-        if (!interaction.member.roles.cache.has(`320880176416161802`)) {
-            const embed = new EmbedBuilder()
-                .setAuthor({
-                    name: `❗ Отсутствует необходимая роль!`
-                })
-                .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`320880176416161802`).name}\`!`)
-                .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
-                .setColor(`DarkRed`)
-                .setTimestamp(Date.now())
-
-            return interaction.reply({
-                embeds: [embed],
-                ephemeral: true
-            })
-        }
 
         switch (interaction.options.getSubcommand()) {
             case `set`: {
+                if (!interaction.member.roles.cache.has(`320880176416161802`)) {
+                    const embed = new EmbedBuilder()
+                        .setAuthor({
+                            name: `❗ Отсутствует необходимая роль!`
+                        })
+                        .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`320880176416161802`).name}\`!`)
+                        .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                        .setColor(`DarkRed`)
+                        .setTimestamp(Date.now())
+        
+                    return interaction.reply({
+                        embeds: [embed],
+                        ephemeral: true
+                    })
+                }
                 const user = interaction.options.getUser(`пользователь`)
                 const date = new Date()
                 const currentYear = date.getFullYear()

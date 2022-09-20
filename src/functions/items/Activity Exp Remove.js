@@ -26,6 +26,6 @@ module.exports = (client) => {
                     result.save()
                 }
             }
-        }, 60000)
+        }, 30000)
     }
 }

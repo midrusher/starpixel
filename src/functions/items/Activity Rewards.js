@@ -72,6 +72,6 @@ module.exports = (client) => {
 
                 }
             }
-        }, 60000)
+        }, 30000)
     }
 }

@@ -938,7 +938,7 @@ ${loot4[i_loot4].loot4_description}.
 ╚═════════♡════════╝`
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
-            userData.totalexp += act_exp[i_act].act_amount
+
             userData.save();
             console.log(chalk.magentaBright(`[${interaction.user.tag} открыл подарок судьбы]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов, +${rumbik[i_rumb].rumb_amount} румбиков, ${loot2[i_loot2].loot2_name}, ${loot1[i_loot1].loot1_name}, ${loot3[i_loot3].loot3_name} и ${loot4[i_loot4].loot4_name}`))
 

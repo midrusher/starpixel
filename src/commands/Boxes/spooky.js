@@ -190,7 +190,7 @@ ${loot1[i_loot1].loot1_description}
 ╚═════════♡════════╝`
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
-            userData.totalexp += act_exp[i_act].act_amount
+            
                 userData.save();
                 console.log(chalk.magentaBright(`[${interaction.user.tag} открыл маленькую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot1[i_loot1].loot1_name}`))
             

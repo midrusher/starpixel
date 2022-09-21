@@ -12,10 +12,10 @@ module.exports = (client) => {
                 const member = await guild.members.cache.get(userid)
 
                 const levelbefore = result.level;
-                 if (result.exp < 0) {
+                 if (result.exp <= 0) {
                     while (result.exp < 0) {
                         result.level -= 1;
-                        result.exp += 5 * (Math.pow(result.level, 2)) + (50 * result.level) + 100
+                        result.exp += ((5 * ( result.level ** 2)) + (50 * result.level) + 100)
                     }
                     if (levelbefore > result.level) {
                         guild.channels.cache.get(ch_list.main).send(

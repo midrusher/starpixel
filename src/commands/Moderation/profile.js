@@ -6,7 +6,9 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const ch_list = require(`../../discord structure/channels.json`)
+const ch_list = require(`../../discord structure/channels.json`);
+const { calcActLevel, getLevel } = require(`../../functions`);
+const { level } = require('winston');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -922,15 +924,18 @@ module.exports = {
                             }
                                 break;
                             case `Опыт активности`: {
-                                const before = userData.totalexp
+                                const before = calcActLevel(0, userData.level, userData.exp)
 
                                 if (value < 0) return interaction.reply({
                                     content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
                                     ephemeral: true
                                 })
 
-                                userData.totalexp = value
-                                userData.exp = value
+                                const values = getLevel(value)
+                                const level = values[0]
+                                const exp = values[1]
+                                userData.level = level
+                                userData.exp = exp
                                 userData.save()
 
                                 const success = new EmbedBuilder()

@@ -326,7 +326,7 @@ ${loot2[i_loot2].loot2_description}
 ╚═════════♡════════╝`
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
-            userData.totalexp += act_exp[i_act].act_amount
+            
 
             userData.save();
 

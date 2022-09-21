@@ -21,8 +21,11 @@ module.exports = {
         const users = await User.find().then(users => {
             return users.filter(async user => await interaction.guild.members.fetch(user.userid))
         })
-        const sorts = users.sort((a, b) => {
-            return b.totalexp - a.totalexp
+        const sort1 = users.sort((a, b) => {
+            return b.exp - a.exp
+        }).slice(0, 10)
+        const sorts = sort1.sort((a, b) => {
+            return b.level - a.level
         })
         var i = 0
         while (sorts[i].userid !== user.id) {
@@ -32,7 +35,7 @@ module.exports = {
         let rank = i + 1
         const neededXP = 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
 
-        if (userData.totalexp == 0) return interaction.reply({
+        if (userData.exp == 0 && userData.level == 0) return interaction.reply({
             content: `У ${user} нет опыта активности.`,
             ephemeral: true
         });

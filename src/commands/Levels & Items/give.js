@@ -54,7 +54,6 @@ module.exports = {
         switch (interaction.options.getString(`тип`)) {
             case `Опыт активности`: {
                 userData.exp += interaction.options.getNumber(`количество`);
-                userData.totalexp += interaction.options.getNumber(`количество`);
                 userData.save();
                 interaction.reply(`Выдано ${interaction.options.getNumber(`количество`)}🌀 пользователю ${user}!`)
                 console.log(chalk.green(`[${user.username} получил опыт активности]`) + chalk.gray(`: Теперь у него ${userData.exp} опыта и ${userData.level} уровень.`))

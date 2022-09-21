@@ -30,13 +30,16 @@ module.exports = {
                 const users = await User.find().then(users => {
                     return users.filter(async user => await interaction.guild.members.fetch(user.userid))
                 })
-                const sort = users.sort((a, b) => {
-                    return b.totalexp - a.totalexp
+                const sort1 = users.sort((a, b) => {
+                    return b.exp - a.exp
                 }).slice(0, 10)
+                const sort = sort1.sort((a, b) => {
+                    return b.level - a.level
+                })
                 let index = 1
                 const map = sort.map(async (user) => {
                     const tag = await interaction.guild.members.fetch(user.userid)
-                    return `**${index++}.** ${tag} > Всего опыта: ${user.totalexp}🌀  &  ${user.level} уровень`
+                    return `**${index++}.** ${tag} > ${user.level} уровень & ${user.exp}🌀`
                 })
                 const mapProm = await Promise.all(map)
 

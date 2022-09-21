@@ -180,10 +180,8 @@ ${loot1[i_loot1].loot1_description}
             );
             if (roles.cache.has(`572124614050840576`)) {
                 userData.exp += (act_exp[i_act].act_amount * 2) //ДОБАВИТЬ В ДРУГИЕ
-                userData.totalexp += (act_exp[i_act].act_amount * 2)
             } else {
                 userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
-                userData.totalexp += act_exp[i_act].act_amount
             }
 
             userData.cooldowns.daily = Date.now() + (1000 * 60 * 60 * 16) //ДОБАВИТЬ В ДРУГИЕ(ГДЕ КУЛДАУН)  * 60 * 16

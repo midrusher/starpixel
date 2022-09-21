@@ -12,9 +12,9 @@ module.exports = (client) => {
                 const member = await guild.members.cache.get(userid)
 
                 const levelbefore = result.level;
-                if (result.exp >= (5 * (Math.pow(result.level, 2)) + (50 * result.level) + 100)) {
-                    while (result.exp >= (5 * (Math.pow(result.level, 2)) + (50 * result.level) + 100)) {
-                        result.exp -= 5 * (Math.pow(result.level, 2)) + (50 * result.level) + 100;
+                if (result.exp >= ((5 * ( result.level ** 2)) + (50 * result.level) + 100)) {
+                    while (result.exp >= ((5 * ( result.level ** 2)) + (50 * result.level) + 100)) {
+                        result.exp -= ((5 * ( result.level ** 2)) + (50 * result.level) + 100);
                         result.level += 1;
                     }
                     if (levelbefore < result.level) {

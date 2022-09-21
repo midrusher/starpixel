@@ -9,7 +9,7 @@ const { loadImage, createCanvas } = require(`@napi-rs/canvas`)
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const { test, toOrdinalSuffix } = require(`../../functions`)
+const { gameConstructor, calcActLevel } = require(`../../functions`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,10 +17,13 @@ module.exports = {
         .setDescription(`TEST_COMMAND_NO_USAGE`),
 
     async execute(interaction, client) {
-        let a = 5, b = 2
-
-        test(a, b)
-        const abc = toOrdinalSuffix(a)
-        console.log(abc)
+        const userData = await User.find({ guildid: interaction.guild.id })
+        const map = userData.map(async (user) => {
+            let summa = calcActLevel(0, user.level, user.exp)
+            const member = await interaction.guild.members.fetch(user.userid)
+            return `234`
+        })
+        const prom = await Promise.all(map)
+        await interaction.reply(`${prom.join(`\n`)}`)
     }
 };

@@ -22,7 +22,6 @@ const User = new mongoose.Schema({
     rumbik: { type: Number, default: 0 },
     rank: { type: Number, default: 0 },
     exp: { type: Number, default: 0 },
-    totalexp: { type: Number, default: 0 },
     level: { type: Number, default: 0},
     gexp: { type: Number, default: 0},
     pers_emoji: { type: Boolean, default: false},

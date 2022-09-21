@@ -12,12 +12,12 @@ module.exports = {
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
 
         const { roles } = interaction.member //Участник команды
+        const member = interaction.member
         const role = await interaction.guild.roles  //Постоянная для role
             .fetch("896100103700496436") //ID коробки
             .catch(console.error);
         if (roles.cache.has("896100103700496436") || roles.cache.has("567689925143822346")) { //Проверка роли коробки || правления
             const timestamp = Math.round(interaction.createdTimestamp / 1000)
-            await roles.remove(role).catch(console.error); //Удалить роль коробки
             const opener = interaction.member.id;
 
             //Лут из коробок
@@ -80,10 +80,11 @@ module.exports = {
             const r8 = `595892930204401665`;
             const r9 = `595889341058777088`;
 
-            if (roles.cache.has(r1) || roles.cache.has(r2) || roles.cache.has(r3) || roles.cache.has(r4) || roles.cache.has(r5) || roles.cache.has(r6) || roles.cache.has(r7) || roles.cache.has(r8) || roles.cache.has(r9)) return interaction.reply({
-                content: `Вы не можете использовать данную команду, так как у вас есть цвет! Обратитесь в вопрос модерам, чтобы вам сняли цвет, если вы хотите!`,
+            if (member.roles.cache.has(r1) || member.roles.cache.has(r2) || member.roles.cache.has(r3) || member.roles.cache.has(r4) || member.roles.cache.has(r5) || member.roles.cache.has(r6) || member.roles.cache.has(r7) || member.roles.cache.has(r8) || member.roles.cache.has(r9)) return interaction.reply({
+                content: `Вы не можете использовать данную команду, так как у вас есть цвет! Используйте команду \`/colors reset\`, чтобы убрать ваш цвет!`,
                 ephemeral: true
             })
+            await roles.remove(role).catch(console.error); //Удалить роль коробки
             //Отправка сообщения о луте              
             const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                 .send(
@@ -93,21 +94,22 @@ module.exports = {
 Он получает \`${rloot1.loot1_name}\` цвет на 1 неделю! Поздравляем!
 ╰─────:rainbow:─────╯
 ◾`)
-            if (!roles.cache.has(rloot1.loot1_roleID) && (roles.cache.has(`780487593485008946`) || roles.cache.has(`849695880688173087`) || roles.cache.has(`992122876394225814`) || roles.cache.has(`992123014831419472`) || roles.cache.has(`992123019793276961`))) {
-                await roles.add(rloot1.loot1_roleID).catch(console.error);
+            if (!member.roles.cache.has(rloot1.loot1_roleID) && (member.roles.cache.has(`780487593485008946`) || member.roles.cache.has(`849695880688173087`) || member.roles.cache.has(`992122876394225814`) || member.roles.cache.has(`992123014831419472`) || member.roles.cache.has(`992123019793276961`))) {
+                await member.roles.add(rloot1.loot1_roleID).catch(console.error);
                 await r_loot_msg.react("✅")
                 const tempItems = new Temp({
                     userid: user.id,
                     guildid: interaction.guild.id,
                     roleid: rloot1.loot1_roleID,
-                    expire: Date.now() + (1000 * 60 * 60 * 24 * 7)
+                    expire: Date.now() + (1000 * 60 * 60 * 24 * 7),
+                    color: true
                 })
                 tempItems.save()
-            } else {
-                if (roles.cache.has(rloot1.loot1_roleID)) {
+            } else if (member.roles.cache.has(rloot1.loot1_roleID)) {
+                    await r_loot_msg.react("🚫")
+                } else {
                     await r_loot_msg.react("🚫")
                 };
-            };
 
             console.log(chalk.magentaBright(`[${interaction.user.tag} использовал выбор цвета]`) + chalk.gray(`: Он получил ${rloot1.loot1_name}`))
             const message = await interaction.deferReply({

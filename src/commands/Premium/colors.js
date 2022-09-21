@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
+const { Temp } = require(`../../schemas/temp_items`)
 const chalk = require(`chalk`);
 
 module.exports = {
@@ -33,6 +34,7 @@ module.exports = {
 
     async execute(interaction, client) {
         const { roles } = interaction.member //Участник команды
+        const member = interaction.member
         const r1 = `595893144055316490`;
         const r2 = `595892599693246474`;
         const r3 = `595892677451710468`;
@@ -45,6 +47,10 @@ module.exports = {
 
         switch (interaction.options.getSubcommand()) {
             case `set`: {
+                if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                    content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                    ephemeral: true
+                })
                 switch (interaction.options.getString(`цвет`)) {
                     case `Чёрный`: {
                         const role = await interaction.guild.roles
@@ -208,7 +214,11 @@ module.exports = {
                 break;
 
                 case `reset`: {
-                    interaction.reply({
+                    const tempData = await Temp.findOne({ userid: interaction.user.id, guildid: interaction.guild.id, color: true })
+                    if (tempData) {
+                        tempData.delete()
+                    }
+                    await interaction.reply({
                         content: `Вы убрали свой цвет!`,
                         ephemeral: true
                     })

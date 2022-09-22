@@ -18,7 +18,7 @@ module.exports = (client) => {
         client.commands.set(command.data.name, command);
         commandArray.push(command.data.toJSON());
         console.log(chalk.hex(`#646464`)(`[ЗАГРУЗКА КОМАНД] ${i++}. ${file} был успешно загружен!`))
-        
+
       }
     }
 

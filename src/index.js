@@ -23,7 +23,7 @@ const client = new Client({
         GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.GuildWebhooks,
         GatewayIntentBits.Guilds,
-        GatewayIntentBits.MessageContent
+        GatewayIntentBits.MessageContent,
         
         
     ],
@@ -34,7 +34,7 @@ const client = new Client({
         Partials.Message,
         Partials.Reaction,
         Partials.ThreadMember,
-        Partials.User
+        Partials.User,
     ],
     presence: {
         status: `idle`,

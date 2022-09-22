@@ -1,5 +1,7 @@
 const { User } = require(`../../../schemas/userdata`)
 const { Birthday } = require(`../../../schemas/birthday`)
+const { Temp } = require(`../../../schemas/temp_items`)
+const { TicketsUser } = require(`../../../schemas/ticketUser`)
 const { ChannelType } = require(`discord.js`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
@@ -9,6 +11,22 @@ module.exports = {
     async execute(member) {
         const userData = await User.findOne({ userid: member.user.id, guildid: member.guild.id })
         const bd = await Birthday.findOne({ userid: member.user.id, guildid: member.guild.id })
+        const temp = await Temp.find({ userid: member.user.id, guildid: member.guild.id })
+        const tickets = await TicketsUser.find({ userid: member.user.id, guildid: member.guild.id })
+
+        if (tickets) {
+            tickets.forEach(async (ticket) => {
+                const channel = await member.guild.channels.fetch(ticket.channelid)
+                await channel.delete()
+                ticket.delete()
+            })
+        }
+        if (temp) {
+            temp.forEach((item) => {
+                item.delete()
+            })
+        }
+
         if (userData) {
             userData.delete()
         }

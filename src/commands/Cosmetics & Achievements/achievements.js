@@ -165,7 +165,17 @@ module.exports = {
                         );
                     }
                         break;
-                    default:
+                    default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            } {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                         break;
 
 
@@ -227,7 +237,12 @@ module.exports = {
                         );
                     }
                         break;
-                    default:
+                    default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                         break;
 
 
@@ -289,14 +304,24 @@ module.exports = {
                         );
                     }
                         break;
-                    default:
+                    default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                         break;
 
 
                 }
             }
                 break;
-            default:
+            default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                 break;
         }
     },
@@ -2400,7 +2425,12 @@ ${user} +50 💠
                                     })
                                     console.log(chalk.magenta(`[Выполнено достижение]` + chalk.gray(`: ${user.user.username} выполнил достижение ${interaction.options.getString(`достижение`)}!`)))
                                 } break;
-                                default:
+                                default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                                     break;
                             }
 
@@ -2833,12 +2863,22 @@ ${user} + 300 💠
 
                                             break;
 
-                                        default:
+                                        default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                                             break;
                                     }
                                 }
 
-                        default:
+                        default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                             break;
                     };
                 }
@@ -3403,7 +3443,12 @@ ${user} + 300 💠
                                     })
                                 } break;
 
-                                default:
+                                default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                                     break;
                             }
                         }
@@ -3520,13 +3565,23 @@ ${user} + 300 💠
                                     })
                                 } break;
 
-                                default:
+                                default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                                     break;
                             }
                         }
                             break;
 
-                        default:
+                        default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                             break;
 
                     }
@@ -4092,7 +4147,12 @@ ${user} + 300 💠
                                     })
                                 } break;
 
-                                default:
+                                default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                                     break;
                             }
 
@@ -4210,13 +4270,23 @@ ${user} + 300 💠
                                     })
                                 } break;
 
-                                default:
+                                default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                                     break;
                             }
                         }
                             break;
 
-                        default:
+                        default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                             break;
 
 
@@ -4225,7 +4295,12 @@ ${user} + 300 💠
                 }
                     break;
 
-                default:
+                default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                     break
             }
         } catch (error) {

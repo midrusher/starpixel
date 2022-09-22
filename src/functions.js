@@ -30,6 +30,33 @@ class gameConstructor {
     getRule(rule) {
         let err = new Error(`Выбранный вариант не является допустим типом игры! ${rule}`)
         if (typeof rule !== "string") return err
+
+        let g_rule
+        if (rule === "Переводной") {
+            g_rule = "Переводной"
+        } else if (rule === "Подкидной") {
+            g_rule = "Переводной"
+        } else {
+            let err = new Error(`Введённое вами правило не является допустимым для создания игры!`)
+            return err
+        }
+        return g_rule
+    }
+
+    getFinal(final) {
+        let err = new Error(`Выбранный вариант не является допустим финалом игры! ${final}`)
+        if (typeof rule !== "string") return err
+        let g_final
+        if (final === "Дурак один") {
+            g_final = "Переводной"
+        } else if (final === "Ничья") {
+            g_final = "Переводной"
+        } else {
+            let err = new Error(`Введённое вами правило не является допустимым для создания игры!`)
+            return err
+        }
+        return g_final
+
     }
 }
 

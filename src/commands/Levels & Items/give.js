@@ -95,7 +95,12 @@ ${user} повысил уровень активности до ${userData.level
 
                 break;
 
-            default:
+            default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                 break;
         }
     }

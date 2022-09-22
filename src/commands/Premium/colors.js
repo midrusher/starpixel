@@ -206,7 +206,12 @@ module.exports = {
 
                         break;
 
-                    default:
+                    default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                         break;
                 }
             }
@@ -224,7 +229,12 @@ module.exports = {
                     })
                     await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9]).catch(console.error)
                 }
-            default:
+            default: {
+                await interaction.reply({
+                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                    ephemeral: true
+                })
+            }
                 break;
         }
         console.log(chalk.green(`[Использована команда]`) + chalk.gray(`: ${interaction.user.tag} использовал команду /colors ${interaction.options.getSubcommand()}`))

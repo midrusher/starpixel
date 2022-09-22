@@ -7,7 +7,7 @@ function toOrdinalSuffix(num) {
         : int + ordinals[3]
 };
 
-//Игра в карта
+//Игра в дурака
 class gameConstructor {
     constructor() { }
     getAmountAndList(amount) {

@@ -1,7 +1,9 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const { User } = require(`../../schemas/userdata`);
+const ch_list = require(`../../discord structure/channels.json`)
 const chalk = require(`chalk`);
+const { calcActLevel, getLevel } = require(`../../functions`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -53,9 +55,24 @@ module.exports = {
         const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username })
         switch (interaction.options.getString(`тип`)) {
             case `Опыт активности`: {
-                userData.exp += interaction.options.getNumber(`количество`);
+                let cur_exp = userData.exp + interaction.options.getNumber(`количество`)
+                let cur_level = userData.level
+                let total_exp = calcActLevel(0, cur_level, cur_exp)
+                let level_exp = getLevel(total_exp)
+                let level = level_exp[0], exp = level_exp[1]
+                
+                userData.level = level
+                userData.exp = exp
+
+                if (cur_level < level) {
+                    await interaction.guild.channels.cache.get(ch_list.main).send(
+                        `:black_medium_small_square:
+${user} повысил уровень активности до ${userData.level} уровня! :tada:
+:black_medium_small_square:`);
+                }
+
                 userData.save();
-                interaction.reply(`Выдано ${interaction.options.getNumber(`количество`)}🌀 пользователю ${user}!`)
+                await interaction.reply(`Выдано ${interaction.options.getNumber(`количество`)}🌀 пользователю ${user}!`)
                 console.log(chalk.green(`[${user.username} получил опыт активности]`) + chalk.gray(`: Теперь у него ${userData.exp} опыта и ${userData.level} уровень.`))
             };
 

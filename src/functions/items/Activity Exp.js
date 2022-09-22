@@ -9,32 +9,27 @@ module.exports = (client) => {
             const guild = await client.guilds.fetch(`320193302844669959`)
             const results = await User.find({ guildid: guild.id })
             for (const result of results) {
-                const { userid } = result;
-                const member = await guild.members.cache.get(userid)
+                const member = await guild.members.cache.get(result.userid)
+                let lvl_before = result.level
                 let total_exp = calcActLevel(0, result.level, result.exp) //Текущий опыт
-                let req_exp = calcActLevel(0, result.level + 1, 0) // Опыта для следующего уровня
-                let cur_exp = calcActLevel(0, result.level, 0) // Опыта для получения текущего уровня
                 let level_exp = getLevel(total_exp)
                 let level = level_exp[0]
                 let exp = level_exp[1]
+                result.exp = exp
+                result.level = level
 
-                if (total_exp >= req_exp) {
-                    while (total_exp >= req_exp) {
-                        result.level += 1
-                        result.exp = (total_exp - req_exp)
-                    }
-
+                if (lvl_before < level) {
                     await guild.channels.cache.get(ch_list.main).send(
                         `:black_medium_small_square:
 ${member} повысил уровень активности до ${result.level} уровня! :tada:
 :black_medium_small_square:`);
-                } else if (total_exp < cur_exp) {
-                    while (total_exp < cur_exp) {
-                        result.level -= 1
-                        result.exp = 0
-                    }
+                } else if (lvl_before > level) {
+                    await guild.channels.cache.get(ch_list.main).send(
+                        `:black_medium_small_square:
+К сожалению, ${member} понизил свой уровень активности до ${result.level} уровня! 😔
+:black_medium_small_square:`);
                 }
-                    result.save()
+                result.save()
             }
         }, 30000)
     }

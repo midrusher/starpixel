@@ -769,7 +769,7 @@ ${user} +50 💠
     Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
                                         .setTimestamp(Date.now())
 
-                                    if (!user.roles.cache.has(`553593136027533313`)) return interaction.reply({
+                                    if (!user.roles.cache.has(`553593136027533313`) && !user.roles.cache.has(`553593976037310489`) && !user.roles.cache.has(`780487593485008946`) && !user.roles.cache.has(`849695880688173087`) && !user.roles.cache.has(`992122876394225814`) && !user.roles.cache.has(`992123014831419472`) && !user.roles.cache.has(`992123019793276961`)) return interaction.reply({
                                         embeds: [no_condition],
                                         ephemeral: true
                                     })

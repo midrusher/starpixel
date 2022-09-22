@@ -2,7 +2,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const { User } = require(`../../schemas/userdata`);
 const chalk = require(`chalk`);
-const { calcActLevel } = require(`../../functions`)
+const ch_list = require(`../../discord structure/channels.json`)
+const { calcActLevel, getLevel } = require(`../../functions`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -50,7 +51,7 @@ module.exports = {
             ephemeral: true
         })
 
-        const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
+        const user = interaction.options.getUser(`пользователь`);
         const userData = await User.findOne({ userid: user.id })
         switch (interaction.options.getString(`тип`)) {
             case `Опыт активности`: {
@@ -68,9 +69,23 @@ module.exports = {
                     embeds: [not_possible]
                 })
 
-                userData.exp -= value
+                let cur_exp = userData.exp - interaction.options.getNumber(`количество`)
+                let cur_level = userData.level
+                let total_exp = calcActLevel(0, cur_level, cur_exp)
+                let level_exp = getLevel(total_exp)
+                let level = level_exp[0], exp = level_exp[1]
+                
+                userData.level = level
+                userData.exp = exp
+
+                if (cur_level > level) {
+                    await interaction.guild.channels.cache.get(ch_list.main).send(
+                        `:black_medium_small_square:
+К сожалению, ${user} понизил свой уровень активности до ${userData.level} уровня! 😔
+:black_medium_small_square:`);
+                }
                 userData.save();
-                interaction.reply(`Убрано ${interaction.options.getNumber(`количество`)}🌀 у пользователя ${user}!`)
+                await interaction.reply(`Убрано ${interaction.options.getNumber(`количество`)}🌀 у пользователя ${user}!`)
                 console.log(chalk.green(`[${user.username} потерял опыт активности]`) + chalk.gray(`: Теперь у него ${userData.exp} опыта и ${userData.level} уровень.`))
             };
 

@@ -244,7 +244,6 @@ module.exports = {
                 await appMsg.reactions.removeAll()
                 appData.status = `Принята`
                 await appMsg.react(`✅`)
-                appData.save()
 
                 if (age <= 0) return interaction.reply({
                     content: `Возраст не может быть отрицательным!`,
@@ -343,6 +342,7 @@ module.exports = {
 
                     creator.save()
                     userData.save()
+                    appData.save()
                     if (memberDM.user.id !== `491343958660874242`) {
                         memberDM.setNickname(`「${userData.displayname.rank}」 ${userData.displayname.ramka1}${userData.displayname.name}${userData.displayname.ramka2}${userData.displayname.suffix} ${userData.displayname.symbol}┇ ${userData.displayname.premium}`)
                     }

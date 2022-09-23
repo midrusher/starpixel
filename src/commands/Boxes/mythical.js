@@ -83,7 +83,8 @@ module.exports = {
                     .setTimestamp(Date.now())
 
                 if (!user.roles.cache.has(role)) return interaction.reply({
-                    embeds: [no_role]
+                    embeds: [no_role],
+                    ephemeral: true
                 })
 
                 const cd = new EmbedBuilder()
@@ -184,7 +185,8 @@ module.exports = {
                     .setTimestamp(Date.now())
 
                 if (!user.roles.cache.has(role)) return interaction.reply({
-                    embeds: [no_role]
+                    embeds: [no_role],
+                    ephemeral: true
                 })
 
                 const cd = new EmbedBuilder()
@@ -249,7 +251,8 @@ module.exports = {
                     .setTimestamp(Date.now())
 
                 if (!user.roles.cache.has(role)) return interaction.reply({
-                    embeds: [no_role]
+                    embeds: [no_role],
+                    ephemeral: true
                 })
 
                 const cd = new EmbedBuilder()
@@ -416,7 +419,8 @@ ${user} обращается к Венере.
                     .setTimestamp(Date.now())
 
                 if (!user.roles.cache.has(role)) return interaction.reply({
-                    embeds: [no_role]
+                    embeds: [no_role],
+                    ephemeral: true
                 })
 
                 const cd = new EmbedBuilder()
@@ -489,7 +493,8 @@ ${user} обращается к Венере.
                     .setTimestamp(Date.now())
 
                 if (!user.roles.cache.has(role)) return interaction.reply({
-                    embeds: [no_role]
+                    embeds: [no_role],
+                    ephemeral: true
                 })
 
                 const cd = new EmbedBuilder()
@@ -561,7 +566,8 @@ ${user} использует **СИЛУ ЮПИТЕРА**    @here
                     .setTimestamp(Date.now())
 
                 if (!user.roles.cache.has(role)) return interaction.reply({
-                    embeds: [no_role]
+                    embeds: [no_role],
+                    ephemeral: true
                 })
 
                 const cd = new EmbedBuilder()
@@ -683,7 +689,8 @@ ${user} использует силу Сатурна, чтобы наказат�
                     .setTimestamp(Date.now())
 
                 if (!user.roles.cache.has(role)) return interaction.reply({
-                    embeds: [no_role]
+                    embeds: [no_role],
+                    ephemeral: true
                 })
 
                 const symbol = interaction.options.getString(`значок`)
@@ -711,7 +718,8 @@ ${user} использует силу Сатурна, чтобы наказат�
                     .setTimestamp(Date.now())
 
                 if (!user.roles.cache.has(role)) return interaction.reply({
-                    embeds: [no_role]
+                    embeds: [no_role],
+                    ephemeral: true
                 })
 
                 const cd = new EmbedBuilder()

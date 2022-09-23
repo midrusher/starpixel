@@ -20,6 +20,10 @@ module.exports = {
             .setDescription(`Пользователь, с которым нужно взаимодействовать`)),
 
     async execute(interaction, client) {
-       await interaction.reply(`Пустая команда`)
+        await interaction.reply({
+            content: `Нет теста на данный момент`,
+            ephemeral: true
+        })
+
     }
 };

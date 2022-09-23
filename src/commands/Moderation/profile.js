@@ -4,6 +4,7 @@ const wait = require(`node:timers/promises`).setTimeout
 const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
+const { Apply } = require(`../../schemas/applications`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../discord structure/channels.json`);
@@ -22,7 +23,7 @@ module.exports = {
                 .setDescription(`Пользователь в Discord`)
                 .setRequired(true)
             )
-            .addStringOption(option => option
+            /* .addStringOption(option => option
                 .setName(`имя`)
                 .setDescription(`Реальное имя пользователя`)
                 .setRequired(true)
@@ -36,7 +37,7 @@ module.exports = {
                 .setName(`никнейм`)
                 .setDescription(`Никнейм в Minecraft`)
                 .setRequired(true)
-            )
+            ) */
         )
         .addSubcommand(subcommand => subcommand
             .setName(`update`)
@@ -208,11 +209,11 @@ module.exports = {
 
                         break;
                     default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
+                        await interaction.reply({
+                            content: `Данной опции не существует! Выберите одну из предложенных!`,
+                            ephemeral: true
+                        })
+                    }
                         break;
                 }
             }
@@ -233,15 +234,22 @@ module.exports = {
     async execute(interaction, client) {
         switch (interaction.options.getSubcommand()) {
             case `create`: {
-                const realname = interaction.options.getString(`имя`)
-                const age = interaction.options.getInteger(`возраст`)
+                const user = interaction.options.getUser(`пользователь`)
+                const appData = await Apply.findOne({ userid: user.id, guildid: interaction.guild.id })
+                const realname = appData.que1
+                const playername = appData.que2
+                const age = Number(appData.que3)
+                const appCh = await interaction.guild.channels.fetch(ch_list.apply)
+                const appMsg = await appCh.messages.fetch(appData.applicationid)
+                await appMsg.reactions.removeAll()
+                appData.status = `Принята`
+                await appMsg.react(`✅`)
+                appData.save()
+
                 if (age <= 0) return interaction.reply({
                     content: `Возраст не может быть отрицательным!`,
                     ephemeral: true
                 })
-
-                const user = interaction.options.getUser(`пользователь`)
-                const playername = interaction.options.getString(`никнейм`)
                 if (!interaction.member.roles.cache.has(`320880176416161802`)) {
                     const embed = new EmbedBuilder()
                         .setAuthor({
@@ -903,11 +911,11 @@ module.exports = {
                                 break;
 
                             default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
+                                await interaction.reply({
+                                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                                    ephemeral: true
+                                })
+                            }
                                 break;
                         }
                     }
@@ -1290,7 +1298,7 @@ module.exports = {
                             }
                                 break;
                             case `Медаль 🥉`: {
-                            
+
                                 const before = userData.medal_3
 
                                 if (value < 0) return interaction.reply({
@@ -1447,8 +1455,8 @@ module.exports = {
                                     embeds: [success]
                                 })
                             }
-                            
-                            
+
+
                                 break;
                             case `Навык "Подводное дыхание" (Вода)`: {
                                 const before = userData.elements.respiration
@@ -1614,9 +1622,9 @@ module.exports = {
                                 break;
                             case `Навык "Орлиный глаз" (Воздух)`: {
                                 const before = userData.elements.eagle_eye
-                                
-                                
-                                
+
+
+
                                 if (value < 0) return interaction.reply({
                                     content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
                                     ephemeral: true
@@ -1859,16 +1867,16 @@ module.exports = {
 
 
                             default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
+                                await interaction.reply({
+                                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                                    ephemeral: true
+                                })
+                            }
                                 break;
                         }
 
                     }
-                        
+
                         break;
                     case 'boolean': {
                         const user_id = interaction.options.getString(`id`)
@@ -1897,33 +1905,29 @@ module.exports = {
                                 break;
 
                             default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
+                                await interaction.reply({
+                                    content: `Данной опции не существует! Выберите одну из предложенных!`,
+                                    ephemeral: true
+                                })
+                            }
                                 break;
                         }
                     }
                         break
                     default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
+                        await interaction.reply({
+                            content: `Данной опции не существует! Выберите одну из предложенных!`,
+                            ephemeral: true
+                        })
+                    }
                         break;
                 }
             }
 
                 break;
 
-            default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
+            default:
+
                 break;
         }
     }

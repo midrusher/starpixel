@@ -29,7 +29,7 @@ module.exports = {
         )
     ,
     async autoComplete(interaction, client) {
-        
+
         const focusedValue = interaction.options.getFocused();
         const choices = [
             'Символ ранга',
@@ -47,9 +47,23 @@ module.exports = {
 
     },
     async execute(interaction, client) {
+        if (!interaction.member.roles.cache.has(`320880176416161802`)) {
+            const embed = new EmbedBuilder()
+                .setAuthor({
+                    name: `❗ Отсутствует необходимая роль!`
+                })
+                .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`320880176416161802`).name}\`!`)
+                .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                .setColor(`DarkRed`)
+                .setTimestamp(Date.now())
+
+            return interaction.reply({
+                embeds: [embed],
+                ephemeral: true
+            })
+        }
         const user = interaction.options.getUser(`пользователь`)
         const userData = await User.findOne({ userid: user.id })
-
 
         const newoption = interaction.options.getString(`значение`) || ``
 

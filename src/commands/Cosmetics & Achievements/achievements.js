@@ -2885,7 +2885,8 @@ ${user} + 300 💠
                     break;
                 case `grant`: {
                     if (!user.roles.cache.has(`320880176416161802`)) return interaction.reply({
-                        embeds: [not_admin]
+                        embeds: [not_admin],
+                        ephemeral: true
                     })
                     const member = interaction.options.getMember(`пользователь`)
                     const memberData = await User.findOne({ id: member.user.id }) || new User({ id: member.user.id, name: member.user.username })
@@ -3589,7 +3590,8 @@ ${user} + 300 💠
                     break;
                 case `revoke`: {
                     if (!user.roles.cache.has(`320880176416161802`)) return interaction.reply({
-                        embeds: [not_admin]
+                        embeds: [not_admin],
+                        ephemeral: true
                     })
                     const member = interaction.options.getMember(`пользователь`)
                     const memberData = await User.findOne({ id: member.user.id }) || new User({ id: member.user.id, name: member.user.username })

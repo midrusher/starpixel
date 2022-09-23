@@ -14,9 +14,12 @@ const { gameConstructor, calcActLevel, getLevel } = require(`../../functions`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`test_command_no_usage`)
-        .setDescription(`TEST_COMMAND_NO_USAGE`),
+        .setDescription(`TEST_COMMAND_NO_USAGE`)
+        .addUserOption(option => option
+            .setName(`пользователь`)
+            .setDescription(`Пользователь, с которым нужно взаимодействовать`)),
 
     async execute(interaction, client) {
-        await interaction.reply(`Нет тестовой команды на данный момент!`)
+       await interaction.reply(`Пустая команда`)
     }
 };

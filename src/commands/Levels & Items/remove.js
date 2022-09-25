@@ -40,13 +40,13 @@ module.exports = {
             .setAuthor({
                 name: `❗ Отсутствует необходимая роль!`
             })
-            .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`563793535250464809`).name}\`!
+            .setDescription(`Вы не имеете роль \`${interaction.guild.roles.cache.get(`320880176416161802`).name}\`!
 Но вы всё ещё можете использовать команду \`/profile update\``)
             .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
             .setColor(`DarkRed`)
             .setTimestamp(Date.now())
 
-        if (!interaction.member.roles.cache.has(`563793535250464809`)) return interaction.reply({
+        if (!interaction.member.roles.cache.has(`320880176416161802`)) return interaction.reply({
             embeds: [embed],
             ephemeral: true
         })

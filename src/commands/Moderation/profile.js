@@ -410,7 +410,6 @@ module.exports = {
                         let json = await responseA.json()
                         var i = 0
                         while (json.guild.members[i].uuid !== userData.uuid) {
-                            console.log(chalk.hex(`#FFA500`)(`[HypixelAPI]`) + chalk.gray(`: Участник ${json.guild.members[i].uuid} не является пользователем ${userData.uuid}`))
                             i++
                         }
                         let gexpObj = json.guild.members[i].expHistory
@@ -436,14 +435,18 @@ module.exports = {
                     interaction.reply(`Ошибка! Свяжитесь с администрацией гильдии.`)
                 }
                 userData.save()
+                const totalexp = calcActLevel(0, userData.level, userData.exp)
                 const success = new EmbedBuilder()
                     .setTitle(`Профиль успешно обновлен!`)
+                    .setColor(process.env.bot_color)
+                    .setTimestamp(Date.now())
+                    .setThumbnail(`https://visage.surgeplay.com/face/${userData.uuid}.png`)
                     .setDescription(`Профиль игрок ${interaction.member} был успешно обновлен!
 
 **Предметов на данный момент:**
 Опыт активности - ${userData.exp} (подробнее: \`/rank\`)
 Уровень активности - ${userData.level}
-Всего опыта - ${userData.totalexp}
+Всего опыта - ${totalexp}
 
 Опыта рангов - ${userData.rank}
 Румбиков - ${userData.rumbik}

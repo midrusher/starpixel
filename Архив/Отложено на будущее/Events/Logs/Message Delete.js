@@ -7,11 +7,12 @@ const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИ
 
 module.exports = {
     name: 'messageDelete',
-    async execute(message) {       
-         
+    async execute(message) {
+
         const guild = message.guild;
+        const pluginData = await Guild.findOne({ id: guild.id })
+        if (pluginData.plugins.logs === false) return
         const log_data = await Guild.findOne({ id: guild.id })
-        if (log_data.plugins.logs === false) return
         const channel = await guild.channels.cache.get(ch_list.log)
         const webhookF = await channel.fetchWebhooks().then(hooks => hooks.find(webhook => webhook.name == `Starpixel Logs`))
         let webhook
@@ -26,26 +27,62 @@ module.exports = {
                 log_data.logs.webhook_url = hook.url
                 log_data.save()
             })
-            webhook = new WebhookClient({ id: log_data.logs.webhook_id, token: log_data.logs.webhook_token})
+            webhook = new WebhookClient({ id: log_data.logs.webhook_id, token: log_data.logs.webhook_token })
         } else if (webhookF) {
-            webhook = new WebhookClient({ id: log_data.logs.webhook_id, token: log_data.logs.webhook_token})
+            webhook = new WebhookClient({ id: log_data.logs.webhook_id, token: log_data.logs.webhook_token })
         }
-        
+
 
         const fetchedLogs = await message.guild.fetchAuditLogs({
             limit: 1,
             type: AuditLogEvent.MessageDelete,
         });
-        
+
         const auditLog = fetchedLogs.entries.first();
+        if (auditLog.createdTimestamp > Date.now() - 300000) {
+            let executor
+            if (!auditLog) {
+                executor = `Пользователь не найден`
+            } else if (auditLog) {
+                executor = auditLog.executor
+            }
 
-        let executor
-        if (!auditLog) {
-            executor = `Пользователь не найден`
-        } else if (auditLog) {
-            executor = auditLog.executor
-        }
+            if (message.content) {
+                if (message.author.bot) return
+                const created = Math.round(message.createdTimestamp / 1000)
+                const log = new EmbedBuilder()
+                    .setTitle(`Удалено сообщение`)
+                    .setDescription(`Автор: ${message.author}
+Дата отправки сообщения: <t:${created}:f>
+Канал: ${message.channel}
+Содержимое: \`${message.content}\`
 
+Удалено пользователем: ${executor}`)
+                    .setColor(process.env.bot_color)
+                    .setTimestamp(Date.now())
+                    .setThumbnail(message.author.displayAvatarURL())
+
+                webhook.send({
+                    embeds: [log]
+                })
+            } else if (!message.content) {
+                const created = Math.round(message.createdTimestamp / 1000)
+                const log = new EmbedBuilder()
+                    .setTitle(`Удалено сообщение`)
+                    .setDescription(`Автор: \`Неизвестно\`
+Дата отправки сообщения: <t:${created}:f>
+Канал: ${message.channel}
+Содержимое: \`Неизвестно\`
+
+Удалено пользователем: ${executor}`)
+                    .setColor(process.env.bot_color)
+                    .setTimestamp(Date.now())
+
+                webhook.send({
+                    embeds: [log]
+                })
+            }
+        } else {
         if (message.content) {
             if (message.author.bot) return
             const created = Math.round( message.createdTimestamp / 1000)
@@ -56,7 +93,7 @@ module.exports = {
 Канал: ${message.channel}
 Содержимое: \`${message.content}\`
 
-Удалено пользователем: ${executor}`)
+Удалено пользователем: \`Неизвестно\``)
         .setColor(process.env.bot_color)
         .setTimestamp(Date.now())
         .setThumbnail(message.author.displayAvatarURL())
@@ -73,13 +110,14 @@ module.exports = {
 Канал: ${message.channel}
 Содержимое: \`Неизвестно\`
 
-Удалено пользователем: ${executor}`)
+Удалено пользователем: \`Неизвестно\``)
         .setColor(process.env.bot_color)
         .setTimestamp(Date.now())
 
         webhook.send({
             embeds: [log]
         })
+        }
         }
     }
 }

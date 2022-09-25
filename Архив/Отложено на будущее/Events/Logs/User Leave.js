@@ -10,8 +10,9 @@ module.exports = {
     async execute(member) {
         const client = member.client
         const guild = member.guild;
+        const pluginData = await Guild.findOne({ id: guild.id })
+        if (pluginData.plugins.logs === false) return
         const log_data = await Guild.findOne({ id: guild.id })
-        if (log_data.plugins.logs === false) return
         const channel = await guild.channels.cache.get(ch_list.log)
         const webhookF = await channel.fetchWebhooks().then(hooks => hooks.find(webhook => webhook.name == `Starpixel Logs`))
         let webhook

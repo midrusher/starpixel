@@ -1,17 +1,27 @@
 const { User } = require(`../../../../src/schemas/userdata`)
 const { Guild } = require(`../../../../src/schemas/guilddata`)
-const { ChannelType, AuditLogEvent, WebhookClient, EmbedBuilder } = require(`discord.js`)
+const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`discord.js`)
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 
 module.exports = {
-    name: 'guildMemberAdd',
-    async execute(member) {
-        const client = member.client
-        const guild = member.guild;
+    name: 'guildBanRemove',
+    async execute(ban) {
+        const client = ban.client
+        const guild = ban.guild
+        const pluginData = await Guild.findOne({ id: guild.id })
+        if (pluginData.plugins.logs === false) return
+        if (ban.partial) {
+            try {
+                await ban.fetch();
+            } catch (error) {
+                console.error('Произошла ошибка при обработке бана', error);
+
+                return;
+            }
+        }
         const log_data = await Guild.findOne({ id: guild.id })
-        if (log_data.plugins.logs === false) return
         const channel = await guild.channels.cache.get(ch_list.log)
         const webhookF = await channel.fetchWebhooks().then(hooks => hooks.find(webhook => webhook.name == `Starpixel Logs`))
         let webhook
@@ -31,28 +41,25 @@ module.exports = {
             webhook = new WebhookClient({ id: log_data.logs.webhook_id, token: log_data.logs.webhook_token })
         }
 
-        const { invites } = client
-        const newInvites = await guild.invites.fetch()
-        const oldInvites = await invites.get(member.guild.id);
-        const invite = await newInvites.find(i => i.uses > oldInvites.get(i.code));
-        const inviter = await client.users.fetch(invite.inviter.id);
-
-        const created = Math.round(member.user.createdTimestamp / 1000)
-        const joined = Math.round(member.joinedTimestamp / 1000)
+        const fetchedLogs = await ban.guild.fetchAuditLogs({
+            limit: 1,
+            type: AuditLogEvent.MemberBanRemove
+        });
+        const auditLog = fetchedLogs.entries.first();
 
         const log = new EmbedBuilder()
-            .setTitle(`Участник присоединился к серверу`)
-            .setDescription(`Пользователь: \`${member}\`
-Дата создания аккаунта: <t:${created}:f>
-Дата вступления: <t:${joined}:f>
+            .setTitle(`Пользователь разблокирован`)
+            .setDescription(`Пользователь: ${ban.user.tag}
+Причина: ${ban.reason}
 
-Пригласил: ${inviter}`)
+Модератор: ${auditLog.executor}`)
             .setColor(process.env.bot_color)
             .setTimestamp(Date.now())
-            .setThumbnail(member.user.displayAvatarURL())
+            .setThumbnail(ban.user.displayAvatarURL())
 
-        await webhook.send({
+        webhook.send({
             embeds: [log]
         })
+
     }
 }

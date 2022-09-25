@@ -32,8 +32,12 @@ module.exports = {
             embeds: [embed],
             ephemeral: true
         })
-        const member = interaction.options.getUser(`пользователь`)
-        const memberData = await User.findOne({ userid: member.id }) || new User({ userid: member.id, name: member.username})
+        const member = interaction.options.getMember(`пользователь`)
+        if (member.roles.cache.has(`920346035811917825`)) return interaction.reply({
+            content: `Данный участник не находится в гильдии!`,
+            ephemeral: true
+        })
+        const memberData = await User.findOne({ userid: member.user.id })
         const reason = interaction.options.getString(`причина`)
         memberData.warns += 1
         memberData.save()

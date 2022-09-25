@@ -16,6 +16,7 @@ const User = new mongoose.Schema({
     },
     name: { type: String  },
     nickname: { type: String, },
+    oldnickname: { type: String },
     uuid: {type: String, },
     age: { type: Number, },
     security_code: { type: String, default: `0000`},

@@ -48,9 +48,9 @@ class gameConstructor {
         if (typeof rule !== "string") return err
         let g_final
         if (final === "Дурак один") {
-            g_final = "Переводной"
+            g_final = "Дурак один"
         } else if (final === "Ничья") {
-            g_final = "Переводной"
+            g_final = "Ничья"
         } else {
             let err = new Error(`Введённое вами правило не является допустимым для создания игры!`)
             return err

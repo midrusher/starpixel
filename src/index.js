@@ -49,7 +49,8 @@ client.commands = new Collection();
 client.buttons = new Collection();
 client.modals = new Collection();
 client.selectMenus = new Collection();
-client.voiceManager = new Collection()
+client.voiceManager = new Collection();
+client.invites = new Collection()
 
 client.commandArray = [];
 
@@ -77,6 +78,7 @@ client.act_rewards();
 client.updatenicks();
 client.top_3_gexp();
 client.haspremium();
+client.emojiUpdate();
 client.UpdateNicknames();
 client.AutoElements();
 client.AutoStars();

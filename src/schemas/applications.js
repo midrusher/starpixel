@@ -3,6 +3,7 @@ const mongoose = require(`mongoose`);
 const Apply = new mongoose.Schema({
     guildid: { type: String },
     userid: { type: String },
+    invited_by: { type: String },
 
     que1: { type: String, default: `` },
     que2: { type: String, default: `` },

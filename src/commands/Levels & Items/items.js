@@ -13,8 +13,13 @@ module.exports = {
             .setDescription(`Введите любого пользователя`)
         ),
     async execute(interaction, client) {
+        const member = interaction.options.getMember(`пользователь`) || interaction.member
+                if (member.roles.cache.has(`920346035811917825`)) return interaction.reply({
+                    content: `Данный участник не находится в гильдии!`,
+                    ephemeral: true
+                })
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
-        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username })
+        const userData = await User.findOne({ userid: user.id })
         const embed = new EmbedBuilder()
             .setColor(0xA872FF)
             .setAuthor({

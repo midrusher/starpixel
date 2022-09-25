@@ -12,26 +12,13 @@ module.exports = (client) => {
                 const member = await guild.members.cache.get(userid)
                 if (member.roles.cache.has(`850336260265476096`)) {
                     displayname.premium = `💳`
-                    if (!guild.emojis.cache.find(emoji => emoji.name === `${result.nickname}`) && pers_emoji == false && result.uuid !== `bd4988c17cfa4daba1f0a2bce375b291`) {
-                        await guild.emojis.create({ attachment: `https://visage.surgeplay.com/face/${result.uuid}.png`, name: `${result.nickname}` })
-                        result.pers_emoji = true
-                    } else if (guild.emojis.cache.find(emoji => emoji.name === `${result.nickname}`) && pers_emoji == true && result.uuid !== `bd4988c17cfa4daba1f0a2bce375b291`) {
-                        const emojiDelete = await guild.emojis.cache.find(emoji => emoji.name === `${result.nickname}`)
-                        await emojiDelete.delete()
-                        await guild.emojis.create({ attachment: `https://visage.surgeplay.com/face/${result.uuid}.png`, name: `${result.nickname}` })
-                    } 
                 } else if (!member.roles.cache.has(`850336260265476096`)) {
                     displayname.premium = ``
-                    const emoji = guild.emojis.cache.find(emoji => emoji.name === `${result.nickname}`)
-                    result.pers_emoji = false
-                    if (emoji) {
-                        emoji.delete(emoji, `${member.user.username} потерял Premium!`)
-                    }
                 }
                 result.save()
 
             }
 
-        }, 600000)
+        }, 10000)
     }
 }

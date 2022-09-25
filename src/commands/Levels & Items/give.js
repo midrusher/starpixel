@@ -50,9 +50,13 @@ module.exports = {
             embeds: [embed],
             ephemeral: true
         })
-
+        const member = interaction.options.getMember(`пользователь`) || interaction.member
+                if (member.roles.cache.has(`920346035811917825`)) return interaction.reply({
+                    content: `Данный участник не находится в гильдии!`,
+                    ephemeral: true
+                })
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
-        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username })
+        const userData = await User.findOne({ userid: user.id })
         switch (interaction.options.getString(`тип`)) {
             case `Опыт активности`: {
                 let cur_exp = userData.exp + interaction.options.getNumber(`количество`)

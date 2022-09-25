@@ -1,23 +1,85 @@
 const { User } = require(`../../../../src/schemas/userdata`)
 const { Guild } = require(`../../../../src/schemas/guilddata`)
-const { ChannelType } = require(`discord.js`)
+const { ChannelType, AuditLogEvent, WebhookClient, EmbedBuilder } = require(`discord.js`)
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 
 module.exports = {
     name: 'messageDelete',
-    async execute(message) {
-        if (message.content) {
+    async execute(message) {       
+         
+        const guild = message.guild;
+        const log_data = await Guild.findOne({ id: guild.id })
+        if (log_data.plugins.logs === false) return
+        const channel = await guild.channels.cache.get(ch_list.log)
+        const webhookF = await channel.fetchWebhooks().then(hooks => hooks.find(webhook => webhook.name == `Starpixel Logs`))
+        let webhook
+        if (!webhookF) {
+            await channel.createWebhook({
+                name: `Starpixel Logs`,
+                avatar: guild.iconURL(),
+                reason: `Не было вебхука для использования логов!`
+            }).then(hook => {
+                log_data.logs.webhook_id = hook.id
+                log_data.logs.webhook_token = hook.token
+                log_data.logs.webhook_url = hook.url
+                log_data.save()
+            })
+            webhook = new WebhookClient({ id: log_data.logs.webhook_id, token: log_data.logs.webhook_token})
+        } else if (webhookF) {
+            webhook = new WebhookClient({ id: log_data.logs.webhook_id, token: log_data.logs.webhook_token})
+        }
+        
 
+        const fetchedLogs = await message.guild.fetchAuditLogs({
+            limit: 1,
+            type: AuditLogEvent.MessageDelete,
+        });
+        
+        const auditLog = fetchedLogs.entries.first();
+
+        let executor
+        if (!auditLog) {
+            executor = `Пользователь не найден`
+        } else if (auditLog) {
+            executor = auditLog.executor
+        }
+
+        if (message.content) {
             if (message.author.bot) return
-            await message.guild.channels.cache.get(ch_list.test).send({
-                content: `Удалено сообщение: \`${message.content}\``
-            })
+            const created = Math.round( message.createdTimestamp / 1000)
+            const log = new EmbedBuilder()
+        .setTitle(`Удалено сообщение`)
+        .setDescription(`Автор: ${message.author}
+Дата отправки сообщения: <t:${created}:f>
+Канал: ${message.channel}
+Содержимое: \`${message.content}\`
+
+Удалено пользователем: ${executor}`)
+        .setColor(process.env.bot_color)
+        .setTimestamp(Date.now())
+        .setThumbnail(message.author.displayAvatarURL())
+
+        webhook.send({
+            embeds: [log]
+        })
         } else if (!message.content) {
-            await message.guild.channels.cache.get(ch_list.test).send({
-                content: `Удалено сообщение от пользователя ${message.author}`
-            })
+            const created = Math.round( message.createdTimestamp / 1000)
+            const log = new EmbedBuilder()
+        .setTitle(`Удалено сообщение`)
+        .setDescription(`Автор: \`Неизвестно\`
+Дата отправки сообщения: <t:${created}:f>
+Канал: ${message.channel}
+Содержимое: \`Неизвестно\`
+
+Удалено пользователем: ${executor}`)
+        .setColor(process.env.bot_color)
+        .setTimestamp(Date.now())
+
+        webhook.send({
+            embeds: [log]
+        })
         }
     }
 }

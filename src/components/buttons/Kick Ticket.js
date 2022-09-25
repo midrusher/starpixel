@@ -20,7 +20,7 @@ module.exports = {
             name: `обращение-№${tickets.id}`,
             type: ChannelType.GuildText,
             parent: interaction.channel.parentId,
-            topic: `Обращение пользователя ${user} зарегистрированное под номером №${tickets.id}.
+            topic: `Обращение пользователя ${user}, зарегистрированное под номером №${tickets.id}.
  **Тема обращения**: Обжалование исключения из гильдии.`,
             permissionOverwrites: [
                 {

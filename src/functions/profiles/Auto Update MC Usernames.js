@@ -14,7 +14,11 @@ module.exports = (client) => {
                 let response = await fetch(`https://api.hypixel.net/player?key=${upd_nick_api}&uuid=${result.uuid}`)
                     if (response.ok) {
                         try {
+                            const oldnick = result.nickname
                             let json = await response.json()
+                            if (oldnick !== json.player.displayname) {
+                                result.oldnickname = oldnick
+                            }
                             result.nickname = json.player.displayname;
                             result.save()
                         } catch (error) {

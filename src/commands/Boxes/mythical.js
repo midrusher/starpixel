@@ -541,7 +541,10 @@ ${user} использует **СИЛУ ЮПИТЕРА**    @here
 Юпитер притягивает ко всем другим участникам:
 - \`${r_1.name}\`
 - \`${r_2.name}\`
-:magnet: :sparkles: :magnet: :sparkles: :magnet: :sparkles: `
+:magnet: :sparkles: :magnet: :sparkles: :magnet: :sparkles: `,
+allowedMentions: { 
+    parse: ["everyone"] 
+}
                 })
 
                 const members = await interaction.guild.members.fetch()

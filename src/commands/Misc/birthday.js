@@ -70,6 +70,11 @@ module.exports = {
                         ephemeral: true
                     })
                 }
+                const member = interaction.options.getMember(`пользователь`)
+                if (member.roles.cache.has(`920346035811917825`)) return interaction.reply({
+                    content: `Данный участник не находится в гильдии!`,
+                    ephemeral: true
+                })
                 const user = interaction.options.getUser(`пользователь`)
                 const date = new Date()
                 const currentYear = date.getFullYear()

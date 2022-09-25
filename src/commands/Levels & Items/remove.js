@@ -50,7 +50,11 @@ module.exports = {
             embeds: [embed],
             ephemeral: true
         })
-
+        const member = interaction.options.getMember(`пользователь`)
+                if (member.roles.cache.has(`920346035811917825`)) return interaction.reply({
+                    content: `Данный участник не находится в гильдии!`,
+                    ephemeral: true
+                })
         const user = interaction.options.getUser(`пользователь`);
         const userData = await User.findOne({ userid: user.id })
         switch (interaction.options.getString(`тип`)) {

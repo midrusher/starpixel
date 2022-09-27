@@ -92,6 +92,238 @@ function getLevel(exp) {
     return [level, exp]
 }
 
+function permToName(array) {
+    let result = []
+    for (let i = 0; i < array.length; i++) {
+        let name
+        switch (array[i]) {
+            case `AddReactions`: {
+                name = `Добавлять реакции`
+                result.push(name)
+            }
+                break;
+            case `Administrator`: {
+                name = `Администратор`
+                result.push(name)
+            }
+                break;
+            case `AttachFiles`: {
+                name = `Прикреплять файлы`
+                result.push(name)
+            }
+                break;
+            case `BanMembers`: {
+                name = `Банить участников`
+                result.push(name)
+            }
+                break;
+            case `ChangeNickname`: {
+                name = `Изменять никнейм`
+                result.push(name)
+            }
+                break;
+            case `Connect`: {
+                name = `Подключаться`
+                result.push(name)
+            }
+                break;
+            case `CreateInstantInvite`: {
+                name = `Создавать приглашения`
+                result.push(name)
+            }
+                break;
+            case `CreatePrivateThreads`: {
+                name = `Создавать приватные ветки`
+                result.push(name)
+            }
+                break;
+            case `CreatePublicThreads`: {
+                name = `Создавать публичные ветки`
+                result.push(name)
+            }
+                break;
+            case `DeafenMembers`: {
+                name = `Отключать участникам звук`
+                result.push(name)
+            }
+                break;
+            case `EmbedLinks`: {
+                name = `Встраивать ссылки`
+                result.push(name)
+            }
+                break;
+            case `KickMembers`: {
+                name = `Выгонять участников`
+                result.push(name)
+            }
+                break;
+            case `ManageChannels`: {
+                name = `Управлять каналами`
+                result.push(name)
+            }
+                break;
+            case `ManageEmojisAndStickers`: {
+                name = `Управлять эмодзи с стикерами`
+                result.push(name)
+            }
+                break;
+            case `ManageEvents`: {
+                name = `Управлять событиями`
+                result.push(name)
+            }
+                break;
+            case `ManageGuild`: {
+                name = `Управлять сервером`
+                result.push(name)
+            }
+                break;
+            case `ManageMessages`: {
+                name = `Управлять сообщениями`
+                result.push(name)
+            }
+                break;
+            case `ManageNicknames`: {
+                name = `Управлять никнеймами`
+                result.push(name)
+            }
+                break;
+            case `ManageRoles`: {
+                name = `Управлять ролями`
+                result.push(name)
+            }
+                break;
+            case `ManageThreads`: {
+                name = `Управлять ветками`
+                result.push(name)
+            }
+                break;
+            case `ManageWebhooks`: {
+                name = `Управлять вебхуками`
+                result.push(name)
+            }
+                break;
+            case `MentionEveryone`: {
+                name = `Упоминание \@everyone, \@here и всех ролей`
+                result.push(name)
+            }
+                break;
+            case `ModerateMembers`: {
+                name = `Отправлять участников подумать о своем поведении`
+                result.push(name)
+            }
+                break;
+            case `MoveMembers`: {
+                name = `Перемещать участников`
+                result.push(name)
+            }
+                break;
+            case `MuteMembers`: {
+                name = `Отключать участникам микрофон`
+                result.push(name)
+            }
+                break;
+            case `PrioritySpeaker`: {
+                name = `Приоритетные режим`
+                result.push(name)
+            }
+                break;
+            case `ReadMessageHistory`: {
+                name = `Читать историю сообщений`
+                result.push(name)
+            }
+                break;
+            case `RequestToSpeak`: {
+                name = `Попросить выступить`
+                result.push(name)
+            }
+                break;
+            case `SendMessages`: {
+                name = `Отправлять сообщения`
+                result.push(name)
+            }
+                break;
+            case `SendMessagesInThreads`: {
+                name = `Отправлять сообщения в ветках`
+                result.push(name)
+            }
+                break;
+            case `SendTTSMessages`: {
+                name = `Отправлять TTS сообщения`
+                result.push(name)
+            }
+                break;
+            case `Speak`: {
+                name = `Говорить`
+                result.push(name)
+            }
+                break;
+            case `Stream`: {
+                name = `Использовать видео`
+                result.push(name)
+            }
+                break;
+            case `UseApplicationCommands`: {
+                name = `Использовать команды приложений`
+                result.push(name)
+            }
+                break;
+            case `UseEmbeddedActivities`: {
+                name = `Использовать активности`
+                result.push(name)
+            }
+                break;
+            case `UseExternalEmojis`: {
+                name = `Использовать внешние эмодзи`
+                result.push(name)
+            }
+                break;
+            case `UseExternalStickers`: {
+                name = `Использовать внешние стикеры`
+                result.push(name)
+            }
+                break;
+            case `UseVAD`: {
+                name = `Использовать режим активации по голосу`
+                result.push(name)
+            }
+                break;
+            case `ViewAuditLog`: {
+                name = `Просматривать журнал аудита`
+                result.push(name)
+            }
+                break;
+            case `ViewChannel`: {
+                name = `Просматривать канал`
+                result.push(name)
+            }
+                break;
+            case `ViewGuildInsights`: {
+                name = `Просматривать статистику сервера`
+                result.push(name)
+            }
+                break;
+
+            default:
+                break;
+        }
+    }
 
 
-module.exports = { toOrdinalSuffix, gameConstructor, calcActLevel, getLevel }
+    return result
+}
+
+function isURL(string) {
+    let url;
+    
+    try {
+      url = new URL(string);
+      return true
+    } catch (_) {
+      return false;  
+    }
+  
+  }
+
+
+
+module.exports = { toOrdinalSuffix, gameConstructor, calcActLevel, getLevel, permToName, isURL }

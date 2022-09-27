@@ -737,11 +737,6 @@ ${user} использует силу Сатурна, чтобы наказат�
                     ephemeral: true
                 })
 
-                if (user.user.id === member.id) return interaction.reply({
-                    content: `Вы не можете выбрать в качестве пользователя самого себя!`,
-                    ephemeral: true
-                })
-
                 const ramkas = [
                     {
                         name: `РАМКА ДЛЯ НИКА ❦`,
@@ -809,7 +804,7 @@ ${user} использует силу Сатурна, чтобы наказат�
                             .setStyle(ButtonStyle.Success)
                             .setEmoji(`⬆️`)
                     )
-                await interaction.reply({
+                const reply = await interaction.reply({
                     content: `◾
 🧥 ${user}... Нептун зовёт тебя.
 В этот раз он даёт тебе \`${r_ramka.name}\`!

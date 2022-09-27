@@ -12,7 +12,7 @@ module.exports = {
             const vars = [
                 {
                     name: `none`,
-                    dropChance: 99993
+                    dropChance: 9993
                 },
                 {
                     name: `quiz`,

@@ -10,15 +10,16 @@ module.exports = {
             const message_embed = new EmbedBuilder()
                 .setColor(process.env.bot_color)
                 .setThumbnail(message.author.displayAvatarURL())
-                .setTitle(`НОВОЕ СООБЩЕНИЕ В ЛИЧНЫХ СООБЩЕНИЯХ`)
+                .setTitle(`НОВОЕ СООБЩЕНИЕ В ЛИЧНЫХ СООБЩЕНИЯХ C ${message.channel.recipient.tag}`)
                 .setTimestamp(Date.now())
                 .setDescription(`Автор: \`${message.author.tag}\`
-Содержимое: \`${message.content}\``)
+Содержимое: \`${message.content}\`
+Получатель: ${message.channel.recipient.tag}`)
             await channel.send({
                 embeds: [message_embed]
             })
-            console.log(chalk.yellow(`[${message.author.tag} в личных сообщениях]`) + chalk.white(`: ${message.content}`))
-    
+            console.log(chalk.yellow(`[${message.author.tag} в личных сообщениях с ${message.channel.recipient.tag}]`) + chalk.white(`: ${message.content}`))
+
 
 
         }

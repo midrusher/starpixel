@@ -4,6 +4,7 @@ const { tokenTEST, token, databaseToken } = process.env;
 const { connect } = require(`mongoose`)
 const { Client, Collection, GatewayIntentBits, Partials, ActivityType, } = require('discord.js');
 const fs = require('fs');
+const { DisTube } = require(`distube`)
 
 const client = new Client({
     intents: [
@@ -44,6 +45,21 @@ const client = new Client({
         }]
     }
 });
+
+client.distube = new DisTube(client, {
+    leaveOnEmpty: true,
+    emptyCooldown: 240,
+    leaveOnFinish: false,
+    leaveOnStop: false,
+    savePreviousSongs: true,
+    searchSongs: 5,
+    searchCooldown: 30,
+    nsfw: true,
+    emitAddListWhenCreatingQueue: true,
+    emitAddSongWhenCreatingQueue: true,
+    joinNewVoiceChannel: true,
+    directLink: true
+})
 
 client.commands = new Collection();
 client.buttons = new Collection();

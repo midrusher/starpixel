@@ -2,7 +2,9 @@ const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const fetch = require(`node-fetch`);
 const api = process.env.hypixel_apikey;
-const chalk = require(`chalk`)
+const chalk = require(`chalk`);
+const ch_list = require(`../../discord structure/channels.json`)
+const { GuildAuditLogs } = require("discord.js");
 
 module.exports = (client) => {
     client.statsChannel = async () => {
@@ -10,6 +12,7 @@ module.exports = (client) => {
             const guild = await client.guilds.fetch(`320193302844669959`)
             const dis_members = await guild.memberCount
             const role = await guild.roles.fetch(`504887113649750016`)
+            const guilddata = await Guild.findOne({ id: guild.id })
             const guild_members = await role.members.size
             let level = 0
             let xpneeded = 0
@@ -44,7 +47,22 @@ module.exports = (client) => {
                 else if (hpguild.exp >= 20000000) xpneeded = ((Math.floor((hpguild.exp - 20000000) / 3000000) + 1) * 3000000) - (hpguild.exp - 20000000)
             }
             const percent = 100 - (Math.round((xpneeded / 3000000) * 100))
-            
+            const before = guilddata.level
+            guilddata.hypixel_lvl = level
+            guilddata.save()
+            if (before < guilddata.hypixel_lvl) {
+                const chat = await guild.channels.fetch(ch_list.main)
+                await chat.send({
+                    content: `**НОВЫЙ УРОВЕНЬ ГИЛЬДИИ** @here
+
+Уровень гильдии на Hypixel повышен!
+\`${before}\` ➡ \`${guilddata.level}\``,
+                    allowedMentions: {
+                        parse: ["everyone"]
+                    }
+                })
+            }
+
             const channel_level = await guild.channels.fetch(`1017729617739665408`)
             await channel_level.edit({
                 name: `┊📊・Уровень: ${level}`

@@ -62,7 +62,7 @@ module.exports = {
         )
         .addSubcommandGroup(group => group
             .setName(`set`)
-            .setDescription(`Установить данные  в профиле игрока`)
+            .setDescription(`Установить данные в профиле игрока`)
             .addSubcommand(subcommand => subcommand
                 .setName(`string`)
                 .setDescription(`Установить текстовое значение (ники, id и пр.)`)
@@ -208,24 +208,14 @@ module.exports = {
                     }
 
                         break;
-                    default: {
-                        await interaction.reply({
-                            content: `Данной опции не существует! Выберите одну из предложенных!`,
-                            ephemeral: true
-                        })
-                    }
+                    default: 
                         break;
                 }
             }
 
                 break;
 
-            default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
+            default: 
                 break;
         }
 
@@ -842,12 +832,7 @@ module.exports = {
                 break;
 
 
-            default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
+            default: 
                 break;
         }
 
@@ -913,12 +898,7 @@ module.exports = {
 
                                 break;
 
-                            default: {
-                                await interaction.reply({
-                                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                                    ephemeral: true
-                                })
-                            }
+                            default: 
                                 break;
                         }
                     }
@@ -1869,12 +1849,7 @@ module.exports = {
                                 break;
 
 
-                            default: {
-                                await interaction.reply({
-                                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                                    ephemeral: true
-                                })
-                            }
+                            default: 
                                 break;
                         }
 
@@ -1907,22 +1882,12 @@ module.exports = {
 
                                 break;
 
-                            default: {
-                                await interaction.reply({
-                                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                                    ephemeral: true
-                                })
-                            }
+                            default: 
                                 break;
                         }
                     }
                         break
-                    default: {
-                        await interaction.reply({
-                            content: `Данной опции не существует! Выберите одну из предложенных!`,
-                            ephemeral: true
-                        })
-                    }
+                    default: 
                         break;
                 }
             }

@@ -42,7 +42,9 @@ const Guild = new mongoose.Schema({
         user_updates: { type: Boolean, default: true},
         channels: { type: Boolean, default: true},
         gexp: { type: Boolean, default: true},
-    }
+        music: { type: Boolean, default: true},
+    },
+    hypixel_lvl: { type: Number, default: 0 }
 
 })
 

@@ -3,7 +3,11 @@ const { ChannelType, EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: 'messageCreate',
-    async execute(message, client) {
+    async execute(message) {
+        const { Guild } = require(`../../../schemas/guilddata`)
+        const guild_plugin = await message.client.guilds.fetch(`320193302844669959`)
+        const pluginData = await Guild.findOne({ id: guild_plugin.id })
+        if (pluginData.plugins.bot_dms === false) return
         if (message.channel.type === ChannelType.DM) {
             const guild = await client.guilds.fetch(`320193302844669959`)
             const channel = await guild.channels.cache.get(`982551755340537866`)

@@ -8,6 +8,9 @@ const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИ
 module.exports = {
     name: 'guildMemberAdd',
     async execute(member) {
+        const guild_plugin = await member.client.guilds.fetch(`320193302844669959`)
+        const pluginData = await Guild.findOne({ id: guild_plugin.id })
+        if (pluginData.plugins.welcome === false) return
         const guild = member.guild
         const canvas = createCanvas(1000, 300),
             ctx = canvas.getContext('2d'),

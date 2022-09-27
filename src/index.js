@@ -48,7 +48,7 @@ const client = new Client({
 
 client.distube = new DisTube(client, {
     leaveOnEmpty: true,
-    emptyCooldown: 240,
+    emptyCooldown: 300,
     leaveOnFinish: false,
     leaveOnStop: false,
     savePreviousSongs: true,

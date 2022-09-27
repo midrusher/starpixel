@@ -18,6 +18,9 @@ module.exports = {
             .setRequired(false)
         ),
     async execute(interaction, client) {
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.moderation === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
 
         const cmd_name = `done`
         const mod = interaction.member;

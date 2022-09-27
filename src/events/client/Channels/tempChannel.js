@@ -5,6 +5,10 @@ const { ReactionCollector, ChannelType, CategoryChannelChildManager, Collection,
 module.exports = {
     name: 'voiceStateUpdate',
     async execute(oldState, newState) {
+        const { Guild } = require(`../../../schemas/guilddata`)
+        const guild_plugin = await newState.client.guilds.fetch(`320193302844669959`)
+        const pluginData = await Guild.findOne({ id: guild_plugin.id })
+        if (pluginData.plugins.temp_channels === false) return
         const newChannel = newState.channel;
         const oldChannel = oldState.channel;
         const user = newState.guild.members.cache.get(newState.id).user || oldState.guild.members.cache.get(oldState.id).user
@@ -66,7 +70,7 @@ module.exports = {
             }
 
         }
-        const ch_data = await User.findOne({ "temp_channel.id" : oldChannel?.id })
+        const ch_data = await User.findOne({ "temp_channel.id": oldChannel?.id })
         if (!ch_data) return
         if (ch_data.temp_channel.id === oldChannel?.id) {
             if (oldChannel.members.size <= 0) {

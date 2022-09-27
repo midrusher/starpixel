@@ -9,7 +9,11 @@ module.exports = (client) => {
     client.wish_birthday = async () => {
         const Guilds = client.guilds.cache
 
-        cron.schedule(`0 5 * * *`, () => {
+        cron.schedule(`0 5 * * *`, async () => {
+            const { Guild } = require(`../../schemas/guilddata`)
+            const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            const pluginData = await Guild.findOne({ id: guild_plugin.id })
+            if (pluginData.plugins.birthday === false) return
             Guilds.forEach(async g => {
                 const data = await Birthday.find({ guild: g.id }).catch(err => { })
                 if (!data) return

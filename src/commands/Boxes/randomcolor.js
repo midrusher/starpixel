@@ -9,6 +9,9 @@ module.exports = {
         .setName(`randomcolor`)  //Название команды
         .setDescription(`Получить случайный цвет`), //Описание команды
     async execute(interaction, client) {
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.boxes === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
 
         const { roles } = interaction.member //Участник команды

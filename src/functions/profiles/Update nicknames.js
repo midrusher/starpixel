@@ -5,6 +5,10 @@ const wait = require(`node:timers/promises`).setTimeout
 module.exports = (client) => {
     client.updatenicks = async () => {
         setInterval(async () => {
+            const { Guild } = require(`../../schemas/guilddata`)
+            const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            const pluginData = await Guild.findOne({ id: guild_plugin.id })
+            if (pluginData.plugins.user_updates === false) return
             const guild = await client.guilds.fetch(`320193302844669959`)
             const results = await User.find({ guildid: `320193302844669959` })
             let i = 0

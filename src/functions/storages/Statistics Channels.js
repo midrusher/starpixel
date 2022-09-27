@@ -9,6 +9,9 @@ const { GuildAuditLogs } = require("discord.js");
 module.exports = (client) => {
     client.statsChannel = async () => {
         setInterval(async () => {
+            const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            const pluginData = await Guild.findOne({ id: guild_plugin.id })
+            if (pluginData.plugins.channels === false) return
             const guild = await client.guilds.fetch(`320193302844669959`)
             const dis_members = await guild.memberCount
             const role = await guild.roles.fetch(`504887113649750016`)

@@ -8,6 +8,10 @@ const ch_list = require(`../../../discord structure/channels.json`)
 module.exports = {
     name: 'messageCreate',
     async execute(message, client) {
+        const { Guild } = require(`../../../schemas/guilddata`)
+        const guild_plugin = await message.client.guilds.fetch(`320193302844669959`)
+        const pluginData = await Guild.findOne({ id: guild_plugin.id })
+        if (pluginData.plugins.channels === false) return
         if (message.channel.id == ch_list.main) {
             const vars = [
                 {
@@ -150,7 +154,7 @@ ${item.question}`
             else if (vars[i_var].name === `none`) return
 
             setTimeout(() => {
-                
+
             }, 10000);
         }
 

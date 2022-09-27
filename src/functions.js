@@ -7,6 +7,8 @@ function toOrdinalSuffix(num) {
         : int + ordinals[3]
 };
 
+
+
 //Игра в дурака
 class gameConstructor {
     constructor() { }
@@ -314,16 +316,90 @@ function permToName(array) {
 
 function isURL(string) {
     let url;
-    
+
     try {
-      url = new URL(string);
-      return true
+        url = new URL(string);
+        return true
     } catch (_) {
-      return false;  
+        return false;
     }
-  
-  }
+}
+
+function SettingsPluginsGetID(string) {
+    let id
+    switch (string) {
+        case `Коробки`: { id = 0 }
+            break;
+        case `Косметика`: { id = 1 }
+            break;
+        case `Достижения`: { id = 2 }
+            break;
+        case `Питомцы`: { id = 3 }
+            break;
+        case `Активность`: { id = 4 }
+            break;
+        case `Ранги`: { id = 5 }
+            break;
+        case `Магазин`: { id = 6 }
+            break;
+        case `Система никнеймов`: { id = 7 }
+            break;
+        case `Премиум`: { id = 8 }
+            break;
+        case `Новые участники`: { id = 9 }
+            break;
+        case `Дни рождения`: { id = 10 }
+            break;
+        case `Служба поддержки`: { id = 11 }
+            break;
+        case `Модерация`: { id = 12 }
+            break;
+        case `Безопасность`: { id = 13 }
+            break;
+        case `Временные каналы`: { id = 14 }
+            break;
+        case `Личные сообщения бота`: { id = 15 }
+            break;
+        case `Логи`: { id = 16 }
+            break;
+        case `Временные роли`: { id = 17 }
+            break;
+        case `Автороли`: { id = 18 }
+            break;
+        case `Обновление пользователей`: { id = 19 }
+            break;
+        case `Обновление каналов`: { id = 20 }
+            break;
+        case `Опыт гильдии`: { id = 21 }
+            break;
+        case `Музыка`: { id = 22 }
+            break;
+        case `Запись звука`: { id = 23 }
+            break;
+        default: { id = 9999 }
+            break;
+    }
+
+    return id
+}
+
+function toggleOnOff(boolean) {
+    let err = new Error(`Выбранная опция должны иметь тип Boolean!`)
+    if (typeof boolean !== "boolean") return err
+
+    if (boolean === false) return `Отключено`
+    else if (boolean === true) return `Включено`
+
+}
 
 
-
-module.exports = { toOrdinalSuffix, gameConstructor, calcActLevel, getLevel, permToName, isURL }
+module.exports = {
+    toOrdinalSuffix,
+    gameConstructor,
+    calcActLevel,
+    getLevel,
+    permToName,
+    isURL,
+    SettingsPluginsGetID,
+    toggleOnOff
+}

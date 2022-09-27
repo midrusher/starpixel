@@ -3,11 +3,11 @@ const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder } = require(`discord.js`)
 
 module.exports = {
-    name: 'playSong',
+    name: 'addSong',
     async execute(queue, song) {
         const playing = new EmbedBuilder()
             .setColor(process.env.bot_color)
-            .setTitle(`Сейчас играет... 🎶`)
+            .setTitle(`Добавлена песня... 🎶`)
             .setTimestamp(Date.now())
             .setDescription(`**Название**: \`${song.name}\`
 **Запросил**: ${song.user}

@@ -63,7 +63,9 @@ module.exports = {
         ),
 
     async execute(interaction, client) {
-        const guildData = await Guild.findOne({ id: interaction.guild.id }) || new Guild({ id: interaction.guild.id, name: interaction.guild.name })
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.boxes === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
+        const guildData = await Guild.findOne({ id: interaction.guild.id })
 
         const user = interaction.member
         const userData = await User.findOne({ userid: user.id })

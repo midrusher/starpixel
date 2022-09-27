@@ -13,6 +13,9 @@ module.exports = {
             .setDescription(`Введите любого пользователя`)
         ),
     async execute(interaction, client) {
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.act_exp === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
 
         if (user.bot) return interaction.reply({
@@ -75,19 +78,19 @@ module.exports = {
         ctx.fillText(`#` + rank, 580, 85, 200);
         ctx.fillText(`${userData.level}`, 830, 85, 200);
 
-        
+
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
         const applyText = (canvas, text) => {
             // Declare a base size of the font
             let fontSize = 44;
-        
+
             do {
                 // Assign the font to the context and decrement it so it can be measured again
                 ctx.font = `bold ${fontSize -= 2}px Serif`;
                 // Compare pixel width of the text to the canvas minus the approximate avatar size
             } while (ctx.measureText(text).width > canvas.width - 300);
-        
+
             // Return the result to use in the actual canvas
             return ctx.font;
         };

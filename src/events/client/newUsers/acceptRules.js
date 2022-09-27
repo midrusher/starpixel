@@ -7,6 +7,9 @@ const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИ
 module.exports = {
     name: 'guildMemberUpdate',
     async execute(oldMember, newMember) {
+        const guild_plugin = await newMember.client.guilds.fetch(`320193302844669959`)
+        const pluginData = await Guild.findOne({ id: guild_plugin.id })
+        if (pluginData.plugins.welcome === false) return
         if (oldMember.pending === true && newMember.pending === false) {
             await newMember.roles.add(`920346035811917825`)
             const guild = newMember.guild

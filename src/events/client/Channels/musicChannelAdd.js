@@ -4,6 +4,10 @@ const { ReactionCollector } = require("discord.js");
 module.exports = {
     name: 'messageReactionAdd',
     async execute(reaction, user) {
+        const { Guild } = require(`../../../schemas/guilddata`)
+        const guild_plugin = await reaction.client.guilds.fetch(`320193302844669959`)
+        const pluginData = await Guild.findOne({ id: guild_plugin.id })
+        if (pluginData.plugins.channels === false) return
         if (reaction.partial) {
             try {
                 await reaction.fetch();

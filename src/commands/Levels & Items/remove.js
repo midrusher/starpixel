@@ -51,15 +51,17 @@ module.exports = {
             ephemeral: true
         })
         const member = interaction.options.getMember(`пользователь`)
-                if (member.roles.cache.has(`920346035811917825`)) return interaction.reply({
-                    content: `Данный участник не находится в гильдии!`,
-                    ephemeral: true
-                })
+        if (member.roles.cache.has(`920346035811917825`)) return interaction.reply({
+            content: `Данный участник не находится в гильдии!`,
+            ephemeral: true
+        })
         const user = interaction.options.getUser(`пользователь`);
         const userData = await User.findOne({ userid: user.id })
         switch (interaction.options.getString(`тип`)) {
             case `Опыт активности`: {
-
+                const { Guild } = require(`../../schemas/guilddata`)
+                const pluginData = await Guild.findOne({ id: interaction.guild.id })
+                if (pluginData.plugins.act_exp === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 const total = calcActLevel(0, userData.level, userData.exp)
 
                 const value = interaction.options.getNumber(`количество`);
@@ -78,7 +80,7 @@ module.exports = {
                 let total_exp = calcActLevel(0, cur_level, cur_exp)
                 let level_exp = getLevel(total_exp)
                 let level = level_exp[0], exp = level_exp[1]
-                
+
                 userData.level = level
                 userData.exp = exp
 
@@ -95,6 +97,9 @@ module.exports = {
 
                 break;
             case `Опыт рангов`: {
+                const { Guild } = require(`../../schemas/guilddata`)
+                const pluginData = await Guild.findOne({ id: interaction.guild.id })
+                if (pluginData.plugins.rank_exp === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 userData.rank -= interaction.options.getNumber(`количество`)
                 const not_possible = new EmbedBuilder()
                     .setColor(`DarkRed`)
@@ -113,6 +118,9 @@ module.exports = {
 
                 break;
             case `Румбики`: {
+                const { Guild } = require(`../../schemas/guilddata`)
+                const pluginData = await Guild.findOne({ id: interaction.guild.id })
+                if (pluginData.plugins.shop === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 userData.rumbik -= interaction.options.getNumber(`количество`)
                 const not_possible = new EmbedBuilder()
                     .setColor(`DarkRed`)

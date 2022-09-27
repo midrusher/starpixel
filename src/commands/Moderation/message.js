@@ -36,6 +36,10 @@ module.exports = {
             )
         ),
     async execute(interaction, client) {
+
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.bot_dms === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         if (!interaction.member.roles.cache.has(`320880176416161802`)) {
             const embed = new EmbedBuilder()
                 .setAuthor({

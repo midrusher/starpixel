@@ -6,6 +6,10 @@ const chalk = require(`chalk`)
 module.exports = (client) => {
     client.act_rewards = async () => {
         setInterval(async () => {
+            const { Guild } = require(`../../schemas/guilddata`)
+            const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            const pluginData = await Guild.findOne({ id: guild_plugin.id })
+            if (pluginData.plugins.act_exp === false) return
             const results = await User.find({ level: { $gt: 0 } })
             let i
             for (const result of results) {

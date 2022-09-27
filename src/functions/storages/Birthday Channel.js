@@ -7,6 +7,9 @@ const { EmbedBuilder } = require("discord.js")
 module.exports = (client) => {
     client.birthdayChannel = async () => {
         setInterval(async () => {
+            const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            const pluginData = await Guild.findOne({ id: guild_plugin.id })
+            if (pluginData.plugins.birthday === false) return
             const guild = await client.guilds.fetch(`320193302844669959`)
             const b_chan = await guild.channels.cache.get(`931877939325325332`)
             const birthday_jan = await Birthday.find({ guildid: guild.id, month: 1 })

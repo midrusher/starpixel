@@ -7,6 +7,9 @@ module.exports = {
         name: `kick_ticket`
     },
     async execute(interaction, client) {
+        const { Guild } = require(`../../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.tickets === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         const guild = interaction.guild
         const user = interaction.user
         const tickets = await Tickets.findOne({ guildid: guild.id }) || new Tickets({ guildid: guild.id, support: `320880176416161802` })

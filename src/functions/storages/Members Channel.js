@@ -8,7 +8,9 @@ module.exports = (client) => {
     client.update_members = async () => {
         setInterval(async () => {
             const Guilds = client.guilds.cache
-
+            const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            const pluginData = await Guild.findOne({ id: guild_plugin.id })
+            if (pluginData.plugins.channels === false) return
             Guilds.forEach(async g => {
                 const channel = await g.channels.cache.get(`932203255335899177`)
                 const adminmsg = await channel.messages.fetch(`1018224160125755553`)
@@ -70,7 +72,7 @@ module.exports = (client) => {
 
                     return `${off} ➖ \`${age} лет\` ➖ \`${nickname}\``
                 })
-                let offres = await Promise.all(off_list) 
+                let offres = await Promise.all(off_list)
 
 
                 const staff = new EmbedBuilder()
@@ -146,7 +148,7 @@ ${offres.join('\n')}`)
                         name: `Примечание 1`,
                         value: `Если вы поменяли ник, убедительная просьба сообщить об этом в <#${ch_list.ask}>`,
                         inline: true
-                    },{
+                    }, {
                         name: `Примечание 2`,
                         value: `Если вы обнаружили ошибку в вашем нике или вашем возрасте, пожалуйста, сообщите нам об этом в <#${ch_list.ask}>`,
                         inline: true

@@ -301,6 +301,8 @@ module.exports = {
         }
     },
     async execute(interaction, client) {
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.achievements === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         try {
             if (interaction.member.roles.cache.has(`920346035811917825`)) return interaction.reply({
                 content: `Вы не можете использовать эту команду! Пожалуйста, вступите в гильдию Starpixel.

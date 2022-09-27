@@ -29,6 +29,9 @@ module.exports = {
         ),
 
     async execute(interaction, client) {
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.pets === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         const user = interaction.member
         const userData = await User.findOne({ userid: user.id })
         let role = ``

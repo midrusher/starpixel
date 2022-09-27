@@ -52,7 +52,8 @@ module.exports = {
         ),
 
     async execute(interaction, client) {
-
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.birthday === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         switch (interaction.options.getSubcommand()) {
             case `set`: {
                 if (!interaction.member.roles.cache.has(`320880176416161802`)) {
@@ -64,7 +65,7 @@ module.exports = {
                         .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
                         .setColor(`DarkRed`)
                         .setTimestamp(Date.now())
-        
+
                     return interaction.reply({
                         embeds: [embed],
                         ephemeral: true
@@ -102,13 +103,13 @@ module.exports = {
                     10: "октября",
                     11: "ноября",
                     12: "декабря",
-                    
+
                 }
                 if (Month == 1 || Month == 3 || Month == 5 || Month == 7 || Month == 8 || Month == 10 || Month == 12) {
                     if (Day > 31 || Day <= 0) return interaction.reply({
-                    content: `День должен быть между 1 и 31!`,
-                    ephemeral: true
-                })
+                        content: `День должен быть между 1 и 31!`,
+                        ephemeral: true
+                    })
                 } else if (Month == 4 || Month == 6 || Month == 9 || Month == 11) {
                     if (Day > 30 || Day <= 0) return interaction.reply({
                         content: `День должен быть между 1 и 30!`,
@@ -125,7 +126,7 @@ module.exports = {
                         ephemeral: true
                     })
                 }
-                
+
 
                 if (Month > 12 || Month <= 0) return interaction.reply({
                     content: `Месяц должен быть между 1 и 12!`,
@@ -165,15 +166,15 @@ module.exports = {
                 }
 
                 const age = toOrdinalSuffix(wishYear - Year)
-            
+
                 const bdata = await Birthday.findOne({ guildid: interaction.guild.id, userid: user.id })
 
 
-                
+
                 if (bdata) {
-                    
+
                     bdata.delete()
-                    
+
                     const newbdata = new Birthday({
                         guildid: interaction.guild.id,
                         userid: user.id,
@@ -181,34 +182,34 @@ module.exports = {
                         month: Month,
                         year: Year
                     })
-                    
-                    await newbdata.save()
-                    
-                } else {
-                    
-                    const newbdata = new Birthday({
-                        guildid: interaction.guild.id,
-                        userid: user.id,
-                        day: Day,
-                        month: Month,
-                        year: Year
-                    })
-                    
 
                     await newbdata.save()
-                    
+
+                } else {
+
+                    const newbdata = new Birthday({
+                        guildid: interaction.guild.id,
+                        userid: user.id,
+                        day: Day,
+                        month: Month,
+                        year: Year
+                    })
+
+
+                    await newbdata.save()
+
                 }
-                
+
                 const b_embed = new EmbedBuilder()
                     .setTitle(`Установлен день рождения`)
                     .setColor(process.env.bot_color)
                     .setThumbnail(user.displayAvatarURL())
                     .setDescription(`🎂 Я поздравлю ${user} с **${age}** днём рождения через ${remDays} дн., **${Day} ${list[Month]}, ${wishYear}**!`)
-                
+
                 await interaction.editReply({
                     embeds: [b_embed]
                 })
-                
+
 
             }
 
@@ -266,7 +267,7 @@ module.exports = {
                 let index = 1
                 listData.sort((a, b) => new Date(`${a.year} ${a.month} ${a.day}`) - new Date(`${b.year} ${b.month} ${b.day}`))
 
-                
+
 
                 const birthdayData = listData.map((d) => {
                     return `**${index++}.** \`${d.day}.${d.month}.${d.year}\` - ${client.users.cache.get(d.userid)} (${currentYear - d.year})`

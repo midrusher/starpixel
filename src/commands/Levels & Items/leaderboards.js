@@ -24,6 +24,9 @@ module.exports = {
     async execute(interaction, client) {
         switch (interaction.options.getString(`тип`)) {
             case `Опыт активности`: {
+                const { Guild } = require(`../../schemas/guilddata`)
+                const pluginData = await Guild.findOne({ id: interaction.guild.id })
+                if (pluginData.plugins.act_exp === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 await interaction.deferReply({
                     fetchReply: true
                 })
@@ -59,6 +62,9 @@ module.exports = {
 
                 break;
             case `Опыт рангов`: {
+                const { Guild } = require(`../../schemas/guilddata`)
+                const pluginData = await Guild.findOne({ id: interaction.guild.id })
+                if (pluginData.plugins.rank_exp === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 await interaction.deferReply({
                     fetchReply: true
                 })
@@ -91,6 +97,9 @@ module.exports = {
 
                 break;
             case `Румбики`: {
+                const { Guild } = require(`../../schemas/guilddata`)
+                const pluginData = await Guild.findOne({ id: interaction.guild.id })
+                if (pluginData.plugins.shop === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 await interaction.deferReply({
                     fetchReply: true
                 })

@@ -33,6 +33,7 @@ module.exports = {
     },
 
     async execute(interaction, client) {
+
         const { roles } = interaction.member //Участник команды
         const member = interaction.member
         const r1 = `595893144055316490`;
@@ -47,6 +48,9 @@ module.exports = {
 
         switch (interaction.options.getSubcommand()) {
             case `set`: {
+                const { Guild } = require(`../../schemas/guilddata`)
+                const pluginData = await Guild.findOne({ id: interaction.guild.id })
+                if (pluginData.plugins.premium === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
                     content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
                     ephemeral: true
@@ -207,28 +211,28 @@ module.exports = {
                         break;
 
                     default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
+                        await interaction.reply({
+                            content: `Данной опции не существует! Выберите одну из предложенных!`,
+                            ephemeral: true
+                        })
+                    }
                         break;
                 }
             }
 
                 break;
 
-                case `reset`: {
-                    const tempData = await Temp.findOne({ userid: interaction.user.id, guildid: interaction.guild.id, color: true })
-                    if (tempData) {
-                        tempData.delete()
-                    }
-                    await interaction.reply({
-                        content: `Вы убрали свой цвет!`,
-                        ephemeral: true
-                    })
-                    await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9]).catch(console.error)
+            case `reset`: {
+                const tempData = await Temp.findOne({ userid: interaction.user.id, guildid: interaction.guild.id, color: true })
+                if (tempData) {
+                    tempData.delete()
                 }
+                await interaction.reply({
+                    content: `Вы убрали свой цвет!`,
+                    ephemeral: true
+                })
+                await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9]).catch(console.error)
+            }
             default: {
                 await interaction.reply({
                     content: `Данной опции не существует! Выберите одну из предложенных!`,

@@ -36,7 +36,9 @@ module.exports = {
 
         const user = interaction.member
         const guild = interaction.guild
-        const guildData = await Guild.findOne({ id: guild.id }) || new Guild({ id: guild.id, name: guild.name })
+        const guildData = await Guild.findOne({ id: guild.id })
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.achievements === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
 
         switch (interaction.options.getSubcommand()) {
             case `set`: {

@@ -18,7 +18,9 @@ module.exports = {
         )
     ,
     async execute(interaction, client) {
-
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.moderation === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         const embed = new EmbedBuilder()
             .setAuthor({
                 name: `❗ Вы не можете использовать это!`
@@ -54,6 +56,6 @@ module.exports = {
             content: `${member}`,
             embeds: [warning]
         })
-        
+
     }
 }

@@ -5,6 +5,10 @@ const cron = require(`node-cron`)
 module.exports = (client) => {
     client.emojiUpdate = async () => {
         cron.schedule(`0 5 * * *`, async () => {
+            const { Guild } = require(`../../schemas/guilddata`)
+            const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            const pluginData = await Guild.findOne({ id: guild_plugin.id })
+            if (pluginData.plugins.premium === false) return
             const guild = await client.guilds.fetch(`320193302844669959`)
             const results = await User.find({ guildid: guild.id })
 

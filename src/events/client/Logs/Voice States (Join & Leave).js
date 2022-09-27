@@ -1,7 +1,7 @@
-const { User } = require(`../../../src/schemas/userdata`)
-const { Guild } = require(`../../../src/schemas/guilddata`)
+const { User } = require(`../../../schemas/userdata`)
+const { Guild } = require(`../../../schemas/guilddata`)
 const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`discord.js`)
-const ch_list = require(`../../../src/discord structure/channels.json`)
+const ch_list = require(`../../../discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 

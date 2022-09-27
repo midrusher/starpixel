@@ -7,6 +7,9 @@ module.exports = {
         .setName(`Пожаловаться`)
         .setType(ApplicationCommandType.Message),
     async execute(interaction, client) {
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.moderation === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         const response = new EmbedBuilder()
         .setColor(process.env.bot_color)
         .setThumbnail(interaction.targetMessage.author.displayAvatarURL())

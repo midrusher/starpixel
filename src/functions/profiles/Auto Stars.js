@@ -6,6 +6,10 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = (client) => {
     client.AutoStars = async () => {
         setInterval(async () => {
+            const { Guild } = require(`../../schemas/guilddata`)
+            const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            const pluginData = await Guild.findOne({ id: guild_plugin.id })
+            if (pluginData.plugins.auto_roles === false) return
             const guild = await client.guilds.fetch(`320193302844669959`)
             const results = await User.find({ guildid: guild.id })
             const channel = await guild.channels.cache.get(ch_list.main)

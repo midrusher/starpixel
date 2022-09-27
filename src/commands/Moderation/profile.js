@@ -222,6 +222,8 @@ module.exports = {
 
     },
     async execute(interaction, client) {
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.moderation === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         switch (interaction.options.getSubcommand()) {
             case `create`: {
                 const user = interaction.options.getUser(`пользователь`)

@@ -51,6 +51,8 @@ module.exports = {
     },
     async execute(interaction, client) {
         const user = interaction.member
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.cosmetics === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         switch (interaction.options.getSubcommand()) {
             case `rps`: {
                 const choice = interaction.options.getString(`выбор`)

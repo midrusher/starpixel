@@ -12,11 +12,13 @@ module.exports = {
         .setDescription(`Открыть ежедневную коробку`), //Описание команды
     async execute(interaction, client) {
 
-        const cmd_name = `/daily`
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.boxes === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         const { roles } = interaction.member //Участник команды
 
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
-        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ userid: user.id })
 
 
         if (roles.cache.has("504887113649750016")) { //Проверка роли участника гильдии

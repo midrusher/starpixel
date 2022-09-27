@@ -11,6 +11,9 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = (client) => {
     client.top_3_gexp = async () => {
         setInterval(async () => {
+            const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            const pluginData = await Guild.findOne({ id: guild_plugin.id })
+            if (pluginData.plugins.gexp === false) return
             const guild = await client.guilds.fetch(`320193302844669959`)
             const guildData = await Guild.findOne({ id: guild.id })
 

@@ -51,20 +51,24 @@ module.exports = {
             ephemeral: true
         })
         const member = interaction.options.getMember(`пользователь`) || interaction.member
-                if (member.roles.cache.has(`920346035811917825`)) return interaction.reply({
-                    content: `Данный участник не находится в гильдии!`,
-                    ephemeral: true
-                })
+        if (member.roles.cache.has(`920346035811917825`)) return interaction.reply({
+            content: `Данный участник не находится в гильдии!`,
+            ephemeral: true
+        })
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
         const userData = await User.findOne({ userid: user.id })
         switch (interaction.options.getString(`тип`)) {
             case `Опыт активности`: {
+                const { Guild } = require(`../../schemas/guilddata`)
+                const pluginData = await Guild.findOne({ id: interaction.guild.id })
+                if (pluginData.plugins.act_exp === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
+
                 let cur_exp = userData.exp + interaction.options.getNumber(`количество`)
                 let cur_level = userData.level
                 let total_exp = calcActLevel(0, cur_level, cur_exp)
                 let level_exp = getLevel(total_exp)
                 let level = level_exp[0], exp = level_exp[1]
-                
+
                 userData.level = level
                 userData.exp = exp
 
@@ -82,6 +86,9 @@ ${user} повысил уровень активности до ${userData.level
 
                 break;
             case `Опыт рангов`: {
+                const { Guild } = require(`../../schemas/guilddata`)
+                const pluginData = await Guild.findOne({ id: interaction.guild.id })
+                if (pluginData.plugins.rank_exp === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 userData.rank += interaction.options.getNumber(`количество`)
                 userData.save();
                 interaction.reply(`Выдано ${interaction.options.getNumber(`количество`)}💠 пользователю ${user}! У него теперь ${userData.rank} опыта рангов!`)
@@ -91,6 +98,9 @@ ${user} повысил уровень активности до ${userData.level
 
                 break;
             case `Румбики`: {
+                const { Guild } = require(`../../schemas/guilddata`)
+                const pluginData = await Guild.findOne({ id: interaction.guild.id })
+                if (pluginData.plugins.shop === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 userData.rumbik += interaction.options.getNumber(`количество`)
                 userData.save();
                 interaction.reply(`Выдано ${interaction.options.getNumber(`количество`)}<:Rumbik:883638847056003072> пользователю ${user}! У него теперь ${userData.rumbik} румбиков!`)

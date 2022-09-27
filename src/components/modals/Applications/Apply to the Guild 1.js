@@ -6,6 +6,9 @@ module.exports = {
         name: "apply1"
     },
     async execute(interaction, client) {
+        const { Guild } = require(`../../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.welcome === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         let appData = await Apply.findOne({ userid: interaction.user.id, guildid: interaction.guild.id }) || new Apply({ userid: interaction.user.id, guildid: interaction.guild.id })
 
         let r1 = interaction.fields.getTextInputValue("first")

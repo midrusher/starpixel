@@ -15,7 +15,9 @@ module.exports = {
         .setDescription(`Покинуть гильдию Starpixel`),
 
     async execute(interaction, client) {
-
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.welcome === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         const user = interaction.member
         if (!user.roles.cache.has(`504887113649750016`)) return interaction.reply({
             content: `Вы не являетесь участником гильдии Starpixel, какую гильдию вы собираетесь покидать? 😂`,

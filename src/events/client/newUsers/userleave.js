@@ -9,6 +9,10 @@ const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИ
 module.exports = {
     name: 'guildMemberRemove',
     async execute(member) {
+        const { Guild } = require(`../../../schemas/guilddata`)
+        const guild_plugin = await member.client.guilds.fetch(`320193302844669959`)
+        const pluginData = await Guild.findOne({ id: guild_plugin.id })
+        if (pluginData.plugins.welcome === false) return
         const userData = await User.findOne({ userid: member.user.id, guildid: member.guild.id })
         const bd = await Birthday.findOne({ userid: member.user.id, guildid: member.guild.id })
         const temp = await Temp.find({ userid: member.user.id, guildid: member.guild.id })

@@ -11,8 +11,11 @@ module.exports = {
         .setName(`king`)  //Название команды
         .setDescription(`Открыть королевскую коробку`), //Описание команды
     async execute(interaction, client) {
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.boxes === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
-        const userData = await User.findOne({ userid: user.id }) || new User({ userid: user.id, name: user.username }) //ДОБАВИТЬ В ДРУГИЕ
+        const userData = await User.findOne({ userid: user.id })
 
 
         const timestamp = Math.round(interaction.createdTimestamp / 1000)

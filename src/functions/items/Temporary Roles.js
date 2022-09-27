@@ -6,6 +6,9 @@ const { User } = require(`../../schemas/userdata`)
 module.exports = (client) => {
     client.temp_roles = async () => {
         setInterval(async () => {
+            const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            const pluginData = await Guild.findOne({ id: guild_plugin.id })
+            if (pluginData.plugins.temp_roles === false) return
             const results = await Temp.find({ expire: { $lt: new Date() } })
 
             for (const result of results) {

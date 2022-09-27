@@ -45,7 +45,9 @@ module.exports = {
             )
         ),
     async execute(interaction, client) {
-
+        const { Guild } = require(`../../schemas/guilddata`)
+        const pluginData = await Guild.findOne({ id: interaction.guild.id })
+        if (pluginData.plugins.welcome === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         switch (interaction.options.getSubcommand()) {
             case `create`: {
                 const member = interaction.member
@@ -235,7 +237,7 @@ module.exports = {
                         .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
                         .setColor(`DarkRed`)
                         .setTimestamp(Date.now())
-        
+
                     return interaction.reply({
                         embeds: [embed],
                         ephemeral: true
@@ -277,7 +279,7 @@ module.exports = {
                     })
                 }
                 appData.save()
-                
+
             }
 
                 break;
@@ -310,7 +312,7 @@ module.exports = {
                     ephemeral: true
                 })
             }
-            break;
+                break;
             default:
                 break;
         }

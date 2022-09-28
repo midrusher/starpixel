@@ -104,7 +104,7 @@ module.exports = {
     async execute(interaction, client) {
         const guild = interaction.guild
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
-        if (pluginData.plugins.music === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
+        if (pluginData.plugins.music === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         const music_channel = await guild.channels.fetch(ch_list.music)
         const user = interaction.user
         const member = interaction.member
@@ -271,13 +271,13 @@ module.exports = {
                                 })
                             })
                     }
-               } catch (e) {
+                } catch (e) {
                     await interaction.reply({
                         content: `Произошла ошибка при загрузке данной песни...`,
                         ephemeral: true
                     })
                     console.log(e)
-               }
+                }
 
             }
                 break;
@@ -294,7 +294,11 @@ module.exports = {
                 })
                 let n = 0
                 let listS = queue.songs.map((song, id) => {
-                    return `**${id + 1}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\``
+                    if (queue.songs[0] == song) {
+                        return `**${id + 1}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\` **СЕЙЧАС ИГРАЕТ**`
+                    } else {
+                        return `**${id + 1}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\``
+                    }
                 })
                 let list = listS.slice(0 + (n * 10), 10 + (n * 10))
 
@@ -708,7 +712,7 @@ module.exports = {
                     embeds: [no_queue]
                 })
 
-                const song = queue.songs[0]
+                let song = queue.songs[0]
                 const playing = new EmbedBuilder()
                     .setColor(process.env.bot_color)
                     .setTitle(`Сейчас играет... 🎶`)
@@ -722,8 +726,93 @@ module.exports = {
 
 [Нажмите здесь, чтобы получить ссылку](${song.url})`)
 
-                await interaction.reply({
-                    embeds: [playing]
+                const prevnext = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`prevsong`)
+                            .setLabel(`Предыдущая песня`)
+                            .setStyle(ButtonStyle.Danger)
+                            .setEmoji(`⏮`)
+                    )
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`nextsong`)
+                            .setLabel(`Следующая песня`)
+                            .setStyle(ButtonStyle.Success)
+                            .setEmoji(`⏭`)
+                    )
+
+                const msg = await interaction.reply({
+                    embeds: [playing],
+                    components: [prevnext],
+                    fetchReply: true
+                })
+
+                const filter = (i) => i.user.id === interaction.user.id
+
+                const collector = msg.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 30000 })
+                let songR = queue.song[0]
+                collector.on('collect', async (i) => {
+
+                    await i.deferReply({
+                        fetchReply: true
+                    })
+                    if (i.customId == `prevsong`) {
+                        try {
+                            songR = await queue.previous()
+                            const result = new EmbedBuilder()
+                                .setTitle(`Переключено на предыдущую песню... ✅`)
+                                .setColor(process.env.bot_color)
+                                .setTimestamp(Date.now())
+                                .setDescription(`Вы снова включили \`${songR.name}\`!`)
+
+                            await i.editReply({
+                                embeds: [result]
+                            })
+                        } catch (e) {
+                            await i.editReply({
+                                content: `Вы уже включили самую первую песню в очереди!`
+                            })
+                            console.log(e)
+                        }
+
+                        collector.stop()
+                    } else if (i.customId == `nextsong`) {
+                        try {
+                            const result = new EmbedBuilder()
+                                .setTitle(`Песня пропущена... ✅`)
+                                .setColor(process.env.bot_color)
+                                .setTimestamp(Date.now())
+                                .setDescription(`Текущая песня \`${queue.songs[0].name}\` была пропущена!`)
+                            songR = await queue.skip()
+
+                            await i.editReply({
+                                embeds: [result]
+                            })
+                        } catch (e) {
+                            await i.editReply({
+                                content: `В очереди больше нет песен для пропуска!`
+                            })
+                            console.log(e)
+                        }
+                        collector.stop()
+                    }
+                })
+                collector.on('end', async (collected) => {
+                    prevnext.components[0].setDisabled(true)
+                    prevnext.components[1].setDisabled(true)
+                    playing.setDescription(`**Название**: \`${songR.name}\`
+**Запросил**: ${songR.user}
+**Длительность**: \`${queue.formattedCurrentTime}\`/\`${songR.formattedDuration}\`
+
+**Лайков**: ${songR.likes}👍
+**Дизлайков**: ${songR.dislikes}👎
+
+[Нажмите здесь, чтобы получить ссылку](${songR.url})`)
+                    await interaction.editReply({
+                        embeds: [playing],
+                        components: [prevnext]
+                    })
                 })
 
             }
@@ -744,7 +833,7 @@ module.exports = {
                 if (volume < 0 || volume > 100) return interaction.reply({
                     content: `Вы можете устанавливать звук в диапазоне от 0 до 100!`,
                     ephemeral: true
-                }) 
+                })
 
                 queue.setVolume(volume)
                 const result = new EmbedBuilder()
@@ -782,7 +871,7 @@ module.exports = {
                     })
                 } catch (e) {
                     await interaction.reply({
-                        content: `При пропуске песни произошла ошибка! ${e}`
+                        content: `В очереди больше нет песен для пропуска!`
                     })
                     console.log(e)
                 }
@@ -815,7 +904,7 @@ module.exports = {
                     })
                 } catch (e) {
                     await interaction.reply({
-                        content: `При возврате песни произошла ошибка! ${e}`
+                        content: `Вы уже включили самую первую песню в очереди!`
                     })
                     console.log(e)
                 }

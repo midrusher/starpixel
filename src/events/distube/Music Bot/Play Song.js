@@ -1,6 +1,6 @@
 const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
-const { Collection, EmbedBuilder } = require(`discord.js`)
+const { Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require(`discord.js`)
 
 module.exports = {
     name: 'playSong',
@@ -17,8 +17,89 @@ module.exports = {
 **Дизлайков**: ${song.dislikes}👎
 
 [Нажмите здесь, чтобы получить ссылку](${song.url})`)
-        await queue.textChannel.send({
-            embeds: [playing]
+        const prevnext = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`prevsong`)
+                    .setLabel(`Предыдущая песня`)
+                    .setStyle(ButtonStyle.Danger)
+                    .setEmoji(`⏮`)
+            )
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId(`nextsong`)
+                    .setLabel(`Следующая песня`)
+                    .setStyle(ButtonStyle.Success)
+                    .setEmoji(`⏭`)
+            )
+
+        const msg = await queue.textChannel.send({
+            embeds: [playing],
+            components: [prevnext],
+            fetchReply: true
+        })
+        const collector = msg.createMessageComponentCollector({ componentType: ComponentType.Button, time: song.duration * 1000})
+        let songR = song
+        collector.on('collect', async (i) => {
+            await i.deferReply({
+                fetchReply: true
+            })
+            if (i.customId == `prevsong`) {
+                try {
+                    songR = await queue.previous()
+                    const result = new EmbedBuilder()
+                        .setTitle(`Переключено на предыдущую песню... ✅`)
+                        .setColor(process.env.bot_color)
+                        .setTimestamp(Date.now())
+                        .setDescription(`Вы снова включили \`${songR.name}\`!`)
+
+                    await i.editReply({
+                        embeds: [result]
+                    })
+                } catch (e) {
+                    await i.editReply({
+                        content: `Вы уже включили самую первую песню в очереди!`
+                    })
+                    console.log(e)
+                }
+
+                collector.stop()
+            } else if (i.customId == `nextsong`) {
+                try {
+                    const result = new EmbedBuilder()
+                        .setTitle(`Песня пропущена... ✅`)
+                        .setColor(process.env.bot_color)
+                        .setTimestamp(Date.now())
+                        .setDescription(`Текущая песня \`${queue.songs[0].name}\` была пропущена!`)
+                    songR = await queue.skip()
+
+                    await i.editReply({
+                        embeds: [result]
+                    })
+                } catch (e) {
+                    await i.editReply({
+                        content: `В очереди больше нет песен для пропуска!`
+                    })
+                    console.log(e)
+                }
+                collector.stop()
+            }
+        })
+        collector.on('end', async (collected) => {
+            prevnext.components[0].setDisabled(true)
+            prevnext.components[1].setDisabled(true)
+            playing.setDescription(`**Название**: \`${songR.name}\`
+**Запросил**: ${songR.user}
+**Длительность**: \`${queue.formattedCurrentTime}\`/\`${songR.formattedDuration}\`
+
+**Лайков**: ${songR.likes}👍
+**Дизлайков**: ${songR.dislikes}👎
+
+[Нажмите здесь, чтобы получить ссылку](${songR.url})`)
+            await msg.edit({
+                embeds: [playing],
+                components: [prevnext]
+            })
         })
     }
 }

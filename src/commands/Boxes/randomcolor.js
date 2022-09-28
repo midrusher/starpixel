@@ -11,7 +11,7 @@ module.exports = {
     async execute(interaction, client) {
         const { Guild } = require(`../../schemas/guilddata`)
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
-        if (pluginData.plugins.items === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
+        if (pluginData.plugins.items === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
 
         const { roles } = interaction.member //Участник команды
@@ -67,8 +67,13 @@ module.exports = {
                     loot1_name: `ПЕСОЧНЫЙ`,
                     loot1_roleID: "595889341058777088",
                 }
+                ,
+                {
+                    loot1_name: `АЛИЗАРИНОВЫЙ`,
+                    loot1_roleID: "1024741633947873401",
+                }
             ];
-            
+
             //рандом предметов
             let rloot1 = loot1[Math.floor(Math.random() * loot1.length)];
             const tempData = await Temp.findOne({ userid: user.id, roleid: rloot1.loot1_roleID })
@@ -82,8 +87,9 @@ module.exports = {
             const r7 = `630395361508458516`;
             const r8 = `595892930204401665`;
             const r9 = `595889341058777088`;
+            const r10 = `1024741633947873401`;
 
-            if (member.roles.cache.has(r1) || member.roles.cache.has(r2) || member.roles.cache.has(r3) || member.roles.cache.has(r4) || member.roles.cache.has(r5) || member.roles.cache.has(r6) || member.roles.cache.has(r7) || member.roles.cache.has(r8) || member.roles.cache.has(r9)) return interaction.reply({
+            if (member.roles.cache.has(r1) || member.roles.cache.has(r2) || member.roles.cache.has(r3) || member.roles.cache.has(r4) || member.roles.cache.has(r5) || member.roles.cache.has(r6) || member.roles.cache.has(r7) || member.roles.cache.has(r8) || member.roles.cache.has(r9) || member.roles.cache.has(r10)) return interaction.reply({
                 content: `Вы не можете использовать данную команду, так как у вас есть цвет! Используйте команду \`/colors reset\`, чтобы убрать ваш цвет!`,
                 ephemeral: true
             })
@@ -109,10 +115,10 @@ module.exports = {
                 })
                 tempItems.save()
             } else if (member.roles.cache.has(rloot1.loot1_roleID)) {
-                    await r_loot_msg.react("🚫")
-                } else {
-                    await r_loot_msg.react("🚫")
-                };
+                await r_loot_msg.react("🚫")
+            } else {
+                await r_loot_msg.react("🚫")
+            };
 
             console.log(chalk.magentaBright(`[${interaction.user.tag} использовал выбор цвета]`) + chalk.gray(`: Он получил ${rloot1.loot1_name}`))
             const message = await interaction.deferReply({

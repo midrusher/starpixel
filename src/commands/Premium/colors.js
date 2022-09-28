@@ -24,7 +24,7 @@ module.exports = {
     async autoComplete(interaction, client) {
 
         const focusedValue = interaction.options.getFocused();
-        const choices = ['Чёрный', 'Лазурный', 'Пурпурный', 'Сиреневый', 'Фламинговый', 'Изумрудный', 'Яблочный', 'Салатовый', 'Песочный'];
+        const choices = ['Чёрный', 'Лазурный', 'Пурпурный', 'Сиреневый', 'Ализариновый', 'Фламинговый', 'Изумрудный', 'Яблочный', 'Салатовый', 'Песочный'];
         const filtered = choices.filter(choice => choice.startsWith(focusedValue));
         await interaction.respond(
             filtered.map(choice => ({ name: choice, value: choice })),
@@ -36,15 +36,16 @@ module.exports = {
 
         const { roles } = interaction.member //Участник команды
         const member = interaction.member
-        const r1 = `595893144055316490`;
-        const r2 = `595892599693246474`;
-        const r3 = `595892677451710468`;
-        const r4 = `595892238370996235`;
-        const r5 = `589770984391966760`;
-        const r6 = `595893568485326862`;
-        const r7 = `630395361508458516`;
-        const r8 = `595892930204401665`;
-        const r9 = `595889341058777088`;
+        const r1 = `595893144055316490`; //Чёрный
+        const r2 = `595892599693246474`; //Лазурный
+        const r3 = `595892677451710468`; //Пурпурный
+        const r4 = `595892238370996235`; //Сиреневый
+        const r5 = `589770984391966760`; //Фламинговый
+        const r6 = `595893568485326862`; //Изумрудный 
+        const r7 = `630395361508458516`; //Яблочный
+        const r8 = `595892930204401665`; //Салатовый
+        const r9 = `595889341058777088`; //Песочный
+        const r10 = `1024741633947873401`; //Ализариновый
 
         switch (interaction.options.getSubcommand()) {
             case `set`: {
@@ -68,7 +69,7 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r9]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r9, r10]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
@@ -85,7 +86,7 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r1, r3, r4, r5, r6, r7, r8, r9]).catch(console.error)
+                        await roles.remove([r1, r3, r4, r5, r6, r7, r8, r9, r10]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
@@ -102,7 +103,7 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r1, r4, r5, r6, r7, r8, r9]).catch(console.error)
+                        await roles.remove([r2, r1, r4, r5, r6, r7, r8, r9, r10]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
@@ -119,7 +120,7 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r1, r5, r6, r7, r8, r9]).catch(console.error)
+                        await roles.remove([r2, r3, r1, r5, r6, r7, r8, r9, r10]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
@@ -136,7 +137,7 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r1, r6, r7, r8, r9]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r1, r6, r7, r8, r9, r10]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
@@ -153,7 +154,7 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r1, r7, r8, r9]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r1, r7, r8, r9, r10]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
@@ -170,7 +171,7 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r6, r1, r8, r9]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r6, r1, r8, r9, r10]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
@@ -187,7 +188,7 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r1, r9]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r1, r9, r10]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
@@ -204,10 +205,27 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r10]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
+                        break;
+
+                    case `Ализариновый`: {
+                        const role = await interaction.guild.roles
+                            .fetch(r10) //ID цвета
+                            .catch(console.error);
+                        if (roles.cache.has(r10)) return interaction.reply({
+                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
+                            ephemeral: true
+                        });
+                        interaction.reply({
+                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
+                            ephemeral: true
+                        })
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9]).catch(console.error)
+                        await roles.add(role).catch(console.error)
+                    }
                         break;
 
                     default: {

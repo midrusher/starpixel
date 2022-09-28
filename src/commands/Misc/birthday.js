@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ComponentType, ButtonStyle } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
 const { execute } = require('../../events/client/start_bot/ready');
 const fetch = require(`node-fetch`);
@@ -265,25 +265,123 @@ module.exports = {
                 const currentYear = date.getFullYear()
 
                 let index = 1
-                listData.sort((a, b) => new Date(`${a.year} ${a.month} ${a.day}`) - new Date(`${b.year} ${b.month} ${b.day}`))
+                listData.sort((a, b) => new Date(`${a.month} ${a.day}`) - new Date(`${b.month} ${b.day}`))
 
 
-
-                const birthdayData = listData.map((d) => {
+                let n = 0
+                const birthdayDataS = listData.map((d) => {
                     return `**${index++}.** \`${d.day}.${d.month}.${d.year}\` - ${client.users.cache.get(d.userid)} (${currentYear - d.year})`
-                }).join("\n")
+                })
+
+                const totalPages = Math.ceil(listData.length / 10)
+                let birthdayData = birthdayDataS.slice(0 + (n * 10), 10 + (n * 10))
+                const pages = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`prev`)
+                            .setEmoji(`⬅`)
+                            .setStyle(ButtonStyle.Danger)
+                            .setDisabled(true)
+                    )
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`stop`)
+                            .setEmoji(`⏸`)
+                            .setStyle(ButtonStyle.Secondary)
+                            .setDisabled(false)
+                    )
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId(`next`)
+                            .setEmoji(`➡`)
+                            .setStyle(ButtonStyle.Success)
+                            .setDisabled(false)
+                    )
+
 
                 const list = new EmbedBuilder()
                     .setTitle(`Список дней рождений`)
                     .setThumbnail(interaction.guild.iconURL())
                     .setColor(process.env.bot_color)
                     .setTimestamp(Date.now())
-                    .setDescription(`${birthdayData}`)
+                    .setDescription(`${birthdayData.join(`\n`)}`)
+                    .setFooter({
+                        text: `Страница ${n + 1}/${totalPages}`
+                    })
 
-                await interaction.editReply({
-                    embeds: [list]
+                let msg = await interaction.editReply({
+                    embeds: [list],
+                    components: [pages],
+                    fetchReply: true
                 })
 
+                const collector = msg.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120000 })
+                collector.on('collect', async (i) => {
+                    if (i.customId == `prev`) {
+                        n = n - 1
+                        if (n <= 0) {
+                            pages.components[0].setDisabled(true)
+                        } else {
+                            pages.components[0].setDisabled(false)
+                        }
+                        pages.components[1].setDisabled(false)
+                        pages.components[2].setDisabled(false)
+                        birthdayData = birthdayDataS.slice(0 + (n * 10), 10 + (n * 10))
+                        list.setTimestamp(Date.now())
+                            .setDescription(`${birthdayData.join(`\n`)}`)
+                            .setFooter({
+                                text: `Страница ${n + 1}/${totalPages}`
+                            })
+                        await i.deferUpdate()
+                        await interaction.editReply({
+                            embeds: [list],
+                            components: [pages],
+                            fetchReply: true
+                        })
+
+                    } else if (i.customId == `stop`) {
+                        await i.deferUpdate()
+                        collector.stop()
+                    } else if (i.customId == `next`) {
+                        n = n + 1
+                        if (n >= totalPages - 1) {
+                            pages.components[2].setDisabled(true)
+                        } else {
+                            pages.components[2].setDisabled(false)
+                        }
+                        pages.components[1].setDisabled(false)
+                        pages.components[0].setDisabled(false)
+                        birthdayData = birthdayDataS.slice(0 + (n * 10), 10 + (n * 10))
+                        list.setTimestamp(Date.now())
+                            .setDescription(`${birthdayData.join(`\n`)}`)
+                            .setFooter({
+                                text: `Страница ${n + 1}/${totalPages}`
+                            })
+                        await i.deferUpdate()
+                        await interaction.editReply({
+                            embeds: [list],
+                            components: [pages],
+                            fetchReply: true
+                        })
+                    }
+                })
+
+                collector.on('end', async (collected) => {
+                    n = n
+                    pages.components[0].setDisabled(true)
+                    pages.components[1].setDisabled(true)
+                    pages.components[2].setDisabled(true)
+                    birthdayData = birthdayDataS.slice(0 + (n * 10), 10 + (n * 10))
+                    list.setTimestamp(Date.now())
+                        .setDescription(`${birthdayData.join(`\n`)}`)
+                        .setFooter({
+                            text: `Страница ${n + 1}/${totalPages}`
+                        })
+                    await interaction.editReply({
+                        embeds: [list],
+                        components: [pages]
+                    })
+                })
             }
 
                 break;

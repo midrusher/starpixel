@@ -16,7 +16,7 @@ module.exports = {
             await invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, invite.uses])));
             console.log(chalk.blue(`[Бот Starpixel] Приглашения обработаны!`))
 
-            const channel = await guild.channels.fetch(`1016038744312254515`)
+            const channel = await guild.channels.fetch(`876436260347076608`)
             const timestamp = Math.round(Date.now() / 1000)
             const embed = new EmbedBuilder()
             .setTitle(`Бот запущен!`)

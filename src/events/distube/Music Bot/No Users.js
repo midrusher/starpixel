@@ -9,7 +9,7 @@ module.exports = {
             .setColor(process.env.bot_color)
             .setTitle(`Не осталось пользователей`)
             .setTimestamp(Date.now())
-            .setDescription(`В канале ${queue.voiceChannel} не осталось пользователей. Я покину этот голосовой канал через 5 минут!`)
+            .setDescription(`В канале ${queue.voiceChannel} не осталось пользователей, поэтому я должен был покинуть этот канал!`)
         await queue.textChannel.send({
             embeds: [playing]
         })

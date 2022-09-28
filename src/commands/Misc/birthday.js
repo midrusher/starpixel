@@ -262,6 +262,8 @@ module.exports = {
                 await interaction.deferReply()
 
                 const date = new Date()
+                const currentDate = date.getDate()
+                const currentMonth = date.getMonth() + 1
                 const currentYear = date.getFullYear()
 
                 let index = 1
@@ -270,7 +272,22 @@ module.exports = {
 
                 let n = 0
                 const birthdayDataS = listData.map((d) => {
-                    return `**${index++}.** \`${d.day}.${d.month}.${d.year}\` - ${client.users.cache.get(d.userid)} (${currentYear - d.year})`
+                    const firstDate = new Date(currentYear, d.month, d.day)
+                    const secondDate = new Date(currentYear, currentMonth, currentDate)
+
+                    const oneDay = 1000 * 60 * 60 * 24
+                    let diffDays = Math.round((firstDate - secondDate) / oneDay)
+
+                    let wishYear
+
+                    if (diffDays > 0) {
+                        wishYear = currentYear
+                    } else {
+                        wishYear = currentYear + 1
+                    }
+
+                    const age = wishYear - d.year
+                    return `**${index++}.** \`${d.day}.${d.month}.${d.year}\` - ${client.users.cache.get(d.userid)} (в ${wishYear} исполнится ${age})`
                 })
 
                 const totalPages = Math.ceil(listData.length / 10)

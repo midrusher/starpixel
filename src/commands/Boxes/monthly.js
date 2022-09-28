@@ -13,7 +13,7 @@ module.exports = {
     async execute(interaction, client) {
         const { Guild } = require(`../../schemas/guilddata`)
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
-        if (pluginData.plugins.boxes === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
+        if (pluginData.plugins.items === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         const cmd_name = `/monthly`
         const { roles } = interaction.member //Участник команды
 

@@ -27,7 +27,7 @@ module.exports = {
     async execute(interaction, client) {
         const { Guild } = require(`../../schemas/guilddata`)
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
-        if (pluginData.plugins.shop === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
+        if (pluginData.plugins.items === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         await interaction.reply({
             content: `Данная команда ещё в разработке! NO_ITEMS`,
             ephemeral: true

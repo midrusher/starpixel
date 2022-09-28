@@ -14,7 +14,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`settings`)
         .setDescription(`Настройки бота гильдии`)
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+        .setDefaultMemberPermissions(0)
         .addSubcommandGroup(gr => gr
             .setName(`plugins`)
             .setDescription(`Настройка плагинов бота`)
@@ -50,13 +50,10 @@ module.exports = {
                     case `toggle`: {
                         const focusedValue = interaction.options.getFocused();
                         const choices = [
-                            'Коробки',
+                            'Предметы',
                             'Косметика',
                             'Достижения',
                             'Питомцы',
-                            'Активность',
-                            'Ранги',
-                            'Магазин',
                             'Система никнеймов',
                             'Премиум',
                             'Новые участники',
@@ -97,8 +94,8 @@ module.exports = {
         const { guild, member, user, channel, options } = interaction
         const gr = options.getSubcommandGroup()
         const sb = options.getSubcommand()
-        const guildData = await Guild.findOne({ id: guild.id })
-        const { plugins } = guildData
+        let guildData = await Guild.findOne({ id: guild.id })
+        let { plugins } = guildData
 
         switch (gr) {
             case `plugins`: {
@@ -110,13 +107,10 @@ module.exports = {
                         const string = options.getString(`выбор`)
                         const boolean = options.getBoolean(`статус`)
                         const id = SettingsPluginsGetID(string)
-                        if (id == 0) guildData.plugins.boxes = boolean
+                        if (id == 24) guildData.plugins.items = boolean
                         else if (id == 1) guildData.plugins.cosmetics = boolean
                         else if (id == 2) guildData.plugins.achievements = boolean
                         else if (id == 3) guildData.plugins.pets = boolean
-                        else if (id == 4) guildData.plugins.act_exp = boolean
-                        else if (id == 5) guildData.plugins.rank_exp = boolean
-                        else if (id == 6) guildData.plugins.shop = boolean
                         else if (id == 7) guildData.plugins.nick_system = boolean
                         else if (id == 8) guildData.plugins.premium = boolean
                         else if (id == 9) guildData.plugins.welcome = boolean
@@ -134,34 +128,54 @@ module.exports = {
                         else if (id == 21) guildData.plugins.gexp = boolean
                         else if (id == 22) guildData.plugins.music = boolean
                         else if (id == 23) guildData.plugins.recording = boolean
-                        else if (id == 9999) return interaction.reply({content: `Данной опции не существует!`, ephemeral: true})
-                        
+                        else if (id == 9999 || id == 0 || id == 4 || id == 5 || id == 6) return interaction.reply({ content: `Данной опции не существует!`, ephemeral: true })
+
                         guildData.save()
                         const result = toggleOnOff(boolean)
                         const resultid = String(boolean).toUpperCase()
                         await interaction.reply({
-                            content: `Статус плагина \`${string}\` был установлен на \`${result}\`!
-\`\`\`js
-PLUGIN_DATA_ID_${id} = new TOGGLE_${resultid}
-
-RESULT = SUCCESS\`\`\``
+                            content: `Статус плагина \`${string}\` был установлен на \`${result}\`!`
                         })
-                        
+
                     }
                         break;
 
-                    /* case `check`: {
+                    case `check`: {
                         let i = 1
-                        const jsonObject = await guildData.
-                        const pluginsMap = jsonObject.
-                         .map((plugin) => {
-                            console.log(plugin)
-                            let status = toggleOnOff(plugin.valueOf)
-                            return `**${i++}.** \`${plugin}\` - Статус: \`${status}\``
-                        }).join(`\n`) 
-                        console.log(pluginsMap)
+                        let { items, cosmetics, achievements, pets, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, recording } = plugins
+                        let result = new EmbedBuilder()
+                            .setColor(process.env.bot_color)
+                            .setTitle(`Статус плагинов гильдии`)
+                            .setTimestamp(Date.now())
+                            .setDescription(`**${i++}.** \`Предметы\` - Статус: ${toggleOnOff(items)}
+**${i++}.** \`Косметика\` - Статус: ${toggleOnOff(cosmetics)}
+**${i++}.** \`Достижения\` - Статус: ${toggleOnOff(achievements)}
+**${i++}.** \`Питомцы\` - Статус: ${toggleOnOff(pets)}
+**${i++}.** \`Система никнеймов\` - Статус: ${toggleOnOff(nick_system)}
+**${i++}.** \`Премиум\` - Статус: ${toggleOnOff(premium)}
+**${i++}.** \`Новые участники\` - Статус: ${toggleOnOff(welcome)}
+**${i++}.** \`Дни рождения\` - Статус: ${toggleOnOff(birthday)}
+**${i++}.** \`Служба поддержки\` - Статус: ${toggleOnOff(tickets)}
+**${i++}.** \`Модерация\` - Статус: ${toggleOnOff(moderation)}
+**${i++}.** \`Безопасность\` - Статус: ${toggleOnOff(security)}
+**${i++}.** \`Временные каналы\` - Статус: ${toggleOnOff(temp_channels)}
+**${i++}.** \`Личные сообщения бота\` - Статус: ${toggleOnOff(bot_dms)}
+**${i++}.** \`Логи\` - Статус: ${toggleOnOff(logs)}
+**${i++}.** \`Временные роли\` - Статус: ${toggleOnOff(temp_roles)}
+**${i++}.** \`Автороли\` - Статус: ${toggleOnOff(auto_roles)}
+**${i++}.** \`Обновление пользователей\` - Статус: ${toggleOnOff(user_updates)}
+**${i++}.** \`Обновление каналов\` - Статус: ${toggleOnOff(channels)}
+**${i++}.** \`Опыт гильдии\` - Статус: ${toggleOnOff(gexp)}
+**${i++}.** \`Музыка\` - Статус: ${toggleOnOff(music)}
+**${i++}.** \`Запись звука\` - Статус: ${toggleOnOff(recording)}`)
+
+
+                        await interaction.reply({
+                            embeds: [result]
+                        })
+
                     }
-                    break; */
+                        break;
                     default:
                         break;
                 }

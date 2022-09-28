@@ -14,7 +14,7 @@ module.exports = {
 
         const { Guild } = require(`../../schemas/guilddata`)
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
-        if (pluginData.plugins.boxes === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
+        if (pluginData.plugins.items === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
         const { roles } = interaction.member //Участник команды
 
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ

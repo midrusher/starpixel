@@ -10,7 +10,7 @@ module.exports = (client) => {
             const { Guild } = require(`../../schemas/guilddata`)
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
-            if (pluginData.plugins.rank_exp === false) return
+            if (pluginData.plugins.items === false) return
             const results = await User.find({ rank: { $gte: 0 } })
 
             for (let result of results) {

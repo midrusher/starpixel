@@ -10,7 +10,7 @@ module.exports = {
         if (message.channel.type !== ChannelType.DM) {
             const guild_plugin = await message.client.guilds.fetch(`320193302844669959`)
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
-            if (pluginData.plugins.act_exp === false) return
+            if (pluginData.plugins.items === false) return
             const guildData = await Guild.findOne({ id: message.guild.id }) || new Guild({ id: message.guild.id, name: message.guild.name })
             if (message.author.bot) return
             console.log(chalk.yellow(`[${message.author.tag} в ${message.channel.name}]`) + chalk.white(`: ${message.content}`))

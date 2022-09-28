@@ -61,7 +61,7 @@ module.exports = {
             case `Опыт активности`: {
                 const { Guild } = require(`../../schemas/guilddata`)
                 const pluginData = await Guild.findOne({ id: interaction.guild.id })
-                if (pluginData.plugins.act_exp === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
+                if (pluginData.plugins.items === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
 
                 let cur_exp = userData.exp + interaction.options.getNumber(`количество`)
                 let cur_level = userData.level
@@ -88,7 +88,7 @@ ${user} повысил уровень активности до ${userData.level
             case `Опыт рангов`: {
                 const { Guild } = require(`../../schemas/guilddata`)
                 const pluginData = await Guild.findOne({ id: interaction.guild.id })
-                if (pluginData.plugins.rank_exp === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
+                if (pluginData.plugins.items === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 userData.rank += interaction.options.getNumber(`количество`)
                 userData.save();
                 interaction.reply(`Выдано ${interaction.options.getNumber(`количество`)}💠 пользователю ${user}! У него теперь ${userData.rank} опыта рангов!`)
@@ -100,7 +100,7 @@ ${user} повысил уровень активности до ${userData.level
             case `Румбики`: {
                 const { Guild } = require(`../../schemas/guilddata`)
                 const pluginData = await Guild.findOne({ id: interaction.guild.id })
-                if (pluginData.plugins.shop === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
+                if (pluginData.plugins.items === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
                 userData.rumbik += interaction.options.getNumber(`количество`)
                 userData.save();
                 interaction.reply(`Выдано ${interaction.options.getNumber(`количество`)}<:Rumbik:883638847056003072> пользователю ${user}! У него теперь ${userData.rumbik} румбиков!`)

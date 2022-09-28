@@ -376,6 +376,8 @@ function SettingsPluginsGetID(string) {
             break;
         case `Запись звука`: { id = 23 }
             break;
+        case `Предметы`: { id = 24 }
+            break;
         default: { id = 9999 }
             break;
     }
@@ -384,11 +386,11 @@ function SettingsPluginsGetID(string) {
 }
 
 function toggleOnOff(boolean) {
-    let err = new Error(`Выбранная опция должны иметь тип Boolean!`)
+    let err = new Error(`\`Выбранная опция должны иметь тип Boolean!\``)
     if (typeof boolean !== "boolean") return err
 
-    if (boolean === false) return `Отключено`
-    else if (boolean === true) return `Включено`
+    if (boolean === false) return `\`Отключено\` ❌`
+    else if (boolean === true) return `\`Включено\` ✅`
 
 }
 

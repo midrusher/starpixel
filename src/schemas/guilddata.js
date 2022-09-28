@@ -18,13 +18,10 @@ const Guild = new mongoose.Schema({
         log_channel: { type: String }
     },
     plugins: {
-        boxes: { type: Boolean, default: true},
+        items: { type: Boolean, default: true},
         cosmetics: { type: Boolean, default: true},
         achievements: { type: Boolean, default: true},
         pets: { type: Boolean, default: true},
-        act_exp: { type: Boolean, default: true},
-        rank_exp: { type: Boolean, default: true},
-        shop: { type: Boolean, default: true},
         nick_system: { type: Boolean, default: true},
         premium: { type: Boolean, default: true},
         birthday: { type: Boolean, default: true},
@@ -41,6 +38,7 @@ const Guild = new mongoose.Schema({
         channels: { type: Boolean, default: true},
         gexp: { type: Boolean, default: true},
         music: { type: Boolean, default: true},
+        recording: { type: Boolean, default: true}
     },
     hypixel_lvl: { type: Number, default: 0 }
 

@@ -66,8 +66,7 @@ module.exports = {
                 {
                     loot1_name: `ПЕСОЧНЫЙ`,
                     loot1_roleID: "595889341058777088",
-                }
-                ,
+                },
                 {
                     loot1_name: `АЛИЗАРИНОВЫЙ`,
                     loot1_roleID: "1024741633947873401",
@@ -78,7 +77,7 @@ module.exports = {
             let rloot1 = loot1[Math.floor(Math.random() * loot1.length)];
             const tempData = await Temp.findOne({ userid: user.id, roleid: rloot1.loot1_roleID })
 
-            const r1 = `595893144055316490`;
+            const r1 = `595893144055316490`; //Название цветов есть в /colors
             const r2 = `595892599693246474`;
             const r3 = `595892677451710468`;
             const r4 = `595892238370996235`;

@@ -6,8 +6,8 @@ const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 
 module.exports = {
-    name: 'guildScheduledEventUpdate',
-    async execute(oldEvent, newEvent) {
+    name: 'guildUpdate',
+    async execute(oldGuild, newGuild) {
         const client = member.client
         const guild = member.guild;
         const pluginData = await Guild.findOne({ id: guild.id })

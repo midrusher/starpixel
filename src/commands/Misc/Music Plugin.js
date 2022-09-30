@@ -9,7 +9,7 @@ const { loadImage, createCanvas } = require(`@napi-rs/canvas`)
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
-const { gameConstructor, calcActLevel, getLevel, isURL } = require(`../../functions`);
+const { gameConstructor, calcActLevel, getLevel, isURL, secondPage } = require(`../../functions`);
 const { SearchResultType, DisTubeVoice, Song, Playlist } = require('distube');
 
 module.exports = {
@@ -341,14 +341,14 @@ module.exports = {
                             .setCustomId(`next`)
                             .setEmoji(`➡`)
                             .setStyle(ButtonStyle.Success)
-                            .setDisabled(false)
+                            .setDisabled(secondPage(totalPages))
                     )
                     .addComponents(
                         new ButtonBuilder()
                             .setCustomId(`last`)
                             .setEmoji(`⏩`)
                             .setStyle(ButtonStyle.Success)
-                            .setDisabled(false)
+                            .setDisabled(secondPage(totalPages))
                     )
 
                 let msg = await interaction.reply({

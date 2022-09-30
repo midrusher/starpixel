@@ -394,6 +394,24 @@ function toggleOnOff(boolean) {
 
 }
 
+function replaceTrueFalse(boolean) {
+    let err = new Error(`\`Выбранная опция должны иметь тип Boolean!\``)
+    if (typeof boolean !== "boolean") return err
+
+    if (boolean === false) return `\`Нет\` ❌`
+    else if (boolean === true) return `\`Да\` ✅`
+}
+
+function secondPage(number) {
+    if (number >= 2) return false
+    else return true
+}
+
+function defaultShop(type, value) {
+    if (type == value) return true
+    else return false
+}
+
 
 module.exports = {
     toOrdinalSuffix,
@@ -403,5 +421,8 @@ module.exports = {
     permToName,
     isURL,
     SettingsPluginsGetID,
-    toggleOnOff
+    toggleOnOff,
+    replaceTrueFalse,
+    defaultShop,
+    secondPage
 }

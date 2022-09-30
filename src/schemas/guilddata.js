@@ -40,7 +40,15 @@ const Guild = new mongoose.Schema({
         music: { type: Boolean, default: true},
         recording: { type: Boolean, default: true}
     },
-    hypixel_lvl: { type: Number, default: 0 }
+    hypiel_lvl: { type: Number, default: 0 },
+
+    shop: [{
+        price: {type: Number},
+        name: {type: String},
+        code: {type: String},
+        shop_type: {type: String},
+        roleid: [{ type: String }]
+    }]
 
 })
 

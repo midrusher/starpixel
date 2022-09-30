@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
 const { execute } = require('../../events/client/start_bot/ready');
 const wait = require('node:timers/promises').setTimeout;
@@ -7,7 +7,7 @@ const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
-const { SettingsPluginsGetID, toggleOnOff } = require(`../../functions`)
+const { SettingsPluginsGetID, toggleOnOff, defaultShop, secondPage } = require(`../../functions`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 
 module.exports = {
@@ -37,15 +37,147 @@ module.exports = {
                 .setName(`check`)
                 .setDescription(`Проверить состояние плагинов`)
             )
+        )
+        .addSubcommandGroup(gr => gr
+            .setName(`shop`)
+            .setDescription(`Настройки магазина гильдии`)
+            .addSubcommand(sb => sb
+                .setName(`addroleitem`)
+                .setDescription(`Добавить предмет-роль в магазин`)
+                .addStringOption(o => o
+                    .setName(`название`)
+                    .setDescription(`Название предмета`)
+                    .setRequired(true)
+                )
+                .addStringOption(o => o
+                    .setName(`магазин`)
+                    .setDescription(`Магазин предмета`)
+                    .setRequired(true)
+                    .addChoices(
+                        {
+                            name: `Королевский магазин`,
+                            value: `KG`
+                        },
+                        {
+                            name: `Магазин активности`,
+                            value: `AC`
+                        },
+                        {
+                            name: `Обычный магазин`,
+                            value: `SH`
+                        }
+                    )
+                )
+                .addRoleOption(o => o
+                    .setName(`роль`)
+                    .setDescription(`Роль, которая будет продаваться в магазине`)
+                    .setRequired(true)
+                )
+                .addIntegerOption(o => o
+                    .setName(`цена`)
+                    .setDescription(`Цена предмета (валюта зависит от кода магазина)`)
+                    .setRequired(true)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`addstaticitem`)
+                .setDescription(`Добавить предмет без роли в магазин`)
+                .addStringOption(o => o
+                    .setName(`название`)
+                    .setDescription(`Название предмета`)
+                    .setRequired(true)
+                )
+                .addStringOption(o => o
+                    .setName(`магазин`)
+                    .setDescription(`Магазин предмета`)
+                    .setRequired(true)
+                    .addChoices(
+                        {
+                            name: `Королевский магазин`,
+                            value: `KG`
+                        },
+                        {
+                            name: `Магазин активности`,
+                            value: `AC`
+                        },
+                        {
+                            name: `Обычный магазин`,
+                            value: `SH`
+                        }
+                    )
+                )
+                .addIntegerOption(o => o
+                    .setName(`цена`)
+                    .setDescription(`Цена предмета (валюта зависит от кода магазина)`)
+                    .setRequired(true)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`additem`)
+                .setDescription(`Добавить предмет в товар в магазине`)
+                .addStringOption(o => o
+                    .setName(`код`)
+                    .setDescription(`Код товара, в который нужно добавить роль`)
+                    .setRequired(true)
+                )
+                .addRoleOption(o => o
+                    .setName(`роль`)
+                    .setDescription(`Роль, которую необходимо добавить`)
+                    .setRequired(true)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`removeitemfrom`)
+                .setDescription(`Удалить предмет из товара в магазине`)
+                .addStringOption(o => o
+                    .setName(`код`)
+                    .setDescription(`Код товара, из которого нужно удалить роль`)
+                    .setRequired(true)
+                )
+                .addRoleOption(o => o
+                    .setName(`роль`)
+                    .setDescription(`Роль, которую удалить`)
+                    .setRequired(true)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`items`)
+                .setDescription(`Посмотреть информацию о каждом предмете`)
+                .addStringOption(o => o
+                    .setName(`магазин`)
+                    .setDescription(`Выберите магазин, предметы которого хотите посмотреть`)
+                    .setRequired(true)
+                    .addChoices(
+                        {
+                            name: `Королевский магазин`,
+                            value: `KG`
+                        },
+                        {
+                            name: `Магазин активности`,
+                            value: `AC`
+                        },
+                        {
+                            name: `Обычный магазин`,
+                            value: `SH`
+                        }
+                    )
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`removeitem`)
+                .setDescription(`Удалить предмет из магазина`)
+                .addStringOption(o => o
+                    .setName(`код`)
+                    .setDescription(`Код предмета, который нужно удалить`)
+                    .setRequired(true)
+                )
+            )
         ),
     async autoComplete(interaction, client) {
         const gr = interaction.options.getSubcommandGroup()
         const sb = interaction.options.getSubcommand()
         switch (gr) {
             case `plugins`: {
-
-
-
                 switch (sb) {
                     case `toggle`: {
                         const focusedValue = interaction.options.getFocused();
@@ -91,6 +223,10 @@ module.exports = {
         }
     },
     async execute(interaction, client) {
+        if (!interaction.member.permissions.has(PermissionFlagsBits.ManageGuild)) return interaction.reply({
+            content: `У вас недостаточно прав, чтобы использовать данную команду!`,
+            ephemeral: true
+        })
         const { guild, member, user, channel, options } = interaction
         const gr = options.getSubcommandGroup()
         const sb = options.getSubcommand()
@@ -134,7 +270,7 @@ module.exports = {
                         const result = toggleOnOff(boolean)
                         const resultid = String(boolean).toUpperCase()
                         await interaction.reply({
-                            content: `Статус плагина \`${string}\` был установлен на \`${result}\`!`
+                            content: `Статус плагина \`${string}\` был установлен на ${result}!`
                         })
 
                     }
@@ -185,7 +321,407 @@ module.exports = {
 
             }
                 break;
+            case 'shop': {
+                switch (sb) {
+                    case `addroleitem`: {
+                        const name = interaction.options.getString(`название`)
+                        const price = interaction.options.getInteger(`цена`)
+                        const shop = interaction.options.getString(`магазин`)
+                        const role = interaction.options.getRole(`роль`)
+                        let fullCode
+                        for (let i = 0; i < guildData.shop.length; i++) {
+                            let shop = guildData.shop[i]
+                            if (name == shop.name) return interaction.reply({
+                                content: `Предмет с таким названием уже существует!`,
+                                ephemeral: true
+                            })
+                            if (shop.roleid.includes(role.id)) return interaction.reply({
+                                content: `Предмет с данной ролью уже существует!`,
+                                ephemeral: true
+                            })
+                        }
 
+
+                        if (shop == `AC`) {
+                            const AC = guildData.shop.filter(shop => {
+                                return shop.code.startsWith(`AC`)
+                            })
+                            let b = 1
+                            const res = AC.find(a => a.code.endsWith(b))
+                            while (res) {
+                                b++
+                            }
+                            console.log
+                            fullCode = `AC${b}`
+                        }
+
+                        else if (shop == `KG`) {
+                            const KG = guildData.shop.filter(shop => {
+                                return shop.code.startsWith(`KG`)
+                            })
+                            let b = 1
+                            const res = KG.find(a => a.code.endsWith(b))
+                            while (res) {
+                                b++
+                            }
+                            fullCode = `KG${b}`
+                        }
+
+                        else if (shop == `SH`) {
+                            const SH = guildData.shop.filter(shop => {
+                                return shop.code.startsWith(`SH`)
+                            })
+                            let b = 1
+                            const res = SH.find(a => a.code.endsWith(b))
+                            while (res) {
+                                b++
+                            }
+                            fullCode = `SH${b}`
+                        }
+
+
+                        guildData.shop.push({
+                            name: name,
+                            price: price,
+                            shop_type: shop,
+                            roleid: [role.id],
+                            code: fullCode
+                        })
+                        guildData.save()
+                        await interaction.reply({
+                            content: `Предмет **\`${name}\`** (код \`${fullCode}\`) был добавлен и имеет цену в \`${price}\` штук валюты магазина! Роль: ${role}`,
+                            ephemeral: true
+                        })
+                    }
+                        break;
+
+                    case `addstaticitem`: {
+                        const name = interaction.options.getString(`название`)
+                        const price = interaction.options.getInteger(`цена`)
+                        const shop = interaction.options.getString(`магазин`)
+
+                        let fullCode
+                        for (let i = 0; i < guildData.shop.length; i++) {
+                            let shop = guildData.shop[i]
+                            if (name == shop.name) return interaction.reply({
+                                content: `Предмет с таким названием уже существует!`,
+                                ephemeral: true
+                            })
+                        }
+
+
+                        if (shop == `AC`) {
+                            const AC = guildData.shop.filter(shop => {
+                                return shop.code.startsWith(`AC`)
+                            })
+                            let b = 1
+                            const res = AC.find(a => a.code.endsWith(b))
+                            while (res) {
+                                b++
+                            }
+                            fullCode = `AC${b}`
+                        }
+
+                        else if (shop == `KG`) {
+                            const KG = guildData.shop.filter(shop => {
+                                return shop.code.startsWith(`KG`)
+                            })
+                            let b = 1
+                            const res = KG.find(a => a.code.endsWith(b))
+                            while (res) {
+                                b++
+                            }
+                            fullCode = `KG${b}`
+                        }
+
+                        else if (shop == `SH`) {
+                            const SH = guildData.shop.filter(shop => {
+                                return shop.code.startsWith(`SH`)
+                            })
+                            let b = 1
+                            const res = SH.find(a => a.code.endsWith(b))
+                            while (res) {
+                                b++
+                            }
+                            fullCode = `SH${b}`
+                        }
+
+
+                        guildData.shop.push({
+                            name: name,
+                            price: price,
+                            shop_type: shop,
+                            code: fullCode
+                        })
+                        guildData.save()
+
+                        await interaction.reply({
+                            content: `Предмет **\`${name}\`** (код \`${fullCode}\`) был добавлен и имеет цену в \`${price}\` штук валюты магазина!`,
+                            ephemeral: true
+                        })
+                    }
+                        break;
+                    case `additem`: {
+                        const code = interaction.options.getString(`код`)
+                        const role = interaction.options.getRole(`роль`)
+                        const shop = guildData.shop.find(sh => sh.code == code)
+                        const i = shop.roleid.find(rid => rid == role.id)
+                        if (i) return interaction.reply({
+                            content: `Данная роль уже есть в этом товаре!`,
+                            ephemeral: true
+                        })
+                        shop.roleid.push(role.id)
+                        guildData.save()
+
+                        await interaction.reply({
+                            content: `Предмет с кодом \`${code}\` был дополнен ролью ${role}!`,
+                            ephemeral: true
+                        })
+                    }
+                        break;
+
+                    case `items`: {
+                        let type = interaction.options.getString(`магазин`)
+
+                        let b = 0
+                        let shops = guildData.shop.filter(sh => sh.shop_type == type)
+                        let mapS = shops.map(async (sh) => {
+                            let i = 1
+                            let currency
+                            if (sh.shop_type == `AC`) currency = `🏷`
+                            else if (sh.shop_type == `KG` || sh.shop_type == `SH`) currency = `<:Rumbik:883638847056003072>`
+                            if (sh.roleid.length >= 1) {
+                                const rolesM = sh.roleid.map(async (roleid) => {
+                                    const role = await guild.roles.fetch(roleid)
+                                    return role
+                                })
+                                const roles = await Promise.all(rolesM)
+
+                                return `**${i++}**. Название: \`${sh.name}\`, код: \`${sh.code}\`, цена: \`${sh.price}\`${currency}.
+**Роли:**
+${roles.join('\n')}`
+                            } else {
+                                return `**${i++}**. Название: \`${sh.name}\`, код: \`${sh.code}\`, цена: \`${sh.price}\`${currency}.`
+                            }
+
+                        })
+
+                        let mProm = await Promise.all(mapS)
+                        let map = mProm.slice(0 + (b * 10), 10 + (10 * b))
+                        let totalPages = Math.ceil(mapS.length / 10)
+                        const selectMenu = new ActionRowBuilder()
+                            .addComponents(
+                                new SelectMenuBuilder()
+                                    .setCustomId(`shoptype`)
+                                    .setMaxValues(1)
+                                    .setMinValues(1)
+                                    .setPlaceholder(`Тип магазина гильдии`)
+                                    .addOptions(
+                                        {
+                                            label: `Магазин активности`,
+                                            emoji: `🏷`,
+                                            description: `Магазин активности гильдии`,
+                                            value: `AC`,
+                                            default: defaultShop(type, `AC`)
+                                        },
+                                        {
+                                            label: `Королевский магазин`,
+                                            emoji: `👑`,
+                                            description: `Королевский магазин гильдии`,
+                                            value: `KG`,
+                                            default: defaultShop(type, `KG`)
+                                        },
+                                        {
+                                            label: `Обычный магазин`,
+                                            emoji: `<:Rumbik:883638847056003072>`,
+                                            description: `Обычный магазин гильдии`,
+                                            value: `SH`,
+                                            default: defaultShop(type, `SH`)
+                                        }
+                                    )
+                            )
+
+                        const buttons = new ActionRowBuilder()
+                            .addComponents(
+                                new ButtonBuilder()
+                                    .setCustomId(`prev`)
+                                    .setDisabled(true)
+                                    .setLabel(`Предыдущая`)
+                                    .setStyle(ButtonStyle.Danger)
+                                    .setEmoji(`⬅`)
+                            )
+                            .addComponents(
+                                new ButtonBuilder()
+                                    .setCustomId(`next`)
+                                    .setDisabled(secondPage(totalPages))
+                                    .setLabel(`Следующая`)
+                                    .setStyle(ButtonStyle.Success)
+                                    .setEmoji(`➡`)
+                            )
+
+                        const embed = new EmbedBuilder()
+                            .setTitle(`Список товаров`)
+                            .setDescription(`${map.join(`\n`)}`)
+                            .setColor(process.env.bot_color)
+                            .setTimestamp(Date.now())
+                            .setFooter({ text: `Страница ${b + 1}/${totalPages}` })
+
+                        const msg = await interaction.reply({
+                            embeds: [embed],
+                            components: [buttons, selectMenu],
+                            fetchReply: true
+                        })
+
+                        const collector = msg.createMessageComponentCollector({ time: 300000 })
+
+                        collector.on('collect', async (i) => {
+                            if (i.customId == `prev`) {
+                                b = b - 1
+                                if (b <= 0) {
+                                    buttons.components[0].setDisabled(true)
+                                } else {
+                                    buttons.components[0].setDisabled(false)
+                                }
+                                map = mapS.slice(0 + (b * 10), 10 + (b * 10))
+                                embed.setDescription(`${map.join(`\n`)}`).setFooter({
+                                    text: `Страница ${b + 1}/${totalPages}`
+                                })
+                                await i.deferUpdate()
+                                await interaction.editReply({
+                                    embeds: [embed],
+                                    components: [buttons, selectMenu],
+                                    fetchReply: true
+                                })
+                            } else if (i.customId == `next`) {
+                                b = b + 1
+                                if (b >= totalPages - 1) {
+                                    buttons.components[1].setDisabled(true)
+                                } else {
+                                    buttons.components[1].setDisabled(false)
+                                }
+                                map = mapS.slice(0 + (b * 10), 10 + (b * 10))
+                                embed.setDescription(`${map.join(`\n`)}`).setFooter({
+                                    text: `Страница ${b + 1}/${totalPages}`
+                                })
+                                await i.deferUpdate()
+                                await interaction.editReply({
+                                    embeds: [embed],
+                                    components: [buttons, selectMenu],
+                                    fetchReply: true
+                                })
+                            } else if (i.customId == `shoptype`) {
+                                const value = i.values[0]
+                                let type = value
+                                selectMenu.components[0].setOptions({
+                                    label: `Магазин активности`,
+                                    emoji: `🏷`,
+                                    description: `Магазин активности гильдии`,
+                                    value: `AC`,
+                                    default: defaultShop(type, `AC`)
+                                },
+                                    {
+                                        label: `Королевский магазин`,
+                                        emoji: `👑`,
+                                        description: `Королевский магазин гильдии`,
+                                        value: `KG`,
+                                        default: defaultShop(type, `KG`)
+                                    },
+                                    {
+                                        label: `Обычный магазин`,
+                                        emoji: `<:Rumbik:883638847056003072>`,
+                                        description: `Обычный магазин гильдии`,
+                                        value: `SH`,
+                                        default: defaultShop(type, `SH`)
+                                    })
+                                shops = guildData.shop.filter(sh => sh.shop_type == value)
+                                mapS = shops.map(async (sh) => {
+                                    let i = 1
+                                    let currency
+                                    if (sh.shop_type == `AC`) currency = `🏷`
+                                    else if (sh.shop_type == `KG` || sh.shop_type == `SH`) currency = `<:Rumbik:883638847056003072>`
+                                    if (sh.roleid.length >= 1) {
+                                        const rolesM = sh.roleid.map(async (roleid) => {
+                                            const role = await guild.roles.fetch(roleid)
+                                            return role
+                                        })
+                                        const roles = await Promise.all(rolesM)
+
+                                        return `**${i++}**. Название: \`${sh.name}\`, код: \`${sh.code}\`, цена: \`${sh.price}\`${currency}.
+**Роли:**
+${roles.join('\n')}`
+                                    } else {
+                                        return `**${i++}**. Название: \`${sh.name}\`, код: \`${sh.code}\`, цена: \`${sh.price}\`${currency}.`
+                                    }
+                                })
+                                mProm = await Promise.all(mapS)
+                                totalPages = Math.ceil(mapS.length / 10)
+                                b = 0
+                                buttons.components[0].setDisabled(true)
+                                buttons.components[1].setDisabled(secondPage(totalPages))
+                                map = mProm.slice(0 + (b * 10), 10 + (b * 10))
+                                embed.setDescription(`${map.join(`\n`)}`).setFooter({
+                                    text: `Страница ${b + 1}/${totalPages}`
+                                })
+                                await i.deferUpdate()
+                                await interaction.editReply({
+                                    embeds: [embed],
+                                    components: [buttons, selectMenu],
+                                    fetchReply: true
+                                })
+                            }
+                        })
+
+                        collector.on('end', async (coll) => {
+                            selectMenu.components[0].setDisabled(true)
+                            buttons.components[0].setDisabled(true)
+                            buttons.components[1].setDisabled(true)
+                            await interaction.editReply({
+                                embeds: [embed],
+                                components: [buttons, selectMenu]
+                            })
+                        })
+                    }
+                        break;
+
+                    case `removeitem`: {
+                        const code = interaction.options.getString(`код`)
+                        const i = guildData.shop.findIndex(sh => sh.code == code)
+                        const name = guildData.shop[i].name
+                        guildData.shop.splice(i, 1)
+                        guildData.save()
+                        await interaction.reply({
+                            content: `Предмет кодом \`${code}\` и именем \`${name}\` был удален!`,
+                            ephemeral: true
+                        })
+                    }
+                        break;
+
+                    case `removeitemfrom`: {
+                        const code = interaction.options.getString(`код`)
+                        const role = interaction.options.getRole(`роль`)
+                        const shop = guildData.shop.find(sh => sh.code == code)
+                        const i = shop.roleid.findIndex(rid => rid == role.id)
+                        console.log(i)
+                        if (i == -1) return interaction.reply({
+                            content: `Данная роль в этом товаре не найдена!`,
+                            ephemeral: true
+                        })
+
+                        shop.roleid.splice(i, 1)
+                        guildData.save()
+
+                        await interaction.reply({
+                            content: `У предмета с кодом \`${code}\` была убрана роль ${role}!`,
+                            ephemeral: true
+                        })
+                        guildData.save()
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            }
+                break;
             default:
                 break;
         }

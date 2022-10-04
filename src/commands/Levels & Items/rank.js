@@ -26,7 +26,7 @@ module.exports = {
         })
         const sort1 = users.sort((a, b) => {
             return b.exp - a.exp
-        }).slice(0, 10)
+        })
         const sorts = sort1.sort((a, b) => {
             return b.level - a.level
         })

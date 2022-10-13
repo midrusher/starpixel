@@ -208,14 +208,14 @@ module.exports = {
                     }
 
                         break;
-                    default: 
+                    default:
                         break;
                 }
             }
 
                 break;
 
-            default: 
+            default:
                 break;
         }
 
@@ -223,7 +223,7 @@ module.exports = {
     },
     async execute(interaction, client) {
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
-        if (pluginData.plugins.moderation === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
+        if (pluginData.plugins.moderation === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         switch (interaction.options.getSubcommand()) {
             case `create`: {
                 const user = interaction.options.getUser(`пользователь`)
@@ -300,7 +300,7 @@ module.exports = {
                             return;
                         }
                     }
-
+                    userData.name = user.username
                     userData.age = age
                     userData.displayname.name = realname
 
@@ -517,6 +517,18 @@ module.exports = {
                                     embeds: [delete_embed],
                                     components: [delete_button]
                                 })
+                                try {
+                                    const member = await interaction.guild.members.fetch(userData.userid)
+                                    if (member) {
+                                        await interaction.guild.members.edit(member, {
+                                            roles: [`920346035811917825`],
+                                            nick: `${member.user.username}`
+                                        })
+                                    }
+                                    
+                                } catch (e) {
+                                    
+                                }
                                 userData.delete()
 
                             } else {
@@ -599,7 +611,7 @@ module.exports = {
                 await interaction.guild.members.edit(user, {
                     roles: [`930520087797051452`, `553593731953983498`, `721047643370815599`, `702540345749143661`, `746440976377184388`, `722523773961633927`, `849533128871641119`, `709753395417972746`, `722533819839938572`, `722523856211935243`, `504887113649750016`]
                 })
-                const userData = await User.findOne({ userid: user.id })
+                const userData = await User.findOne({ userid: user.user.id })
 
                 userData.rank = 0
                 userData.rumbik = 0
@@ -834,7 +846,7 @@ module.exports = {
                 break;
 
 
-            default: 
+            default:
                 break;
         }
 
@@ -900,7 +912,7 @@ module.exports = {
 
                                 break;
 
-                            default: 
+                            default:
                                 break;
                         }
                     }
@@ -1851,7 +1863,7 @@ module.exports = {
                                 break;
 
 
-                            default: 
+                            default:
                                 break;
                         }
 
@@ -1884,12 +1896,12 @@ module.exports = {
 
                                 break;
 
-                            default: 
+                            default:
                                 break;
                         }
                     }
                         break
-                    default: 
+                    default:
                         break;
                 }
             }

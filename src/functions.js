@@ -378,6 +378,8 @@ function SettingsPluginsGetID(string) {
             break;
         case `Предметы`: { id = 24 }
             break;
+        case `Сезонное`: { id = 25 }
+            break;
         default: { id = 9999 }
             break;
     }
@@ -402,6 +404,14 @@ function replaceTrueFalse(boolean) {
     else if (boolean === true) return `\`Да\` ✅`
 }
 
+function achievementStats(boolean) {
+    let err = new Error(`\`Выбранная опция должны иметь тип Boolean!\``)
+    if (typeof boolean !== "boolean") return err
+
+    if (boolean === false) return `\`Не выполнено\` ❌`
+    else if (boolean === true) return `\`Выполнено\` ✅`
+}
+
 function secondPage(number) {
     if (number >= 2) return false
     else return true
@@ -424,5 +434,6 @@ module.exports = {
     toggleOnOff,
     replaceTrueFalse,
     defaultShop,
-    secondPage
+    secondPage,
+    achievementStats
 }

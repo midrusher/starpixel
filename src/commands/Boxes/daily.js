@@ -50,19 +50,19 @@ module.exports = {
             let loot1 = [
                 {
                     loot1_name: `❕ 🎁 МАЛЕНЬКАЯ /small`,
-                    dropChanceLOOT1: 15,
+                    dropChanceLOOT1: 30,
                     loot1_roleID: "510932601721192458",
                     loot1_description: `Открой, чтобы получить награды.`
                 },
                 {
                     loot1_name: `💰 МЕШОЧЕК /bag`,
-                    dropChanceLOOT1: 35,
+                    dropChanceLOOT1: 40,
                     loot1_roleID: "819930814388240385",
                     loot1_description: `Открой, чтобы получить опыт активности.`
                 },
                 {
                     loot1_name: `Награды нет.`,
-                    dropChanceLOOT1: 50,
+                    dropChanceLOOT1: 30,
                     loot1_description: `Коробка пуста.`
                 }
             ];

@@ -121,6 +121,31 @@ const User = new mongoose.Schema({
     temp_channel: { 
         created: {type: Boolean, default: false },
         id: { type: String, default: `` },
+    },
+
+    seasonal: { 
+        halloween: {
+            points: { type: Number, default: 0 },
+            achievements: {
+                num1: { type: Boolean, default: false},
+                num2: { type: Boolean, default: false},
+                num3: { type: Boolean, default: false},
+                num4: { type: Boolean, default: false},
+                num5: { type: Boolean, default: false},
+                
+            },
+            opened_scary: { type: Number, default: 0 }
+        },
+        new_year: {
+            points: { type: Number, default: 0 }
+        },
+        easter: {
+            points: { type: Number, default: 0 }
+        },
+        summer: {
+            points: { type: Number, default: 0 }
+        },
+        
     }
 })
 

@@ -172,6 +172,32 @@ module.exports = {
                     .setRequired(true)
                 )
             )
+        )
+        .addSubcommandGroup(gr => gr
+            .setName(`seasonal`)
+            .setDescription(`Настройки сезонов гильдии`)
+            .addSubcommand(sb => sb
+                .setName(`hw_channel_add`)
+                .setDescription(`Добавить канал для сезона "Хэллоуин"`)
+                .addChannelOption(o => o
+                    .setName(`канал`)
+                    .setDescription(`Канал, который нужно добавить в сезон`)
+                    .setRequired(true)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`hw_channel_remove`)
+                .setDescription(`Удалить канал из сезона "Хэллоуин"`)
+                .addStringOption(o => o
+                    .setName(`id`)
+                    .setDescription(`ID канала, который нужно удалить из сезона`)
+                    .setRequired(true)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`hw_channel_check`)
+                .setDescription(`Проверить каналы для сезона "Хэллоуин"`)
+            )
         ),
     async autoComplete(interaction, client) {
         const gr = interaction.options.getSubcommandGroup()
@@ -202,7 +228,8 @@ module.exports = {
                             'Обновление каналов',
                             'Опыт гильдии',
                             'Музыка',
-                            'Запись звука'
+                            'Запись звука',
+                            'Сезонное'
                         ];
                         const filtered = choices.filter(choice => choice.startsWith(focusedValue)).slice(0, 25);
                         await interaction.respond(
@@ -235,7 +262,7 @@ module.exports = {
 
         switch (gr) {
             case `plugins`: {
-                let { boxes, cosmetics, achievements, pets, act_exp, rank_exp, shop, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, recording } = plugins
+                let { boxes, cosmetics, achievements, pets, act_exp, rank_exp, shop, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, recording, seasonal } = plugins
 
                 switch (sb) {
                     case `toggle`: {
@@ -243,8 +270,7 @@ module.exports = {
                         const string = options.getString(`выбор`)
                         const boolean = options.getBoolean(`статус`)
                         const id = SettingsPluginsGetID(string)
-                        if (id == 24) guildData.plugins.items = boolean
-                        else if (id == 1) guildData.plugins.cosmetics = boolean
+                        if (id == 1) guildData.plugins.cosmetics = boolean
                         else if (id == 2) guildData.plugins.achievements = boolean
                         else if (id == 3) guildData.plugins.pets = boolean
                         else if (id == 7) guildData.plugins.nick_system = boolean
@@ -264,6 +290,8 @@ module.exports = {
                         else if (id == 21) guildData.plugins.gexp = boolean
                         else if (id == 22) guildData.plugins.music = boolean
                         else if (id == 23) guildData.plugins.recording = boolean
+                        else if (id == 24) guildData.plugins.items = boolean
+                        else if (id == 25) guildData.plugins.seasonal = boolean
                         else if (id == 9999 || id == 0 || id == 4 || id == 5 || id == 6) return interaction.reply({ content: `Данной опции не существует!`, ephemeral: true })
 
                         guildData.save()
@@ -278,7 +306,7 @@ module.exports = {
 
                     case `check`: {
                         let i = 1
-                        let { items, cosmetics, achievements, pets, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, recording } = plugins
+                        let { items, cosmetics, achievements, pets, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, recording, seasonal } = plugins
                         let result = new EmbedBuilder()
                             .setColor(process.env.bot_color)
                             .setTitle(`Статус плагинов гильдии`)
@@ -303,7 +331,8 @@ module.exports = {
 **${i++}.** \`Обновление каналов\` - Статус: ${toggleOnOff(channels)}
 **${i++}.** \`Опыт гильдии\` - Статус: ${toggleOnOff(gexp)}
 **${i++}.** \`Музыка\` - Статус: ${toggleOnOff(music)}
-**${i++}.** \`Запись звука\` - Статус: ${toggleOnOff(recording)}`)
+**${i++}.** \`Запись звука\` - Статус: ${toggleOnOff(recording)}
+**${i++}.** \`Сезонное\` - Статус: ${toggleOnOff(seasonal)}`)
 
 
                         await interaction.reply({
@@ -717,6 +746,54 @@ ${roles.join('\n')}`
                         guildData.save()
                     }
                         break;
+                    default:
+                        break;
+                }
+            }
+                break;
+
+            case "seasonal": {
+                switch (interaction.options.getSubcommand()) {
+                    case `hw_channel_add`: {
+                        const channel = interaction.options.getChannel(`канал`)
+                        if (guildData.seasonal.halloween.channels.find(ch => ch.id == channel.id)) return interaction.reply({
+                            content: `Данный канал уже есть в списке добавленных!`,
+                            ephemeral: true
+                        })
+                        guildData.seasonal.halloween.channels.push({ id: channel.id })
+                        guildData.save()
+                    }
+                        break;
+                    case `hw_channel_remove`: {
+                        const channel = interaction.options.getString(`id`)
+                        if (!guildData.seasonal.halloween.channels.find(ch => ch.id == channel)) return interaction.reply({
+                            content: `Данного канала нет в списке этого сезона!`,
+                            ephemeral: true
+                        })
+                        let i = guildData.seasonal.halloween.channels.findIndex(ch => ch.id == channel)
+                        guildData.seasonal.halloween.channels.splice(i, 1)
+                    }
+                        break;
+                    case `hw_channel_check`: {
+                        const listMap = guildData.seasonal.halloween.channels.map(async (channelID) => {
+                            const ch = await interaction.guild.channels.fetch(channelID)
+                            let i = 1
+                            return `**${i++}.** Канал ${ch}, ID \`${channelID}\``
+                        })
+                        const list = await Promise.all(listMap)
+                        const embed = new EmbedBuilder()
+                        .setTitle(`Список каналов сезона "Хэллоуин"`)
+                        .setDescription(`${list.join(`\n`)}`)
+                        .setColor(process.env.bot_color)
+                        .setThumbnail(interaction.guild.iconURL())
+                        .setTimestamp(Date.now())
+
+                        await interaction.reply({
+                            embeds: [embed]
+                        })
+                    }
+                        break;
+
                     default:
                         break;
                 }

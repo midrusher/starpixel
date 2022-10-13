@@ -83,7 +83,7 @@ module.exports = {
             const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                 .send(
                     `◾
-<@${opener}> использует тотем счастья. :nazar_amulet:
+<@${opener}> использует талисман счастья. :nazar_amulet:
 ╭═────═────═╮
 \`${loot1[i_loot1].loot1_name}\`
 ${loot1[i_loot1].loot1_description}
@@ -95,7 +95,7 @@ ${loot1[i_loot1].loot1_description}
             } else await r_loot_msg.react(`🚫`)
 
             userData.cooldowns.prestige = Date.now() + (1000 * 60 * 60 * 24 * 7)
-
+            userData.save()
         } else {
             await interaction.reply({
                 content: `У вас отсутствует \`${role.name}\`!`,

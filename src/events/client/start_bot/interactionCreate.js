@@ -1,8 +1,15 @@
 const { InteractionType } = require(`discord.js`)
+const { ClientSettings } = require(`../../../schemas/client`)
 
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction, client) {
+        const clientData = await ClientSettings.findOne({ clientid: client.user.id }) || new ClientSettings({ clientid: client.user.id })
+        clientData.save()
+        if (clientData.testmode == true && interaction.user.id !== `491343958660874242`) return interaction.reply({
+            content: `Бот находится на техническом обслуживании! Попробуйте позже!`,
+            ephemeral: true
+        })
         if (interaction.isChatInputCommand()) {
             const { commands } = client;
             const { commandName } = interaction;

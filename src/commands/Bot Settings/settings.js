@@ -9,12 +9,26 @@ const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const { SettingsPluginsGetID, toggleOnOff, defaultShop, secondPage } = require(`../../functions`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
+const { ClientSettings } = require(`../../schemas/client`)
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`settings`)
         .setDescription(`Настройки бота гильдии`)
         .setDefaultMemberPermissions(0)
+        .addSubcommandGroup(gr => gr
+            .setName(`client`)
+            .setDescription(`Технические настройки для бота`)
+            .addSubcommand(sb => sb
+                .setName(`testmode`)
+                .setDescription(`Установить режим технического обслуживания`)
+                .addBooleanOption(o => o
+                    .setName(`статус`)
+                    .setDescription(`Выбрать статус технического обслуживания`)
+                    .setRequired(true)
+                )
+            )
+        )
         .addSubcommandGroup(gr => gr
             .setName(`plugins`)
             .setDescription(`Настройка плагинов бота`)
@@ -258,9 +272,28 @@ module.exports = {
         const gr = options.getSubcommandGroup()
         const sb = options.getSubcommand()
         let guildData = await Guild.findOne({ id: guild.id })
+        const clientData = await ClientSettings.findOne({ clientid: client.user.id })
         let { plugins } = guildData
 
         switch (gr) {
+            case `client`: {
+                switch (sb) {
+                    case `testmode`: {
+
+                        const toggleTo = options.getBoolean(`статус`)
+                        clientData.testmode = toggleTo
+                        clientData.save()
+                        await interaction.reply({
+                            content: `Режим технических работ был изменён на: ${toggleOnOff(toggleTo)}`,
+                            ephemeral: true
+                        })
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            }
+                break;
             case `plugins`: {
                 let { boxes, cosmetics, achievements, pets, act_exp, rank_exp, shop, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, recording, seasonal } = plugins
 
@@ -332,7 +365,9 @@ module.exports = {
 **${i++}.** \`Опыт гильдии\` - Статус: ${toggleOnOff(gexp)}
 **${i++}.** \`Музыка\` - Статус: ${toggleOnOff(music)}
 **${i++}.** \`Запись звука\` - Статус: ${toggleOnOff(recording)}
-**${i++}.** \`Сезонное\` - Статус: ${toggleOnOff(seasonal)}`)
+**${i++}.** \`Сезонное\` - Статус: ${toggleOnOff(seasonal)}
+
+**РЕЖИМ ТЕХ. РАБОТ**: ${toggleOnOff(clientData.testmode)}`)
 
 
                         await interaction.reply({
@@ -772,6 +807,7 @@ ${roles.join('\n')}`
                         })
                         let i = guildData.seasonal.halloween.channels.findIndex(ch => ch.id == channel)
                         guildData.seasonal.halloween.channels.splice(i, 1)
+                        guildData.save()
                     }
                         break;
                     case `hw_channel_check`: {
@@ -782,11 +818,11 @@ ${roles.join('\n')}`
                         })
                         const list = await Promise.all(listMap)
                         const embed = new EmbedBuilder()
-                        .setTitle(`Список каналов сезона "Хэллоуин"`)
-                        .setDescription(`${list.join(`\n`)}`)
-                        .setColor(process.env.bot_color)
-                        .setThumbnail(interaction.guild.iconURL())
-                        .setTimestamp(Date.now())
+                            .setTitle(`Список каналов сезона "Хэллоуин"`)
+                            .setDescription(`${list.join(`\n`)}`)
+                            .setColor(process.env.bot_color)
+                            .setThumbnail(interaction.guild.iconURL())
+                            .setTimestamp(Date.now())
 
                         await interaction.reply({
                             embeds: [embed]

@@ -105,7 +105,10 @@ client.update_members();
 client.statsChannel();
 client.birthdayChannel();
 
-
+//Seasonal
+client.halloweenRewards();
+client.halloweenStart();
+client.halloweenEnd();
 
 client.login(token);
 (async () => {

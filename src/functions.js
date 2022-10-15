@@ -411,6 +411,13 @@ function achievementStats(boolean) {
     if (boolean === false) return `\`Не выполнено\` ❌`
     else if (boolean === true) return `\`Выполнено\` ✅`
 }
+function found(boolean) {
+    let err = new Error(`\`Выбранная опция должны иметь тип Boolean!\``)
+    if (typeof boolean !== "boolean") return err
+
+    if (boolean === false) return `\`Не найдено\` ❌`
+    else if (boolean === true) return `\`Найдено\` ✅`
+}
 
 function secondPage(number) {
     if (number >= 2) return false
@@ -435,5 +442,6 @@ module.exports = {
     replaceTrueFalse,
     defaultShop,
     secondPage,
-    achievementStats
+    achievementStats,
+    found
 }

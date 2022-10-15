@@ -24,8 +24,8 @@ module.exports = {
     async autoComplete(interaction, client) {
 
         const focusedValue = interaction.options.getFocused();
-        const choices = ['Чёрный', 'Лазурный', 'Пурпурный', 'Сиреневый', 'Ализариновый', 'Фламинговый', 'Изумрудный', 'Яблочный', 'Салатовый', 'Песочный'];
-        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+        const choices = ['Чёрный', 'Лазурный', 'Пурпурный', 'Сиреневый', 'Ализариновый', 'Фламинговый', 'Изумрудный', 'Яблочный', 'Салатовый', 'Песочный', 'Летний', 'Хэллоуинский', 'Новогодний', 'Пасхальный'];
+        const filtered = choices.filter(choice => choice.toLowerCase().startsWith(focusedValue.toLowerCase()));
         await interaction.respond(
             filtered.map(choice => ({ name: choice, value: choice })),
         );
@@ -46,18 +46,23 @@ module.exports = {
         const r8 = `595892930204401665`; //Салатовый
         const r9 = `595889341058777088`; //Песочный
         const r10 = `1024741633947873401`; //Ализариновый
+        const r11 = `1030760792359960607`; //Летний
+        const r12 = `1030760791722434620`; //Хэллоуинский
+        const r13 = `1030760793991565422`; //Новогодний
+        const r14 = `1030760793672785991`; //Пасхальный
 
         switch (interaction.options.getSubcommand()) {
             case `set`: {
                 const { Guild } = require(`../../schemas/guilddata`)
                 const pluginData = await Guild.findOne({ id: interaction.guild.id })
                 if (pluginData.plugins.premium === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
-                if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
-                    content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
-                    ephemeral: true
-                })
+
                 switch (interaction.options.getString(`цвет`)) {
                     case `Чёрный`: {
+                        if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                            content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
                         const role = await interaction.guild.roles
                             .fetch(r1) //ID цвета
                             .catch(console.error);
@@ -69,12 +74,16 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r9, r10]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
                         break;
                     case `Лазурный`: {
+                        if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                            content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
                         const role = await interaction.guild.roles
                             .fetch(r2) //ID цвета
                             .catch(console.error);
@@ -86,12 +95,16 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r1, r3, r4, r5, r6, r7, r8, r9, r10]).catch(console.error)
+                        await roles.remove([r1, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
                         break;
                     case `Пурпурный`: {
+                        if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                            content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
                         const role = await interaction.guild.roles
                             .fetch(r3) //ID цвета
                             .catch(console.error);
@@ -103,12 +116,16 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r1, r4, r5, r6, r7, r8, r9, r10]).catch(console.error)
+                        await roles.remove([r2, r1, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
                         break;
                     case `Сиреневый`: {
+                        if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                            content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
                         const role = await interaction.guild.roles
                             .fetch(r4) //ID цвета
                             .catch(console.error);
@@ -120,12 +137,16 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r1, r5, r6, r7, r8, r9, r10]).catch(console.error)
+                        await roles.remove([r2, r3, r1, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
                         break;
                     case `Фламинговый`: {
+                        if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                            content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
                         const role = await interaction.guild.roles
                             .fetch(r5) //ID цвета
                             .catch(console.error);
@@ -137,12 +158,16 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r1, r6, r7, r8, r9, r10]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r1, r6, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
                         break;
                     case `Изумрудный`: {
+                        if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                            content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
                         const role = await interaction.guild.roles
                             .fetch(r6) //ID цвета
                             .catch(console.error);
@@ -154,12 +179,16 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r1, r7, r8, r9, r10]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r1, r7, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
                         break;
                     case `Яблочный`: {
+                        if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                            content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
                         const role = await interaction.guild.roles
                             .fetch(r7) //ID цвета
                             .catch(console.error);
@@ -171,12 +200,16 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r6, r1, r8, r9, r10]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r6, r1, r8, r9, r10, r11, r12, r13, r14]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
                         break;
                     case `Салатовый`: {
+                        if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                            content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
                         const role = await interaction.guild.roles
                             .fetch(r8) //ID цвета
                             .catch(console.error);
@@ -188,12 +221,16 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r1, r9, r10]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r1, r9, r10, r11, r12, r13, r14]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
                         break;
                     case `Песочный`: {
+                        if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                            content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
                         const role = await interaction.guild.roles
                             .fetch(r9) //ID цвета
                             .catch(console.error);
@@ -205,13 +242,17 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r10]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r10, r11, r12, r13, r14]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
 
                         break;
 
                     case `Ализариновый`: {
+                        if (!member.roles.cache.has(`850336260265476096`)) return interaction.reply({
+                            content: `У вас нет подписки VIP, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
                         const role = await interaction.guild.roles
                             .fetch(r10) //ID цвета
                             .catch(console.error);
@@ -223,7 +264,87 @@ module.exports = {
                             content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
                             ephemeral: true
                         })
-                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9]).catch(console.error)
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r11, r12, r13, r14]).catch(console.error)
+                        await roles.add(role).catch(console.error)
+                    }
+                        break;
+                    case `Летний`: {
+                        if (!member.roles.cache.has(`1030757074839277608`)) return interaction.reply({
+                            content: `У вас нет сезонной роли, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
+                        const role = await interaction.guild.roles
+                            .fetch(r11) //ID цвета
+                            .catch(console.error);
+                        if (roles.cache.has(r11)) return interaction.reply({
+                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
+                            ephemeral: true
+                        });
+                        interaction.reply({
+                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
+                            ephemeral: true
+                        })
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r10, r12, r13, r14]).catch(console.error)
+                        await roles.add(role).catch(console.error)
+                    }
+                        break;
+                    case `Хэллоуинский`: {
+                        if (!member.roles.cache.has(`1030757644320915556`)) return interaction.reply({
+                            content: `У вас нет сезонной роли, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
+                        const role = await interaction.guild.roles
+                            .fetch(r12) //ID цвета
+                            .catch(console.error);
+                        if (roles.cache.has(r12)) return interaction.reply({
+                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
+                            ephemeral: true
+                        });
+                        interaction.reply({
+                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
+                            ephemeral: true
+                        })
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r11, r10, r13, r14]).catch(console.error)
+                        await roles.add(role).catch(console.error)
+                    }
+                        break;
+                    case `Новогодний`: {
+                        if (!member.roles.cache.has(`1030757867373998190`)) return interaction.reply({
+                            content: `У вас нет сезонной роли, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
+                        const role = await interaction.guild.roles
+                            .fetch(r13) //ID цвета
+                            .catch(console.error);
+                        if (roles.cache.has(r13)) return interaction.reply({
+                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
+                            ephemeral: true
+                        });
+                        interaction.reply({
+                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
+                            ephemeral: true
+                        })
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r11, r12, r10, r14]).catch(console.error)
+                        await roles.add(role).catch(console.error)
+                    }
+                        break;
+                    case `Пасхальный`: {
+                        if (!member.roles.cache.has(`1030757633231167538`)) return interaction.reply({
+                            content: `У вас нет сезонной роли, чтобы использовать данную команду!`,
+                            ephemeral: true
+                        })
+                        const role = await interaction.guild.roles
+                            .fetch(r14) //ID цвета
+                            .catch(console.error);
+                        if (roles.cache.has(r14)) return interaction.reply({
+                            content: `У вас уже есть ${interaction.options.getString(`цвет`)} цвет!`,
+                            ephemeral: true
+                        });
+                        interaction.reply({
+                            content: `Вы выбрали ${interaction.options.getString(`цвет`)} цвет!`,
+                            ephemeral: true
+                        })
+                        await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9, r11, r12, r13, r10]).catch(console.error)
                         await roles.add(role).catch(console.error)
                     }
                         break;

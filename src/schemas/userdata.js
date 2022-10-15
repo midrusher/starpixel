@@ -34,6 +34,7 @@ const User = new mongoose.Schema({
         monthly: { type: Date, default: Date.now() },
 
         msgCreateExp: { type: Date, default: Date.now() },
+        hw_msgCreate: { type: Date, default: Date.now() },
 
         prof_update: { type: Date, default: Date.now() }, 
         prof_create: { type: Date, default: Date.now() },
@@ -134,7 +135,10 @@ const User = new mongoose.Schema({
                 num5: { type: Boolean, default: false},
                 
             },
-            opened_scary: { type: Number, default: 0 }
+            opened_scary: { type: Number, default: 0 },
+            hw_msg: { type: Boolean, default: false},
+            hw_cosm: { type: Boolean, default: false },
+            hw_soul: { type: Boolean, default: false },
         },
         new_year: {
             points: { type: Number, default: 0 }

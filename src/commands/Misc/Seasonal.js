@@ -7,7 +7,7 @@ const cron = require(`node-cron`)
 const ch_list = require(`../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 const { execute } = require('../../events/client/start_bot/ready');
-const { achievementStats } = require(`../../functions`)
+const { achievementStats, found } = require(`../../functions`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -25,24 +25,24 @@ module.exports = {
                     .setRequired(true)
                     .setChoices(
                         {
-                            name: `№1. `,
-                            value: `№1. `
+                            name: `№1. Призраки`,
+                            value: `№1. Призраки`
                         },
                         {
-                            name: `№2. `,
-                            value: `№2. `
+                            name: `№2. Полтинник`,
+                            value: `№2. Полтинник`
                         },
                         {
-                            name: `№3. `,
-                            value: `№3. `
+                            name: `№3. Хэллоуин`,
+                            value: `№3. Хэллоуин`
                         },
                         {
-                            name: `№4. `,
-                            value: `№4. `
+                            name: `№4. Жуть`,
+                            value: `№4. Жуть`
                         },
                         {
-                            name: `№5. `,
-                            value: `№5. `
+                            name: `№5. Душа`,
+                            value: `№5. Душа`
                         },
 
                     )
@@ -59,12 +59,46 @@ module.exports = {
                 .setName(`leaderboards`)
                 .setDescription(`Лучшие участники в период Хэллоуина`)
             )
+            .addSubcommand(sb => sb
+                .setName(`buy`)
+                .setDescription(`Приобрести хэллоуинский товар`)
+                .addStringOption(o => o
+                    .setName(`товар`)
+                    .setDescription(`Выберите товар для покупки`)
+                    .setRequired(true)
+                    .setChoices(
+                        {
+                            name: `Косметический значок 🎱`,
+                            value: `🎱`
+                        },
+                        {
+                            name: `Косметический значок 👹`,
+                            value: `👹`
+                        },
+                        {
+                            name: `Косметический значок 🩸`,
+                            value: `🩸`
+                        },
+                        {
+                            name: `Косметический значок 🧥`,
+                            value: `🧥`
+                        },
+                        {
+                            name: `Косметический значок 💀`,
+                            value: `💀`
+                        },
+                        {
+                            name: `Косметический значок 🧛‍♀️`,
+                            value: `🧛‍♀️`
+                        },
+                    ))
+            )
         ),
     async execute(interaction, client) {
         const guildData = await Guild.findOne({ id: interaction.guild.id })
         if (guildData.plugins.seasonal === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         const member = interaction.guild.member
-        
+
         switch (interaction.options.getSubcommandGroup()) {
             case `halloween`: {
                 if (guildData.seasonal.halloween.enabled === false) return interaction.reply({
@@ -77,7 +111,7 @@ module.exports = {
                         const userData = await User.findOne({ userid: interaction.user.id, guildid: interaction.guild.id })
                         const achievement = interaction.options.getString(`достижение`)
                         switch (achievement) {
-                            case ``: {
+                            case `№1. Призраки`: {
                                 const already_done = new EmbedBuilder()
                                     .setColor(`DarkRed`)
                                     .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
@@ -89,7 +123,7 @@ module.exports = {
 Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
 
 
-                                if (userData.seasonal.halloween.achievements === true) return interaction.reply({
+                                if (userData.seasonal.halloween.achievements.num1 === true) return interaction.reply({
                                     embeds: [already_done],
                                     ephemeral: true
                                 })
@@ -105,7 +139,7 @@ module.exports = {
 Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
                                     .setTimestamp(Date.now())
 
-                                if (!member.roles.cache.has(`521248091853291540`)) return interaction.reply({
+                                if (!member.roles.cache.has(`893927886766096384`)) return interaction.reply({
                                     embeds: [no_condition],
                                     ephemeral: true
                                 })
@@ -160,20 +194,332 @@ ${member} +50 💠
 
                             }
                                 break;
-                            case ``: {
+                            case `№2. Полтинник`: {
+                                const already_done = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Достижение уже выполнено!`
+                                    })
+                                    .setDescription(`Вы не можете выполнить данное достижение, так как вы уже выполнили его! Найти его вы можете в своем профиле.
 
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+
+
+                                if (userData.seasonal.halloween.achievements.num2 === true) return interaction.reply({
+                                    embeds: [already_done],
+                                    ephemeral: true
+                                })
+
+                                const no_condition = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Вы не соответствуете требованиям!`
+                                    })
+                                    .setDescription(`Вы не соответствуете требованиям для получения данного достижения! Проверить требования вы можете в канале <#${ch_list.achs}>.
+
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+                                    .setTimestamp(Date.now())
+
+                                if (userData.seasonal.halloween.points < 50) return interaction.reply({
+                                    embeds: [no_condition],
+                                    ephemeral: true
+                                })
+                                let reward = `893932177799135253`
+                                const has_reward = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Вы имеете награду!`
+                                    })
+                                    .setDescription(`У вас уже есть награда за данное достижение! Пожалуйста, откройте <@&${reward}>, чтобы выполнить достижение.
+
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+                                    .setTimestamp(Date.now())
+                                if (member.roles.cache.has(reward)) return interaction.reply({
+                                    embeds: [has_reward],
+                                    ephemeral: true
+                                })
+                                userData.seasonal.halloween.achievements.num2 = true
+                                await member.roles.add(reward)
+                                userData.rank += 50
+                                userData.exp += 300;
+                                userData.seasonal.halloween.points += 5
+                                userData.save()
+                                const condition_meet = new EmbedBuilder()
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
+                                    .setTitle(`✅ Достижение выполнено!`)
+                                    .setTimestamp(Date.now())
+                                    .setDescription(`${member} выполнил достижение \`${interaction.options.getString(`достижение`)}\`!
+Он уже получил достижение! Хочешь и ты? Тогда тебе в <#1029662737497866300>
+
+Чтобы проверить статистику ваших достижения, используйте команду \`/seasonal halloween stats\`!`)
+
+
+                                await interaction.guild.channels.cache.get(ch_list.act).send(
+                                    `╒══════════════════╕
+${member} +300 🌀
+\`Выполнение достижения.\`
+╘══════════════════╛`)
+
+                                await interaction.guild.channels.cache.get(ch_list.rank).send(
+                                    `╒══════════════════╕
+${member} +50 💠
+\`Выполнение достижения.\`
+╘══════════════════╛`)
+                                await interaction.reply({
+                                    embeds: [condition_meet]
+                                })
+                                console.log(chalk.magenta(`[Выполнено достижение]` + chalk.gray(`: ${member.user.username} выполнил достижение ${interaction.options.getString(`достижение`)}!`)))
                             }
                                 break;
-                            case ``: {
+                            case `№3. Хэллоуин`: {
+                                const already_done = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Достижение уже выполнено!`
+                                    })
+                                    .setDescription(`Вы не можете выполнить данное достижение, так как вы уже выполнили его! Найти его вы можете в своем профиле.
 
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+
+
+                                if (userData.seasonal.halloween.achievements.num3 === true) return interaction.reply({
+                                    embeds: [already_done],
+                                    ephemeral: true
+                                })
+                                const date = new Date()
+                                const day = date.getDate()
+                                const month = date.getMonth() + 1
+
+
+                                const no_condition = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Вы не соответствуете требованиям!`
+                                    })
+                                    .setDescription(`Вы не соответствуете требованиям для получения данного достижения! Проверить требования вы можете в канале <#${ch_list.achs}>.
+
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+                                    .setTimestamp(Date.now())
+
+                                if (day !== 31 || month !== 10 || userData.seasonal.halloween.hw_msg !== true) return interaction.reply({
+                                    embeds: [no_condition],
+                                    ephemeral: true
+                                })
+                                let reward = `893932177799135253`
+                                const has_reward = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Вы имеете награду!`
+                                    })
+                                    .setDescription(`У вас уже есть награда за данное достижение! Пожалуйста, откройте <@&${reward}>, чтобы выполнить достижение.
+
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+                                    .setTimestamp(Date.now())
+                                if (member.roles.cache.has(reward)) return interaction.reply({
+                                    embeds: [has_reward],
+                                    ephemeral: true
+                                })
+                                userData.seasonal.halloween.achievements.num3 = true
+                                await member.roles.add(reward)
+                                userData.rank += 50
+                                userData.exp += 300;
+                                userData.seasonal.halloween.points += 5
+                                userData.save()
+                                const condition_meet = new EmbedBuilder()
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
+                                    .setTitle(`✅ Достижение выполнено!`)
+                                    .setTimestamp(Date.now())
+                                    .setDescription(`${member} выполнил достижение \`${interaction.options.getString(`достижение`)}\`!
+Он уже получил достижение! Хочешь и ты? Тогда тебе в <#1029662737497866300>
+
+Чтобы проверить статистику ваших достижения, используйте команду \`/seasonal halloween stats\`!`)
+
+
+                                await interaction.guild.channels.cache.get(ch_list.act).send(
+                                    `╒══════════════════╕
+${member} +300 🌀
+\`Выполнение достижения.\`
+╘══════════════════╛`)
+
+                                await interaction.guild.channels.cache.get(ch_list.rank).send(
+                                    `╒══════════════════╕
+${member} +50 💠
+\`Выполнение достижения.\`
+╘══════════════════╛`)
+                                await interaction.reply({
+                                    embeds: [condition_meet]
+                                })
+                                console.log(chalk.magenta(`[Выполнено достижение]` + chalk.gray(`: ${member.user.username} выполнил достижение ${interaction.options.getString(`достижение`)}!`)))
                             }
                                 break;
-                            case ``: {
+                            case `№4. Жуть`: {
+                                const already_done = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Достижение уже выполнено!`
+                                    })
+                                    .setDescription(`Вы не можете выполнить данное достижение, так как вы уже выполнили его! Найти его вы можете в своем профиле.
 
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+
+
+                                if (userData.seasonal.halloween.achievements.num4 === true) return interaction.reply({
+                                    embeds: [already_done],
+                                    ephemeral: true
+                                })
+
+                                const no_condition = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Вы не соответствуете требованиям!`
+                                    })
+                                    .setDescription(`Вы не соответствуете требованиям для получения данного достижения! Проверить требования вы можете в канале <#${ch_list.achs}>.
+
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+                                    .setTimestamp(Date.now())
+
+                                if (userData.seasonal.halloween.hw_cosm == false) return interaction.reply({
+                                    embeds: [no_condition],
+                                    ephemeral: true
+                                })
+                                let reward = `893932177799135253`
+                                const has_reward = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Вы имеете награду!`
+                                    })
+                                    .setDescription(`У вас уже есть награда за данное достижение! Пожалуйста, откройте <@&${reward}>, чтобы выполнить достижение.
+
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+                                    .setTimestamp(Date.now())
+                                if (member.roles.cache.has(reward)) return interaction.reply({
+                                    embeds: [has_reward],
+                                    ephemeral: true
+                                })
+                                userData.seasonal.halloween.achievements.num4 = true
+                                await member.roles.add(reward)
+                                userData.rank += 50
+                                userData.exp += 300;
+                                userData.seasonal.halloween.points += 5
+                                userData.save()
+                                const condition_meet = new EmbedBuilder()
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
+                                    .setTitle(`✅ Достижение выполнено!`)
+                                    .setTimestamp(Date.now())
+                                    .setDescription(`${member} выполнил достижение \`${interaction.options.getString(`достижение`)}\`!
+Он уже получил достижение! Хочешь и ты? Тогда тебе в <#1029662737497866300>
+
+Чтобы проверить статистику ваших достижения, используйте команду \`/seasonal halloween stats\`!`)
+
+
+                                await interaction.guild.channels.cache.get(ch_list.act).send(
+                                    `╒══════════════════╕
+${member} +300 🌀
+\`Выполнение достижения.\`
+╘══════════════════╛`)
+
+                                await interaction.guild.channels.cache.get(ch_list.rank).send(
+                                    `╒══════════════════╕
+${member} +50 💠
+\`Выполнение достижения.\`
+╘══════════════════╛`)
+                                await interaction.reply({
+                                    embeds: [condition_meet]
+                                })
+                                console.log(chalk.magenta(`[Выполнено достижение]` + chalk.gray(`: ${member.user.username} выполнил достижение ${interaction.options.getString(`достижение`)}!`)))
                             }
                                 break;
-                            case ``: {
+                            case `№5. Душа`: {
+                                const already_done = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Достижение уже выполнено!`
+                                    })
+                                    .setDescription(`Вы не можете выполнить данное достижение, так как вы уже выполнили его! Найти его вы можете в своем профиле.
 
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+
+
+                                if (userData.seasonal.halloween.achievements.num5 === true) return interaction.reply({
+                                    embeds: [already_done],
+                                    ephemeral: true
+                                })
+
+                                const no_condition = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Вы не соответствуете требованиям!`
+                                    })
+                                    .setDescription(`Вы не соответствуете требованиям для получения данного достижения! Проверить требования вы можете в канале <#${ch_list.achs}>.
+
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+                                    .setTimestamp(Date.now())
+
+                                if (userData.seasonal.halloween.hw_soul == false) return interaction.reply({
+                                    embeds: [no_condition],
+                                    ephemeral: true
+                                })
+                                let reward = `893932177799135253`
+                                const has_reward = new EmbedBuilder()
+                                    .setColor(`DarkRed`)
+                                    .setThumbnail(`https://i.imgur.com/6IE3lz7.png`)
+                                    .setAuthor({
+                                        name: `❗ Вы имеете награду!`
+                                    })
+                                    .setDescription(`У вас уже есть награда за данное достижение! Пожалуйста, откройте <@&${reward}>, чтобы выполнить достижение.
+
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+                                    .setTimestamp(Date.now())
+                                if (member.roles.cache.has(reward)) return interaction.reply({
+                                    embeds: [has_reward],
+                                    ephemeral: true
+                                })
+                                userData.seasonal.halloween.achievements.num5 = true
+                                await member.roles.add(reward)
+                                userData.rank += 50
+                                userData.exp += 300;
+                                userData.seasonal.halloween.points += 5
+                                userData.save()
+                                const condition_meet = new EmbedBuilder()
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
+                                    .setTitle(`✅ Достижение выполнено!`)
+                                    .setTimestamp(Date.now())
+                                    .setDescription(`${member} выполнил достижение \`${interaction.options.getString(`достижение`)}\`!
+Он уже получил достижение! Хочешь и ты? Тогда тебе в <#1029662737497866300>
+
+Чтобы проверить статистику ваших достижения, используйте команду \`/seasonal halloween stats\`!`)
+
+
+                                await interaction.guild.channels.cache.get(ch_list.act).send(
+                                    `╒══════════════════╕
+${member} +300 🌀
+\`Выполнение достижения.\`
+╘══════════════════╛`)
+
+                                await interaction.guild.channels.cache.get(ch_list.rank).send(
+                                    `╒══════════════════╕
+${member} +50 💠
+\`Выполнение достижения.\`
+╘══════════════════╛`)
+                                await interaction.reply({
+                                    embeds: [condition_meet]
+                                })
+                                console.log(chalk.magenta(`[Выполнено достижение]` + chalk.gray(`: ${member.user.username} выполнил достижение ${interaction.options.getString(`достижение`)}!`)))
                             }
                                 break;
 
@@ -200,10 +546,11 @@ ${member} +50 💠
                         const userData = await User.findOne({ userid: user.id, guildid: guild.id })
                         let rank = i + 1
                         const embed = new EmbedBuilder()
-                        .setTitle(`Хэллоуинская статистика пользователя ${user.username}`)
-                        .setDescription(`**Позиция в топе**: ${rank}
+                            .setTitle(`Хэллоуинская статистика пользователя ${user.username}`)
+                            .setDescription(`**Позиция в топе**: ${rank}
 **Очков**: ${userData.seasonal.halloween.points}
 **Открыто жутких коробок**: ${userData.seasonal.halloween.opened_scary}
+**Хэллоуинская душа**: ${found(userData.seasonal.halloween.hw_soul)}
 
 **ДОСТИЖЕНИЯ**
 **Достижение №1**: ${achievementStats(userData.seasonal.halloween.achievements.num1)}
@@ -211,9 +558,9 @@ ${member} +50 💠
 **Достижение №3**: ${achievementStats(userData.seasonal.halloween.achievements.num3)}
 **Достижение №4**: ${achievementStats(userData.seasonal.halloween.achievements.num4)}
 **Достижение №5**: ${achievementStats(userData.seasonal.halloween.achievements.num5)}`)
-                        .setThumbnail(user.displayAvatarURL())
-                        .setColor(process.env.bot_color)
-                        .setTimestamp(Date.now())
+                            .setThumbnail(user.displayAvatarURL())
+                            .setColor(process.env.bot_color)
+                            .setTimestamp(Date.now())
 
                         await interaction.reply({
                             embeds: [embed]
@@ -259,6 +606,29 @@ ${member} +50 💠
                         })
                     }
                         break;
+                    case `buy`: {
+                        const userData = await User.findOne({ userid: interaction.user.id, guildid: interaction.guild.id })
+                        const symb = interaction.options.getString(`товар`)
+                        let price
+                        if (symb == `🎱` || symb == `👹` || symb == `🩸`) {
+                            price = 30
+                        } else if (symb == `🧥`) {
+                            price = 40
+                        } else if (symb == `💀` || symb == `🧛‍♀️`) {
+                            price = 50
+                        }
+
+                        if (userData.seasonal.halloween.points < price) return interaction.reply({
+                            content: `Для покупки \`${symb}\` вам необходимо минимум ${price} очков! У вас на данный момент ${userData.seasonal.halloween.points} очков`
+                        })
+                        userData.seasonal.halloween.points -= price
+                        userData.seasonal.halloween.hw_cosm = true
+                        userData.displayname.symbol = symb
+                        userData.save()
+                        await interaction.reply({
+                            content: `Вы приобрели \`${symb}\` за ${price} хэллоуинских очков! В скором времени данный значок появится в вашем никнейме! Если этого не произойдёт в течение 15 минут, обратитесь в вопрос-модерам!`
+                        })
+                    }
 
                     default:
                         break;

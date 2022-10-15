@@ -11,10 +11,10 @@ module.exports = {
     async execute(interaction, client) {
         const { Guild } = require(`../../schemas/guilddata`)
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
-        if (pluginData.plugins.items === false) return interaction.reply({content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true})
+        if (pluginData.plugins.items === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
-        const userData = await User.findOne({ userid: user.id }) 
-        
+        const userData = await User.findOne({ userid: user.id })
+
 
 
         const { roles } = interaction.member //Участник команды
@@ -25,8 +25,8 @@ module.exports = {
             await roles.remove(role).catch(console.error); //Удалить роль коробки
             const opener = interaction.member.id;
             const message = await interaction.deferReply({
-            fetchReply: true,
-        });
+                fetchReply: true,
+            });
             await interaction.deleteReply()
 
             //Лут из коробок
@@ -39,25 +39,25 @@ module.exports = {
             let loot1 = [
                 {
                     loot1_name: `🐛ПИТОМЕЦ  spet`,
-                    dropChanceLOOT1: 10,
+                    dropChanceLOOT1: 9,
                     loot1_roleID: "553637207911563264",
                     loot1_description: "Обучайся различным навыкам у питомцев."
                 },
                 {
                     loot1_name: `👻 КАРТИНКА  ghost`,
-                    dropChanceLOOT1: 1,
+                    dropChanceLOOT1: 5,
                     loot1_roleID: "893927886766096384",
                     loot1_description: "Обучайся различным навыкам у питомцев."
                 },
                 {
                     loot1_name: `СТАНДАРТНАЯ ЭМОЦИЯ 😮 getup`,
-                    dropChanceLOOT1: 20,
+                    dropChanceLOOT1: 18,
                     loot1_roleID: "571745411929341962",
                     loot1_description: "Используй её, чтобы лучше показать свои эмоции в чате."
                 },
                 {
                     loot1_name: `СТАНДАРТНАЯ ЭМОЦИЯ 😴 sleep`,
-                    dropChanceLOOT1: 20,
+                    dropChanceLOOT1: 18,
                     loot1_roleID: "571744516894228481",
                     loot1_description: "Используй её, чтобы лучше показать свои эмоции в чате."
                 },
@@ -84,7 +84,12 @@ module.exports = {
                     dropChanceLOOT1: 10,
                     loot1_roleID: "609082751349686282",
                     loot1_description: "Собери 9 звёзд, чтобы создать созвездие."
-                }
+                },
+                {
+                    loot1_name: `ХЭЛЛОУИНСКАЯ ДУША`,
+                    dropChanceLOOT1: 1,
+                    loot1_description: "Вы теперь можете выполнить хэллоуинское достижение."
+                },
             ];
 
             //рандом предметов
@@ -102,14 +107,17 @@ module.exports = {
             //Отправка сообщения о луте              
             const r_loot_msg = await interaction.guild.channels.cache.get(ch_list.box)
                 .send(
-`◾
+                    `◾
 <@${opener}> открывает жуткую коробку:
 ╔━═━︽︾︽︾🎃︾︽︾︽━═━╗
 \`${loot1[i_loot1].loot1_name}\`
 ${loot1[i_loot1].loot1_description}
 ╚━═━︽︾︽︾🎃︾︽︾︽━═━╝
 ◾`)
-            if (!roles.cache.has(loot1[i_loot1].loot1_roleID)) {
+            if (loot1[i_loot1].loot1_name == `ХЭЛЛОУИНСКАЯ ДУША`) {
+                userData.seasonal.halloween.hw_soul = true
+                await r_loot_msg.react("✅")
+            } else if (!roles.cache.has(loot1[i_loot1].loot1_roleID)) {
                 await roles.add(loot1[i_loot1].loot1_roleID).catch(console.error);
                 await r_loot_msg.react("✅")
             } else await r_loot_msg.react("🚫")
@@ -141,7 +149,7 @@ ${loot1[i_loot1].loot1_description}
 
             //Сообщение - опыт рангов                       
             interaction.guild.channels.cache.get(ch_list.rank).send(
-`╔═════════♡════════╗
+                `╔═════════♡════════╗
 <@${opener}> +${rank_exp[i_rank].rank_amount}💠
 \`Получено из жуткой коробки.\`
 ╚═════════♡════════╝`
@@ -187,16 +195,16 @@ ${loot1[i_loot1].loot1_description}
 
             //Сообщение - опыт активности                       
             interaction.guild.channels.cache.get(ch_list.act).send(
-`╔═════════♡════════╗
+                `╔═════════♡════════╗
 <@${opener}> +${act_exp[i_act].act_amount}🌀
 \`Получено из жуткой коробки.\`
 ╚═════════♡════════╝`
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
-            
-                userData.save();
-                console.log(chalk.magentaBright(`[${interaction.user.tag} открыл маленькую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot1[i_loot1].loot1_name}`))
-            
+
+            userData.save();
+            console.log(chalk.magentaBright(`[${interaction.user.tag} открыл жуткую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot1[i_loot1].loot1_name}`))
+
         } else {
             await interaction.reply({
                 content: `У вас отсутствует \`${role.name}\` коробка!`,

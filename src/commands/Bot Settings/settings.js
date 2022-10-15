@@ -797,6 +797,10 @@ ${roles.join('\n')}`
                         })
                         guildData.seasonal.halloween.channels.push({ id: channel.id })
                         guildData.save()
+                        await interaction.reply({
+                            content: `Канал ${channel} был добавлен в список Хэллоуинских!`,
+                            ephemeral: true
+                        })
                     }
                         break;
                     case `hw_channel_remove`: {
@@ -808,13 +812,18 @@ ${roles.join('\n')}`
                         let i = guildData.seasonal.halloween.channels.findIndex(ch => ch.id == channel)
                         guildData.seasonal.halloween.channels.splice(i, 1)
                         guildData.save()
+                        await interaction.reply({
+                            content: `Канал ${channel} был удален из списока хэллоуинских!`,
+                            ephemeral: true
+                        })
+                        
                     }
                         break;
                     case `hw_channel_check`: {
-                        const listMap = guildData.seasonal.halloween.channels.map(async (channelID) => {
-                            const ch = await interaction.guild.channels.fetch(channelID)
-                            let i = 1
-                            return `**${i++}.** Канал ${ch}, ID \`${channelID}\``
+                        let i = 1
+                        const listMap = guildData.seasonal.halloween.channels.map(async (channel) => {
+                            const ch = await interaction.guild.channels.fetch(channel.id)
+                            return `**${i++}.** Канал ${ch}, ID \`${channel.id}\``
                         })
                         const list = await Promise.all(listMap)
                         const embed = new EmbedBuilder()

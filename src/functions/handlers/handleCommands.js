@@ -17,7 +17,7 @@ module.exports = (client) => {
         const command = require(`../../commands/${folder}/${file}`);
         client.commands.set(command.data.name, command);
         commandArray.push(command.data.toJSON());
-        console.log(chalk.hex(`#646464`)(`[ЗАГРУЗКА КОМАНД] ${i++}. ${file} был успешно загружен!`))
+        console.log(chalk.hex(`#535b83`)(`[ЗАГРУЗКА КОМАНД] ${i++}. ${file} был успешно загружен!`))
 
       }
     }

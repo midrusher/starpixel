@@ -16,19 +16,19 @@ module.exports = {
             const vars = [
                 {
                     name: `none`,
-                    dropChance: 9993
+                    dropChance: 9983
                 },
                 {
                     name: `quiz`,
-                    dropChance: 1
+                    dropChance: 4
                 },
                 {
                     name: `math`,
-                    dropChance: 1
+                    dropChance: 4
                 },
                 {
                     name: `question`,
-                    dropChance: 5
+                    dropChance: 9
                 },
 
             ];
@@ -55,7 +55,7 @@ module.exports = {
 ❔ Вопрос: **${item.question}**`, fetchReply: true
                 })
                     .then(() => {
-                        message.channel.awaitMessages({ filter, max: 1, time: 10000, errors: ['time'] })
+                        message.channel.awaitMessages({ filter, max: 1, time: 60000, errors: ['time'] })
                             .then(async (collected) => {
                                 const userData = await User.findOne({ userid: collected.first().author.id }) || new User({ userid: collected.first().author.id, name: collected.first().author.username })
                                 userData.rumbik += 10

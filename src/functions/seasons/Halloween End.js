@@ -5,25 +5,26 @@ const { Guild } = require(`../../schemas/guilddata`)
 const ch_list = require(`../../discord structure/channels.json`)
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
+const wait = require(`node:timers/promises`).setTimeout
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 module.exports = (client) => {
     client.halloweenEnd = async () => {
-        const Guilds = client.guilds.cache
 
-        cron.schedule(`0 5 7 11 *`, async () => {
+        cron.schedule(`0 18 7 11 *`, async () => {
+            const Guilds = client.guilds.cache
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
             if (pluginData.plugins.seasonal === false) return
             Guilds.forEach(async g => {
                 const guildData = await Guild.findOne({ id: g.id })
                 guildData.seasonal.halloween.channels.forEach(async ch => {
-                    try {
-                        const channel = await g.channels.fetch(ch.id)
-                        await channel.edit({
+
+                    const channel = await g.channels.fetch(ch.id).then(async chan => {
+                        await chan.edit({
                             permissionOverwrites: [
                                 {
-                                    id: `504887113649750016`,
+                                    id: `567689925143822346`,
                                     deny: [
                                         PermissionsBitField.Flags.ViewChannel,
                                         PermissionsBitField.Flags.SendMessages
@@ -38,26 +39,23 @@ module.exports = (client) => {
                                 },
                             ]
                         })
-                    } catch (e) {
+                    }).catch(async (err) => {
                         let i = guildData.seasonal.halloween.channels.findIndex(chan => chan.id == ch.id)
                         guildData.seasonal.halloween.channels.splice(i, 1)
                         guildData.save()
-                    }
+                    })
+
+
+
 
                 })
                 guildData.seasonal.halloween.enabled = false
                 guildData.save()
 
                 const userDatas = await User.find({
-                    seasonal: {
-                        halloween: {
-                            points: {
-                                $gt: 0
-                            }
-                        }
-                    }
+                    "seasonal.halloween.points": { $gt: 0 }
                 }).then(users => {
-                    return users.filter(async user => await g.members.fetch(user.userid))
+                    return users.filter(async user => await interaction.guild.members.fetch(user.userid))
                 })
                 const sort = userDatas.sort((a, b) => {
                     return b.seasonal.halloween.points - a.seasonal.halloween.points
@@ -69,7 +67,6 @@ module.exports = (client) => {
                 })
                 const bestData = sort[0]
                 const member = await g.members.fetch(bestData.userid)
-                await member.roles.add(`660236704971489310`)
 
                 const mapProm = await Promise.all(map)
                 const embed = new EmbedBuilder()
@@ -82,10 +79,25 @@ module.exports = (client) => {
 
                 await g.channels.cache.get(ch_list.main).send({
                     embeds: [embed]
+                }).then(async msg => {
+                    await msg.react(`🎃`)
+                    await wait(1000)
                 })
+                await g.channels.cache.get(ch_list.main).send(`Идет финальный подсчёт количества очков... Кто же победит?`)
+                await wait(3000)
+                await g.channels.cache.get(ch_list.main).send(`Ответ вы узнаете через 3...`)
+                await wait(3000)
+                await g.channels.cache.get(ch_list.main).send(`Ответ вы узнаете через 2...`)
+                await wait(3000)
+                await g.channels.cache.get(ch_list.main).send(`Ответ вы узнаете через 1...`)
+                await wait(3000)
                 await g.channels.cache.get(ch_list.main).send({
-                    content: `Поздравляем ${member} с победой в Хэллоуинском мероприятии! Он получает эксклюзивную роль <@&660236704971489310>!    @eeveryone`
+                    content: `Поздравляем ${member} с победой в Хэллоуинском мероприятии! Он получает эксклюзивную роль <@&660236704971489310>!  @everyone`,
+                    allowedMentions: {
+                        parse: ["everyone"]
+                    }
                 })
+                await member.roles.add(`660236704971489310`)
             })
         }, {
             scheduled: true,

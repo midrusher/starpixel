@@ -28,6 +28,15 @@ module.exports = {
                     .setRequired(true)
                 )
             )
+            .addSubcommand(sb => sb
+                .setName(`setversion`)
+                .setDescription(`Установить версию бота`)
+                .addStringOption(o => o
+                    .setName(`версия`)
+                    .setDescription(`Версия бота`)
+                    .setRequired(true)
+                )
+            )
         )
         .addSubcommandGroup(gr => gr
             .setName(`plugins`)
@@ -242,7 +251,6 @@ module.exports = {
                             'Обновление каналов',
                             'Опыт гильдии',
                             'Музыка',
-                            'Запись звука',
                             'Сезонное'
                         ];
                         const filtered = choices.filter(choice => choice.startsWith(focusedValue)).slice(0, 25);
@@ -289,6 +297,25 @@ module.exports = {
                         })
                     }
                         break;
+                    case `setversion`: {
+                        const newV = options.getString(`версия`)
+                        const oldV = clientData.version
+
+                        clientData.version = newV
+                        clientData.save()
+                        const embed = new EmbedBuilder()
+                        .setTitle(`Изменена версия бота`)
+                        .setColor(process.env.bot_color)
+                        .setDescription(`Версия бота была изменена с \`${oldV}\` на \`${newV}\``)
+                        .setThumbnail(client.user.displayAvatarURL())
+                        .setTimestamp(Date.now())
+
+                        await interaction.reply({
+                            embeds: [embed],
+                            ephemeral: true
+                        })
+                    }
+                    break;
                     default:
                         break;
                 }
@@ -322,10 +349,9 @@ module.exports = {
                         else if (id == 20) guildData.plugins.channels = boolean
                         else if (id == 21) guildData.plugins.gexp = boolean
                         else if (id == 22) guildData.plugins.music = boolean
-                        else if (id == 23) guildData.plugins.recording = boolean
                         else if (id == 24) guildData.plugins.items = boolean
                         else if (id == 25) guildData.plugins.seasonal = boolean
-                        else if (id == 9999 || id == 0 || id == 4 || id == 5 || id == 6) return interaction.reply({ content: `Данной опции не существует!`, ephemeral: true })
+                        else if (id == 9999 || id == 0 || id == 4 || id == 5 || id == 6 || id == 23) return interaction.reply({ content: `Данной опции не существует!`, ephemeral: true })
 
                         guildData.save()
                         const result = toggleOnOff(boolean)
@@ -339,7 +365,7 @@ module.exports = {
 
                     case `check`: {
                         let i = 1
-                        let { items, cosmetics, achievements, pets, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, recording, seasonal } = plugins
+                        let { items, cosmetics, achievements, pets, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, seasonal } = plugins
                         let result = new EmbedBuilder()
                             .setColor(process.env.bot_color)
                             .setTitle(`Статус плагинов гильдии`)
@@ -364,7 +390,6 @@ module.exports = {
 **${i++}.** \`Обновление каналов\` - Статус: ${toggleOnOff(channels)}
 **${i++}.** \`Опыт гильдии\` - Статус: ${toggleOnOff(gexp)}
 **${i++}.** \`Музыка\` - Статус: ${toggleOnOff(music)}
-**${i++}.** \`Запись звука\` - Статус: ${toggleOnOff(recording)}
 **${i++}.** \`Сезонное\` - Статус: ${toggleOnOff(seasonal)}
 
 **РЕЖИМ ТЕХ. РАБОТ**: ${toggleOnOff(clientData.testmode)}`)

@@ -543,7 +543,7 @@ ${member} +50 💠
                         while (sorts[i].userid !== user.id) {
                             i++
                         }
-                        const userData = await User.findOne({ userid: user.id, guildid: guild.id })
+                        const userData = await User.findOne({ userid: user.id, guildid: interaction.guild.id })
                         let rank = i + 1
                         const embed = new EmbedBuilder()
                             .setTitle(`Хэллоуинская статистика пользователя ${user.username}`)
@@ -571,14 +571,7 @@ ${member} +50 💠
                         await interaction.deferReply({
                             fetchReply: true
                         })
-                        const users = await User.find({
-                            seasonal: {
-                                halloween: {
-                                    points: {
-                                        $gt: 0
-                                    }
-                                }
-                            }
+                        const users = await User.find({ "seasonal.halloween.points": { $gt: 0 }
                         }).then(users => {
                             return users.filter(async user => await interaction.guild.members.fetch(user.userid))
                         })
@@ -588,7 +581,7 @@ ${member} +50 💠
                         let index = 1
                         const map = sort.map(async (user) => {
                             const tag = await interaction.guild.members.fetch(user.userid)
-                            return `**${index++}.** ${tag} > ${user.seasonal.halloween.points} очков`
+                            return `**${index++}.** ${tag}: ${user.seasonal.halloween.points} очков`
                         })
                         const mapProm = await Promise.all(map)
 

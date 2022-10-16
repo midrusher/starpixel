@@ -1,12 +1,13 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
+const { ClientSettings } = require(`../../schemas/client`)
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`info`)
         .setDescription(`Основные ссылки и информация о гильдии`),
     async execute(interaction, client) {
-        
+        const clientData = await ClientSettings.findOne({ clientid: client.user.id })
         const msg = new EmbedBuilder()
         .setColor(process.env.bot_color)
         .setTitle(`Основная информация о боте Starpixel`)
@@ -14,7 +15,7 @@ module.exports = {
 Профиль бота - <@${process.env.bot_id}>
 Разработчик бота - <@${process.env.bot_dev}>
 Описание бота - \`${process.env.bot_descr}\`
-Текущая версия бота - \`v${process.env.bot_v}\`
+Текущая версия бота - \`${clientData.version}\`
 Если вы нашли какой-либо баг, опишите его и упомяните разработчика в канале <#849516805529927700>
 
 Социальные сети гильдии:

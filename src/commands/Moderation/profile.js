@@ -5,6 +5,7 @@ const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { Apply } = require(`../../schemas/applications`)
+const { Birthday } = require(`../../schemas/birthday`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../discord structure/channels.json`);
@@ -464,6 +465,7 @@ module.exports = {
                 const id = interaction.options.getString(`id`)
                 const user = interaction.guild.members.cache.get(id)
                 const userData = await User.findOne({ userid: id })
+                const birthdayData = await Birthday.findOne({ userid: id })
                 if (!interaction.member.roles.cache.has(`320880176416161802`)) {
                     const embed = new EmbedBuilder()
                         .setAuthor({
@@ -530,6 +532,7 @@ module.exports = {
                                     
                                 }
                                 userData.delete()
+                                birthdayData.delete()
 
                             } else {
                                 i.reply({ content: `Вы не можете использовать данную кнопочку!`, ephemeral: true });
@@ -832,7 +835,7 @@ module.exports = {
                     .setColor(process.env.bot_color)
                     .setDescription(`Обработка и обновление профилей участников завершена!
 
-Теперь никнеймы, идентификаторы и прочее совпадает актуальны! В скором времени канал <#932203255335899177> будет содержать данную информацию
+Теперь никнеймы, идентификаторы и прочее актуальны! В скором времени канал <#932203255335899177> будет содержать данную информацию
 **Прогресс**: ${b}/${userDatas.length} - ${(Math.round(((b) / (userDatas.length)) * 100))}% завершено . . .`)
                     .setTimestamp(Date.now())
                     .setThumbnail(`https://i.imgur.com/BahQWAW.png`)

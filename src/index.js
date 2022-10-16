@@ -1,5 +1,6 @@
 require('dotenv').config();
 const winston = require('winston');
+const chalk = require(`chalk`)
 const { tokenTEST, token, databaseToken } = process.env;
 const { connect } = require(`mongoose`)
 const { Client, Collection, GatewayIntentBits, Partials, ActivityType, } = require('discord.js');
@@ -25,8 +26,8 @@ const client = new Client({
         GatewayIntentBits.GuildWebhooks,
         GatewayIntentBits.Guilds,
         GatewayIntentBits.MessageContent,
-        
-        
+
+
     ],
     partials: [
         Partials.Channel,
@@ -70,13 +71,17 @@ client.invites = new Collection()
 
 client.commandArray = [];
 
+let i = 1
 const functionFolders = fs.readdirSync('./src/functions');
 for (const folder of functionFolders) {
     const functionFiles = fs
         .readdirSync(`./src/functions/${folder}`)
         .filter((file) => file.endsWith(`.js`));
-    for (const file of functionFiles)
+    for (const file of functionFiles) {
         require(`./functions/${folder}/${file}`)(client);
+        console.log(chalk.hex(`#3d1b33`)(`[ЗАГРУЗКА ФУНКЦИЙ] ${i++}. ${file} был успешно загружен!`))
+    }
+
 }
 
 //Handlers
@@ -98,6 +103,7 @@ client.emojiUpdate();
 client.UpdateNicknames();
 client.AutoElements();
 client.AutoStars();
+client.removeNonPremiumColors();
 
 //Storages
 client.wish_birthday();

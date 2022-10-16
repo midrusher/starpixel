@@ -29,7 +29,7 @@ module.exports = (client) => {
                     let imp = await guild.roles.fetch(`992123014831419472`) //Император
                     let pov = await guild.roles.fetch(`992123019793276961`) //Повелитель
                     const member = await guild.members.fetch(userid)
-                    if (member.roles.cache.has(`1017131191771615243`)) {
+                    if (member.roles.cache.has(`504887113649750016`)) {
                         if (result.rank >= 0 && result.rank < 50) { //Новичок
                             const oldrank = [sp, pro, mas, champ, star, leg, vlad, lord, imp, pov]
                             const newrank = nov

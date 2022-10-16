@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const { User } = require(`../../schemas/userdata`);
+const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 
@@ -9,9 +10,9 @@ module.exports = {
         .setName(`spooky`)  //Название команды
         .setDescription(`Открыть жуткую коробку`), //Описание команды
     async execute(interaction, client) {
-        const { Guild } = require(`../../schemas/guilddata`)
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
         if (pluginData.plugins.items === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
+        const guildData = await Guild.findOne({ id: interaction.guild.id })
         const user = interaction.member.user //ДОБАВИТЬ В ДРУГИЕ
         const userData = await User.findOne({ userid: user.id })
 
@@ -201,6 +202,13 @@ ${loot1[i_loot1].loot1_description}
 ╚═════════♡════════╝`
             );
             userData.exp += act_exp[i_act].act_amount //ДОБАВИТЬ В ДРУГИЕ
+
+            if (guildData.seasonal.halloween.enabled === true) {
+                const points = [0,1,2]
+                const rp = points[Math.floor(Math.random() * points.length)]
+                userData.seasonal.halloween.points += rp
+                userData.seasonal.halloween.opened_scary += 1
+            }
 
             userData.save();
             console.log(chalk.magentaBright(`[${interaction.user.tag} открыл жуткую коробку]`) + chalk.gray(`: +${act_exp[i_act].act_amount} опыта активности, +${rank_exp[i_rank].rank_amount} опыта рангов и ${loot1[i_loot1].loot1_name}`))

@@ -8,9 +8,9 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 
 module.exports = (client) => {
     client.halloweenStart = async () => {
-        const Guilds = client.guilds.cache
 
-        cron.schedule(`0 5 7 10 *`, async () => {
+        cron.schedule(`0 5 18 10 *`, async () => {
+            const Guilds = client.guilds.cache
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
             if (pluginData.plugins.seasonal === false) return
@@ -22,7 +22,7 @@ module.exports = (client) => {
                         await channel.edit({
                             permissionOverwrites: [
                                 {
-                                    id: `504887113649750016`,
+                                    id: `567689925143822346`,
                                     allow: [
                                         PermissionsBitField.Flags.ViewChannel,
                                     ],

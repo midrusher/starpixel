@@ -18,6 +18,7 @@ module.exports = (client) => {
                     displayname.premium = `💳`
                 } else if (!member.roles.cache.has(`850336260265476096`)) {
                     displayname.premium = ``
+                    
                 }
                 result.save()
 

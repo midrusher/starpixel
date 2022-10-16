@@ -304,18 +304,19 @@ module.exports = {
                         clientData.version = newV
                         clientData.save()
                         const embed = new EmbedBuilder()
-                        .setTitle(`Изменена версия бота`)
-                        .setColor(process.env.bot_color)
-                        .setDescription(`Версия бота была изменена с \`${oldV}\` на \`${newV}\``)
-                        .setThumbnail(client.user.displayAvatarURL())
-                        .setTimestamp(Date.now())
+                            .setTitle(`Изменена версия бота`)
+                            .setColor(process.env.bot_color)
+                            .setDescription(`Версия бота была изменена с \`${oldV}\` на \`${newV}\``)
+                            .setThumbnail(client.user.displayAvatarURL())
+                            .setTimestamp(Date.now())
 
                         await interaction.reply({
                             embeds: [embed],
                             ephemeral: true
                         })
                     }
-                    break;
+                        break;
+                   
                     default:
                         break;
                 }
@@ -841,7 +842,7 @@ ${roles.join('\n')}`
                             content: `Канал ${channel} был удален из списока хэллоуинских!`,
                             ephemeral: true
                         })
-                        
+
                     }
                         break;
                     case `hw_channel_check`: {

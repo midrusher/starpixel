@@ -5,7 +5,6 @@ const chalk = require(`chalk`)
 
 module.exports = (client) => {
     client.act_rewards = async () => {
-        console.log(`act-rewards`)
         const { Guild } = require(`../../schemas/guilddata`)
         const guild_plugin = await client.guilds.fetch(`320193302844669959`)
         const pluginData = await Guild.findOne({ id: guild_plugin.id })

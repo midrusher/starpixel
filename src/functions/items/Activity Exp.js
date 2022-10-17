@@ -5,7 +5,6 @@ const { calcActLevel, getLevel } = require(`../../functions`)
 
 module.exports = (client) => {
     client.ActExp = async () => {
-        console.log(`act-exp`)
         const { Guild } = require(`../../schemas/guilddata`)
         const guild_plugin = await client.guilds.fetch(`320193302844669959`)
         const pluginData = await Guild.findOne({ id: guild_plugin.id })
@@ -34,7 +33,8 @@ ${member} повысил уровень активности до ${result.level
 :black_medium_small_square:`);
             }
             result.save();
-            client.act_rewards();
         }
+
+        client.act_rewards();
     }
 }

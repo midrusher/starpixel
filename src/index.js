@@ -42,10 +42,10 @@ const client = new Client({
         Partials.User,
     ],
     presence: {
-        status: `idle`,
+        status: `online`,
         activities: [{
-            type: ActivityType.Playing,
-            name: `гильдию Starpixel`,
+            type: ActivityType.Watching,
+            name: `за выпуском обновления`,
         }]
     }
 });

@@ -28,7 +28,14 @@ module.exports = {
 
                 userData.seasonal.halloween.points += r_p
                 userData.cooldowns.hw_msgCreate = Date.now() + (1000 * 60)
+            }
 
+            const hwDate = new Date()
+            const curDate = hwDate.getDate()
+            const curMonth = hwDate.getMonth() + 1
+
+            if (curDate == 31 && curMonth == 10) {
+                userData.seasonal.halloween.hw_msg = true
             }
             userData.save();
 

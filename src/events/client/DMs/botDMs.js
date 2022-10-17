@@ -9,7 +9,7 @@ module.exports = {
         const pluginData = await Guild.findOne({ id: guild_plugin.id })
         if (pluginData.plugins.bot_dms === false) return
         if (message.channel.type === ChannelType.DM) {
-            const guild = await client.guilds.fetch(`320193302844669959`)
+            const guild = await message.client.guilds.fetch(`320193302844669959`)
             const channel = await guild.channels.cache.get(`982551755340537866`)
             const message_embed = new EmbedBuilder()
                 .setColor(process.env.bot_color)

@@ -15,12 +15,18 @@ const { gameConstructor, calcActLevel, getLevel } = require(`../../functions`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`test_command_no_usage`)
-        .setDescription(`TEST_COMMAND_NO_USAGE`)
-        .addUserOption(option => option
-            .setName(`пользователь`)
-            .setDescription(`Пользователь, с которым нужно взаимодействовать`)),
+        .setDescription(`TEST_COMMAND_NO_USAGE`),
 
     async execute(interaction, client) {
-        
+        const userData = await User.findOne({ userid: interaction.user.id, guildid: interaction.guild.id })
+        let response = await fetch(`https://api.hypixel.net/player?key=${api}&uuid=${userData.uuid}`)
+        if (response.ok) {
+            try {
+                let json = await response.json()
+                console.log(json.player.stats.MurderMystery.murderer_chance)
+            } catch (error) {
+
+            }
+        }
     }
 };

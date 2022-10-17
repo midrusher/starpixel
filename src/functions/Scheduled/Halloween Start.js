@@ -9,9 +9,12 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 module.exports = (client) => {
     client.halloweenStart = async () => {
 
-        cron.schedule(`0 5 18 10 *`, async () => {
+        cron.schedule(`0 12 19 10 *`, async () => {
             const Guilds = client.guilds.cache
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
+            await guild_plugin.members.fetch(`491343958660874242`).then(async (adm) => {
+                await adm.send(`НУЖНО ОТПРАВИТЬ В НОВОСТИ СООБЩЕНИЕ ОБ ОБНОВЛЕНИИ + ОТКРЫТЬ КАНАЛЫ + ОТПРАВИТЬ КОНТЕНТ В АРХИВ`)
+            })
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
             if (pluginData.plugins.seasonal === false) return
             Guilds.forEach(async g => {

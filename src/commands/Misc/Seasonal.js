@@ -3,7 +3,9 @@ const { Temp } = require(`../../schemas/temp_items`)
 const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`)
+const fetch = require(`node-fetch`)
 const cron = require(`node-cron`)
+const prettyMilliseconds = require(`pretty-ms`)
 const ch_list = require(`../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 const { execute } = require('../../events/client/start_bot/ready');
@@ -58,6 +60,25 @@ module.exports = {
             .addSubcommand(sb => sb
                 .setName(`leaderboards`)
                 .setDescription(`Лучшие участники в период Хэллоуина`)
+            )
+            .addSubcommand(sb => sb
+                .setName(`quest`)
+                .setDescription(`Получить ежедневный хэллоуинский квест`)
+                .addStringOption(o => o
+                    .setName(`действие`)
+                    .setDescription(`Выберите, что вы хотите сделать с квестом`)
+                    .addChoices(
+                        {
+                            name: `Начать квест`,
+                            value: `start`
+                        },
+                        {
+                            name: `Закончить квест`,
+                            value: `finish`
+                        },
+
+                    )
+                )
             )
             .addSubcommand(sb => sb
                 .setName(`buy`)
@@ -571,7 +592,8 @@ ${member} +50 💠
                         await interaction.deferReply({
                             fetchReply: true
                         })
-                        const users = await User.find({ "seasonal.halloween.points": { $gt: 0 }
+                        const users = await User.find({
+                            "seasonal.halloween.points": { $gt: 0 }
                         }).then(users => {
                             return users.filter(async user => await interaction.guild.members.fetch(user.userid))
                         })
@@ -622,7 +644,135 @@ ${member} +50 💠
                             content: `Вы приобрели \`${symb}\` за ${price} хэллоуинских очков! В скором времени данный значок появится в вашем никнейме! Если этого не произойдёт в течение 15 минут, обратитесь в вопрос-модерам!`
                         })
                     }
+                        break;
+                    case `quest`: {
+                        const userData = await User.findOne({ userid: interaction.user.id, guildid: interaction.guild.id })
+                        if (!userData.nickname) return interaction.reply({
+                            content: `По неизвестной причине в вашем профиле не указан ваш игровой UUID. Вы не можете использовать эту команду! Свяжитесь с модерацией гильдии.`,
+                            ephemeral: true
+                        })
+                        const choice = interaction.options.getString(`действие`)
+                        if (choice == `start`) {
+                            if (userData.cooldowns.hw_quest > Date.now())
+                                return interaction.reply({
+                                    embeds: [
+                                        new EmbedBuilder()
+                                            .setColor(process.env.bot_color)
+                                            .setAuthor({
+                                                name: `Вы не можете использовать эту команду`
+                                            })
+                                            .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.hw_quest - Date.now(), { verbose: true, secondsDecimalDigits: 0 })}!`)
+                                    ],
+                                    ephemeral: true
+                                });
+                            let response = await fetch(`https://api.hypixel.net/player?key=${process.env.hypixel_apikey}&uuid=${userData.uuid}`)
+                            if (response.ok) {
 
+                                const quests = [
+                                    {
+                                        description: `Победить 20 раз на карте Spooky Mansion в Murder Mystery`,
+                                        id: 1,
+                                        req_wins: 20
+                                    },
+                                    {
+                                        description: `Победить 10 раз на карте Spooky Mansion в Murder Mystery`,
+                                        id: 2,
+                                        req_wins: 20
+                                    },
+                                    {
+                                        description: `Победить 20 раз на карте Spooky Mansion в Murder Mystery`,
+                                        id: 3,
+                                        req_wins: 20
+                                    },
+                                    {
+                                        description: `Победить 20 раз на карте Spooky Mansion в Murder Mystery`,
+                                        id: 4,
+                                        req_wins: 20
+                                    },
+                                    {
+                                        description: `Победить 20 раз на карте Spooky Mansion в Murder Mystery`,
+                                        id: 5,
+                                        req_wins: 20
+                                    },
+                                    {
+                                        description: `Победить 20 раз на карте Spooky Mansion в Murder Mystery`,
+                                        id: 6,
+                                        req_wins: 20
+                                    },
+                                    {
+                                        description: `Победить 20 раз на карте Spooky Mansion в Murder Mystery`,
+                                        id: 7,
+                                        req_wins: 20
+                                    },
+                                    {
+                                        description: `Победить 20 раз на карте Spooky Mansion в Murder Mystery`,
+                                        id: 8,
+                                        req_wins: 20
+                                    },
+                                    {
+                                        description: `Победить 20 раз на карте Spooky Mansion в Murder Mystery`,
+                                        id: 9,
+                                        req_wins: 20
+                                    },
+                                ]
+                                const r_quest = quests[Math.floor(Math.random() * quests.length)]
+                                try {
+                                    let json = await response.json()
+                                    if (r_quest.id == 1) {
+
+                                    } else if (r_quest.id == 2) {
+
+                                    } else if (r_quest.id == 3) {
+
+                                    } else if (r_quest.id == 4) {
+
+                                    } else if (r_quest.id == 5) {
+
+                                    } else if (r_quest.id == 6) {
+
+                                    } else if (r_quest.id == 7) {
+
+                                    } else if (r_quest.id == 8) {
+
+                                    } else if (r_quest.id == 9) {
+
+                                    } else if (r_quest.id == 10) {
+
+                                    } else if (r_quest.id == 11) {
+
+                                    } else if (r_quest.id == 12) {
+
+                                    }
+                                } catch (error) {
+
+                                }
+                                const questEmbed = new EmbedBuilder()
+                                    .setColor(`DarkGold`)
+                                    .setTitle(`Хэллоуинский квест для ${interaction.user.username}`)
+                                    .setDescription(`${interaction.member} получил хэллоуинское задание:
+\`${r_quest.description}\``)
+                                await interaction.reply({
+                                    embeds: [questEmbed]
+                                })
+                                userData.cooldowns.hw_quest = Date.now() + (1000 * 60 * 60 * 16)
+                                userData.save()
+                            } else return interaction.reply({
+                                content: `Произошла ошибка при создании квеста для вас! Попробуйте позже!`
+                            })
+                        } else if (choice == `finish`) {
+                            if (userData.seasonal.halloween.quest.finished === false) return interaction.reply({
+                                content: `Вы не завершили предыдущее задание: \`${userData.seasonal.halloween.quest.description}\`
+**Количество на начало квеста**: ${userData.seasonal.halloween.quest.before}
+**Количество для конца квеста**: ${userData.seasonal.halloween.quest.requirement}
+
+Как только вы выполните квест, попробуйте использовать эту команду снова!`
+                            })
+
+
+                        }
+
+                    }
+                        break;
                     default:
                         break;
                 }

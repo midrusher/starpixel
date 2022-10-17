@@ -3,7 +3,7 @@ const mongoose = require(`mongoose`);
 const User = new mongoose.Schema({
     userid: { type: String, unique: true },
     guildid: { type: String, default: `320193302844669959` },
-    displayname: { 
+    displayname: {
         rank: { type: String, default: `🦋` },
         name: { type: String, default: `` },
         ramka1: { type: String, default: `` },
@@ -14,19 +14,19 @@ const User = new mongoose.Schema({
         custom_rank: { type: Boolean, default: false }
 
     },
-    name: { type: String  },
+    name: { type: String },
     nickname: { type: String, },
     oldnickname: { type: String },
-    uuid: {type: String, },
+    uuid: { type: String, },
     age: { type: Number, },
-    security_code: { type: String, default: `0000`},
+    security_code: { type: String, default: `0000` },
     rumbik: { type: Number, default: 0 },
     rank: { type: Number, default: 0 },
     exp: { type: Number, default: 0 },
-    level: { type: Number, default: 0},
-    gexp: { type: Number, default: 0},
-    pers_emoji: { type: Boolean, default: false},
-    tickets: { type: Number, default: 0},
+    level: { type: Number, default: 0 },
+    gexp: { type: Number, default: 0 },
+    pers_emoji: { type: Boolean, default: false },
+    tickets: { type: Number, default: 0 },
     cooldowns: {
 
         daily: { type: Date, default: Date.now() },
@@ -36,7 +36,7 @@ const User = new mongoose.Schema({
         msgCreateExp: { type: Date, default: Date.now() },
         hw_msgCreate: { type: Date, default: Date.now() },
 
-        prof_update: { type: Date, default: Date.now() }, 
+        prof_update: { type: Date, default: Date.now() },
         prof_create: { type: Date, default: Date.now() },
 
         spet: { type: Date, default: Date.now() },
@@ -48,7 +48,7 @@ const User = new mongoose.Schema({
         air: { type: Date, default: Date.now() },
         water: { type: Date, default: Date.now() },
         fire: { type: Date, default: Date.now() },
-        
+
         sun: { type: Date, default: Date.now() },
         mercury: { type: Date, default: Date.now() },
         venera: { type: Date, default: Date.now() },
@@ -61,8 +61,8 @@ const User = new mongoose.Schema({
         premium: { type: Date, default: Date.now() },
         boost: { type: Date, default: Date.now() },
         prestige: { type: Date, default: Date.now() },
-        
-        
+
+        hw_quest: { type: Date, default: Date.now() },
     },
 
     perks: {
@@ -81,7 +81,7 @@ const User = new mongoose.Schema({
         mythical: { type: Number, max: 5, default: 0, min: 0 },
     },
 
-    buy: { type: Number, default: 0},
+    buy: { type: Number, default: 0 },
     sell: {
         comet: { type: Number, default: 0 },
         constellation: { type: Number, default: 0 },
@@ -103,8 +103,8 @@ const User = new mongoose.Schema({
         //Земля
         flying: { type: Number, default: 0, max: 1, min: 0 },
         wind: { type: Number, default: 0, max: 1, min: 0 },
-        eagle_eye: { type: Number, default: 0, max: 1, min: 0 },  
-    }, 
+        eagle_eye: { type: Number, default: 0, max: 1, min: 0 },
+    },
     warns: { type: Number, default: 0 },
     roles: [String],
     shop_costs: { type: Number, default: 1 },
@@ -119,24 +119,31 @@ const User = new mongoose.Schema({
     medal_3: { type: Number, default: 0 },
 
     weekly_exp: { type: Number, default: 0 },
-    temp_channel: { 
-        created: {type: Boolean, default: false },
+    temp_channel: {
+        created: { type: Boolean, default: false },
         id: { type: String, default: `` },
     },
 
-    seasonal: { 
+    seasonal: {
         halloween: {
             points: { type: Number, default: 0 },
+            quest: {
+                id: { type: Number, default: -1 },
+                before: { type: Number, default: 0 },
+                requirement: { type: Number, default: Infinity },
+                finished: { type: Boolean, default: true },
+                description: { type: String, default: `` }
+            },
             achievements: {
-                num1: { type: Boolean, default: false},
-                num2: { type: Boolean, default: false},
-                num3: { type: Boolean, default: false},
-                num4: { type: Boolean, default: false},
-                num5: { type: Boolean, default: false},
-                
+                num1: { type: Boolean, default: false },
+                num2: { type: Boolean, default: false },
+                num3: { type: Boolean, default: false },
+                num4: { type: Boolean, default: false },
+                num5: { type: Boolean, default: false },
+
             },
             opened_scary: { type: Number, default: 0 },
-            hw_msg: { type: Boolean, default: false},
+            hw_msg: { type: Boolean, default: false },
             hw_cosm: { type: Boolean, default: false },
             hw_soul: { type: Boolean, default: false },
         },
@@ -149,7 +156,7 @@ const User = new mongoose.Schema({
         summer: {
             points: { type: Number, default: 0 }
         },
-        
+
     }
 })
 

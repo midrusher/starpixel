@@ -137,7 +137,7 @@ module.exports = {
                             'ID в Discord',
                             'UUID в Minecraft'
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+                        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );
@@ -190,7 +190,7 @@ module.exports = {
 
 
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue)).slice(0, 25);
+                        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase())).slice(0, 25);
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );
@@ -202,7 +202,7 @@ module.exports = {
                         const choices = [
                             'Пользовательский значок ранга',
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+                        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );

@@ -30,7 +30,7 @@ module.exports = {
 
         const focusedValue = interaction.options.getFocused();
         const choices = ['Опыт активности', 'Опыт рангов', 'Румбики'];
-        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
         await interaction.respond(
             filtered.map(choice => ({ name: choice, value: choice })),
         );

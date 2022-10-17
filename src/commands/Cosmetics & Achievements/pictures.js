@@ -31,7 +31,7 @@ module.exports = {
             'ghost',
             'dragon',
         ];
-        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
         await interaction.respond(
             filtered.map(choice => ({ name: choice, value: choice })),
         );

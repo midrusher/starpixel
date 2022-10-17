@@ -141,7 +141,7 @@ module.exports = {
                             '№24. Смысл жизни',
                             '№25. Тайная команда',
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+                        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );
@@ -159,7 +159,7 @@ module.exports = {
                             '№4. Перерождение',
                             '№5. Просто мусор',
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+                        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );
@@ -203,7 +203,7 @@ module.exports = {
                             '№24. Смысл жизни',
                             '№25. Тайная команда',
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+                        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );
@@ -221,7 +221,7 @@ module.exports = {
                             '№4. Перерождение',
                             '№5. Просто мусор',
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+                        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );
@@ -265,7 +265,7 @@ module.exports = {
                             '№24. Смысл жизни',
                             '№25. Тайная команда',
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+                        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );
@@ -283,7 +283,7 @@ module.exports = {
                             '№4. Перерождение',
                             '№5. Просто мусор',
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+                        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));;
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );

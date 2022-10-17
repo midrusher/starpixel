@@ -25,7 +25,7 @@ module.exports = {
 
         const focusedValue = interaction.options.getFocused();
         const choices = ['Чёрный', 'Лазурный', 'Пурпурный', 'Сиреневый', 'Ализариновый', 'Фламинговый', 'Изумрудный', 'Яблочный', 'Салатовый', 'Песочный', 'Летний', 'Хэллоуинский', 'Новогодний', 'Пасхальный'];
-        const filtered = choices.filter(choice => choice.toLowerCase().startsWith(focusedValue.toLowerCase()));
+        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase()));
         await interaction.respond(
             filtered.map(choice => ({ name: choice, value: choice })),
         );

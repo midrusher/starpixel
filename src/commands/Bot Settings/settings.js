@@ -253,7 +253,7 @@ module.exports = {
                             'Музыка',
                             'Сезонное'
                         ];
-                        const filtered = choices.filter(choice => choice.startsWith(focusedValue)).slice(0, 25);
+                        const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase())).slice(0, 25);
                         await interaction.respond(
                             filtered.map(choice => ({ name: choice, value: choice })),
                         );

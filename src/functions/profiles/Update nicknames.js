@@ -1,10 +1,10 @@
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
 const wait = require(`node:timers/promises`).setTimeout
+const cron = require(`node-cron`)
 
 module.exports = (client) => {
     client.updatenicks = async () => {
-        setInterval(async () => {
             const { Guild } = require(`../../schemas/guilddata`)
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
@@ -23,6 +23,5 @@ module.exports = (client) => {
 
             console.log(chalk.magenta(`[ИЗМЕНЕНИЕ НИКНЕЙМОВ]`) + chalk.gray(`: Никнеймы всех участников были обновлены!`))
 
-        }, 600000)
     }
 }

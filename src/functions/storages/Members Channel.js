@@ -6,7 +6,6 @@ const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = (client) => {
     client.update_members = async () => {
-        setInterval(async () => {
             const Guilds = client.guilds.cache
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
@@ -160,6 +159,5 @@ ${offres.join('\n')}`)
                 console.log(chalk.magenta(`[ОБНОВЛЁН КАНАЛ УЧАСТНИКИ]`) + chalk.gray(`: Канал участники был обновлен. Добавлены новые пользователи. Изменены позиции текущий участников.`))
             })
 
-        }, 600000)
     }
 }

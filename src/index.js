@@ -5,7 +5,8 @@ const { tokenTEST, token, databaseToken } = process.env;
 const { connect } = require(`mongoose`)
 const { Client, Collection, GatewayIntentBits, Partials, ActivityType, } = require('discord.js');
 const fs = require('fs');
-const { DisTube } = require(`distube`)
+const { DisTube } = require(`distube`);
+const { setInterval } = require('timers/promises');
 
 const client = new Client({
     intents: [
@@ -26,6 +27,8 @@ const client = new Client({
         GatewayIntentBits.GuildWebhooks,
         GatewayIntentBits.Guilds,
         GatewayIntentBits.MessageContent,
+        GatewayIntentBits.AutoModerationConfiguration,
+        GatewayIntentBits.AutoModerationExecution,
 
 
     ],
@@ -83,38 +86,11 @@ for (const folder of functionFolders) {
     }
 
 }
-
 //Handlers
-client.handleEvents();
 client.handleCommands();
 client.handleComponents();
-
-//Items
-client.temp_roles();
-client.rank_update();
-client.ActExp();
-client.act_rewards();
-
-//Profiles
-client.updatenicks();
-client.top_3_gexp();
-client.haspremium();
-client.emojiUpdate();
-client.UpdateNicknames();
-client.AutoElements();
-client.AutoStars();
-client.removeNonPremiumColors();
-
-//Storages
-client.wish_birthday();
-client.update_members();
-client.statsChannel();
-client.birthdayChannel();
-
-//Seasonal
-client.halloweenRewards();
-client.halloweenStart();
-client.halloweenEnd();
+client.repeatFunctions();
+client.handleEvents();
 
 client.login(token);
 (async () => {

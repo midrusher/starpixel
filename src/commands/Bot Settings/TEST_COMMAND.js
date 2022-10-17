@@ -9,6 +9,7 @@ const { loadImage, createCanvas } = require(`@napi-rs/canvas`)
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
+const wait = require(`node:timers/promises`).setTimeout
 const { gameConstructor, calcActLevel, getLevel } = require(`../../functions`)
 
 module.exports = {

@@ -7,10 +7,13 @@ const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../discord structure/channels.json`)
+const cron = require(`node-cron`)
 
 module.exports = (client) => {
     client.top_3_gexp = async () => {
-        setInterval(async () => {
+        cron.schedule(`0 16 * * 0`, async () => {
+
+
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
             if (pluginData.plugins.gexp === false) return
@@ -105,8 +108,9 @@ module.exports = (client) => {
                 content: ``,
                 embeds: [top_3]
             })
-            
-
-        }, 600000)
+        }, {
+            scheduled: true,
+            timezone: `Europe/Moscow`
+        })
     }
 }

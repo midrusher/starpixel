@@ -5,8 +5,7 @@ const ch_list = require(`../../discord structure/channels.json`)
 
 module.exports = (client) => {
     client.rank_update = async () => {
-        setInterval(async () => {
-
+       
             const { Guild } = require(`../../schemas/guilddata`)
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
@@ -343,6 +342,5 @@ module.exports = (client) => {
 
 
             }
-        }, 600000)
     }
 }

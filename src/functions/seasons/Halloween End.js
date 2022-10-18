@@ -24,7 +24,7 @@ module.exports = (client) => {
                         await chan.edit({
                             permissionOverwrites: [
                                 {
-                                    id: `567689925143822346`,
+                                    id: `504887113649750016`,
                                     deny: [
                                         PermissionsBitField.Flags.ViewChannel,
                                         PermissionsBitField.Flags.SendMessages

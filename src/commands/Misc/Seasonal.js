@@ -949,7 +949,7 @@ ${member} +50 💠
                                 await interaction.reply({
                                     embeds: [questEmbed]
                                 })
-                                //userData.cooldowns.hw_quest = Date.now() + (1000 * 60 * 60 * 16)
+                                userData.cooldowns.hw_quest = Date.now() + (1000 * 60 * 60 * 16)
                                 userData.save()
                             } else return interaction.reply({
                                 content: `Произошла ошибка при создании квеста для вас! Попробуйте позже!`

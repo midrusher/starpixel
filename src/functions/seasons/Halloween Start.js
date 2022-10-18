@@ -9,7 +9,7 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js")
 module.exports = (client) => {
     client.halloweenStart = async () => {
 
-        cron.schedule(`0 12 19 10 *`, async () => {
+        cron.schedule(`20 19 18 10 *`, async () => {
             const Guilds = client.guilds.cache
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
             await guild_plugin.members.fetch(`491343958660874242`).then(async (adm) => {
@@ -64,6 +64,13 @@ module.exports = (client) => {
                     userData.seasonal.halloween.achievements.num3 = false
                     userData.seasonal.halloween.achievements.num4 = false
                     userData.seasonal.halloween.achievements.num5 = false
+                    userData.seasonal.halloween.achievements.num6 = false
+                    userData.seasonal.halloween.quests_completed = 0
+                    userData.seasonal.halloween.quest.before = 0
+                    userData.seasonal.halloween.quest.id = -1
+                    userData.seasonal.halloween.quest.finished = true
+                    userData.seasonal.halloween.quest.requirement = Infinity
+                    userData.seasonal.halloween.quest.description = `Нет квеста.`
 
                     userData.save()
                 })

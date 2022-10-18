@@ -23,7 +23,7 @@ module.exports = {
         if (response.ok) {
             try {
                 let json = await response.json()
-                console.log(json.player.stats.MurderMystery.murderer_chance)
+                console.log(json.player?.stats?.MurderMystery["wins_widow's_den"])
             } catch (error) {
 
             }

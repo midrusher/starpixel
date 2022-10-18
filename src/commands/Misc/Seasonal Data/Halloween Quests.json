@@ -1,0 +1,102 @@
+[
+    {
+        "description": "Победите 20 раз на карте Spooky Mansion в Murder Mystery",
+        "id": 1,
+        "req_wins": 20
+    },
+    {
+        "description": "Победите 20 раз на карте Darkfall в Murder Mystery",
+        "id": 2,
+        "req_wins": 20
+    },
+    {
+        "description": "Победите 20 раз на карте Widow's Den в Murder Mystery",
+        "id": 3,
+        "req_wins": 20
+    },
+    {
+        "description": "Победите 3 раза за человека в VampireZ",
+        "id": 4,
+        "req_wins": 3
+    },
+    {
+        "description": "Сделайте 30 убийств за маньяка в Murder Mystery",
+        "id": 5,
+        "req_wins": 30
+    },
+    {
+        "description": "Выиграйте 1 игру в Zombies на карте Dead End",
+        "id": 6,
+        "req_wins": 1
+    },
+    {
+        "description": "Выиграйте 1 игру в Zombies на карте Bad Blood",
+        "id": 7,
+        "req_wins": 1
+    },
+    {
+        "description": "Выиграйте 5 игр в Blocking Dead",
+        "id": 8,
+        "req_wins": 5
+    },
+    {
+        "description": "Убейте 200 зомби в Zombies",
+        "id": 9,
+        "req_wins": 200
+    },
+    {
+        "description": "Убейте 100 зомби в Zombies Dead End",
+        "id": 10,
+        "req_wins": 100
+    },
+    {
+        "description": "Убейте 100 зомби в Zombies Bad Blood",
+        "id": 11,
+        "req_wins": 100
+    },
+    {
+        "description": "Заразите 30 выживших в Murder Mystery Infection",
+        "id": 12,
+        "req_wins": 30
+    },
+    {
+        "description": "Сделайте 66 убийств в Blocking Dead",
+        "id": 13,
+        "req_wins": 66
+    },
+    {
+        "description": "Выиграйте 1 игру в SkyWars Solo Normal с набором Batguy",
+        "id": 14,
+        "req_wins": 1
+    },
+    {
+        "description": "Выиграйте 1 игру в SkyWars Solo Normal с набором Magician",
+        "id": 15,
+        "req_wins": 1
+    },
+    {
+        "description": "Выиграйте 1 игру в SkyWars Solo Insane с набором Batguy",
+        "id": 16,
+        "req_wins": 1
+    },
+    {
+        "description": "Выиграйте 1 игру в SkyWars Solo Insane с набором Enderman",
+        "id": 17,
+        "req_wins": 1
+    },
+    {
+        "description": "Соберите 50 конфет в Halloween Simulator",
+        "id": 18,
+        "req_wins": 50
+    },
+    {
+        "description": "Выиграйте 1 игру в Halloween Simulator",
+        "id": 19,
+        "req_wins": 1
+    },
+    {
+        "description": "Заразите 15 игроков в Murder Mystery Infection на карте Hypixel World",
+        "id": 20,
+        "req_wins": 15
+    }
+]

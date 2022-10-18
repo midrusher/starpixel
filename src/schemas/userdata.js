@@ -134,12 +134,14 @@ const User = new mongoose.Schema({
                 finished: { type: Boolean, default: true },
                 description: { type: String, default: `` }
             },
+            quests_completed: { type: Number, default: 0 },
             achievements: {
                 num1: { type: Boolean, default: false },
                 num2: { type: Boolean, default: false },
                 num3: { type: Boolean, default: false },
                 num4: { type: Boolean, default: false },
                 num5: { type: Boolean, default: false },
+                num6: { type: Boolean, default: false },
 
             },
             opened_scary: { type: Number, default: 0 },

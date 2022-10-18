@@ -221,6 +221,60 @@ module.exports = {
                 .setName(`hw_channel_check`)
                 .setDescription(`Проверить каналы для сезона "Хэллоуин"`)
             )
+            .addSubcommand(sb => sb
+                .setName(`forcestart`)
+                .setDescription(`Запустить сезон в гильдии`)
+                .addStringOption(o => o
+                    .setName(`сезон`)
+                    .setDescription(`Сезон, который будет запущен`)
+                    .setRequired(true)
+                    .addChoices(
+                        {
+                            name: `Хэллоуин`,
+                            value: `Хэллоуин`
+                        },
+                        {
+                            name: `Новый год`,
+                            value: `Новый год`
+                        },
+                        {
+                            name: `Пасха`,
+                            value: `Пасха`
+                        },
+                        {
+                            name: `Лето`,
+                            value: `Лето`
+                        },
+
+                    ))
+            )
+            .addSubcommand(sb => sb
+                .setName(`forceend`)
+                .setDescription(`Отключить сезон в гильдии`)
+                .addStringOption(o => o
+                    .setName(`сезон`)
+                    .setDescription(`Сезон, который будет отключен`)
+                    .setRequired(true)
+                    .addChoices(
+                        {
+                            name: `Хэллоуин`,
+                            value: `Хэллоуин`
+                        },
+                        {
+                            name: `Новый год`,
+                            value: `Новый год`
+                        },
+                        {
+                            name: `Пасха`,
+                            value: `Пасха`
+                        },
+                        {
+                            name: `Лето`,
+                            value: `Лето`
+                        },
+
+                    ))
+            )
         ),
     async autoComplete(interaction, client) {
         const gr = interaction.options.getSubcommandGroup()
@@ -316,7 +370,7 @@ module.exports = {
                         })
                     }
                         break;
-                   
+
                     default:
                         break;
                 }
@@ -864,7 +918,45 @@ ${roles.join('\n')}`
                         })
                     }
                         break;
+                    case `forcestart`: {
+                        const season = interaction.options.getString(`сезон`)
+                        if (season == `Хэллоуин`) {
+                            guildData.seasonal.halloween.enabled = true
+                        } else if (season == `Новый год`) {
+                            guildData.seasonal.new_year.enabled = true
+                        } else if (season == `Пасха`) {
+                            guildData.seasonal.easter.enabled = true
+                        } else if (season == `Лето`) {
+                            guildData.seasonal.summer.enabled = true
+                        }
 
+                        guildData.save()
+                        await interaction.reply({
+                            content: `Сезон \`${season}\` был запущен. Каналы НЕ открыты. Откройте их вручную!`,
+                            ephemeral: true
+                        })
+                    }
+                        break;
+
+                    case `forceend`: {
+                        const season = interaction.options.getString(`сезон`)
+                        if (season == `Хэллоуин`) {
+                            guildData.seasonal.halloween.enabled = false
+                        } else if (season == `Новый год`) {
+                            guildData.seasonal.new_year.enabled = false
+                        } else if (season == `Пасха`) {
+                            guildData.seasonal.easter.enabled = false
+                        } else if (season == `Лето`) {
+                            guildData.seasonal.summer.enabled = false
+                        }
+
+                        guildData.save()
+                        await interaction.reply({
+                            content: `Сезон \`${season}\` был отключен. Каналы НЕ были закрыты. Закройте их вручную!`,
+                            ephemeral: true
+                        })
+                    }
+                        break;
                     default:
                         break;
                 }

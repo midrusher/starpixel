@@ -229,7 +229,7 @@ module.exports = (client) => {
 
                             const oldrank = [nov, sp, pro, mas, champ, star, lord, imp, pov]
                             const newrank = [leg, vlad]
-                            if (!member.roles.cache.has(newrank[0].id) && !member.roles.cache.has(newrank[1].id)) {
+                            if (!member.roles.cache.has(newrank[0].id) || !member.roles.cache.has(newrank[1].id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
                                     .setColor(process.env.bot_color)
@@ -285,7 +285,7 @@ module.exports = (client) => {
                         else if (result.rank >= 15000 && result.rank < 25000 && member.roles.cache.has(`930520087797051452`)) { //Император
                             const oldrank = [nov, sp, pro, mas, champ, star, vlad, leg, pov]
                             const newrank = [lord, imp]
-                            if (!member.roles.cache.has(newrank[0].id) && !member.roles.cache.has(newrank[1].id)) {
+                            if (!member.roles.cache.has(newrank[0].id) || !member.roles.cache.has(newrank[1].id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
                                     .setColor(process.env.bot_color)
@@ -313,7 +313,7 @@ module.exports = (client) => {
                         else if (result.rank >= 25000 && member.roles.cache.has(`930520087797051452`)) { //Повелитель
                             const oldrank = [nov, sp, pro, mas, champ, star, vlad, leg, imp]
                             const newrank = [lord, pov]
-                            if (!member.roles.cache.has(newrank[0].id) && !member.roles.cache.has(newrank[1].id)) {
+                            if (!member.roles.cache.has(newrank[0].id) || !member.roles.cache.has(newrank[1].id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
                                     .setColor(process.env.bot_color)

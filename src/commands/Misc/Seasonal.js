@@ -671,7 +671,7 @@ ${member} +50 💠
 **Условие**: \`${userData.seasonal.halloween.quest.description}\`
 **Количество на начало квеста**: ${userData.seasonal.halloween.quest.before}
 **Количество на конец квеста**: ${userData.seasonal.halloween.quest.requirement}
-**Статус**: \`${userData.seasonal.halloween.quest.finished ? `Завершено` : `Не завершено`}\``)
+**Статус**: \`${userData.seasonal.halloween.quest.finished ? `Завершено ✅` : `Не завершено ❌`}\``)
                             .setThumbnail(user.displayAvatarURL())
                             .setColor(process.env.bot_color)
                             .setTimestamp(Date.now())

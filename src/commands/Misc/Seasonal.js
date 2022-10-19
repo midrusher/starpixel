@@ -177,7 +177,7 @@ module.exports = {
                                     })
                                     .setDescription(`У вас уже есть награда за данное достижение! Пожалуйста, откройте <@&${reward}>, чтобы выполнить достижение.
     
-    Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
+Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
                                     .setTimestamp(Date.now())
                                 if (member.roles.cache.has(reward)) return interaction.reply({
                                     embeds: [has_reward],

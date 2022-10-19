@@ -33,7 +33,7 @@ module.exports = (client) => {
                             const oldrank = [sp, pro, mas, champ, star, leg, vlad, lord, imp, pov]
                             const newrank = nov
                             if (!member.roles.cache.has(newrank.id)) {
-                                console.log(newrank.id)
+
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
                                     .setColor(process.env.bot_color)
@@ -68,7 +68,7 @@ module.exports = (client) => {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
-    Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
+Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -96,7 +96,7 @@ module.exports = (client) => {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
-    Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
+Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -123,7 +123,7 @@ module.exports = (client) => {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
-    Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
+Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -151,7 +151,7 @@ module.exports = (client) => {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
-    Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
+Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -179,7 +179,7 @@ module.exports = (client) => {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
-    Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
+Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -207,7 +207,7 @@ module.exports = (client) => {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
-    Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
+Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -235,8 +235,8 @@ module.exports = (client) => {
                                     .setColor(process.env.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
-                                    .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
-    Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
+                                    .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1].name}!
+Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -264,7 +264,7 @@ module.exports = (client) => {
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
-    Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
+Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -291,8 +291,8 @@ module.exports = (client) => {
                                     .setColor(process.env.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
-                                    .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
-    Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
+                                    .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1].name}!
+Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()
@@ -319,8 +319,8 @@ module.exports = (client) => {
                                     .setColor(process.env.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
-                                    .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[0].name} & ${newrank[1].name}!
-    Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
+                                    .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1].name}!
+Проверить количество своего опыта ранга можно, прописав \`/items\`!`)
 
                                 await member.roles.remove(oldrank).catch()
                                 await member.roles.add(newrank).catch()

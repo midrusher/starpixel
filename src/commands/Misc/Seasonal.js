@@ -1372,7 +1372,7 @@ ${member} +50 💠
                                         ephemeral: true
                                     })
                                 } else if (hw.quest.id == 19) {
-                                    if (stats?.Arcade?.wins_halloween_simulato >= hw.quest.requirement) {
+                                    if (stats?.Arcade?.wins_halloween_simulator >= hw.quest.requirement) {
                                         hw.quests_completed += 1
                                         hw.points += 5
                                         hw.quest.finished = true

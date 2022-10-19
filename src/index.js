@@ -45,7 +45,7 @@ const client = new Client({
         status: `online`,
         activities: [{
             type: ActivityType.Watching,
-            name: `за выпуском обновления`,
+            name: `за открытием коробок`,
         }]
     }
 });

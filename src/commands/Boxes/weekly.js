@@ -48,7 +48,7 @@ module.exports = {
             let loot1 = [
                 {
                     loot1_name: `❕ 🎁 МАЛЕНЬКАЯ /small`,
-                    dropChanceLOOT1: 15,
+                    dropChanceLOOT1: 25,
                     loot1_roleID: "510932601721192458",
                     loot1_description : `Открой, чтобы получить награды.`
                 },
@@ -60,12 +60,12 @@ module.exports = {
                 },
                 {
                     loot1_name: `Награды нет.`,
-                    dropChanceLOOT1: 50,
+                    dropChanceLOOT1: 30,
                     loot1_description : `Коробка пуста.`
                 },
                 {
                     loot1_name: `❕ 🎁 БОЛЬШАЯ /big`,
-                    dropChanceLOOT1: 5,
+                    dropChanceLOOT1: 15,
                     loot1_roleID: "521248091853291540",
                     loot1_description : `Открой, чтобы получить награды.`
                 }

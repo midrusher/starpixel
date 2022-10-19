@@ -1,7 +1,7 @@
 const chalk = require(`chalk`);
 const { ChannelType, EmbedBuilder } = require("discord.js");
-const quiz = require(`./quiz.json`)
-const questions = require(`./questions.json`);
+const quiz = require(`../commands/quiz.json`)
+const questions = require(`../commands/questions.json`);
 const { User } = require("../../../schemas/userdata");
 const ch_list = require(`../../../discord structure/channels.json`)
 

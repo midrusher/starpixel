@@ -18,15 +18,7 @@ module.exports = {
         .setDescription(`TEST_COMMAND_NO_USAGE`),
 
     async execute(interaction, client) {
-        const userData = await User.findOne({ userid: interaction.user.id, guildid: interaction.guild.id })
-        let response = await fetch(`https://api.hypixel.net/player?key=${api}&uuid=${userData.uuid}`)
-        if (response.ok) {
-            try {
-                let json = await response.json()
-                console.log(json.player?.stats?.MurderMystery["wins_widow's_den"])
-            } catch (error) {
 
-            }
-        }
+        
     }
 };

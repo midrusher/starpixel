@@ -429,6 +429,27 @@ function defaultShop(type, value) {
     else return false
 }
 
+function daysOfWeek(number) {
+    let err = new Error(`\`Выбранная опция должны иметь тип Number!\``)
+    if (typeof number !== "number") return err
+
+    if (number == 0 || number == 7) {
+        return `Воскресенье`
+    } else if (number == 1) {
+        return `Понедельник`
+    } else if (number == 2) {
+        return `Вторник`
+    } else if (number == 3) {
+        return `Среда`
+    } else if (number == 4) {
+        return `Четверг`
+    } else if (number == 5) {
+        return `Пятница`
+    } else if (number == 6) {
+        return `Суббота`
+    } else return `Число ${number} не представляет собой день недели!`
+}
+
 
 module.exports = {
     toOrdinalSuffix,
@@ -443,5 +464,6 @@ module.exports = {
     defaultShop,
     secondPage,
     achievementStats,
-    found
+    found,
+    daysOfWeek
 }

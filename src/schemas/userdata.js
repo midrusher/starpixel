@@ -28,7 +28,6 @@ const User = new mongoose.Schema({
     pers_emoji: { type: Boolean, default: false },
     tickets: { type: Number, default: 0 },
     cooldowns: {
-
         daily: { type: Date, default: Date.now() },
         weekly: { type: Date, default: Date.now() },
         monthly: { type: Date, default: Date.now() },
@@ -158,8 +157,8 @@ const User = new mongoose.Schema({
         summer: {
             points: { type: Number, default: 0 }
         },
-
-    }
+    },
+    visited_games: { type: Number, default: 0 }
 })
 
 module.exports = { User: mongoose.model(`User`, User) }

@@ -9,7 +9,7 @@ const Guild = new mongoose.Schema({
     },
     act_exp_boost: { type: Number, default: 1 },
     cooldowns: {
-        top_3_gexp: { type: Date, default: Date.now() }
+
     },
     logs: {
         webhook_url: { type: String },
@@ -39,7 +39,7 @@ const Guild = new mongoose.Schema({
         gexp: { type: Boolean, default: true },
         music: { type: Boolean, default: true },
         seasonal: { type: Boolean, default: true },
-
+        guildgames: { type: Boolean, default: true },
 
         removed: {
             recording: { type: Boolean, default: true },
@@ -84,8 +84,24 @@ const Guild = new mongoose.Schema({
             }]
 
         },
-    }
+    },
 
+    guildgames: {
+        gamestart_min: { type: Number, default: 0 },
+        gamestart_hour: { type: Number, default: 0 },
+        gameend_min: { type: Number, default: 0 },
+        gameend_hour: { type: Number, default: 0 },
+        game_days: [String],
+        officers: [{
+            id: { type: String },
+            day: { type: String }
+        }],
+        music: [{
+            link: { type: String },
+            chance: { type: Number }
+        }],
+        started: { type: Boolean, default: false }
+    }
 })
 
 module.exports = { Guild: mongoose.model(`Guild`, Guild) }

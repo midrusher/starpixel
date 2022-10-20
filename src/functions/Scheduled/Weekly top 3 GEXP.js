@@ -20,11 +20,8 @@ module.exports = (client) => {
             const guild = await client.guilds.fetch(`320193302844669959`)
             const guildData = await Guild.findOne({ id: guild.id })
 
-            if (guildData.cooldowns.top_3_gexp > Date.now()) return
 
 
-            guildData.cooldowns.top_3_gexp = Date.now() + (1000 * 60 * 60 * 24 * 7)
-            guildData.save()
             let userDatas = await User.find({ guildid: guild.id })
             let b = 0
             let msg = await guild.channels.cache.get(ch_list.main).send({

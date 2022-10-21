@@ -61,7 +61,22 @@ module.exports = (client) => {
                     }
                 }
                     break;
+                case "github": {
+                    for (const eventFolder of eventFolders) {
+                        const eventFiles = fs
+                            .readdirSync(`./src/events/${folder}/${eventFolder}`)
+                            .filter((file) => file.endsWith(`.js`));;
 
+                        for (const file of eventFiles) {
+                            const event = require(`../../events/${folder}/${eventFolder}/${file}`)
+                            if (event.once) client.distube.once(event.name, (...args) => event.execute(...args, client))
+                            else client.distube.on(event.name, (...args) => event.execute(...args, client));
+                            console.log(chalk.hex(`#707070`)(`[ЗАГРУЗКА СОБЫТИЙ] ${i++}. ${file} был успешно загружен! (Distube)`))
+                        }
+
+                    }
+                }
+                    break;
                 default:
                     break;
             }

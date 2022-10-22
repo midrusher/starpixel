@@ -1,4 +1,5 @@
 const fs = require('fs');
+const chalk = require(`chalk`);
 
 module.exports = (client) => {
     client.handleComponents = async () => {
@@ -58,6 +59,5 @@ module.exports = (client) => {
                     break;
             }
         };
-
     }
 }

@@ -6,7 +6,8 @@ const chalk = require(`chalk`);
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`picture`)
-        .setDescription(`Отправить картинку в чат.`)
+        .setDescription(`Отправить картинку в чат`)
+        .setDMPermission(false)
         .addStringOption(option => option
             .setName(`картинка`)
             .setDescription(`Выберите картинку, которую хотите отправить в чат`)

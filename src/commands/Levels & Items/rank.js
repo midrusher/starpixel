@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`rank`)
         .setDescription(`Показать опыт активности`)
+        .setDMPermission(false)
         .addUserOption(option => option
             .setName(`пользователь`)
             .setRequired(false)

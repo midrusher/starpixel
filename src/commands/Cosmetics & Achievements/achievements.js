@@ -10,6 +10,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`achievement`)
         .setDescription(`Получить достижения гильдии`)
+        .setDMPermission(false)
         .addSubcommandGroup(group => group
             .setName(`get`)
             .setDescription(`Обычные достижения`)

@@ -12,7 +12,8 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`premium`)
-        .setDescription(`Открыть премиальную коробку`),
+        .setDescription(`Открыть премиальную коробку`)
+        .setDMPermission(false),
 
     async execute(interaction, client) {
         const pluginData = await Guild.findOne({ id: interaction.guild.id })

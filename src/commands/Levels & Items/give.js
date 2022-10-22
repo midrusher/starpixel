@@ -9,6 +9,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`give`)
         .setDescription(`Выдать предмет пользователю`)
+        .setDMPermission(false)
         .addStringOption(option => option
             .setName(`тип`)
             .setDescription(`Тип предмета`)

@@ -9,6 +9,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`remove`)
         .setDescription(`Убрать предмет у пользователя.`)
+        .setDMPermission(false)
         .addStringOption(option => option
             .setName(`тип`)
             .setDescription(`Тип предмета`)

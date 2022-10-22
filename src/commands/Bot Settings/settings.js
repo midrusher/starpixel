@@ -16,6 +16,7 @@ module.exports = {
         .setName(`settings`)
         .setDescription(`Настройки бота гильдии`)
         .setDefaultMemberPermissions(0)
+        .setDMPermission(false)
         .addSubcommandGroup(gr => gr
             .setName(`client`)
             .setDescription(`Технические настройки для бота`)

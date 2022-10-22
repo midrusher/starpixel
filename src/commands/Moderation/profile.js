@@ -16,6 +16,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`profile`)
         .setDescription(`Профиль игрока`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`create`)
             .setDescription(`Создать профиль игрока`)

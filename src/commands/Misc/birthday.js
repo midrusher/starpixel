@@ -14,6 +14,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`birthday`)
         .setDescription(`Дни рождения участников гильдии`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`set`)
             .setDescription(`Установить день рождения пользователю`)

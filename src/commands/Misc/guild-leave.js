@@ -12,7 +12,8 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`guild-leave`)
-        .setDescription(`Покинуть гильдию Starpixel`),
+        .setDescription(`Покинуть гильдию Starpixel`)
+        .setDMPermission(false),
 
     async execute(interaction, client) {
         const { Guild } = require(`../../schemas/guilddata`)

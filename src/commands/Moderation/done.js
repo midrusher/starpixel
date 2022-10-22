@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`done`)
         .setDescription(`Ответить на вопрос в канале вопрос модерам`)
+        .setDMPermission(false)
         .addUserOption(option => option
             .setName('пользователь')
             .setDescription('Пользователь, которому нужно ответить')

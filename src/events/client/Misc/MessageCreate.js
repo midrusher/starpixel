@@ -3,6 +3,7 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const { ChannelType } = require(`discord.js`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const { isURL } = require(`../../../functions`)
 
 module.exports = {
     name: 'messageCreate',
@@ -36,13 +37,6 @@ module.exports = {
             userData.save();
 
 
-        }
-
-
-
-
-        if (message.channel.id == `967754140199555163` && message.content.includes(`http`)) {
-            message.react(`❤️`)
         }
     }
 }

@@ -12,6 +12,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`changenick`)
         .setDescription(`Изменить части никнейма пользователя`)
+        .setDMPermission(false)
         .addUserOption(option => option
             .setName(`пользователь`)
             .setDescription(`Пользователь`)

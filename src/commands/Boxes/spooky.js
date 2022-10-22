@@ -8,7 +8,8 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`spooky`)  //Название команды
-        .setDescription(`Открыть жуткую коробку`), //Описание команды
+        .setDescription(`Открыть жуткую коробку`)
+        .setDMPermission(false), //Описание команды
     async execute(interaction, client) {
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
         if (pluginData.plugins.items === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })

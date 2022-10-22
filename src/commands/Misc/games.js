@@ -13,6 +13,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`games`)
         .setDescription(`Игры с ботом`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`rps`)
             .setDescription(`Камень, ножницы, бумага`)

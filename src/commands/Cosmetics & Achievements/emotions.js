@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`emotion`)
         .setDescription(`Отправить эмоцию в чат`)
+        .setDMPermission(false)
         .addStringOption(option => option
             .setName(`эмоция`)
             .setDescription(`Выберите эмоцию, которую хотите отправить в чат`)

@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`application`)
         .setDescription(`Заявки на вступление в гильдию Starpixel`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`create`)
             .setDescription(`Подать заявку в гильдию`)

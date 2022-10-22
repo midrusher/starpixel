@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`items`)
         .setDescription(`Показать предметы пользователя`)
+        .setDMPermission(false)
         .addUserOption(option => option
             .setName(`пользователь`)
             .setRequired(false)

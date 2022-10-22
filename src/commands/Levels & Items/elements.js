@@ -11,6 +11,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`elements`)
         .setDescription(`Стихии гильдии Starpixel`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`earth`)
             .setDescription(`Использовать стихию земли`)

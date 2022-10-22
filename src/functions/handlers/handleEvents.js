@@ -82,5 +82,7 @@ module.exports = (client) => {
             }
         };
 
+        console.log(chalk.blue(`[Бот Starpixel] События запущены!`))
+
     }
 }

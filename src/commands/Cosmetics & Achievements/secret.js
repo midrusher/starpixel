@@ -11,7 +11,8 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`secret`)
-        .setDescription(`Основные ссылки и информация о гильдии`)
+        .setDescription(`Тайная команда гильдии`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`set`)
             .setDescription(`Установить новую тайную команду`)

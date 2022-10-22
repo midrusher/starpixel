@@ -12,6 +12,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`boost`)
         .setDescription(`Забустить участника гильдии`)
+        .setDMPermission(false)
         .addUserOption(option => option
             .setName(`пользователь`)
             .setDescription(`Пользователь, которого вы хотите забустить`)

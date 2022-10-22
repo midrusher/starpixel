@@ -5,7 +5,8 @@ const { ClientSettings } = require(`../../schemas/client`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`info`)
-        .setDescription(`Основные ссылки и информация о гильдии`),
+        .setDescription(`Основные ссылки и информация о гильдии`)
+        .setDMPermission(true),
     async execute(interaction, client) {
         const clientData = await ClientSettings.findOne({ clientid: client.user.id })
         const msg = new EmbedBuilder()

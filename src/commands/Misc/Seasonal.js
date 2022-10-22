@@ -15,6 +15,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`seasonal`)
         .setDescription(`Команды сезонных мероприятий`)
+        .setDMPermission(false)
         .addSubcommandGroup(gr => gr
             .setName(`halloween`)
             .setDescription(`Хэллоуинские мероприятия`)
@@ -575,7 +576,7 @@ ${member} +50 💠
 Если вы считаете, что это ошибка, напишите об этом в <#${ch_list.ask}>!`)
                                     .setTimestamp(Date.now())
 
-                                if (userData.seasonal.halloween.quests_completed < 6) return interaction.reply({
+                                if (userData.seasonal.halloween.quests_completed < 5) return interaction.reply({
                                     embeds: [no_condition],
                                     ephemeral: true
                                 })

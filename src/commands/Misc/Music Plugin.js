@@ -16,6 +16,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`music`)
         .setDescription(`Музыкальный бот`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`play`)
             .setDescription(`Включить музыку`)
@@ -105,9 +106,14 @@ module.exports = {
         const guild = interaction.guild
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
         if (pluginData.plugins.music === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
+        const guildData = await Guild.findOne({ id: guild.id })
         const music_channel = await guild.channels.fetch(ch_list.music)
         const user = interaction.user
         const member = interaction.member
+        if (guildData.guildgames.started == true && !member.roles.cache.has(`523559726219526184`) && !member.roles.cache.has(`563793535250464809`) && !member.roles.cache.has(`320880176416161802`)) return interaction.reply({
+            content: `Вы не можете использовать музыкального бота, пока в гильдии проходит совместная игра!`,
+            ephemeral: true
+        })
         if (interaction.channel.id !== music_channel.id && !interaction.member.roles.cache.has(`320880176416161802`)) return interaction.reply({
             content: `Чтобы использовать музыкального бота, перейдите в канал ${music_channel}!`,
             ephemeral: true
@@ -125,9 +131,6 @@ module.exports = {
                     const url = isURL(message)
                     if (url === true) {
                         let received
-                        let song = new Song(message, {
-                            member: member
-                        })
                         received = new EmbedBuilder()
                             .setTitle(`Запрос получен...`)
                             .setColor(process.env.bot_color)

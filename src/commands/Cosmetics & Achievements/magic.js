@@ -12,6 +12,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`magic`)
         .setDescription(`Магия гильдии`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`first`)
             .setDescription(`Магия первого уровня`)

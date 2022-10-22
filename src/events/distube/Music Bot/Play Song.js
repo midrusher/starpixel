@@ -1,10 +1,14 @@
 const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require(`discord.js`)
+const { Guild } = require(`../../../schemas/guilddata`)
 
 module.exports = {
     name: 'playSong',
     async execute(queue, song) {
+        const guild = queue.textChannel.guild
+        const guildData = await Guild.findOne({ id: guild.id })
+        if (guildData.guildgames.started === true) return
         const playing = new EmbedBuilder()
             .setColor(process.env.bot_color)
             .setTitle(`Сейчас играет... 🎶`)
@@ -38,7 +42,7 @@ module.exports = {
             components: [prevnext],
             fetchReply: true
         })
-        const collector = msg.createMessageComponentCollector({ componentType: ComponentType.Button, time: song.duration * 1000})
+        const collector = msg.createMessageComponentCollector({ componentType: ComponentType.Button, time: song.duration * 1000 })
         let songR = song
         collector.on('collect', async (i) => {
             await i.deferReply({

@@ -1,13 +1,11 @@
-const { REST } = require('@discordjs/rest');
-const { Routes } = require(`discord-api-types/v10`);
-const fs = require('fs');
+
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
+const wait = require(`node:timers/promises`).setTimeout
 
 module.exports = (client) => {
     client.repeatFunctions = async () => {
         
-        console.log(`enabled`)
         setInterval(async () => {
             //Items
             client.ActExp(); //Опыт активности подсчет
@@ -47,5 +45,12 @@ module.exports = (client) => {
         client.halloweenEnd(); //Запланированное начало Хэллоуина
         client.halloweenStart(); //Запланированный конец Хэллоуина
         client.wish_birthday(); //Запланированное поздравление с днем рождения
+
+        await wait(3000)
+        client.GamePreStart();
+        client.ReminderForOfficer();
+        client.GuildGameStart();
+
+        console.log(chalk.blue(`[Бот Starpixel] Функции запущены!`))
     };
 };

@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`message`)
         .setDescription(`Отправить сообщение в канал/личные сообщения`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`channel`)
             .setDescription(`Отправить сообщение на канал`)

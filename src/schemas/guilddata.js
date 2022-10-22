@@ -91,6 +91,7 @@ const Guild = new mongoose.Schema({
         gamestart_hour: { type: Number, default: 0 },
         gameend_min: { type: Number, default: 0 },
         gameend_hour: { type: Number, default: 0 },
+        pregame_song: { type: String },
         game_days: [String],
         officers: [{
             id: { type: String },
@@ -100,7 +101,18 @@ const Guild = new mongoose.Schema({
             link: { type: String },
             chance: { type: Number }
         }],
-        started: { type: Boolean, default: false }
+        started: { type: Boolean, default: false },
+        games: [{
+            id: { type: String },
+            played: { type: Number, default: 0 }
+        }],
+        gameType: { type: String, default: `Традиционная` },
+        music: [{
+            link: { type: String },
+            usedTimes: { type: Number, default: 0 },
+            sent: { type: String }
+        }],
+        temp_leader: { type: String }
     }
 })
 

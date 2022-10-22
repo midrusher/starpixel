@@ -7,7 +7,8 @@ const ch_list = require(`../../discord structure/channels.json`)
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`prestige`)  //Название команды
-        .setDescription(`Использовать талисман удачи`), //Описание команды
+        .setDescription(`Использовать талисман удачи`)
+        .setDMPermission(false), //Описание команды
     async execute(interaction, client) {
         const { Guild } = require(`../../schemas/guilddata`)
         const pluginData = await Guild.findOne({ id: interaction.guild.id })

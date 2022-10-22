@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`leaderboard`)
         .setDescription(`Лучшие пользователи по количеству предметов`)
+        .setDMPermission(false)
         .addStringOption(option => option
             .setName(`тип`)
             .setRequired(true)

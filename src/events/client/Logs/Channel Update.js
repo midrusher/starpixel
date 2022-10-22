@@ -204,7 +204,7 @@ module.exports = {
 
             let log = new EmbedBuilder()
                 .setTitle(`Изменён канал`)
-                .setDescription(`Категория: \`${newCh.parent.name}\`
+                .setDescription(`Категория: \`${newCh?.parent?.name ? newCh.parent.name : `Отсутствует`}\`
 Канал: ${newCh}
 **Изменения**
 ${chanProm.join(`\n`)}

@@ -14,6 +14,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`mythical`)
         .setDescription(`Мифические предметы гильдии`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`sun`)
             .setDescription(`Мифический предмет - Солнце`)

@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`colors`)
         .setDescription(`Выбрать цвет вашего ника`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`set`)
             .setDescription(`Установить цвет`)

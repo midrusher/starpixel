@@ -10,6 +10,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`code`)
         .setDescription(`Код безопасности гильдии Starpixel`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`first`)
             .setDescription(`Получить первый код безопасности`)

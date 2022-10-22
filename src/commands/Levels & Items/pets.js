@@ -11,6 +11,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`pets`)
         .setDescription(`Питомцы гильдии Starpixel`)
+        .setDMPermission(false)
         .addSubcommand(subcommand => subcommand
             .setName(`spet`)
             .setDescription(`Отправить питомца земли на поиски`)

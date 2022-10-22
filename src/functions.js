@@ -320,7 +320,7 @@ function isURL(string) {
     try {
         url = new URL(string);
         return true
-    } catch (_) {
+    } catch (e) {
         return false;
     }
 }

@@ -1,13 +1,16 @@
-const { ContextMenuCommandBuilder, ApplicationCommandType, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, ModalSubmitInteraction, InteractionType, EmbedBuilder, PermissionFlagsBits, ComponentType, SlashCommandBuilder } = require('discord.js');
+const { ContextMenuCommandBuilder, ApplicationCommandType, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, ModalSubmitInteraction, InteractionType, EmbedBuilder, PermissionFlagsBits, ComponentType, SlashCommandBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
-const { daysOfWeek } = require(`../../functions`)
+const { daysOfWeek, isURL, secondPage } = require(`../../functions`);
+const { Song, SearchResultType } = require('distube');
+const wait = require(`node:timers/promises`).setTimeout
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName(`guildgames`)
         .setDescription(`Совместные игры`)
+        .setDMPermission(false)
         .addSubcommandGroup(gr => gr
             .setName(`settings`)
             .setDescription(`Настройки совместных игр`)
@@ -229,10 +232,36 @@ module.exports = {
                 .setName(`check`)
                 .setDescription(`Получить информацию о совместных игр`)
             )
+            .addSubcommand(sb => sb
+                .setName(`pregame_song`)
+                .setDescription(`Изменить предыгровую песню`)
+                .addStringOption(o => o
+                    .setName(`песня`)
+                    .setDescription(`Ссылка на новую предыгровую песню (длительность должна быть менее 10 минут)`)
+                    .setRequired(true)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`removesong`)
+                .setDescription(`Удалить песню из случайно воспроизводимых`)
+                .addStringOption(o => o
+                    .setName(`песня`)
+                    .setDescription(`Ссылка на песню`)
+                    .setRequired(true)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`songlist`)
+                .setDescription(`Список песен для автовоспроизведения`)
+            )
         )
         .addSubcommand(sb => sb
             .setName(`randomgame`)
             .setDescription(`Случайная игра`)
+        )
+        .addSubcommand(sb => sb
+            .setName(`becomeleader`)
+            .setDescription(`Стать ведущим совместной игры на сегодня`)
         ),
 
     async execute(interaction, client) {
@@ -280,6 +309,10 @@ module.exports = {
                                 ephemeral: true
                             })
                         }
+
+                        client.GamePreStart();
+                        client.ReminderForOfficer();
+                        client.GuildGameStart();
                     }
                         break;
                     case `sethours`: {
@@ -304,6 +337,10 @@ module.exports = {
                                 ephemeral: true
                             })
                         }
+
+                        client.GamePreStart();
+                        client.ReminderForOfficer();
+                        client.GuildGameStart();
                     }
                         break;
                     case `addday`: {
@@ -320,6 +357,10 @@ module.exports = {
                             content: `День \`${daysOfWeek(Number(dayString))}\` был добавлен в список дней проведения совместных игр!`,
                             ephemeral: true
                         })
+
+                        client.GamePreStart();
+                        client.ReminderForOfficer();
+                        client.GuildGameStart();
                     }
                         break;
                     case `removeday`: {
@@ -338,6 +379,10 @@ module.exports = {
                             content: `День \`${daysOfWeek(Number(dayString))}\` был удалён из списка дней проведения совместных игр!`,
                             ephemeral: true
                         })
+
+                        client.GamePreStart();
+                        client.ReminderForOfficer();
+                        client.GuildGameStart();
                     }
                         break;
                     case `addleader`: {
@@ -366,6 +411,9 @@ module.exports = {
                             content: `${member} был успешно добавлен состав ведущих совместных игр! Он будет проводить совместные в \`${daysOfWeek(Number(dayString))}\`!`,
                             ephemeral: true
                         })
+                        client.GamePreStart();
+                        client.ReminderForOfficer();
+                        client.GuildGameStart();
                     }
                         break;
                     case `removeleader`: {
@@ -395,6 +443,10 @@ module.exports = {
                             content: `${member} был успешно удалён из состава ведущих совместных игр! Он больше не будет проводить совместные в \`${daysOfWeek(Number(dayString))}\`!`,
                             ephemeral: true
                         })
+
+                        client.GamePreStart();
+                        client.ReminderForOfficer();
+                        client.GuildGameStart();
                     }
                         break;
                     case `check`: {
@@ -453,6 +505,148 @@ ${promOffs.join(`\n`)}`)
                         })
                     }
                         break;
+
+                    case `pregame_song`: {
+                        const song = interaction.options.getString(`песня`)
+                        if (isURL(song) === false) return interaction.reply({
+                            content: `Песня должна быть ссылкой!`,
+                            ephemeral: true
+                        })
+                        let songDist = await client.distube.search(song, {
+                            limit: 1,
+                            type: SearchResultType.VIDEO
+                        })
+                        if (songDist[0].duration > 600) return interaction.reply({
+                            content: `[Песня](${song}), которую вы попытались добавить, имеет длительность более 10 минут!`,
+                            ephemeral: true,
+                            embeds: []
+                        })
+                        guildData.guildgames.pregame_song = song
+                        guildData.save()
+                        await interaction.reply({
+                            content: `[Песня](${song}) была успешно установлена! Вы сможете услышать её за 10 минут до начала совместной игры!`,
+                            ephemeral: true,
+                            embeds: []
+                        })
+                    }
+                        break;
+                    case `removesong`: {
+                        const url = interaction.options.getString(`песня`)
+                        const search = guildData.guildgames.music.find(mus => mus.link == url)
+                        if (!search) return interaction.reply({
+                            content: `Данной песни нет в списке записанных, проверьте ссылку ещё раз!`,
+                            ephemeral: true
+                        })
+
+                        const i = guildData.guildgames.music.findIndex(mus => mus.link == url)
+                        guildData.guildgames.music.splice(i, 1)
+                        guildData.save()
+                        await interaction.reply({
+                            content: `[Песня](${url}) была удалена из списка автовоспроизведения!`,
+                            ephemeral: true
+                        })
+                    }
+                        break;
+                    case `songlist`: {
+                        let i = 1
+                        let n = 0
+                        let listM = guildData.guildgames.music.map(async mus => {
+                            const song = await client.distube.search(mus.link, {
+                                limit: 1,
+                                type: SearchResultType.VIDEO
+                            })
+                            return `**${i++}**. [${song[0].name}](${mus.link}), отправил <@${mus.sent}>.`
+                        })
+                        const listProm = await Promise.all(listM)
+                        const totalPages = Math.ceil(listProm.length / 10)
+                        let list = listProm.slice(0 + (n * 10), 10 + (n * 10))
+                        const embed = new EmbedBuilder()
+                            .setTitle(`Список песен в автовоспроизведении`)
+                            .setDescription(`Список:
+${list.join(`\n`)}`)
+                            .setColor(process.env.bot_color)
+                            .setThumbnail(interaction.guild.iconURL())
+                            .setFooter({ text: `Страница ${n + 1}/${totalPages}` })
+                            .setTimestamp(Date.now())
+
+                        const pages = new ActionRowBuilder()
+                            .addComponents(
+                                new ButtonBuilder()
+                                    .setCustomId(`prev`)
+                                    .setLabel(`Предыдущая`)
+                                    .setEmoji(`⬅`)
+                                    .setStyle(ButtonStyle.Danger)
+                                    .setDisabled(true)
+                            )
+                            .addComponents(
+                                new ButtonBuilder()
+                                    .setCustomId(`next`)
+                                    .setLabel(`Следующая`)
+                                    .setEmoji(`➡`)
+                                    .setStyle(ButtonStyle.Success)
+                                    .setDisabled(secondPage(totalPages))
+                            )
+
+                        const msg = await interaction.reply({
+                            embeds: [embed],
+                            components: [pages],
+                            fetchReply: true
+                        })
+                        const collector = msg.createMessageComponentCollector({ componentType: ComponentType.Button, time: 120000 })
+
+                        collector.on('collect', async (int) => {
+                            if (interaction.user.id !== int.user.id) return int.reply({
+                                content: `Вы не можете использовать эту кнопку!`,
+                                ephemeral: true
+                            })
+                            if (int.customId == `prev`) {
+                                n = n - 1
+                                if (n <= 0) {
+                                    pages.components[0].setDisabled(true)
+                                } else {
+                                    pages.components[0].setDisabled(false)
+                                }
+                                list = listProm.slice(0 + (n * 10), 10 + (n * 10))
+                                embed.setDescription(`${list.join(`\n`)}`).setFooter({
+                                    text: `Страница ${n + 1}/${totalPages}`
+                                })
+                                pages.components[1].setDisabled(false)
+                                await int.deferUpdate()
+                                await interaction.editReply({
+                                    embeds: [embed],
+                                    components: [pages],
+                                    fetchReply: true
+                                })
+                            } else if (int.customId == `next`) {
+                                n = n + 1
+                                if (n >= totalPages - 1) {
+                                    pages.components[1].setDisabled(true)
+                                } else {
+                                    pages.components[1].setDisabled(false)
+                                }
+                                list = listProm.slice(0 + (n * 10), 10 + (n * 10))
+                                embed.setDescription(`${list.join(`\n`)}`).setFooter({
+                                    text: `Страница ${n + 1}/${totalPages}`
+                                })
+                                pages.components[0].setDisabled(false)
+                                await int.deferUpdate()
+                                await interaction.editReply({
+                                    embeds: [embed],
+                                    components: [pages],
+                                    fetchReply: true
+                                })
+                            }
+                        })
+                        collector.on('end', async (res) => {
+                            pages.components[0].setDisabled(true)
+                            pages.components[1].setDisabled(true)
+                            await interaction.editReply({
+                                embeds: [embed],
+                                components: [pages]
+                            })
+                        })
+                    }
+                        break;
                     default:
                         break;
                 }
@@ -488,7 +682,20 @@ ${promOffs.join(`\n`)}`)
                 }
             }
                 break;
-
+            case `becomeleader`: {
+                const date = new Date()
+                if (!guildData.guildgames.game_days.includes(date.getDay())) return interaction.reply({
+                    content: `По расписанию сегодня нет совместной игры! Попросите администратора изменить это в настройках совместной игры!`,
+                    ephemeral: true
+                })
+                guildData.guildgames.temp_leader = member.user.id
+                guildData.save()
+                await interaction.reply({
+                    content: `Вы стали ведущим на сегодняшнюю совместную игру!`,
+                    ephemeral: true
+                })
+            }
+                break;
             default:
                 break;
         }

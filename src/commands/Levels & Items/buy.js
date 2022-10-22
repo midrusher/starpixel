@@ -5,6 +5,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`buy`)
         .setDescription(`Купить предмет в магазине гильдии`)
+        .setDMPermission(false)
         .addStringOption(option => option
             .setName(`код`)
             .setDescription(`Код предмета, который вы хотите купить`)

@@ -1,0 +1,19 @@
+[
+    {
+        "type": "normal",
+        "name": "",
+        "max": ""
+    },
+    {
+        "type": "vote",
+        "name1": "",
+        "max1": "",
+        "name2": "",
+        "max2": ""
+    },
+    {
+        "type": "restrictment",
+        "name": "",
+        "max": ""
+    }
+]

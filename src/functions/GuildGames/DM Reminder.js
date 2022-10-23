@@ -51,7 +51,7 @@ module.exports = (client) => {
         const weekDays = guildData.guildgames.game_days.join(`,`)
         const scheduleStop = await cron.getTasks().get(`ReminderForOfficer`)
         if (scheduleStop) {
-            scheduleStop.stop()
+            await scheduleStop.stop()
         }
         cron.schedule(`${min_remind.join(`,`)} ${hour_remind.join(`,`)} * * ${weekDays}`, async () => {
             const date = new Date()

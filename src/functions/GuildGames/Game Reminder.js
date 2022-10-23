@@ -28,7 +28,7 @@ module.exports = (client) => {
         const weekDays = guildData.guildgames.game_days.join(`,`)
         const scheduleStop = await cron.getTasks().get(`GamePreStart`)
         if (scheduleStop) {
-            scheduleStop.stop()
+            await scheduleStop.stop()
         }
         cron.schedule(`${min_remind} ${hour_remind} * * ${weekDays}`, async () => {
             let song = guildData.guildgames.pregame_song

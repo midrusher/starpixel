@@ -12,7 +12,6 @@ module.exports = (client) => {
         if (pluginData.plugins.guildgames === false) return
         const guild = await client.guilds.fetch(`320193302844669959`)
         await client.distube.voices.leave(guild)
-        await wait(1000)
         const guildData = await Guild.findOne({ id: guild.id })
         const channel = await guild.channels.fetch(ch_list.main)
         const voice = await guild.channels.fetch(ch_list.guildGamesVoice)

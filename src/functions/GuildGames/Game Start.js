@@ -19,7 +19,7 @@ module.exports = (client) => {
         const weekDays = guildData.guildgames.game_days.join(`,`)
         const scheduleStop = await cron.getTasks().get(`GuildGameStart`)
         if (scheduleStop) {
-            scheduleStop.stop()
+            await scheduleStop.stop()
         }
         cron.schedule(`${startMin} ${startHour} * * ${weekDays}`, async () => {
             const gameTypes = [`Традиционная`, `Особая`]

@@ -25,24 +25,9 @@ module.exports = (client) => {
             const gameTypes = [`Традиционная`, `Особая`]
             const gameType = gameTypes[Math.floor(Math.random() * gameTypes.length)]
             const channel = await guild.channels.fetch(ch_list.test)
-            const voice = await guild.channels.fetch(ch_list.voice)
-
+            const voice = await guild.channels.fetch(ch_list.guildGamesVoice)
+            guildData.guildgames.gameType = gameType
             const musicChannel = await guild.channels.fetch(ch_list.your_music)
-            const pinnedMessages = await musicChannel.messages.fetchPinned()
-            await pinnedMessages.forEach(msg => {
-                const content = msg.content.split(` `)
-                content.forEach(cont => {
-                    if (isURL(cont) === true) {
-                        const res = guildData.guildgames.music.find(mus => mus.link == cont)
-                        if (!res) {
-                            guildData.guildgames.music.push({
-                                link: cont,
-                                sent: msg.author.id
-                            })
-                        }
-                    }
-                })
-            })
             guildData.save()
             const date = new Date()
             const day = date.getDay()
@@ -54,7 +39,7 @@ module.exports = (client) => {
 
 **СОВМЕСТНАЯ ИГРА**  :arrow_down: 
 
-Игру ведет ${member}!     :sunglasses:    @here
+Игру ведет ${member}!     :sunglasses:    
 Ждём Вас в голосовом канале ${voice} с хорошим настроением!
 Тип совместной игры: **${gameType}**.
 
@@ -71,7 +56,7 @@ module.exports = (client) => {
 
 **СОВМЕСТНАЯ ИГРА**  :arrow_down: 
 
-Ждём Вас в голосовом канале ${voice} с хорошим настроением!   @here
+Ждём Вас в голосовом канале ${voice} с хорошим настроением!   
 Тип совместной игры: **${gameType}**.
 
 :warning: Чтобы получить пати, просто примите \`/g party\`. Иногда вам придётся ждать, пока наши игроки доиграют.

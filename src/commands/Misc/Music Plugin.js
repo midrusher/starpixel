@@ -754,7 +754,7 @@ module.exports = {
                 const filter = (i) => i.user.id === interaction.user.id
 
                 const collector = msg.createMessageComponentCollector({ filter, componentType: ComponentType.Button, time: 30000 })
-                let songR = queue.song[0]
+                let songR = queue.songs[0]
                 collector.on('collect', async (i) => {
 
                     await i.deferReply({

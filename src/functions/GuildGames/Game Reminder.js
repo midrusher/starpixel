@@ -47,7 +47,7 @@ module.exports = (client) => {
             if (memberInfo) {
                 const member = await guild.members.fetch(memberInfo)
                 await channel.send({
-                    content: `Скоро совместная игра!    @here
+                    content: `Скоро совместная игра!    
 Заходите на Hypixel, чтобы успеть принять \`/g party\`.
 
 :scroll:  ${member} хочет напомнить вам **ПРАВИЛА** совместных игр: 
@@ -68,7 +68,7 @@ module.exports = (client) => {
             } else {
                 const clientMember = await guild.members.fetch(client.user.id)
                 await channel.send({
-                    content: `Скоро совместная игра!    @here
+                    content: `Скоро совместная игра!    
 Заходите на Hypixel, чтобы успеть принять \`/g party\`.
 
 :scroll:  Ведущие хотят напомнить вам **ПРАВИЛА** совместных игр: 

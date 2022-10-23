@@ -450,7 +450,7 @@ module.exports = {
                     }
                         break;
                     case `check`: {
-                        let i = ``
+                        let i = 1
                         const mapDays = guildData.guildgames.game_days.map(day => {
                             return `${daysOfWeek(Number(day))}`
                         }).join(`, `)
@@ -548,22 +548,22 @@ ${promOffs.join(`\n`)}`)
                     }
                         break;
                     case `songlist`: {
-                        let i = 1
                         let n = 0
-                        let listM = guildData.guildgames.music.map(async mus => {
+                        let listM = guildData.guildgames.music.map(async (mus, i) => {
                             const song = await client.distube.search(mus.link, {
                                 limit: 1,
                                 type: SearchResultType.VIDEO
                             })
-                            return `**${i++}**. [${song[0].name}](${mus.link}), отправил <@${mus.sent}>.`
+                            return `**${++i}**. [${song[0].name}](${mus.link}), отправил <@${mus.sent}>.`
                         })
-                        const listProm = await Promise.all(listM)
-                        const totalPages = Math.ceil(listProm.length / 10)
-                        let list = listProm.slice(0 + (n * 10), 10 + (n * 10))
+
+                        let list = listM.slice(0 + (n * 10), 10 + (n * 10))
+                        let listProm = await Promise.all(list)
+                        const totalPages = Math.ceil(listM.length / 10)
                         const embed = new EmbedBuilder()
                             .setTitle(`Список песен в автовоспроизведении`)
                             .setDescription(`Список:
-${list.join(`\n`)}`)
+${listProm.join(`\n`)}`)
                             .setColor(process.env.bot_color)
                             .setThumbnail(interaction.guild.iconURL())
                             .setFooter({ text: `Страница ${n + 1}/${totalPages}` })
@@ -606,8 +606,9 @@ ${list.join(`\n`)}`)
                                 } else {
                                     pages.components[0].setDisabled(false)
                                 }
-                                list = listProm.slice(0 + (n * 10), 10 + (n * 10))
-                                embed.setDescription(`${list.join(`\n`)}`).setFooter({
+                                list = listM.slice(0 + (n * 10), 10 + (n * 10))
+                                listProm = await Promise.all(list)
+                                embed.setDescription(`${listProm.join(`\n`)}`).setFooter({
                                     text: `Страница ${n + 1}/${totalPages}`
                                 })
                                 pages.components[1].setDisabled(false)
@@ -624,8 +625,9 @@ ${list.join(`\n`)}`)
                                 } else {
                                     pages.components[1].setDisabled(false)
                                 }
-                                list = listProm.slice(0 + (n * 10), 10 + (n * 10))
-                                embed.setDescription(`${list.join(`\n`)}`).setFooter({
+                                list = listM.slice(0 + (n * 10), 10 + (n * 10))
+                                listProm = await Promise.all(list)
+                                embed.setDescription(`${listProm.join(`\n`)}`).setFooter({
                                     text: `Страница ${n + 1}/${totalPages}`
                                 })
                                 pages.components[0].setDisabled(false)

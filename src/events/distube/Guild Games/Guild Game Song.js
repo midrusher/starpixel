@@ -13,21 +13,22 @@ module.exports = {
         const mus = guildData.guildgames.music
         let total = 0;
         for (let i = 0; i < mus.length; i++) {
-            const formula = Math.floor(1 / (mus.length * (mus[i].usedTimes + 1))) * 100
+            const formula = Math.floor((1 / (mus.length * ((mus[i].usedTimes ** 2) + 1))) * 100)
             total += formula;
         }
         let r = Math.floor(Math.random() * total);
-        let i = 0;
-        for (let s = Math.floor(1 / (mus.length * (mus[0].usedTimes + 1))) * 100; s <= r; s += Math.floor(1 / (mus.length * (mus[i].usedTimes + 1))) * 100) {
-            i++;
+        let b = 0;
+        for (let s = Math.floor((1 / (mus.length * ((mus[0].usedTimes ** 2) + 1))) * 100); s <= r; s += Math.floor((1 / (mus.length * ((mus[b].usedTimes ** 2) + 1))) * 100)) {
+            b++;
         }
-        const member = await guild.members.fetch(mus[i].sent)
-        client.distube.play(queue.voiceChannel, mus[i].link, {
+        const member = await guild.members.fetch(mus[b].sent)
+        client.distube.play(queue.voiceChannel, mus[b].link, {
             member: member,
             textChannel: queue.textChannel
         })
-
-        const song = await client.distube.search(mus[i].link, {
+        guildData.guildgames.music[b].usedTimes += 1
+        guildData.save()
+        const song = await client.distube.search(mus[b].link, {
             limit: 1,
             type: SearchResultType.VIDEO
         })
@@ -37,9 +38,7 @@ module.exports = {
             .setTimestamp(Date.now())
             .setDescription(`**Название**: \`${song[0].name}\`
 **Длительность**: \`${song[0].formattedDuration}\`
-
-**Лайков**: ${song[0].likes}👍
-**Дизлайков**: ${song[0].dislikes}👎
+**Отправил**: <@${mus[b].sent}>
 
 [Нажмите здесь, чтобы получить ссылку](${song[0].url})`)
         await queue.textChannel.send({

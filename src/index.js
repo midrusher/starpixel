@@ -1,4 +1,5 @@
 require('dotenv').config();
+require(`node:events`).setMaxListeners(100)
 const winston = require('winston');
 const chalk = require(`chalk`)
 const { tokenTEST, token, databaseToken, github_token } = process.env;
@@ -7,9 +8,6 @@ const { Client, Collection, GatewayIntentBits, Partials, ActivityType, } = requi
 const fs = require('fs');
 const { DisTube } = require(`distube`);
 const { setInterval } = require('timers/promises');
-
-
-
 
 const client = new Client({
     intents: [
@@ -65,7 +63,7 @@ client.distube = new DisTube(client, {
     emitAddListWhenCreatingQueue: true,
     emitAddSongWhenCreatingQueue: true,
     joinNewVoiceChannel: true,
-    directLink: true
+    directLink: true,
 })
 
 client.commands = new Collection();
@@ -99,4 +97,6 @@ client.login(token);
 (async () => {
     await connect(databaseToken).catch(console.error)
 })();
+
+process.on('warning', e => console.warn(e.stack))
 

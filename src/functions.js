@@ -7,6 +7,14 @@ function toOrdinalSuffix(num) {
         : int + ordinals[3]
 };
 
+function suffix(num) {
+    const int = parseInt(num), digits = [int % 10, int % 100], ordinals = [` раз`, ` раза`, ` раза`, ` раза`, ` раз`], oPattern = [1, 2, 3, 4, 5], tPattern = [11, 12, 13, 14, 15, 16, 17, 18, 19]
+
+    return oPattern.includes(digits[0]) && !tPattern.includes(digits[1])
+        ? int + ordinals[digits[0] - 1]
+        : int + ordinals[4]
+};
+
 
 
 //Игра в дурака
@@ -453,6 +461,7 @@ function daysOfWeek(number) {
 
 module.exports = {
     toOrdinalSuffix,
+    suffix,
     gameConstructor,
     calcActLevel,
     getLevel,

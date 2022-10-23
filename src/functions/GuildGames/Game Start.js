@@ -24,10 +24,9 @@ module.exports = (client) => {
         cron.schedule(`${startMin} ${startHour} * * ${weekDays}`, async () => {
             const gameTypes = [`Традиционная`, `Особая`]
             const gameType = gameTypes[Math.floor(Math.random() * gameTypes.length)]
-            const channel = await guild.channels.fetch(ch_list.test)
+            const channel = await guild.channels.fetch(ch_list.main)
             const voice = await guild.channels.fetch(ch_list.guildGamesVoice)
             guildData.guildgames.gameType = gameType
-            const musicChannel = await guild.channels.fetch(ch_list.your_music)
             guildData.save()
             const date = new Date()
             const day = date.getDay()

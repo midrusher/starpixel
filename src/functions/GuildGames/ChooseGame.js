@@ -13,7 +13,7 @@ module.exports = (client) => {
 
         const guild = await client.guilds.fetch(`320193302844669959`)
         const guildData = await Guild.findOne({ id: guild.id })
-        const channel = await guild.channels.fetch(ch_list.test)
+        const channel = await guild.channels.fetch(ch_list.main)
         const voice = await guild.channels.fetch(ch_list.guildGamesVoice)
 
         const games = require(`./GuildGamesSettings/Games List.json`)

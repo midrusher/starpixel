@@ -33,7 +33,7 @@ module.exports = (client) => {
         cron.schedule(`${min_remind} ${hour_remind} * * ${weekDays}`, async () => {
             let song = guildData.guildgames.pregame_song
             if (!song) song = `https://www.youtube.com/watch?v=KvAuzChTIJg`
-            const channel = await guild.channels.fetch(ch_list.test)
+            const channel = await guild.channels.fetch(ch_list.main)
             const MusicCommandsChannel = await guild.channels.fetch(ch_list.music)
             const date = new Date()
             const day = date.getDay()

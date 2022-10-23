@@ -63,14 +63,14 @@ module.exports = (client) => {
                     const channel = await guild.channels.fetch(ch_list.guildgames)
                     await member.send(`Привет! Скоро начинается твоя совместная игра! Пожалуйста, не пропусти ее! Если ты не можешь её посетить, заранее уведоми других ведущих в канале ${channel}! Спасибо!`)
                 } catch (e) {
-                    const channel = await guild.channels.fetch(ch_list.test)
+                    const channel = await guild.channels.fetch(ch_list.guildgames)
                     await channel.send(`${member}, привет!  У тебя закрыты личные сообщение, поэтому я не смог написать тебе. Пожалуйста, открой их.
                     
 Скоро начинается твоя совместная игра! Пожалуйста, не пропусти ее! Если ты не можешь её посетить, заранее уведоми других ведущих в канале ${channel}! Спасибо!`)
                 }
 
             } else {
-                const channel = await guild.channels.fetch(ch_list.test)
+                const channel = await guild.channels.fetch(ch_list.guildgames)
                 const role = await guild.roles.fetch(`523559726219526184`)
                 await channel.send({
                     content: `Скоро начинается совместная игра! Пожалуйста, не пропустите её! В моей базе данных нет информации о ведущем совместной игры в этот день. Прошу администрацию это исправить. ${role}

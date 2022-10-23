@@ -14,7 +14,7 @@ module.exports = (client) => {
         await client.distube.voices.leave(guild)
         await wait(1000)
         const guildData = await Guild.findOne({ id: guild.id })
-        const channel = await guild.channels.fetch(ch_list.test)
+        const channel = await guild.channels.fetch(ch_list.main)
         const voice = await guild.channels.fetch(ch_list.guildGamesVoice)
         const voiceMembers = voice.members.filter(member => member.user.bot === false)
         await voiceMembers.forEach(async member => {
@@ -75,7 +75,7 @@ ${gamesPlayed.join(`\n`)}`)
             `:purple_heart: :blue_heart: :purple_heart: :blue_heart: :purple_heart: :blue_heart:`
         ]
         const randomHearts = hearts[Math.floor(Math.random() * hearts.length)]
-        await channel.send(randomHearts)
+        await channel.send(`${randomHearts}`)
         await channel.send({
             embeds: [statsEmbed]
         })

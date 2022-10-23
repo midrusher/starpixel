@@ -30,6 +30,9 @@ module.exports = (client) => {
             guildData.save()
             const date = new Date()
             const day = date.getDay()
+            await voice.members.forEach(async (member) => {
+                await member.voice.setMute(false)
+            })
             const memberInfo = guildData.guildgames.temp_leader || await guildData.guildgames.officers.find(off => off.day == day).id
             if (memberInfo) {
                 const member = await guild.members.fetch(memberInfo)

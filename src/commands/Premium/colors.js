@@ -97,7 +97,8 @@ module.exports = {
                 switch (interaction.options.getSubcommand()) {
                     case `create`: {
                         if (userData.custom_color.created === true) return interaction.reply({
-                            content: `У вас уже имеется собственный цвет! Используйте команду \`/colors custom change\`, чтобы изменить код вашего цвета!`
+                            content: `У вас уже имеется собственный цвет! Используйте команду \`/colors custom change\`, чтобы изменить код вашего цвета!`,
+                            ephemeral: true
                         })
                         if (userData.rumbik < 200) return interaction.reply({
                             content: `Вы не можете создать собственный цвет, так как на вашем балансе меньше 200 румбиков!`,

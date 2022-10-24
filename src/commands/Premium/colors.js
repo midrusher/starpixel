@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const { Temp } = require(`../../schemas/temp_items`)
 const chalk = require(`chalk`);
+const { User } = require('../../schemas/userdata');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -20,6 +21,40 @@ module.exports = {
         .addSubcommand(subcommand => subcommand
             .setName(`reset`)
             .setDescription(`Сбросить текущий цвет`)
+        )
+        .addSubcommandGroup(gr => gr
+            .setName(`custom`)
+            .setDescription(`Пользовательский цвет никнейма (Владыка+)`)
+            .addSubcommand(sb => sb
+                .setName(`create`)
+                .setDescription(`Приобрести собственный цвет за 200 румбиков`)
+                .addStringOption(o => o
+                    .setName(`код`)
+                    .setDescription(`Цветовой код вашего цвета в формате hex`)
+                    .setRequired(true)
+                    .setMaxLength(7)
+                    .setMinLength(6)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`change`)
+                .setDescription(`Изменить цветовой код личного цвета`)
+                .addStringOption(o => o
+                    .setName(`код`)
+                    .setDescription(`Цветовой код вашего нового цвета в формате hex`)
+                    .setRequired(true)
+                    .setMaxLength(7)
+                    .setMinLength(6)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`set`)
+                .setDescription(`Установить пользовательский цвет`)
+            )
+            .addSubcommand(sb => sb
+                .setName(`reset`)
+                .setDescription(`Убрать пользовательский цвет`)
+            )
         ),
 
     async autoComplete(interaction, client) {
@@ -36,7 +71,8 @@ module.exports = {
     async execute(interaction, client) {
 
         const { roles } = interaction.member //Участник команды
-        const member = interaction.member
+        const { member, user, guild } = interaction
+        const userData = await User.findOne({ userid: interaction.user.id, guildid: interaction.guild.id })
         const r1 = `595893144055316490`; //Чёрный
         const r2 = `595892599693246474`; //Лазурный
         const r3 = `595892677451710468`; //Пурпурный
@@ -51,7 +87,117 @@ module.exports = {
         const r12 = `1030760791722434620`; //Хэллоуинский
         const r13 = `1030760793991565422`; //Новогодний
         const r14 = `1030760793672785991`; //Пасхальный
+        switch (interaction.options.getSubcommandGroup()) {
+            case `custom`: {
+                if (userData.rank_number < 7) return interaction.reply({
+                    content: `Вы не можете использовать эту команду, так как ваш ранг ниже Владыки!`,
+                    ephemeral: true
+                })
 
+                switch (interaction.options.getSubcommand()) {
+                    case `create`: {
+                        if (userData.custom_color.created === true) return interaction.reply({
+                            content: `У вас уже имеется собственный цвет! Используйте команду \`/colors custom change\`, чтобы изменить код вашего цвета!`
+                        })
+                        if (userData.rumbik < 200) return interaction.reply({
+                            content: `Вы не можете создать собственный цвет, так как на вашем балансе меньше 200 румбиков!`,
+                            ephemeral: true
+                        })
+                        let hex = interaction.options.getString(`код`)
+                        if (!hex.startsWith(`#`)) hex = `#${interaction.options.getString(`код`)}`
+                        var test = /^#[0-9A-F]{6}$/i.test(hex)
+                        if (test == false) return interaction.reply({
+                            content: `Введённый вами код не является цветовым кодом hex!`,
+                            ephemeral: true
+                        })
+                        const exampleRole = await interaction.guild.roles.fetch(`563793535250464809`)
+                        const position = exampleRole.position - 2
+                        const role = await guild.roles.create({
+                            name: `ᅠᅠᅠЛИЧНЫЙ ЦВЕТ`,
+                            color: hex,
+                            position: position
+                        })
+                        userData.rumbik -= 200
+                        userData.custom_color.created = true
+                        userData.custom_color.hex = hex
+                        userData.custom_color.role = role.id
+                        userData.save()
+
+                        await member.roles.add(role.id)
+                        await interaction.reply({
+                            content: `Вы приобрели свой собственный цвет! ${role}`
+                        })
+                    }
+                        break;
+                    case `change`: {
+                        if (userData.custom_color.created === false) return interaction.reply({
+                            content: `У вас нет собственного цвета! Используйте команду \`/colors custom create\`, чтобы приобрести его!`,
+                            ephemeral: true
+                        })
+
+                        const role = await guild.roles.fetch(userData.custom_color.role)
+                        let hex = interaction.options.getString(`код`)
+                        if (!hex.startsWith(`#`)) hex = `#${interaction.options.getString(`код`)}`
+                        var test = /^#[0-9A-F]{6}$/i.test(hex)
+                        if (test == false) return interaction.reply({
+                            content: `Введённый вами код не является цветовым кодом hex!`,
+                            ephemeral: true
+                        })
+                        await role.setColor(hex)
+                        userData.custom_color.hex = hex
+                        userData.save()
+
+                        await interaction.reply({
+                            content: `Вы изменили цветовой код вашего цвета! ${role}`
+                        })
+                    }
+                        break;
+                    case `set`: {
+                        if (userData.custom_color.created === false) return interaction.reply({
+                            content: `У вас нет собственного цвета! Используйте команду \`/colors custom create\`, чтобы приобрести его!`,
+                            ephemeral: true
+                        })
+                        if (member.roles.cache.has(userData.custom_color.role)) return interaction.reply({
+                            content: `У вас уже установлен собственный цвет!`,
+                            ephemeral: true
+                        })
+                        await member.roles.add(userData.custom_color.role)
+                        await interaction.reply({
+                            content: `Вы установили свой цвет!`,
+                            ephemeral: true
+                        })
+
+                    }
+                        break;
+                    case `reset`: {
+                        if (userData.custom_color.created === false) return interaction.reply({
+                            content: `У вас нет собственного цвета! Используйте команду \`/colors custom create\`, чтобы приобрести его!`,
+                            ephemeral: true
+                        })
+                        if (!member.roles.cache.has(userData.custom_color.role)) return interaction.reply({
+                            content: `У вас не установлен собственный цвет!`,
+                            ephemeral: true
+                        })
+                        await member.roles.remove(userData.custom_color.role)
+                        await interaction.reply({
+                            content: `Вы убрали свой цвет!`,
+                            ephemeral: true
+                        })
+
+
+                    }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+                break;
+
+            default:
+                break;
+        }
+        if (interaction.options.getSubcommandGroup()) return
         switch (interaction.options.getSubcommand()) {
             case `set`: {
                 const { Guild } = require(`../../schemas/guilddata`)
@@ -373,12 +519,7 @@ module.exports = {
                 })
                 await roles.remove([r2, r3, r4, r5, r6, r7, r8, r1, r9]).catch(console.error)
             }
-            default: {
-                await interaction.reply({
-                    content: `Данной опции не существует! Выберите одну из предложенных!`,
-                    ephemeral: true
-                })
-            }
+            default:
                 break;
         }
         console.log(chalk.green(`[Использована команда]`) + chalk.gray(`: ${interaction.user.tag} использовал команду /colors ${interaction.options.getSubcommand()}`))

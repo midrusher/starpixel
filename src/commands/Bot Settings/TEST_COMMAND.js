@@ -19,9 +19,9 @@ module.exports = {
         .setDMPermission(false),
 
     async execute(interaction, client) {
-        const voice = await interaction.guild.channels.fetch(ch_list.guildGamesVoice)
-        await voice.members.forEach(async (member) => {
-            await member.voice.setMute(false)
-        })
+        
+        const role = await interaction.guild.roles.fetch(`992395741848928367`)
+        console.log(role.position)
+        console.log(role.rawPosition)
     }
 };

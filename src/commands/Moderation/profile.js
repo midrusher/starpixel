@@ -188,7 +188,7 @@ module.exports = {
                             `Перк "Уменьшение опыта гильдии для получения билета"`,
                             `Перк "Изменение предметов"`,
 
-
+                            `Совместные игры`
 
                         ];
                         const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase())).slice(0, 25);
@@ -528,9 +528,9 @@ module.exports = {
                                             nick: `${member.user.username}`
                                         })
                                     }
-                                    
+
                                 } catch (e) {
-                                    
+
                                 }
                                 userData.delete()
                                 birthdayData.delete()
@@ -653,6 +653,8 @@ module.exports = {
                 userData.perks.shop_discount = 0
                 userData.perks.temp_items = 0
                 userData.perks.ticket_discount = 0
+
+                userData.rank_number = 0
                 userData.save()
 
                 const back_roles = new ActionRowBuilder()
@@ -1865,8 +1867,29 @@ module.exports = {
                                 })
                             }
                                 break;
+                            case 'Совместные игры': {
+                                const before = userData.visited_games
 
+                                if (value < 0) return interaction.reply({
+                                    content: `\`${interaction.options.getString(`опция`)}\` не может быть меньше 0!`,
+                                    ephemeral: true
+                                })
 
+                                userData.visited_games = value
+                                userData.save()
+
+                                const success = new EmbedBuilder()
+                                    .setTitle(`Установлено новое значение в профиле`)
+                                    .setDescription(`Значение \`${interaction.options.getString(`опция`)}\` у пользователя ${user} было установлено на \`${before}  ➡  ${value}\`! Используйте \`/profile updateall\`, чтобы применить новые значения и обновить старые у других пользователей!`)
+                                    .setColor(process.env.bot_color)
+                                    .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
+                                    .setTimestamp(Date.now())
+
+                                await interaction.reply({
+                                    embeds: [success]
+                                })
+                            }
+                                break;
                             default:
                                 break;
                         }

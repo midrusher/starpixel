@@ -276,7 +276,17 @@ module.exports = {
 
                     ))
             )
-        ),
+        )
+        .addSubcommandGroup(gr => gr
+            .setName(`users`)
+            .setDescription(`Настройки пользователей`)
+            .addSubcommand(sb => sb
+                .setName(`removecolor`)
+                .setDescription(`Удалить пользовательский цвет`)
+                .addUserOption(o => o
+                    .setName(`пользователь`)
+                    .setDescription(`Пользователь, цвет которого нужно удалить`)
+                    .setRequired(true)))),
     async autoComplete(interaction, client) {
         const gr = interaction.options.getSubcommandGroup()
         const sb = interaction.options.getSubcommand()
@@ -306,7 +316,8 @@ module.exports = {
                             'Обновление каналов',
                             'Опыт гильдии',
                             'Музыка',
-                            'Сезонное'
+                            'Сезонное',
+                            'Совместные игры'
                         ];
                         const filtered = choices.filter(choice => choice.toLowerCase().includes(focusedValue.toLowerCase())).slice(0, 25);
                         await interaction.respond(
@@ -378,7 +389,7 @@ module.exports = {
             }
                 break;
             case `plugins`: {
-                let { boxes, cosmetics, achievements, pets, act_exp, rank_exp, shop, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, recording, seasonal } = plugins
+                let { boxes, cosmetics, achievements, pets, act_exp, rank_exp, shop, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, recording, seasonal, guildgames } = plugins
 
                 switch (sb) {
                     case `toggle`: {
@@ -407,6 +418,7 @@ module.exports = {
                         else if (id == 22) guildData.plugins.music = boolean
                         else if (id == 24) guildData.plugins.items = boolean
                         else if (id == 25) guildData.plugins.seasonal = boolean
+                        else if (id == 26) guildData.plugins.guildgames = boolean
                         else if (id == 9999 || id == 0 || id == 4 || id == 5 || id == 6 || id == 23) return interaction.reply({ content: `Данной опции не существует!`, ephemeral: true })
 
                         guildData.save()
@@ -421,7 +433,7 @@ module.exports = {
 
                     case `check`: {
                         let i = 1
-                        let { items, cosmetics, achievements, pets, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, seasonal } = plugins
+                        let { items, cosmetics, achievements, pets, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, seasonal, guildgames } = plugins
                         let result = new EmbedBuilder()
                             .setColor(process.env.bot_color)
                             .setTitle(`Статус плагинов гильдии`)
@@ -447,6 +459,7 @@ module.exports = {
 **${i++}.** \`Опыт гильдии\` - Статус: ${toggleOnOff(gexp)}
 **${i++}.** \`Музыка\` - Статус: ${toggleOnOff(music)}
 **${i++}.** \`Сезонное\` - Статус: ${toggleOnOff(seasonal)}
+**${i++}.** \`Совместные игры\` - Статус: ${toggleOnOff(guildgames)}
 
 **РЕЖИМ ТЕХ. РАБОТ**: ${toggleOnOff(clientData.testmode)}`)
 
@@ -958,6 +971,37 @@ ${roles.join('\n')}`
                         })
                     }
                         break;
+                    default:
+                        break;
+                }
+            }
+                break;
+            case `users`: {
+                switch (interaction.options.getSubcommand()) {
+                    case `removecolor`: {
+                        const member = interaction.options.getMember(`пользователь`)
+                        const userData = await User.findOne({ userid: member.user.id, guildid: guild.id })
+                        if (!userData) return interaction.reply({
+                            content: `Данных об этом пользователе нет!`,
+                            ephemeral: true
+                        })
+                        if (userData.custom_color.created === false) return interaction.reply({
+                            content: `Пользователь не приобрел свой цвет!`,
+                            ephemeral: true
+                        })
+                        const colorRole = await interaction.guild.roles.fetch(userData.custom_color.role)
+                        await colorRole.delete()
+                        userData.custom_color.created = false
+                        userData.custom_color.hex = ``
+                        userData.custom_color.role = ``
+                        userData.save()
+                        await interaction.reply({
+                            content: `Вы успешно удалили пользовательский цвет игрока ${member}!`,
+                            ephemeral: true
+                        })
+                    }
+                        break;
+
                     default:
                         break;
                 }

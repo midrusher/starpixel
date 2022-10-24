@@ -1,6 +1,8 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
+const { rankName } = require('../../functions');
 const { User } = require(`../../schemas/userdata`)
+
 
 
 module.exports = {
@@ -21,6 +23,8 @@ module.exports = {
                 })
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
         const userData = await User.findOne({ userid: user.id })
+        let colorRole = await interaction.guild.roles.fetch(userData.custom_color?.role ? userData.custom_color.role : `nn`)
+        if (!colorRole) colorRole = `Не создана`
         const embed = new EmbedBuilder()
             .setColor(0xA872FF)
             .setAuthor({
@@ -30,8 +34,10 @@ module.exports = {
             .setTimestamp(Date.now())
             .setDescription(
                 `**ОСНОВНОЕ**
+\`Ранг в гильдии\` - ${rankName(userData.rank_number)}
 \`Румбики\` - ${userData.rumbik}<:Rumbik:883638847056003072>
 \`Опыт рангов\` - ${userData.rank}💠
+\`Посещено совместных игр\` - ${userData.visited_games} игр
 \`Билеты\` - ${userData.tickets}🏷
 \`Опыт гильдии\` - ${userData.gexp} GEXP
 \`Медаль 🥇\` - ${userData.medal_1} шт.
@@ -46,7 +52,12 @@ module.exports = {
 \`🕒 Увеличение времени действия временных предметов\` - ${userData.perks.temp_items}/1
 \`💰 Возможность продавать предметы из профиля\` - ${userData.perks.sell_items}/1
 \`🏷️ Уменьшение опыта гильдии для получения билета\` - ${userData.perks.ticket_discount}/5
-\`✨ Изменение предметов\` - ${userData.perks.change_items}/1`)
+\`✨ Изменение предметов\` - ${userData.perks.change_items}/1
+
+**ПОЛЬЗОВАТЕЛЬСКИЙ ЦВЕТ**
+\`Наличие\` - ${userData.custom_color.created ? `Создан` : `Не создан`}
+\`Цветовой код\` - ${userData.custom_color?.hex ? userData.custom_color?.hex : `Цветовой код отсутствует`}
+\`Роль\` - ${colorRole}`)
             .addFields(
                 {
                     name: `НАВЫКИ ПИТОМЦЕВ`,

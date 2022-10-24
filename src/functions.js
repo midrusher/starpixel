@@ -388,6 +388,8 @@ function SettingsPluginsGetID(string) {
             break;
         case `Сезонное`: { id = 25 }
             break;
+        case `Совместные игры`: { id = 26 }
+            break;
         default: { id = 9999 }
             break;
     }
@@ -458,6 +460,36 @@ function daysOfWeek(number) {
     } else return `Число ${number} не представляет собой день недели!`
 }
 
+function rankName(number) {
+    let err = new Error(`\`Выбранная опция должны иметь тип Number!\``)
+    if (typeof number !== "number") return err
+
+    if (number == 0) {
+        return `Новичок`
+    } else if (number == 1) {
+        return `Специалист`
+    } else if (number == 2) {
+        return `Профессионал`
+    } else if (number == 3) {
+        return `Мастер`
+    } else if (number == 4) {
+        return `Чемпион`
+    } else if (number == 5) {
+        return `Звёздочка`
+    } else if (number == 6) {
+        return `Легенда`
+    } else if (number == 7) {
+        return `Владыка`
+    } else if (number == 8) {
+        return `Лорд`
+    } else if (number == 9) {
+        return `Император`
+    } else if (number == 10) {
+        return `Повелитель`
+    } else return `Число ${number} не имеет никакого ранга!`
+}
+
+
 
 module.exports = {
     toOrdinalSuffix,
@@ -474,5 +506,6 @@ module.exports = {
     secondPage,
     achievementStats,
     found,
-    daysOfWeek
+    daysOfWeek,
+    rankName
 }

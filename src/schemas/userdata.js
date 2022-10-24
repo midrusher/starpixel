@@ -14,6 +14,7 @@ const User = new mongoose.Schema({
         custom_rank: { type: Boolean, default: false }
 
     },
+    rank_number: { type: Number, default: 0 },
     name: { type: String },
     nickname: { type: String, },
     oldnickname: { type: String },
@@ -158,7 +159,12 @@ const User = new mongoose.Schema({
             points: { type: Number, default: 0 }
         },
     },
-    visited_games: { type: Number, default: 0 }
+    visited_games: { type: Number, default: 0 },
+    custom_color: {
+        hex: { type: String },
+        role: { type: String },
+        created: { type: Boolean, default: false }
+    }
 })
 
 module.exports = { User: mongoose.model(`User`, User) }

@@ -16,17 +16,17 @@ module.exports = (client) => {
                 if (result.userid !== `491343958660874242`) {
                     const { userid } = result;
                     const guild = await client.guilds.fetch(`320193302844669959`)
-                    let nov = await guild.roles.fetch(`553593731953983498`) //Новичок
-                    let sp = await guild.roles.fetch(`553593734479216661`) //Специалист
-                    let pro = await guild.roles.fetch(`553593136895623208`) //Профессионал
-                    let mas = await guild.roles.fetch(`553593133884112900`) //Мастер
-                    let champ = await guild.roles.fetch(`553593136027533313`) //Чемпион
-                    let star = await guild.roles.fetch(`553593976037310489`) //Звездочка
-                    let leg = await guild.roles.fetch(`780487593485008946`) //Легенда
-                    let vlad = await guild.roles.fetch(`849695880688173087`) //Владыка
-                    let lord = await guild.roles.fetch(`992122876394225814`) //Лорд
-                    let imp = await guild.roles.fetch(`992123014831419472`) //Император
-                    let pov = await guild.roles.fetch(`992123019793276961`) //Повелитель
+                    let nov = await guild.roles.fetch(`553593731953983498`) //Новичок 0
+                    let sp = await guild.roles.fetch(`553593734479216661`) //Специалист 1
+                    let pro = await guild.roles.fetch(`553593136895623208`) //Профессионал 2
+                    let mas = await guild.roles.fetch(`553593133884112900`) //Мастер 3
+                    let champ = await guild.roles.fetch(`553593136027533313`) //Чемпион 4
+                    let star = await guild.roles.fetch(`553593976037310489`) //Звездочка 5
+                    let leg = await guild.roles.fetch(`780487593485008946`) //Легенда 6
+                    let vlad = await guild.roles.fetch(`849695880688173087`) //Владыка 7
+                    let lord = await guild.roles.fetch(`992122876394225814`) //Лорд 8 
+                    let imp = await guild.roles.fetch(`992123014831419472`) //Император 9
+                    let pov = await guild.roles.fetch(`992123019793276961`) //Повелитель 10
                     const member = await guild.members.fetch(userid)
                     if (member.roles.cache.has(`504887113649750016`)) {
                         if (result.rank >= 0 && result.rank < 50) { //Новичок
@@ -47,8 +47,10 @@ module.exports = (client) => {
 
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `🦋`
-                                    result.save()
                                 }
+                                result.rank_number = 0
+                                result.save()
+                                 
 
                                 await guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
@@ -74,9 +76,11 @@ module.exports = (client) => {
                                 await member.roles.add(newrank).catch()
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `🥥`
-                                    result.save()
+                                    
                                 }
-
+                                result.rank_number = 1
+                                result.save()
+                                 
 
                                 guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
@@ -102,9 +106,10 @@ module.exports = (client) => {
                                 await member.roles.add(newrank).catch()
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `🍕`
-                                    result.save()
+                                     
                                 }
-
+                                result.rank_number = 2
+                                result.save()
 
                                 guild.channels.cache.get(ch_list.main).send({
                                     embeds: [rank_update]
@@ -129,8 +134,10 @@ module.exports = (client) => {
                                 await member.roles.add(newrank).catch()
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `🍂`
-                                    result.save()
+                                     
                                 }
+                                result.rank_number = 3
+                                result.save()
 
 
                                 guild.channels.cache.get(ch_list.main).send({
@@ -157,8 +164,10 @@ module.exports = (client) => {
                                 await member.roles.add(newrank).catch()
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `🍁`
-                                    result.save()
+                                     
                                 }
+                                result.rank_number = 4
+                                result.save()
 
 
                                 guild.channels.cache.get(ch_list.main).send({
@@ -185,8 +194,10 @@ module.exports = (client) => {
                                 await member.roles.add(newrank).catch()
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `⭐`
-                                    result.save()
+                                     
                                 }
+                                result.rank_number = 5
+                                result.save()
 
 
                                 guild.channels.cache.get(ch_list.main).send({
@@ -213,8 +224,10 @@ module.exports = (client) => {
                                 await member.roles.add(newrank).catch()
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `🏅`
-                                    result.save()
+                                     
                                 }
+                                result.rank_number = 6
+                                result.save()
 
 
                                 guild.channels.cache.get(ch_list.main).send({
@@ -242,8 +255,10 @@ module.exports = (client) => {
                                 await member.roles.add(newrank).catch()
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `🍓`
-                                    result.save()
+                                     
                                 }
+                                result.rank_number = 7
+                                result.save()
 
 
                                 guild.channels.cache.get(ch_list.main).send({
@@ -270,8 +285,10 @@ module.exports = (client) => {
                                 await member.roles.add(newrank).catch()
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `🧨`
-                                    result.save()
+                                     
                                 }
+                                result.rank_number = 8
+                                result.save()
 
 
                                 guild.channels.cache.get(ch_list.main).send({
@@ -298,8 +315,10 @@ module.exports = (client) => {
                                 await member.roles.add(newrank).catch()
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `💎`
-                                    result.save()
+                                     
                                 }
+                                result.rank_number = 9
+                                result.save()
 
 
                                 guild.channels.cache.get(ch_list.main).send({
@@ -326,8 +345,10 @@ module.exports = (client) => {
                                 await member.roles.add(newrank).catch()
                                 if (result.displayname.custom_rank === false) {
                                     result.displayname.rank = `🍇`
-                                    result.save()
+                                     
                                 }
+                                result.rank_number = 10
+                                result.save()
 
 
                                 guild.channels.cache.get(ch_list.main).send({

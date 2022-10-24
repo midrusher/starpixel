@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, Attachment, EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const { createCanvas, loadImage } = require(`@napi-rs/canvas`)
-const { User } = require(`../../schemas/userdata`);
+const { User } = require(`../../src/schemas/userdata`);
 
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
             .setDescription(`Введите любого пользователя`)
         ),
     async execute(interaction, client) {
-        const { Guild } = require(`../../schemas/guilddata`)
+        const { Guild } = require(`../../src/schemas/guilddata`)
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
         if (pluginData.plugins.items === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
         const user = interaction.options.getUser(`пользователь`) || interaction.member.user;

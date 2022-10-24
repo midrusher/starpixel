@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { execute } = require('../../events/client/start_bot/ready');
-const { rankName } = require('../../functions');
-const { User } = require(`../../schemas/userdata`)
+const { execute } = require('../../src/events/client/start_bot/ready');
+const { rankName } = require('../../src/functions');
+const { User } = require(`../../src/schemas/userdata`)
 
 
 

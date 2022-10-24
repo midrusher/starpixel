@@ -16,12 +16,10 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName(`test_command_no_usage`)
         .setDescription(`TEST_COMMAND_NO_USAGE`)
+        .setDefaultMemberPermissions(0)
         .setDMPermission(false),
 
     async execute(interaction, client) {
         
-        const role = await interaction.guild.roles.fetch(`992395741848928367`)
-        console.log(role.position)
-        console.log(role.rawPosition)
     }
 };

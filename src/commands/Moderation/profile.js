@@ -9,7 +9,7 @@ const { Birthday } = require(`../../schemas/birthday`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../discord structure/channels.json`);
-const { calcActLevel, getLevel } = require(`../../functions`);
+const { calcActLevel, getLevel, rankName } = require(`../../functions`);
 const { level } = require('winston');
 
 module.exports = {
@@ -61,6 +61,14 @@ module.exports = {
         .addSubcommand(subcommand => subcommand
             .setName(`updateall`)
             .setDescription(`Обновить профиль всех участников`)
+        )
+        .addSubcommand(subcommand => subcommand
+            .setName(`info`)
+            .setDescription(`Информация о профиле`)
+            .addUserOption(o => o
+                .setName(`пользователь`)
+                .setDescription(`Получить информацию о профиле пользователя`)
+            )
         )
         .addSubcommandGroup(group => group
             .setName(`set`)
@@ -845,13 +853,132 @@ module.exports = {
                 await interaction.editReply({
                     embeds: [update]
                 })
-
-
-
             }
                 break;
+            case `info`: {
+                const member = interaction.options.getMember(`пользователь`) || interaction.member
+                if (member.roles.cache.has(`920346035811917825`)) return interaction.reply({
+                    content: `Данный участник не находится в гильдии!`,
+                    ephemeral: true
+                })
+                const user = interaction.options.getUser(`пользователь`) || interaction.member.user;
+                if (user.bot) return interaction.reply({
+                    content: `${user} является ботом, а значит он не может получать опыт активности :'(`
+                })
+                const users = await User.find().then(users => {
+                    return users.filter(async user => await interaction.guild.members.fetch(user.userid))
+                })
+                const sort1 = users.sort((a, b) => {
+                    return b.exp - a.exp
+                })
+                const sorts = sort1.sort((a, b) => {
+                    return b.level - a.level
+                })
+                var i = 0
+                while (sorts[i].userid !== user.id) {
+                    i++
+                }
+                let userData = sorts[i]
+                let rank = i + 1
+                const neededXP = 5 * (Math.pow(userData.level, 2)) + (50 * userData.level) + 100;
+                let part1
+                let part2
+                if (userData.exp >= 1000) {
+                    part1 = (userData.exp / 1000).toFixed(1) + `k`
+                } else part1 = userData.exp
+                if (neededXP >= 1000) {
+                    part2 = (neededXP / 1000).toFixed(1) + `k`
+                } else part2 = neededXP
+                if (userData.exp == 0 && userData.level == 0) return interaction.reply({
+                    content: `У ${user} нет опыта активности.`,
+                    ephemeral: true
+                });
+                let colorRole = await interaction.guild.roles.fetch(userData.custom_color?.role ? userData.custom_color.role : `nn`)
+                if (!colorRole) colorRole = `Не создана`
+                const embed = new EmbedBuilder()
+                    .setColor(0xA872FF)
+                    .setAuthor({
+                        name: `Предметы пользователя ${user.username}`
+                    })
+                    .setThumbnail(user.displayAvatarURL())
+                    .setTimestamp(Date.now())
+                    .setDescription(
+                        `**ОСНОВНОЕ**
+\`Ранг в гильдии\` - ${rankName(userData.rank_number)}
+\`Румбики\` - ${userData.rumbik}<:Rumbik:883638847056003072>
+\`Опыт рангов\` - ${userData.rank}💠
+\`Посещено совместных игр\` - ${userData.visited_games} игр
+\`Билеты\` - ${userData.tickets}🏷
+\`Опыт гильдии\` - ${userData.gexp} GEXP
+\`Медаль 🥇\` - ${userData.medal_1} шт.
+\`Медаль 🥈\` - ${userData.medal_2} шт.
+\`Медаль 🥉\` - ${userData.medal_3} шт.
 
+**УРОВЕНЬ АКТИВНОСТИ**
+\`Прогресс\` - ${part1}/${part2}🌀
+\`Уровень\` - ${userData.level}
+\`Всего опыта\` - ${calcActLevel(0, userData.level, userData.exp)}🌀
+\`Позиция\` - #${rank}
 
+**ПЕРКИ**
+\`🔺 Повышение опыта рангов\` - ${userData.perks.rank_boost}/6
+\`🔻 Скидка в королевском магазине\` - ${userData.perks.king_discount}/4
+\`🔻 Скидка в магазине активности\` - ${userData.perks.act_discount}/3
+\`🔻 Скидка в обычном магазине гильдии\` - ${userData.perks.shop_discount}/4
+\`🕒 Увеличение времени действия временных предметов\` - ${userData.perks.temp_items}/1
+\`💰 Возможность продавать предметы из профиля\` - ${userData.perks.sell_items}/1
+\`🏷️ Уменьшение опыта гильдии для получения билета\` - ${userData.perks.ticket_discount}/5
+\`✨ Изменение предметов\` - ${userData.perks.change_items}/1
+
+**ПОЛЬЗОВАТЕЛЬСКИЙ ЦВЕТ**
+\`Наличие\` - ${userData.custom_color.created ? `Создан` : `Не создан`}
+\`Цветовой код\` - ${userData.custom_color?.hex ? userData.custom_color?.hex : `Цветовой код отсутствует`}
+\`Роль\` - ${colorRole}`)
+                    .addFields(
+                        {
+                            name: `НАВЫКИ ПИТОМЦЕВ`,
+                            value: `\u200b`,
+                            inline: false
+                        },
+                        {
+                            name: `Земля`,
+                            value:
+                                `\`Выращивание горных пород\` - ${userData.elements.mountains}/1
+\`Быстрый рост растений\` - ${userData.elements.fast_grow}/1
+\`Перемещение под землёй\` - ${userData.elements.underground}/1`,
+                            inline: false
+                        },
+                        {
+                            name: `Вода`,
+                            value:
+                                `\`Плавание на глубине\` - ${userData.elements.diving}/1
+\`Сопротивление течениям\` - ${userData.elements.resistance}/1
+\`Подводное дыхание\` - ${userData.elements.respiration}/1`,
+                            inline: false
+                        },
+                        {
+                            name: `Огонь`,
+                            value:
+                                `\`Защита от огня\` - ${userData.elements.fire_resistance}/1
+\`Удар молнии\` - ${userData.elements.lightning}/1
+\`Управление пламенем\` - ${userData.elements.flame}/1`,
+                            inline: false
+                        },
+                        {
+                            name: `Воздух`,
+                            value:
+                                `\`Полёт в небесах\` - ${userData.elements.flying}/1
+\`Повеление ветром\` - ${userData.elements.wind}/1
+\`Орлиный глаз\` - ${userData.elements.eagle_eye}/1`,
+                            inline: false
+                        },
+                    )
+
+                await interaction.reply({
+                    embeds: [embed]
+                })
+            }
+                break;
             default:
                 break;
         }

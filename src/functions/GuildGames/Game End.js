@@ -19,7 +19,42 @@ module.exports = (client) => {
         await voiceMembers.forEach(async member => {
             const userData = await User.findOne({ userid: member.user.id, guildid: guild.id })
             userData.visited_games += 1
-            userData.save()
+            const rewards = require(`./GuildGamesSettings/Guild Games Rewards.json`)
+            const reward = await rewards.find(rew => rew.required == userData.visited_games)
+            if (reward) {
+                if (!member.roles.cache.has(reward.box)) {
+                    await member.roles.add(reward.box)
+                    const embed = new EmbedBuilder()
+                        .setTitle(`Получена награда за посещение совместной игры`)
+                        .setDescription(`${member} получил награду за посещение ${reward.required} совместных игр! В качестве награды он получает <@&${reward.box}>! 
+                    
+Спасибо, что посещаете совместные игры! Ждём вас ещё!`)
+                        .setColor(process.env.bot_color)
+                        .setThumbnail(member.user.displayAvatarURL())
+                        .setTimestamp(Date.now())
+
+                    userData.save()
+                    await channel.send({
+                        embeds: [embed]
+                    })
+                } else {
+                    await userData.stacked_items.push(reward.box)
+                    userData.save()
+                    const embed = new EmbedBuilder()
+                        .setTitle(`В склад предметов добавлена награда!`)
+                        .setDescription(`${member} теперь имеет ${userData.stacked_items.length} неполученных наград! За посещение ${reward.required} игр на склад была отправлена <@&${reward.box}>!
+
+Чтобы получить награду, откройте коробки и пропишите команду \`/rewards claim\`! Для просмотра списка неполученных наград пропишите \`/rewards unclaimed\`!
+Спасибо, что посещаете совместные игры! Ждём вас ещё!`)
+                        .setColor(process.env.bot_color)
+                        .setThumbnail(member.user.displayAvatarURL())
+                        .setTimestamp(Date.now())
+                    await channel.send({
+                        content: `⚠ ${member}`,
+                        embeds: [embed]
+                    })
+                }
+            }
         })
         let i = 1
         const list = await voiceMembers.map(member => {
@@ -68,8 +103,8 @@ ${gamesPlayed.join(`\n`)}`)
 ◾`
         })
         const hearts = [
-            `:yellow_heart: :orange_heart: :yellow_heart: :orange_heart: :yellow_heart: :orange_heart:`, 
-            `:white_heart: :heart: :white_heart: :heart: :white_heart: :heart:`, 
+            `:yellow_heart: :orange_heart: :yellow_heart: :orange_heart: :yellow_heart: :orange_heart:`,
+            `:white_heart: :heart: :white_heart: :heart: :white_heart: :heart:`,
             `:brown_heart: :green_heart: :brown_heart: :green_heart: :brown_heart: :green_heart:`,
             `:purple_heart: :blue_heart: :purple_heart: :blue_heart: :purple_heart: :blue_heart:`
         ]

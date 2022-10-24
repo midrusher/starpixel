@@ -160,6 +160,7 @@ const User = new mongoose.Schema({
         },
     },
     visited_games: { type: Number, default: 0 },
+    stacked_items: [String],
     custom_color: {
         hex: { type: String },
         role: { type: String },

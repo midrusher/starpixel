@@ -25,6 +25,7 @@ module.exports = {
                 userData.exp += 0
                 userData.totalexp += 0
             } else {
+                if (message.channel.id == `1034497096629362730`) return
                 let add_exp = Math.floor(Math.random() * 15 + 11) * guildData.act_exp_boost
 
                 userData.exp += add_exp

@@ -8,7 +8,7 @@ module.exports = {
     async execute(queue, playlist) {
         const guild = queue.textChannel.guild
         const guildData = await Guild.findOne({ id: guild.id })
-        if (guildData.guildgames.started === true) return
+        if (guildData.guildgames.started >= 1) return
         const playing = new EmbedBuilder()
             .setColor(process.env.bot_color)
             .setTitle(`Добавлен плейлист... 🎶`)

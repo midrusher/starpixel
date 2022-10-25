@@ -114,7 +114,7 @@ ${gamesPlayed.join(`\n`)}`)
             embeds: [statsEmbed]
         })
 
-        guildData.guildgames.started = false
+        guildData.guildgames.started = 0
         guildData.guildgames.gameType = ``
         guildData.guildgames.temp_leader = ``
         guildData.guildgames.music.forEach(mus => mus.usedTimes = 0)

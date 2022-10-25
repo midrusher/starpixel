@@ -49,7 +49,7 @@ module.exports = (client) => {
             else if (hpguild.exp >= 20000000) xpneeded = ((Math.floor((hpguild.exp - 20000000) / 3000000) + 1) * 3000000) - (hpguild.exp - 20000000)
         }
         const percent = 100 - (Math.round((xpneeded / 3000000) * 100))
-        const before = guilddata.level
+        const before = guilddata.hypixel_lvl
         guilddata.hypixel_lvl = level
         guilddata.save()
         if (before < guilddata.hypixel_lvl) {
@@ -58,7 +58,7 @@ module.exports = (client) => {
                 content: `**НОВЫЙ УРОВЕНЬ ГИЛЬДИИ** @here
 
 Уровень гильдии на Hypixel повышен!
-\`${before}\` ➡ \`${guilddata.level}\``,
+\`${before}\` ➡ \`${guilddata.hypixel_lvl}\``,
                 allowedMentions: {
                     parse: ["everyone"]
                 }

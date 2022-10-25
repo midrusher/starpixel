@@ -9,7 +9,7 @@ module.exports = {
     async execute(queue, client) {
         const guild = queue.textChannel.guild
         const guildData = await Guild.findOne({ id: guild.id })
-        if (guildData.guildgames.started === false) return
+        if (guildData.guildgames.started < 1) return
         const mus = guildData.guildgames.music
         let total = 0;
         for (let i = 0; i < mus.length; i++) {

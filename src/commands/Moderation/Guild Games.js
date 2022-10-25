@@ -5,18 +5,19 @@ const { Guild } = require(`../../schemas/guilddata`)
 const { daysOfWeek, isURL, secondPage } = require(`../../functions`);
 const { Song, SearchResultType } = require('distube');
 const wait = require(`node:timers/promises`).setTimeout
+const moment = require(`moment`)
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(`guildgames`)
+        .setName(`gg`)
         .setDescription(`Совместные игры`)
         .setDMPermission(false)
         .addSubcommandGroup(gr => gr
-            .setName(`settings`)
+            .setName(`set`)
             .setDescription(`Настройки совместных игр`)
             .addSubcommand(sb => sb
-                .setName(`setminutes`)
-                .setDescription(`Установить минуту проведения совместных игр`)
+                .setName(`time`)
+                .setDescription(`Установить время проведения совместных игр`)
                 .addStringOption(o => o
                     .setName(`часть`)
                     .setDescription(`Часть совместной игры`)
@@ -32,34 +33,12 @@ module.exports = {
                         }
                     )
                 )
-                .addIntegerOption(o => o
-                    .setName(`число`)
-                    .setDescription(`Число, на которое будет изменено время начала или конца совместной`)
-                    .setRequired(true)
-                )
-            )
-            .addSubcommand(sb => sb
-                .setName(`sethours`)
-                .setDescription(`Установить час проведения совместных игр`)
                 .addStringOption(o => o
-                    .setName(`часть`)
-                    .setDescription(`Часть совместной игры`)
+                    .setName(`время`)
+                    .setDescription(`Время в формате HH:mm (ЧЧ:мм)`)
                     .setRequired(true)
-                    .setChoices(
-                        {
-                            name: `Начало игры`,
-                            value: `start`
-                        },
-                        {
-                            name: `Конец игры`,
-                            value: `end`
-                        }
-                    )
-                )
-                .addIntegerOption(o => o
-                    .setName(`число`)
-                    .setDescription(`Число, на которое будет изменено время начала или конца совместной`)
-                    .setRequired(true)
+                    .setMaxLength(5)
+                    .setMinLength(5)
                 )
             )
             .addSubcommand(sb => sb
@@ -267,7 +246,7 @@ module.exports = {
     async execute(interaction, client) {
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
         if (pluginData.plugins.moderation === false) return interaction.reply({ content: `Данный плагин отключён! Попробуйте позже!`, ephemeral: true })
-        const embed = new EmbedBuilder()
+        const err = new EmbedBuilder()
             .setAuthor({
                 name: `❗ Вы не можете использовать это!`
             })
@@ -280,60 +259,72 @@ module.exports = {
 
 
         switch (options.getSubcommandGroup()) {
-            case `settings`: {
+            case `set`: {
                 if (!member.roles.cache.has(`320880176416161802`)) return interaction.reply({
-                    embeds: [embed],
+                    embeds: [err],
                     ephemeral: true
                 })
                 switch (options.getSubcommand()) {
-                    case `setminutes`: {
-                        const min = options.getInteger(`число`)
+                    case `time`: {
+                        const time = options.getString(`время`)
+                        if (!time.includes(`:`)) return interaction.reply({
+                            content: `Время должно быть записано в формате \`HH:mm\` (\`ЧЧ:мм\`)!`,
+                            ephemeral: true
+                        })
+
+
+                        const timeArray = await time.split(`:`, 2)
+                        const test = new Date()
+                        let date = test.getDate(), month = test.getMonth() + 1, year = test.getFullYear()
+                    
+                        if (moment(`${year}-${month}-${date} ${time}`, moment.ISO_8601, true).isValid() === false) return interaction.reply({
+                            content: `Введённое вами время не является действительным!`,
+                            ephemeral: true
+                        })
+                        let hour = Number(timeArray[0])
+                        if (hour < 0 || hour > 23) return interaction.reply({
+                            content: `Час (HH) должен быть в промежутке от 0 до 23!`,
+                            ephemeral: true
+                        })
+                        let min = Number(timeArray[1])
+                        if (min < 0 || min > 59) return interaction.reply({
+                            content: `Минута (mm) должна быть в промежутке от 0 до 60!`,
+                            ephemeral: true
+                        })
                         const part = options.getString(`часть`)
                         if (min < 0 || min >= 60) return interaction.reply({
                             content: `Число должно быть не менее 0 и не более 59 (Вы указали ${min})!`,
                             ephemeral: true
                         })
 
-                        if (part == `start`) {
-                            guildData.guildgames.gamestart_min = min
-                            guildData.save()
-                            await interaction.reply({
-                                content: `Минута начала совместной игры установлена на \`${min}\`!`,
-                                ephemeral: true
-                            })
-                        } else if (part == `end`) {
-                            guildData.guildgames.gameend_min = min
-                            guildData.save()
-                            await interaction.reply({
-                                content: `Минута конца совместной игры установлена на \`${min}\`!`,
-                                ephemeral: true
-                            })
+
+                        if (String(min).length <= 1) {
+                            min = `0${min}`
+                        } else if (String(min).length > 1) {
+                            min = min
                         }
 
-                        client.GamePreStart();
-                        client.ReminderForOfficer();
-                        client.GuildGameStart();
-                    }
-                        break;
-                    case `sethours`: {
-                        const hour = options.getInteger(`число`)
-                        const part = options.getString(`часть`)
-                        if (hour < 0 || hour >= 24) return interaction.reply({
-                            content: `Число должно быть не менее 0 и не более 23 (Вы указали ${hour})!`,
-                            ephemeral: true
-                        })
+                        if (String(hour).length <= 1) {
+                            hour = `0${hour}`
+                        } else if (String(hour).length > 1) {
+                            hour = hour
+                        }
+
+
                         if (part == `start`) {
-                            guildData.guildgames.gamestart_hour = hour
+                            guildData.guildgames.gamestart_hour = Number(hour)
+                            guildData.guildgames.gamestart_min = Number(min)
                             guildData.save()
                             await interaction.reply({
-                                content: `Час начала совместной игры установлена на \`${hour}\`!`,
+                                content: `Время начала совместной игры установлено на \`${hour}:${min}\``,
                                 ephemeral: true
                             })
                         } else if (part == `end`) {
-                            guildData.guildgames.gameend_hour = hour
+                            guildData.guildgames.gameend_hour = Number(hour)
+                            guildData.guildgames.gameend_min = Number(min)
                             guildData.save()
                             await interaction.reply({
-                                content: `Час конца совместной игры установлена на \`${hour}\`!`,
+                                content: `Время конца совместной игры установлено на \`${hour}:${min}\``,
                                 ephemeral: true
                             })
                         }
@@ -661,7 +652,11 @@ ${listProm.join(`\n`)}`)
 
         switch (options.getSubcommand()) {
             case `randomgame`: {
-                if (guildData.guildgames.started === false) return interaction.reply({
+                if (!member.roles.cache.has(`320880176416161802`) && !member.roles.cache.has(`563793535250464809`) && !member.roles.cache.has(`523559726219526184`)) return interaction.reply({
+                    embeds: [err],
+                    ephemeral: true
+                })
+                if (guildData.guildgames.started <= 1) return interaction.reply({
                     content: `Совместная игра ещё не началась!`,
                     ephemeral: true
                 })
@@ -685,6 +680,10 @@ ${listProm.join(`\n`)}`)
             }
                 break;
             case `becomeleader`: {
+                if (!member.roles.cache.has(`320880176416161802`) && !member.roles.cache.has(`563793535250464809`) && !member.roles.cache.has(`523559726219526184`)) return interaction.reply({
+                    embeds: [err],
+                    ephemeral: true
+                })
                 const date = new Date()
                 if (!guildData.guildgames.game_days.includes(date.getDay())) return interaction.reply({
                     content: `По расписанию сегодня нет совместной игры! Попросите администратора изменить это в настройках совместной игры!`,

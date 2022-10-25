@@ -87,7 +87,7 @@ module.exports = (client) => {
                     textChannel: MusicCommandsChannel
                 })
             }
-            guildData.guildgames.started = true
+            guildData.guildgames.started = 1
             guildData.save()
 
         }, {

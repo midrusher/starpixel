@@ -26,6 +26,7 @@ module.exports = (client) => {
             const gameType = gameTypes[Math.floor(Math.random() * gameTypes.length)]
             const channel = await guild.channels.fetch(ch_list.main)
             const voice = await guild.channels.fetch(ch_list.guildGamesVoice)
+            guildData.guildgames.started = 2
             guildData.guildgames.gameType = gameType
             guildData.save()
             const date = new Date()

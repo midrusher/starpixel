@@ -110,7 +110,7 @@ module.exports = {
         const music_channel = await guild.channels.fetch(ch_list.music)
         const user = interaction.user
         const member = interaction.member
-        if (guildData.guildgames.started == true && !member.roles.cache.has(`523559726219526184`) && !member.roles.cache.has(`563793535250464809`) && !member.roles.cache.has(`320880176416161802`)) return interaction.reply({
+        if (guildData.guildgames.started >= 1 && !member.roles.cache.has(`523559726219526184`) && !member.roles.cache.has(`563793535250464809`) && !member.roles.cache.has(`320880176416161802`)) return interaction.reply({
             content: `Вы не можете использовать музыкального бота, пока в гильдии проходит совместная игра!`,
             ephemeral: true
         })

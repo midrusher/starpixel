@@ -101,7 +101,7 @@ const Guild = new mongoose.Schema({
             link: { type: String },
             chance: { type: Number }
         }],
-        started: { type: Boolean, default: false },
+        started: { type: Number, default: 0 },
         games: [{
             id: { type: String },
             played: { type: Number, default: 0 }

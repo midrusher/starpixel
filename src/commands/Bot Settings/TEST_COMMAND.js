@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder, WebhookClient, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder, WebhookClient, PermissionsBitField, PermissionFlagsBits, ChannelType } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
 const { execute } = require('../../events/client/start_bot/ready');
 const fetch = require(`node-fetch`);
@@ -20,6 +20,21 @@ module.exports = {
         .setDMPermission(false),
 
     async execute(interaction, client) {
-        
-    }   
+       /*  await interaction.deferReply({ fetchReply: true })
+        const channels = await interaction.guild.channels.fetch()
+        await channels.forEach(async (channel) => {
+            if (channel.type == ChannelType.GuildForum || channel.type == ChannelType.GuildText) {
+                const threads = await channel.threads.fetch()
+                console.log(threads)
+                if (channel.threads.cache.size > 1) {
+                    await threads.forEach(async (thread) => {
+                        await thread.join()
+                        console.log(`Я присоединился к ${thread.name}`)
+                    })
+                } else if (channel.threads.cache.size == 1) await threads.join()
+
+            }
+        })
+        await interaction.editReply(`Готово!`) */
+    }
 };

@@ -67,7 +67,11 @@ const Guild = new mongoose.Schema({
             enabled: { type: Boolean, default: false },
             channels: [{
                 id: { type: String }
-            }]
+            }],
+            advent_msgs: {
+                msg1: { type: String },
+                msg2: { type: String },
+            }
 
         },
         easter: {

@@ -382,7 +382,8 @@ module.exports = {
                         .setColor(`DarkRed`)
                         .setTimestamp(Date.now())
                         .setDescription(`Данная команда сейчас находится на перезарядке, вы сможете её использовать через ${prettyMilliseconds(userData.cooldowns.prof_update - Date.now(), { secondsDecimalDigits: 0 })}!`)
-                    ]
+                    ],
+                    ephemeral: true
                 })
                 userData.name = user.username
                 let response = await fetch(`https://api.hypixel.net/player?key=${api}&uuid=${userData.uuid}`)
@@ -446,7 +447,7 @@ module.exports = {
                     .setDescription(`Профиль игрок ${interaction.member} был успешно обновлен!
 
 **Предметов на данный момент:**
-Опыт активности - ${userData.exp} (подробнее: \`/rank\`)
+Опыт активности - ${userData.exp} (подробнее: \`/profile info\`)
 Уровень активности - ${userData.level}
 Всего опыта - ${totalexp}
 

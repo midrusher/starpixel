@@ -274,7 +274,30 @@ module.exports = {
                             value: `Лето`
                         },
 
-                    ))
+                    )
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`ny_channel_add`)
+                .setDescription(`Добавить канал для сезона "Новый год"`)
+                .addChannelOption(o => o
+                    .setName(`канал`)
+                    .setDescription(`Канал, который нужно добавить в сезон`)
+                    .setRequired(true)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`ny_channel_remove`)
+                .setDescription(`Удалить канал из сезона "Новый год"`)
+                .addStringOption(o => o
+                    .setName(`id`)
+                    .setDescription(`ID канала, который нужно удалить из сезона`)
+                    .setRequired(true)
+                )
+            )
+            .addSubcommand(sb => sb
+                .setName(`ny_channel_check`)
+                .setDescription(`Проверить каналы для сезона "Новый год"`)
             )
         )
         .addSubcommandGroup(gr => gr
@@ -892,7 +915,7 @@ ${roles.join('\n')}`
                         guildData.seasonal.halloween.channels.push({ id: channel.id })
                         guildData.save()
                         await interaction.reply({
-                            content: `Канал ${channel} был добавлен в список Хэллоуинских!`,
+                            content: `Канал ${channel} был добавлен в список хэллоуинских!`,
                             ephemeral: true
                         })
                     }
@@ -907,7 +930,7 @@ ${roles.join('\n')}`
                         guildData.seasonal.halloween.channels.splice(i, 1)
                         guildData.save()
                         await interaction.reply({
-                            content: `Канал ${channel} был удален из списока хэллоуинских!`,
+                            content: `Канал ${channel} был удален из списка хэллоуинских!`,
                             ephemeral: true
                         })
 
@@ -968,6 +991,55 @@ ${roles.join('\n')}`
                         await interaction.reply({
                             content: `Сезон \`${season}\` был отключен. Каналы НЕ были закрыты. Закройте их вручную!`,
                             ephemeral: true
+                        })
+                    }
+                        break;
+                    case `ny_channel_add`: {
+                        const channel = interaction.options.getChannel(`канал`)
+                        if (guildData.seasonal.new_year.channels.find(ch => ch.id == channel.id)) return interaction.reply({
+                            content: `Данный канал уже есть в списке добавленных!`,
+                            ephemeral: true
+                        })
+                        guildData.seasonal.new_year.channels.push({ id: channel.id })
+                        guildData.save()
+                        await interaction.reply({
+                            content: `Канал ${channel} был добавлен в список новогодних!`,
+                            ephemeral: true
+                        })
+                    }
+                        break;
+                    case `ny_channel_remove`: {
+                        const channel = interaction.options.getString(`id`)
+                        if (!guildData.seasonal.new_year.channels.find(ch => ch.id == channel)) return interaction.reply({
+                            content: `Данного канала нет в списке этого сезона!`,
+                            ephemeral: true
+                        })
+                        let i = guildData.seasonal.new_year.channels.findIndex(ch => ch.id == channel)
+                        guildData.seasonal.new_year.channels.splice(i, 1)
+                        guildData.save()
+                        await interaction.reply({
+                            content: `Канал ${channel} был удален из списка новогодних!`,
+                            ephemeral: true
+                        })
+
+                    }
+                        break;
+                    case `ny_channel_check`: {
+                        let i = 1
+                        const listMap = guildData.seasonal.new_year.channels.map(async (channel) => {
+                            const ch = await interaction.guild.channels.fetch(channel.id)
+                            return `**${i++}.** Канал ${ch}, ID \`${channel.id}\``
+                        })
+                        const list = await Promise.all(listMap)
+                        const embed = new EmbedBuilder()
+                            .setTitle(`Список каналов сезона "Новый год"`)
+                            .setDescription(`${list.join(`\n`)}`)
+                            .setColor(process.env.bot_color)
+                            .setThumbnail(interaction.guild.iconURL())
+                            .setTimestamp(Date.now())
+
+                        await interaction.reply({
+                            embeds: [embed]
                         })
                     }
                         break;

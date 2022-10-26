@@ -8,8 +8,8 @@ const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИ
 module.exports = {
     name: 'guildScheduledEventCreate',
     async execute(event) {
-        const client = member.client
-        const guild = member.guild;
+        const client = event.client
+        const guild = event.guild;
         const pluginData = await Guild.findOne({ id: guild.id })
         if (pluginData.plugins.logs === false) return
         const log_data = await Guild.findOne({ id: guild.id })
@@ -33,18 +33,18 @@ module.exports = {
         }
 
 
-        const fetchedLogs = await member.guild.fetchAuditLogs({
+        const fetchedLogs = await event.guild.fetchAuditLogs({
             limit: 1,
-            type: AuditLogEvent.MemberKick,
+            type: AuditLogEvent.GuildScheduledEventCreate,
         });
         const auditLog = fetchedLogs.entries.first();
 
         const log = new EmbedBuilder()
             .setTitle(`Создано эмодзи`)
-            .setDescription(`Имя: \`${emoji.name}\`
-Идектификатор: \`${emoji.identifier}\`
-Анимированное: ${replaceTrueFalse(emoji.animated)}
-Эмоджи: ${emoji}
+            .setDescription(`Имя: \`${event.name}\`
+Идектификатор: \`${event.identifier}\`
+Анимированное: ${replaceTrueFalse(event.animated)}
+Эмоджи: ${event}
 
 Автор эмодзи: ${emoji.author}`)
             .setColor(process.env.bot_color)

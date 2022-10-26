@@ -8,28 +8,29 @@ const { Client, Collection, GatewayIntentBits, Partials, ActivityType, } = requi
 const fs = require('fs');
 const { DisTube } = require(`distube`);
 const { setInterval } = require('timers/promises');
+const { transports, format } = require('winston');
 
 const client = new Client({
     intents: [
-        GatewayIntentBits.DirectMessageReactions,
-        GatewayIntentBits.DirectMessageTyping,
-        GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.GuildBans,
-        GatewayIntentBits.GuildEmojisAndStickers,
-        GatewayIntentBits.GuildIntegrations,
-        GatewayIntentBits.GuildInvites,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.GuildMessageTyping,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildPresences,
-        GatewayIntentBits.GuildScheduledEvents,
-        GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildWebhooks,
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.AutoModerationConfiguration,
-        GatewayIntentBits.AutoModerationExecution,
+        GatewayIntentBits.DirectMessageReactions, //1
+        GatewayIntentBits.DirectMessageTyping, //2
+        GatewayIntentBits.DirectMessages, //3
+        GatewayIntentBits.GuildBans, //4
+        GatewayIntentBits.GuildEmojisAndStickers, //5
+        GatewayIntentBits.GuildIntegrations, //6
+        GatewayIntentBits.GuildInvites, //7
+        GatewayIntentBits.GuildMembers, //8
+        GatewayIntentBits.GuildMessageReactions, //9
+        GatewayIntentBits.GuildMessageTyping, //10
+        GatewayIntentBits.GuildMessages, //11
+        GatewayIntentBits.GuildPresences, //12
+        GatewayIntentBits.GuildScheduledEvents, //13
+        GatewayIntentBits.GuildVoiceStates, //14
+        GatewayIntentBits.GuildWebhooks, //15
+        GatewayIntentBits.Guilds, //16
+        GatewayIntentBits.MessageContent, //17
+        GatewayIntentBits.AutoModerationConfiguration, //18
+        GatewayIntentBits.AutoModerationExecution, //19
 
 
     ],
@@ -99,4 +100,19 @@ client.login(token);
 })();
 
 process.on('warning', e => console.warn(e.stack))
+
+/* const logger = winston.createLogger({
+    transports: [
+        new transports.File({
+            filename: `process.log`,
+            level: 'info',
+            format: format.combine(format.timestamp(), format.json())
+        }),
+        new transports.File({
+            filename: `errors.log`,
+            level: 'error',
+            format: format.combine(format.timestamp(), format.json())
+        })
+    ]
+}) */
 

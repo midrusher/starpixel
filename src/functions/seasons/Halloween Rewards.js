@@ -9,6 +9,7 @@ module.exports = (client) => {
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
             if (pluginData.plugins.seasonal === false) return
+            if (pluginData.seasonal.halloween.enabled === false) return
             const guild = await client.guilds.fetch(`320193302844669959`)
             const results = await User.find({ guildid: guild.id })
 

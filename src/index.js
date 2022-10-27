@@ -77,10 +77,10 @@ client.invites = new Collection()
 client.commandArray = [];
 
 let i = 1
-const functionFolders = fs.readdirSync('./src/functions');
+const functionFolders = fs.readdirSync(`./${process.cwd()}/src/functions`);
 for (const folder of functionFolders) {
     const functionFiles = fs
-        .readdirSync(`./src/functions/${folder}`)
+        .readdirSync(`./${process.cwd()}/src/functions/${folder}`)
         .filter((file) => file.endsWith(`.js`));
     for (const file of functionFiles) {
         require(`./functions/${folder}/${file}`)(client);

@@ -3,17 +3,17 @@ const chalk = require(`chalk`);
 
 module.exports = (client) => {
     client.handleComponents = async () => {
-        const folders = fs.readdirSync('./src/components');
+        const folders = fs.readdirSync(`./${process.cwd()}/src/components`);
         for (const folder of folders) {
             const componentFolder = fs
-                .readdirSync(`./src/components/${folder}`)
+                .readdirSync(`./${process.cwd()}/src/components/${folder}`)
 
             const { buttons, modals, selectMenus } = client;
             switch (folder) {
                 case "buttons":
                     for (const buttonFolder of componentFolder) {
                         const buttonFiles = fs
-                            .readdirSync(`./src/components/${folder}/${buttonFolder}`)
+                            .readdirSync(`./${process.cwd()}/src/components/${folder}/${buttonFolder}`)
 
                         for (const file of buttonFiles) {
                             const button = require(`../../components/${folder}/${buttonFolder}/${file}`)
@@ -28,7 +28,7 @@ module.exports = (client) => {
                 case "modals": {
                     for (const modalFolder of componentFolder) {
                         const modalFiles = fs
-                            .readdirSync(`./src/components/${folder}/${modalFolder}`)
+                            .readdirSync(`./${process.cwd()}/src/components/${folder}/${modalFolder}`)
                             .filter((file) => file.endsWith(`.js`));;
 
                         for (const file of modalFiles) {
@@ -43,7 +43,7 @@ module.exports = (client) => {
                 case "selectMenus": {
                     for (const selectMenuFolder of componentFolder) {
                         const selectMenuFiles = fs
-                            .readdirSync(`./src/components/${folder}/${selectMenuFolder}`)
+                            .readdirSync(`./${process.cwd()}/src/components/${folder}/${selectMenuFolder}`)
                             .filter((file) => file.endsWith(`.js`));;
 
                         for (const file of selectMenuFiles) {

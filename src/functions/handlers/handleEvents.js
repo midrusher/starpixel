@@ -4,16 +4,16 @@ const chalk = require(`chalk`)
 
 module.exports = (client) => {
     client.handleEvents = async () => {
-        const folders = fs.readdirSync('./src/events');
+        const folders = fs.readdirSync(`./${process.cwd()}/src/events`);
         let i = 1
         for (const folder of folders) {
             const eventFolders = fs
-                .readdirSync(`./src/events/${folder}`)
+                .readdirSync(`./${process.cwd()}/src/events/${folder}`)
             switch (folder) {
                 case "client":
                     for (const eventFolder of eventFolders) {
                         const eventFiles = fs
-                            .readdirSync(`./src/events/${folder}/${eventFolder}`)
+                            .readdirSync(`./${process.cwd()}/src/events/${folder}/${eventFolder}`)
                             .filter((file) => file.endsWith(`.js`));;
 
                         for (const file of eventFiles) {
@@ -31,7 +31,7 @@ module.exports = (client) => {
                 case "mongo": {
                     for (const eventFolder of eventFolders) {
                         const eventFiles = fs
-                            .readdirSync(`./src/events/${folder}/${eventFolder}`)
+                            .readdirSync(`./${process.cwd()}/src/events/${folder}/${eventFolder}`)
                             .filter((file) => file.endsWith(`.js`));;
 
                         for (const file of eventFiles) {
@@ -48,7 +48,7 @@ module.exports = (client) => {
                 case "distube": {
                     for (const eventFolder of eventFolders) {
                         const eventFiles = fs
-                            .readdirSync(`./src/events/${folder}/${eventFolder}`)
+                            .readdirSync(`./${process.cwd()}/src/events/${folder}/${eventFolder}`)
                             .filter((file) => file.endsWith(`.js`));;
 
                         for (const file of eventFiles) {
@@ -64,7 +64,7 @@ module.exports = (client) => {
                 case "github": {
                     for (const eventFolder of eventFolders) {
                         const eventFiles = fs
-                            .readdirSync(`./src/events/${folder}/${eventFolder}`)
+                            .readdirSync(`./${process.cwd()}/src/events/${folder}/${eventFolder}`)
                             .filter((file) => file.endsWith(`.js`));;
 
                         for (const file of eventFiles) {

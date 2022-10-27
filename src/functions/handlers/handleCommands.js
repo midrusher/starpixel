@@ -5,11 +5,11 @@ const chalk = require(`chalk`)
 
 module.exports = (client) => {
     client.handleCommands = async () => {
-        const commandFolders = fs.readdirSync(`./${process.cwd()}/src/commands`);
+        const commandFolders = fs.readdirSync('./src/commands');
         let i = 1
         for (const folder of commandFolders) {
             const commandFiles = fs
-                .readdirSync(`./${process.cwd()}/src/commands/${folder}`)
+                .readdirSync(`./src/commands/${folder}`)
                 .filter((file) => file.endsWith('.js'));
 
             const { commands, commandArray } = client;

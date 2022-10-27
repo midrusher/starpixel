@@ -51,10 +51,12 @@ module.exports = (client) => {
                 })
                 guildData.seasonal.new_year.enabled = true
                 guildData.save()
-
+                client.AdvCalendarClear()
                 const userDatas = await User.find({ guildid: g.id })
                 userDatas.forEach(async userData => {
-                    
+                    const { points, advent_calendar } = userData.seasonal.new_year
+                    points = 0
+                    advent_calendar = []
 
                     userData.save()
                 })

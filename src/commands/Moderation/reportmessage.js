@@ -22,6 +22,7 @@ module.exports = {
             embeds: [response],
             ephemeral: true
         })
+        await interaction.targetMessage.react(`⚒`)
 
         const report = new EmbedBuilder()
         .setColor(process.env.bot_color)

@@ -151,39 +151,9 @@ const User = new mongoose.Schema({
         },
         new_year: {
             points: { type: Number, default: 0 },
-            advent_calendar: {
-                dec1: { type: Boolean, default: false },
-                dec2: { type: Boolean, default: false },
-                dec3: { type: Boolean, default: false },
-                dec4: { type: Boolean, default: false },
-                dec5: { type: Boolean, default: false },
-                dec6: { type: Boolean, default: false },
-                dec7: { type: Boolean, default: false },
-                dec8: { type: Boolean, default: false },
-                dec9: { type: Boolean, default: false },
-                dec10: { type: Boolean, default: false },
-                dec11: { type: Boolean, default: false },
-                dec12: { type: Boolean, default: false },
-                dec13: { type: Boolean, default: false },
-                dec14: { type: Boolean, default: false },
-                dec15: { type: Boolean, default: false },
-                dec16: { type: Boolean, default: false },
-                dec17: { type: Boolean, default: false },
-                dec18: { type: Boolean, default: false },
-                dec19: { type: Boolean, default: false },
-                dec20: { type: Boolean, default: false },
-                dec21: { type: Boolean, default: false },
-                dec22: { type: Boolean, default: false },
-                dec23: { type: Boolean, default: false },
-                dec24: { type: Boolean, default: false },
-                dec25: { type: Boolean, default: false },
-                dec26: { type: Boolean, default: false },
-                dec27: { type: Boolean, default: false },
-                dec28: { type: Boolean, default: false },
-                dec29: { type: Boolean, default: false },
-                dec30: { type: Boolean, default: false },
-                dec31: { type: Boolean, default: false },   
-            }
+            advent_calendar: [{
+                name: { type: String }
+            }]
         },
         easter: {
             points: { type: Number, default: 0 }

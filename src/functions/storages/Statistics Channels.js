@@ -4,6 +4,7 @@ const fetch = require(`node-fetch`);
 const api = process.env.hypixel_apikey;
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`)
 const { GuildAuditLogs } = require("discord.js");
 
 module.exports = (client) => {

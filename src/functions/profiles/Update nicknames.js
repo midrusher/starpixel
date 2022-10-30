@@ -2,6 +2,7 @@ const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
 const wait = require(`node:timers/promises`).setTimeout
 const cron = require(`node-cron`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.updatenicks = async () => {

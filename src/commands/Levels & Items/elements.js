@@ -6,6 +6,7 @@ const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -53,7 +54,7 @@ module.exports = {
                 })
 
                 const cd = new EmbedBuilder()
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setAuthor({
                         name: `Вы не можете использовать эту команду`
                     })
@@ -152,7 +153,7 @@ module.exports = {
                 })
 
                 const cd = new EmbedBuilder()
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setAuthor({
                         name: `Вы не можете использовать эту команду`
                     })
@@ -237,7 +238,7 @@ module.exports = {
                     ephemeral: true
                 })
                 const cd = new EmbedBuilder()
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setAuthor({
                         name: `Вы не можете использовать эту команду`
                     })
@@ -320,7 +321,7 @@ module.exports = {
                     ephemeral: true
                 })
                 const cd = new EmbedBuilder()
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setAuthor({
                         name: `Вы не можете использовать эту команду`
                     })

@@ -2,6 +2,7 @@
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const wait = require(`node:timers/promises`).setTimeout
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.repeatFunctions = async () => {

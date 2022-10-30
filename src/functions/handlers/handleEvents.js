@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { connection } = require(`mongoose`)
 const chalk = require(`chalk`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.handleEvents = async () => {

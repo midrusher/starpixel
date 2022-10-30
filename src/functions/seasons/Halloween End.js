@@ -7,6 +7,7 @@ const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const wait = require(`node:timers/promises`).setTimeout
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.halloweenEnd = async () => {
@@ -70,7 +71,7 @@ module.exports = (client) => {
 
                 const mapProm = await Promise.all(map)
                 const embed = new EmbedBuilder()
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setAuthor({
                         name: `Лучшие пользователи по хэллоуинским очкам`
                     })

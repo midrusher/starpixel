@@ -4,6 +4,7 @@ const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`dis
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'guildMemberUpdate',
@@ -45,7 +46,7 @@ module.exports = {
 Убранная роль: ❌ \`${auditLog.changes[0].new[0].name}\`
 
 Убрал роль: ${auditLog.executor}`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
                         .setThumbnail(newM.user.displayAvatarURL())
 
@@ -59,7 +60,7 @@ module.exports = {
 Добавленная роль: ✅ \`${auditLog.changes[0].new[0].name}\`
 
 Добавил роль: ${auditLog.executor}`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
                         .setThumbnail(newM.user.displayAvatarURL())
 
@@ -79,7 +80,7 @@ module.exports = {
 Новый никнейм: \`${auditLog.changes[0].new}\`
 
 Изменил никнейм: ${auditLog.executor}`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
                         .setThumbnail(newM.user.displayAvatarURL())
 

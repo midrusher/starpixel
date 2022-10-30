@@ -8,6 +8,7 @@ const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГ�
 const ch_list = require(`../../discord structure/channels.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const wait = require(`node:timers/promises`).setTimeout
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -62,7 +63,7 @@ const items = userData.stacked_items.slice(0)
 ${map.join('\n')}
 
 Осталось неполученных наград: ${userData.stacked_items.length}!`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setThumbnail(user.displayAvatarURL())
                     .setTimestamp(Date.now())
 
@@ -89,7 +90,7 @@ ${map.join('\n')}
 
 **Список наград:**
 ${map.join('\n')}`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setThumbnail(user.displayAvatarURL())
                     .setTimestamp(Date.now())
 

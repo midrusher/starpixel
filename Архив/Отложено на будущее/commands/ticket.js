@@ -39,7 +39,7 @@ const row = new ActionRowBuilder()
         const msgEmbed = new EmbedBuilder()
             .setTitle(`Поддержка гильдии Starpixel`)
             .setThumbnail(interaction.guild.iconURL())
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setDescription(`Если вы хотите открыть канал с поддержкой, вы можете нажать на любую из предложенных ниже кнопочек. **Помните, что вы не можете открыть более 1 канала**!
         
 Вы можете открыть обращение по следующим причинам: 

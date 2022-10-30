@@ -4,6 +4,7 @@ const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИ
 const { execute } = require('../../events/client/start_bot/ready');
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 
 module.exports = {
@@ -25,7 +26,7 @@ module.exports = {
                 return interaction.reply({
                     embeds: [
                         new EmbedBuilder()
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setAuthor({
                                 name: `Вы не можете использовать эту команду`
                             })

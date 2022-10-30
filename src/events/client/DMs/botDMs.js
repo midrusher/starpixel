@@ -1,5 +1,6 @@
 const chalk = require(`chalk`);
 const { ChannelType, EmbedBuilder } = require("discord.js");
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'messageCreate',
@@ -12,7 +13,7 @@ module.exports = {
             const guild = await message.client.guilds.fetch(`320193302844669959`)
             const channel = await guild.channels.cache.get(`982551755340537866`)
             const message_embed = new EmbedBuilder()
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setThumbnail(message.author.displayAvatarURL())
                 .setTitle(`НОВОЕ СООБЩЕНИЕ В ЛИЧНЫХ СООБЩЕНИЯХ C ${message.channel.recipient.tag}`)
                 .setTimestamp(Date.now())

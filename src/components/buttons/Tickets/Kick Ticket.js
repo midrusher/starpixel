@@ -1,6 +1,7 @@
 const { ButtonBuilder, ChannelType, PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 const { Tickets } = require(`../../../schemas/tickets`)
 const { TicketsUser } = require(`../../../schemas/ticketUser`)
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     data: {
@@ -67,7 +68,7 @@ module.exports = {
 
         const delete_embed = new EmbedBuilder()
             .setTitle(`Вы открыли обращение к администрации!`)
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setDescription(`Вы открыли обращение по теме "Обжалование исключения из гильдии". Пожалуйста, напишите ваш никнейм на Hypixel, причину, по которой вас исключили, а также ответьте на вопрос: "Почему мы должны вас вернуть в гильдию?".
         
 Если вы хотите закрыть данное обращение, вы можете нажать на кнопочку ниже. Неактивные обращения удаляются модератором спустя 2 дня.`)

@@ -11,6 +11,7 @@ const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const wait = require(`node:timers/promises`).setTimeout
 const { gameConstructor, calcActLevel, getLevel, isURL } = require(`../../functions`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -8,6 +8,7 @@ const { Birthday } = require(`../../schemas/birthday`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -48,7 +49,7 @@ module.exports = {
             )
 
         const g_leave_embed = new EmbedBuilder()
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setThumbnail(user.user.displayAvatarURL())
             .setTimestamp(Date.now())
             .setTitle(`Подтвердите, что вы готовы покинуть гильдию Starpixel`)

@@ -1,6 +1,7 @@
 const chalk = require(`chalk`);
 const { EmbedBuilder } = require("discord.js");
 const { Guild } = require(`../../../schemas/guilddata`)
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'messageReactionRemove',

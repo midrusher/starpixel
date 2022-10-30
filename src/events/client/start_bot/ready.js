@@ -1,6 +1,7 @@
 const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder } = require(`discord.js`)
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'ready',
@@ -21,7 +22,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setTitle(`Бот запущен!`)
                 .setDescription(`Бот ${client.user} был успешно запущен на сервере \`${guild.name}\`! Команды можно использовать! <t:${timestamp}:R>`)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
 
             await channel.send({

@@ -2,6 +2,7 @@ const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`);
 const { EmbedBuilder } = require(`discord.js`)
 const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.halloweenRewards = async () => {
@@ -20,7 +21,7 @@ module.exports = (client) => {
                 if (seasonal.halloween.achievements.num1 == true && seasonal.halloween.achievements.num2 == true && seasonal.halloween.achievements.num3 == true && seasonal.halloween.achievements.num4 == true && seasonal.halloween.achievements.num5 == true && seasonal.halloween.achievements.num6 == true && !member.roles.cache.has(`1030757644320915556`)) {
                     const done = new EmbedBuilder()
                         .setTitle(`Выдана сезонная роль`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setThumbnail(member.user.displayAvatarURL())
                         .setTimestamp(Date.now())
                         .setDescription(`${member} получил \`${guild.roles.cache.get(`1030757644320915556`).name}\`! Теперь он может использовать сезонный цвет!`)

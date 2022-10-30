@@ -1,6 +1,7 @@
 const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder } = require(`discord.js`)
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'error',

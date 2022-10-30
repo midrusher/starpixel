@@ -9,6 +9,7 @@ const { Birthday } = require(`../../schemas/birthday`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const { toOrdinalSuffix } = require(`../../functions`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -203,7 +204,7 @@ module.exports = {
 
                 const b_embed = new EmbedBuilder()
                     .setTitle(`Установлен день рождения`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setThumbnail(user.displayAvatarURL())
                     .setDescription(`🎂 Я поздравлю ${user} с **${age}** днём рождения через ${remDays} дн., **${Day} ${list[Month]}, ${wishYear}**!`)
 
@@ -223,7 +224,7 @@ module.exports = {
 
                     const b_embed = new EmbedBuilder()
                         .setTitle(`Удалён день рождения`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setThumbnail(user.displayAvatarURL())
                         .setDescription(`✅ - Удалён день рождения пользователя ${user}!`)
                     await interaction.reply({
@@ -234,7 +235,7 @@ module.exports = {
                 } else {
                     const b_embed = new EmbedBuilder()
                         .setTitle(`День рождения не установлен`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setThumbnail(user.displayAvatarURL())
                         .setDescription(`❌ - День рождения ${user} не был установлен, поэтому я не смог его удалить!`)
 
@@ -252,7 +253,7 @@ module.exports = {
 
                 const no_bd = new EmbedBuilder()
                     .setTitle(`Нет дней рождений`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setThumbnail(interaction.guild.iconURL())
                     .setDescription(`❌ - На данном сервере нет дней рождений, очень жаль :'(`)
                 if (!listData) return interaction.reply({
@@ -320,7 +321,7 @@ module.exports = {
                 const list = new EmbedBuilder()
                     .setTitle(`Список дней рождений`)
                     .setThumbnail(interaction.guild.iconURL())
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setDescription(`${birthdayData.join(`\n`)}`)
                     .setFooter({
@@ -408,7 +409,7 @@ module.exports = {
                 const listData = await Birthday.findOne({ guildid: interaction.guild.id, userid: user.id })
                 const no_bd = new EmbedBuilder()
                     .setTitle(`Нет дня рождения`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setThumbnail(interaction.guild.iconURL())
                     .setDescription(`❌ - У данного пользователя нет дня рождения, очень жаль :'(`)
                 if (!listData) return interaction.reply({
@@ -419,7 +420,7 @@ module.exports = {
                 const list = new EmbedBuilder()
                     .setTitle(`День рождения ${user.username}`)
                     .setThumbnail(user.displayAvatarURL())
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setDescription(`🎂 - Пользователь ${user} отмечает свой день рождения \`${listData.day}.${listData.month}.${listData.year}\`!`)
 

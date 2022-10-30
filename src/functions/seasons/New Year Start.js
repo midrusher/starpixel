@@ -5,6 +5,7 @@ const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const { EmbedBuilder, PermissionsBitField } = require("discord.js")
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.newYearStart = async () => {

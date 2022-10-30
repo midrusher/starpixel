@@ -1,6 +1,7 @@
 const { ContextMenuCommandBuilder, ApplicationCommandType, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, ModalSubmitInteraction, InteractionType, EmbedBuilder, PermissionFlagsBits, ComponentType, SlashCommandBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const { User } = require(`../../schemas/userdata`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -46,7 +47,7 @@ module.exports = {
         memberData.save()
         const warning = new EmbedBuilder()
             .setTitle(`Выдано предупреждение`)
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setThumbnail(member.displayAvatarURL())
             .setTimestamp(Date.now())
             .setDescription(`Вам выдано предупреждение! Причина: \`${reason}\`! Пожалуйста, ознакомьтесь с <#774546154209148928>!

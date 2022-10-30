@@ -3,6 +3,7 @@ const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
 const { EmbedBuilder } = require("discord.js")
 const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.update_members = async () => {
@@ -76,7 +77,7 @@ module.exports = (client) => {
 
                 const staff = new EmbedBuilder()
                     .setTitle(`ПЕРСОНАЛ ГИЛЬДИИ`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setDescription(`**Правление гильдии**
 ${adminres.join('\n')}
 
@@ -112,7 +113,7 @@ ${offres.join('\n')}`)
 
                 const premmembers = new EmbedBuilder()
                     .setTitle(`VIP УЧАСТНИКИ`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setDescription(`${premres.join('\n')}`)
                 await premmsg.edit({
                     content: ``,
@@ -140,7 +141,7 @@ ${offres.join('\n')}`)
 
                 const memberslist = new EmbedBuilder()
                     .setTitle(`УЧАСТНИКИ ГИЛЬДИИ`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setDescription(
                         `${membres.join('\n')}`)
                     .addFields({

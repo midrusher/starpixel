@@ -5,6 +5,7 @@ const ch_list = require(`../../../../src/discord structure/channels.json`)
 const { permToName } = require(`../../../functions`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'channelUpdate',
@@ -210,7 +211,7 @@ module.exports = {
 ${chanProm.join(`\n`)}
 
 Модератор: ${mod}`)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
                 .setThumbnail(newCh.guild.iconURL())
             webhook.send({

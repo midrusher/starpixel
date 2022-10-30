@@ -10,6 +10,7 @@ const ch_list = require(`../../discord structure/channels.json`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const { gameConstructor, calcActLevel, getLevel, isURL, secondPage } = require(`../../functions`);
 const { SearchResultType, DisTubeVoice, Song, Playlist } = require('distube');
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -132,7 +133,7 @@ module.exports = {
                         let received
                         received = new EmbedBuilder()
                             .setTitle(`Запрос получен...`)
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setDescription(`🔍 Загружаем ваш запрос: \`${message}\`...`)
                             .setTimestamp(Date.now())
 
@@ -167,7 +168,7 @@ module.exports = {
 
                         const results = new EmbedBuilder()
                             .setTitle(`🔍 Результаты поиска...`)
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setDescription(`${search.join(`\n`)}`)
                             .setTimestamp(Date.now())
 
@@ -244,7 +245,7 @@ module.exports = {
 
                                 const received = new EmbedBuilder()
                                     .setTitle(`Запрос получен...`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setDescription(`🔍 Загружаем песню \`${playSong}\`...`)
                                     .setTimestamp(Date.now())
 
@@ -258,7 +259,7 @@ module.exports = {
                                 const err = new EmbedBuilder()
                                     .setTitle(`❌ Время выбора песни истекло!`)
                                     .setDescription(`Время выбора песни истекло! Чтобы выбрать песню, пропишите команду \`/music play\` и выберите один из 5 предложенных результатов!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setTimestamp(Date.now())
 
                                 await choices.components[0].setDisabled(true)
@@ -310,7 +311,7 @@ module.exports = {
                     .setTitle(`Очередь песен`)
                     .setDescription(`${list.join(`\n`)}`)
                     .setTimestamp(Date.now())
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setThumbnail(guild.iconURL())
                     .setFooter({
                         text: `Страница ${n + 1}/${totalPages} - ${queue.songs.length} треков в очереди`
@@ -451,7 +452,7 @@ module.exports = {
                             .setTitle(`Очередь песен`)
                             .setDescription(`${ephList.join(`\n`)}`)
                             .setTimestamp(Date.now())
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setThumbnail(guild.iconURL())
                             .setFooter({
                                 text: `Страница ${b + 1}/${totalPages} - ${queue.songs.length} треков в очереди`
@@ -716,7 +717,7 @@ module.exports = {
 
                 let song = queue.songs[0]
                 const playing = new EmbedBuilder()
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTitle(`Сейчас играет... 🎶`)
                     .setTimestamp(Date.now())
                     .setDescription(`**Название**: \`${song.name}\`
@@ -764,7 +765,7 @@ module.exports = {
                             songR = await queue.previous()
                             const result = new EmbedBuilder()
                                 .setTitle(`Переключено на предыдущую песню... ✅`)
-                                .setColor(process.env.bot_color)
+                                .setColor(linksInfo.bot_color)
                                 .setTimestamp(Date.now())
                                 .setDescription(`Вы снова включили \`${songR.name}\`!`)
 
@@ -783,7 +784,7 @@ module.exports = {
                         try {
                             const result = new EmbedBuilder()
                                 .setTitle(`Песня пропущена... ✅`)
-                                .setColor(process.env.bot_color)
+                                .setColor(linksInfo.bot_color)
                                 .setTimestamp(Date.now())
                                 .setDescription(`Текущая песня \`${queue.songs[0].name}\` была пропущена!`)
                             songR = await queue.skip()
@@ -840,7 +841,7 @@ module.exports = {
                 queue.setVolume(volume)
                 const result = new EmbedBuilder()
                     .setTitle(`Громкость звука установлена... 🔊`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setDescription(`Громкость проигрывателя была установлена на \`${volume}\`!`)
 
@@ -863,7 +864,7 @@ module.exports = {
                 try {
                     const result = new EmbedBuilder()
                         .setTitle(`Песня пропущена... ✅`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
                         .setDescription(`Текущая песня \`${queue.songs[0].name}\` была пропущена!`)
                     queue.skip()
@@ -897,7 +898,7 @@ module.exports = {
                     const song = await queue.previous()
                     const result = new EmbedBuilder()
                         .setTitle(`Переключено на предыдущую песню... ✅`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
                         .setDescription(`Вы снова включили \`${song.name}\`!`)
 
@@ -922,7 +923,7 @@ module.exports = {
                 })
                 const result = new EmbedBuilder()
                     .setTitle(`Я присоединился 👋`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setDescription(`Я присоединился к вашему голосовому каналу! Чтобы включить музыку, используйте команду \`/music play\`!`)
 
@@ -955,7 +956,7 @@ module.exports = {
                     queue.resume()
                     const result = new EmbedBuilder()
                         .setTitle(`Воспроизведение восстановлено ⏸`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
                         .setDescription(`Так как воспроизведение уже было приостановлено, мы возобновили его! Если хотите поставить воспроизведение на паузу, пропишите эту команду ещё раз.`)
                     return interaction.reply({
@@ -964,7 +965,7 @@ module.exports = {
                 }
                 const result = new EmbedBuilder()
                     .setTitle(`Воспроизведение приостановлено ▶`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setDescription(`Воспроизведение музыки было приостановлено! Чтобы восстановить воспроизведение, пропишите \`/music resume\`!`)
                 queue.pause()
@@ -990,7 +991,7 @@ module.exports = {
                     queue.resume()
                     const result = new EmbedBuilder()
                         .setTitle(`Воспроизведение восстановлено ⏸`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
                         .setDescription(`Воспроизведение музыки было восстановлено! Чтобы приостановить воспроизведение, пропишите \`/music pause\`!`)
                     return interaction.reply({
@@ -999,7 +1000,7 @@ module.exports = {
                 } else if (queue.playing) {
                     const result = new EmbedBuilder()
                         .setTitle(`Воспроизведение приостановлено ▶`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
                         .setDescription(`Так как воспроизведение уже было восстановлено, мы приостановили его! Если хотите восстановить воспроизведение, пропишите эту команду ещё раз.`)
                     queue.pause()
@@ -1024,7 +1025,7 @@ module.exports = {
                 await queue.stop()
                 const result = new EmbedBuilder()
                     .setTitle(`Воспроизведение остановлено ▶`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setDescription(`Воспроизведение песен было полностью остановлено! Очередь была очищена! Если вы хотите включить музыку, используйте \`/music play\`.`)
 
@@ -1048,7 +1049,7 @@ module.exports = {
                 await queue.shuffle()
                 const result = new EmbedBuilder()
                     .setTitle(`Очередь перемешана 🔀`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setDescription(`Очередь была успешно перемешана!`)
 
@@ -1090,7 +1091,7 @@ module.exports = {
                 const setQueue = new EmbedBuilder()
                     .setTitle(`Установлен режим повтора`)
                     .setDescription(`Режим повтора установлен на \`${mode}\``)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                 await client.distube.setRepeatMode(guild, value)
                 await interaction.reply({

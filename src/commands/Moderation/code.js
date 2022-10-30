@@ -5,6 +5,7 @@ const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -62,7 +63,7 @@ module.exports = {
                         .setAuthor({
                             name: `✅ Код принят!`
                         })
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setDescription(`Новый код был отправлен вам в личные сообщения!`)
                         .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
                         .setTimestamp(Date.now())
@@ -130,7 +131,7 @@ module.exports = {
                         })
                         .setDescription(`Ваш код принят! Пожалуйста, дождитесь ответа администратора.`)
                         .setThumbnail(`https://i.imgur.com/BahQWAW.png`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
 
                     await interaction.reply({

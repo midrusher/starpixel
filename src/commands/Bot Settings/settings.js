@@ -10,6 +10,7 @@ const chalk = require(`chalk`);
 const { SettingsPluginsGetID, toggleOnOff, defaultShop, secondPage } = require(`../../functions`)
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const { ClientSettings } = require(`../../schemas/client`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -394,7 +395,7 @@ module.exports = {
                         clientData.save()
                         const embed = new EmbedBuilder()
                             .setTitle(`Изменена версия бота`)
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setDescription(`Версия бота была изменена с \`${oldV}\` на \`${newV}\``)
                             .setThumbnail(client.user.displayAvatarURL())
                             .setTimestamp(Date.now())
@@ -458,7 +459,7 @@ module.exports = {
                         let i = 1
                         let { items, cosmetics, achievements, pets, nick_system, premium, welcome, birthday, tickets, moderation, security, temp_channels, bot_dms, logs, temp_roles, auto_roles, user_updates, channels, gexp, music, seasonal, guildgames } = plugins
                         let result = new EmbedBuilder()
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setTitle(`Статус плагинов гильдии`)
                             .setTimestamp(Date.now())
                             .setDescription(`**${i++}.** \`Предметы\` - Статус: ${toggleOnOff(items)}
@@ -743,7 +744,7 @@ ${roles.join('\n')}`
                         const embed = new EmbedBuilder()
                             .setTitle(`Список товаров`)
                             .setDescription(`${map.join(`\n`)}`)
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setTimestamp(Date.now())
                             .setFooter({ text: `Страница ${b + 1}/${totalPages}` })
 
@@ -946,7 +947,7 @@ ${roles.join('\n')}`
                         const embed = new EmbedBuilder()
                             .setTitle(`Список каналов сезона "Хэллоуин"`)
                             .setDescription(`${list.join(`\n`)}`)
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setThumbnail(interaction.guild.iconURL())
                             .setTimestamp(Date.now())
 
@@ -1034,7 +1035,7 @@ ${roles.join('\n')}`
                         const embed = new EmbedBuilder()
                             .setTitle(`Список каналов сезона "Новый год"`)
                             .setDescription(`${list.join(`\n`)}`)
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setThumbnail(interaction.guild.iconURL())
                             .setTimestamp(Date.now())
 

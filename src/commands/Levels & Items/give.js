@@ -3,6 +3,7 @@ const { execute } = require('../../events/client/start_bot/ready');
 const { User } = require(`../../schemas/userdata`);
 const ch_list = require(`../../discord structure/channels.json`)
 const chalk = require(`chalk`);
+const linksInfo = require(`../../discord structure/links.json`)
 const { calcActLevel, getLevel } = require(`../../functions`)
 
 module.exports = {

@@ -1,6 +1,8 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType, } = require('discord.js');
 const apply = require('../../../commands/Misc/apply');
 const { Apply } = require(`../../../schemas/applications`)
+const linksInfo = require(`../../../discord structure/links.json`)
+
 module.exports = {
     data: {
         name: "button_apply"

@@ -2,6 +2,7 @@ const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, T
 const { execute } = require('../../events/client/start_bot/ready');
 const { Apply } = require(`../../schemas/applications`)
 const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()

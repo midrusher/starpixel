@@ -4,6 +4,7 @@ const { ChannelType, AuditLogEvent, WebhookClient, EmbedBuilder } = require(`dis
 const ch_list = require(`../../../discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'guildMemberAdd',
@@ -48,7 +49,7 @@ module.exports = {
 Дата вступления: <t:${joined}:f>
 
 Пригласил: ${inviter}`)
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setTimestamp(Date.now())
             .setThumbnail(member.user.displayAvatarURL())
 

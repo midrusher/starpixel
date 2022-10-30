@@ -7,6 +7,7 @@ const { Song, SearchResultType } = require('distube');
 const wait = require(`node:timers/promises`).setTimeout
 const moment = require(`moment`)
 const cron = require(`node-cron`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -495,7 +496,7 @@ module.exports = {
                         }
                         const embed = new EmbedBuilder()
                             .setTitle(`Установленные настройки совместных игр`)
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setTimestamp(Date.now())
                             .setDescription(`**Начало совместной игры**: \`${hour_start}:${min_start}\` по московскому времени
 **Конец совместной игры**: \`${hour_end}:${min_end}\` по московскому времени
@@ -568,7 +569,7 @@ ${promOffs.join(`\n`)}`)
                             .setTitle(`Список песен в автовоспроизведении`)
                             .setDescription(`Список:
 ${listProm.join(`\n`)}`)
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setThumbnail(interaction.guild.iconURL())
                             .setFooter({ text: `Страница ${n + 1}/${totalPages}` })
                             .setTimestamp(Date.now())

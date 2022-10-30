@@ -3,6 +3,7 @@ const { Guild } = require(`../../../schemas/guilddata`)
 const { ChannelType, AttachmentBuilder, EmbedBuilder } = require(`discord.js`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'guildMemberAdd',
@@ -13,7 +14,7 @@ module.exports = {
         const guild = member.guild
         const embedJoin = new EmbedBuilder()
         .setTitle(`Пользователь присоединился`)
-        .setColor(process.env.bot_color)
+        .setColor(linksInfo.bot_color)
         .setDescription(`${member} (${member.user.tag}, ${member.user.id}) присоединился!
 Он является #${member.guild.memberCount}-ым участником сервера!`)
         .setTimestamp(Date.now())

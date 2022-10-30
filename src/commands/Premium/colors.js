@@ -3,6 +3,7 @@ const { execute } = require('../../events/client/start_bot/ready');
 const { Temp } = require(`../../schemas/temp_items`)
 const chalk = require(`chalk`);
 const { User } = require('../../schemas/userdata');
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()

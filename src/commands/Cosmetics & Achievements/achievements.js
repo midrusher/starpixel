@@ -5,6 +5,7 @@ const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИ
 const { execute } = require('../../events/client/start_bot/ready');
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -382,7 +383,7 @@ module.exports = {
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -466,7 +467,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -549,7 +550,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -632,7 +633,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -715,7 +716,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -798,7 +799,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -881,7 +882,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -964,7 +965,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1047,7 +1048,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1130,7 +1131,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1213,7 +1214,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1296,7 +1297,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1379,7 +1380,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1462,7 +1463,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1545,7 +1546,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1628,7 +1629,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1711,7 +1712,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1794,7 +1795,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1877,7 +1878,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -1960,7 +1961,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -2043,7 +2044,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -2126,7 +2127,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -2209,7 +2210,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -2292,7 +2293,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -2376,7 +2377,7 @@ ${user} +50 💠
                                     userData.achievements.normal += 1
                                     userData.save()
                                     const condition_meet = new EmbedBuilder()
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                         .setTitle(`✅ Достижение выполнено!`)
                                         .setTimestamp(Date.now())
@@ -2468,7 +2469,7 @@ ${user} +50 💠
                                             userData.achievements.mythical += 1
                                             userData.save()
                                             const condition_meet = new EmbedBuilder()
-                                                .setColor(process.env.bot_color)
+                                                .setColor(linksInfo.bot_color)
                                                 .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                                 .setTitle(`✅ Достижение выполнено!`)
                                                 .setTimestamp(Date.now())
@@ -2552,7 +2553,7 @@ ${user} + 300 💠
                                             userData.achievements.normal += 1
                                             userData.save()
                                             const condition_meet = new EmbedBuilder()
-                                                .setColor(process.env.bot_color)
+                                                .setColor(linksInfo.bot_color)
                                                 .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                                 .setTitle(`✅ Достижение выполнено!`)
                                                 .setTimestamp(Date.now())
@@ -2637,7 +2638,7 @@ ${user} + 300 💠
                                             userData.achievements.normal += 1
                                             userData.save()
                                             const condition_meet = new EmbedBuilder()
-                                                .setColor(process.env.bot_color)
+                                                .setColor(linksInfo.bot_color)
                                                 .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                                 .setTitle(`✅ Достижение выполнено!`)
                                                 .setTimestamp(Date.now())
@@ -2721,7 +2722,7 @@ ${user} + 300 💠
                                             userData.achievements.normal += 1
                                             userData.save()
                                             const condition_meet = new EmbedBuilder()
-                                                .setColor(process.env.bot_color)
+                                                .setColor(linksInfo.bot_color)
                                                 .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                                 .setTitle(`✅ Достижение выполнено!`)
                                                 .setTimestamp(Date.now())
@@ -2806,7 +2807,7 @@ ${user} + 300 💠
                                             userData.achievements.normal += 1
                                             userData.save()
                                             const condition_meet = new EmbedBuilder()
-                                                .setColor(process.env.bot_color)
+                                                .setColor(linksInfo.bot_color)
                                                 .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                                 .setTitle(`✅ Достижение выполнено!`)
                                                 .setTimestamp(Date.now())
@@ -2870,7 +2871,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -2892,7 +2893,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -2914,7 +2915,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -2936,7 +2937,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -2958,7 +2959,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -2980,7 +2981,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3002,7 +3003,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3024,7 +3025,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3046,7 +3047,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3068,7 +3069,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3090,7 +3091,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3112,7 +3113,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3134,7 +3135,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3156,7 +3157,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3178,7 +3179,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3200,7 +3201,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3222,7 +3223,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3244,7 +3245,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3266,7 +3267,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3288,7 +3289,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3310,7 +3311,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3332,7 +3333,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3354,7 +3355,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3376,7 +3377,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3398,7 +3399,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3427,7 +3428,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3449,7 +3450,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3471,7 +3472,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3493,7 +3494,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3515,7 +3516,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Выдано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`Пользователю ${member} было выдано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3560,7 +3561,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3582,7 +3583,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3604,7 +3605,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3626,7 +3627,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3648,7 +3649,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3670,7 +3671,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3692,7 +3693,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3714,7 +3715,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3736,7 +3737,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3758,7 +3759,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3780,7 +3781,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3802,7 +3803,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3824,7 +3825,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3846,7 +3847,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3868,7 +3869,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3890,7 +3891,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3912,7 +3913,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3934,7 +3935,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3956,7 +3957,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -3978,7 +3979,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -4000,7 +4001,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -4022,7 +4023,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -4044,7 +4045,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -4066,7 +4067,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -4088,7 +4089,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -4118,7 +4119,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -4140,7 +4141,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -4162,7 +4163,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -4184,7 +4185,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 
@@ -4206,7 +4207,7 @@ ${user} + 300 💠
                                     const grant_embed = new EmbedBuilder()
                                         .setTitle(`Убрано достижение`)
                                         .setTimestamp(Date.now())
-                                        .setColor(process.env.bot_color)
+                                        .setColor(linksInfo.bot_color)
                                         .setDescription(`У пользователя ${member} было убрано достижение \`${interaction.options.getString(`достижение`)}\``)
                                         .setThumbnail(member.user.displayAvatarURL())
 

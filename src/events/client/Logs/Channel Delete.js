@@ -4,6 +4,7 @@ const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`dis
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'channelDelete',
@@ -79,7 +80,7 @@ module.exports = {
 Тема канала: ${channel.topic || `Не указана`}
 
 Модератор: ${auditLog.executor}`)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
                 .setThumbnail(channel.guild.iconURL())
         } else if (channel.type == ChannelType.GuildCategory) {
@@ -89,7 +90,7 @@ module.exports = {
 Тип канала: ${type}
 
 Модератор: ${auditLog.executor}`)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
                 .setThumbnail(channel.guild.iconURL())
         } else if (channel.type == ChannelType.GuildForum) {
@@ -100,7 +101,7 @@ module.exports = {
 Тип канала: ${type}
 
 Модератор: ${auditLog.executor}`)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
                 .setThumbnail(channel.guild.iconURL())
         } else if (channel.type == ChannelType.GuildVoice || channel.type == ChannelType.GuildStageVoice) {
@@ -111,7 +112,7 @@ module.exports = {
 Тип канала: ${type}
 
 Модератор: ${auditLog.executor}`)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
                 .setThumbnail(channel.guild.iconURL())
         } else if (channel.type == ChannelType.DM) {
@@ -119,7 +120,7 @@ module.exports = {
                 .setTitle(`Удалены личные сообщения с ботом`)
                 .setDescription(`Пользователь: ${channel.recipient}
 Бот: ${client.user}`)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
                 .setThumbnail(channel.recipient.displayAvatarURL())
         }

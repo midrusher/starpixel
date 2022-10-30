@@ -4,6 +4,7 @@ const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const { EmbedBuilder } = require("discord.js")
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.wish_birthday = async () => {
@@ -38,7 +39,7 @@ module.exports = (client) => {
                         .setThumbnail(member.user.displayAvatarURL())
                         .setDescription(`🎂 Поздравляем ${member} с ${age}-ым днём рождения! Желаем тебе всего самого наилучшего в этот прекрасный день! 
 В качестве подарка от гильдии ты получаешь **КОРОЛЕВСКУЮ** коробку и эксклюзивную роль именинника на весь день!`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
 
                     if (Month === currentMonth && Day === currentDate) {
                         await channel.send({

@@ -2,6 +2,7 @@ const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
 const { EmbedBuilder } = require("discord.js")
 const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.rank_update = async () => {
@@ -36,7 +37,7 @@ module.exports = (client) => {
 
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
@@ -66,7 +67,7 @@ module.exports = (client) => {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
@@ -96,7 +97,7 @@ module.exports = (client) => {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
@@ -124,7 +125,7 @@ module.exports = (client) => {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
@@ -154,7 +155,7 @@ module.exports = (client) => {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
@@ -184,7 +185,7 @@ module.exports = (client) => {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
@@ -214,7 +215,7 @@ module.exports = (client) => {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
@@ -245,7 +246,7 @@ module.exports = (client) => {
                             if (!member.roles.cache.has(newrank[0].id) || !member.roles.cache.has(newrank[1].id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1].name}!
@@ -275,7 +276,7 @@ module.exports = (client) => {
                             if (!member.roles.cache.has(newrank.id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank.name}!
@@ -305,7 +306,7 @@ module.exports = (client) => {
                             if (!member.roles.cache.has(newrank[0].id) || !member.roles.cache.has(newrank[1].id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1].name}!
@@ -335,7 +336,7 @@ module.exports = (client) => {
                             if (!member.roles.cache.has(newrank[0].id) || !member.roles.cache.has(newrank[1].id)) {
                                 const rank_update = new EmbedBuilder()
                                     .setTitle(`Ранг пользователя повышен!`)
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(member.user.displayAvatarURL())
                                     .setTimestamp(Date.now())
                                     .setDescription(`${member} повысил ранг гильдии! Теперь он ${newrank[1].name}!

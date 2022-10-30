@@ -1,5 +1,6 @@
 const { User } = require(`../../schemas/userdata`)
 const chalk = require(`chalk`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.haspremium = async () => {

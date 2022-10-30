@@ -47,7 +47,7 @@ module.exports = {
 Эмоджи: ${event}
 
 Автор эмодзи: ${emoji.author}`)
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setTimestamp(Date.now())
             .setThumbnail(emoji.guild.iconURL())
 

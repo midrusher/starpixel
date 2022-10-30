@@ -4,6 +4,7 @@ const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent, AuditLogOptions
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'channelPinsUpdate',
@@ -57,7 +58,7 @@ module.exports = {
 Автор: ${message.content}
 
 Модератор: ${auditLog.executor}`)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
                 .setThumbnail(channel.guild.iconURL())
 
@@ -70,7 +71,7 @@ module.exports = {
 Автор: ${message.content}
 
 Модератор: ${auditLog.executor}`)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
                 .setThumbnail(channel.guild.iconURL())
         }

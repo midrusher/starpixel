@@ -6,6 +6,7 @@ const ch_list = require(`../../discord structure/channels.json`)
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const wait = require(`node:timers/promises`).setTimeout
+const linksInfo = require(`../../discord structure/links.json`)
 const { EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
 
 module.exports = (client) => {

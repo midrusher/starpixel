@@ -3,6 +3,7 @@ const { Guild } = require(`../../schemas/guilddata`)
 const chalk = require(`chalk`)
 const cron = require(`node-cron`)
 const { EmbedBuilder } = require("discord.js")
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.birthdayChannel = async () => {

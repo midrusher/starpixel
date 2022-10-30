@@ -4,6 +4,7 @@ const { EmbedBuilder } = require(`discord.js`)
 const ch_list = require(`../../discord structure/channels.json`)
 const { Guild } = require(`../../schemas/guilddata`)
 const wait = require(`node:timers/promises`).setTimeout
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.GameEnd = async () => {
@@ -29,7 +30,7 @@ module.exports = (client) => {
                         .setDescription(`${member} получил награду за посещение ${reward.required} совместных игр! В качестве награды он получает <@&${reward.box}>! 
                     
 Спасибо, что посещаете совместные игры! Ждём вас ещё!`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setThumbnail(member.user.displayAvatarURL())
                         .setTimestamp(Date.now())
 
@@ -46,7 +47,7 @@ module.exports = (client) => {
 
 Чтобы получить награду, откройте коробки и пропишите команду \`/rewards claim\`! Для просмотра списка неполученных наград пропишите \`/rewards unclaimed\`!
 Спасибо, что посещаете совместные игры! Ждём вас ещё!`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setThumbnail(member.user.displayAvatarURL())
                         .setTimestamp(Date.now())
                     await channel.send({
@@ -73,7 +74,7 @@ module.exports = (client) => {
 
 **Игру посетили**:
 ${list.join(`\n`)}`)
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setFooter({ text: `Если вы посетили совместную игру, но вас тут нет, напишите в вопрос-модерам, предоставив доказательство! Вся информация о посещённых игроках берётся из участников голосового канала. В следующий раз заходите в голосовой канал и общайтесь с другими участниками!` })
             .setThumbnail(guild.iconURL())
             .setTimestamp(Date.now())
@@ -92,7 +93,7 @@ ${list.join(`\n`)}`)
             .setDescription(`Итоги: 
 ${gamesPlayed.join(`\n`)}`)
             .setTimestamp(Date.now())
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setThumbnail(guild.iconURL())
         await channel.send({
             content: `◾ 

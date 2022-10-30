@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder, Embed, ActionRowBuilder, ButtonBuilde
 const { execute } = require('../../events/client/start_bot/ready');
 const wait = require('node:timers/promises').setTimeout;
 const ch_list = require(`../../discord structure/channels.json`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, Attachment, EmbedBuilder, ActionRowBuilder, SelectMenuBuilder } = require('discord.js');
 const { Guild } = require(`../../schemas/guilddata`)
 const { User } = require(`../../schemas/userdata`);
+const linksInfo = require(`../../discord structure/links.json`)
 
 
 module.exports = {
@@ -32,7 +33,7 @@ module.exports = {
 
 
         let embed = new EmbedBuilder()
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setTitle(`Лучшие пользователи по опыту активности`)
             .setTimestamp(Date.now())
             .setDescription(`${mapProm.slice(0, 10).join('\n')}`)

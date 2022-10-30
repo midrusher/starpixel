@@ -8,7 +8,7 @@ const embed1 = new EmbedBuilder()
 После того, как вы отправили заявку, в течение 7 дней с вами свяжется член администрации гильдии и сообщит Вам результат вашей заявки. Если вы не получили ответ на вашу заявку в течение 7 дней, вероятнее всего, что вашу заявку отклонили.
        
 :warning: Внимание! Чтобы администратор гильдии мог Вам написать, убедитесь, что у вас открыты личные сообщения от участников сервера`)
-    .setColor(process.env.bot_color)
+    .setColor(linksInfo.bot_color)
     .setThumbnail(interaction.guild.iconURL())
 
 await channel1.send({
@@ -35,7 +35,7 @@ const embed2 = new EmbedBuilder()
 • Вы согласны соблюдать <#${ch_list.rules}>
             
 Для того, чтобы подать заявку, перейдите в канал <#${ch_list.application}>`)
-    .setColor(process.env.bot_color)
+    .setColor(linksInfo.bot_color)
     .setThumbnail(interaction.guild.iconURL())
 
 await channel2.send({

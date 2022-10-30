@@ -6,6 +6,7 @@ const { Guild } = require(`../../schemas/guilddata`)
 const cron = require(`node-cron`)
 const { isURL } = require(`../../functions`)
 const wait = require(`node:timers/promises`).setTimeout
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.GuildGameStart = async () => {

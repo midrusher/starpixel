@@ -2,6 +2,8 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require(`discord-api-types/v10`);
 const fs = require('fs');
 const chalk = require(`chalk`)
+const linksInfo = require(`../../discord structure/links.json`)
+
 module.exports = (client) => {
     client.handleCommands = async () => {
         const commandFolders = fs.readdirSync('./src/commands');

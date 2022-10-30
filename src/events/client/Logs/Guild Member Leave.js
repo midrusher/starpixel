@@ -4,6 +4,7 @@ const { ChannelType, AuditLogEvent, WebhookClient, EmbedBuilder } = require(`dis
 const ch_list = require(`../../../discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'guildMemberRemove',
@@ -44,7 +45,7 @@ module.exports = {
             const log = new EmbedBuilder()
                 .setTitle(`Участник покинул сервер`)
                 .setDescription(`Имя пользователя: \`${member.user.tag}\``)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
                 .setThumbnail(member.user.displayAvatarURL())
 
@@ -57,7 +58,7 @@ module.exports = {
             if (reason) {
                 const log = new EmbedBuilder()
                     .setTitle(`Участник исключён`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setThumbnail(member.user.displayAvatarURL())
                     .setDescription(`Имя пользователя: \`${member.user.tag}\`
@@ -70,7 +71,7 @@ module.exports = {
             } else if (!reason) {
                 const log = new EmbedBuilder()
                     .setTitle(`Участник исключён`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setThumbnail(member.user.displayAvatarURL())
                     .setDescription(`Имя пользователя: \`${member.user.tag}\`

@@ -1,4 +1,5 @@
 
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     data: {

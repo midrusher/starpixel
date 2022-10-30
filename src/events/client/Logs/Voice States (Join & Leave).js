@@ -4,6 +4,7 @@ const { ChannelType, EmbedBuilder, WebhookClient, AuditLogEvent } = require(`dis
 const ch_list = require(`../../../discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'voiceStateUpdate',
@@ -48,7 +49,7 @@ module.exports = {
 Новый канал: \`${newM.channel.name}\`
 
 Переместил: ${executor}`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
                         .setThumbnail(newM.member.user.displayAvatarURL())
 
@@ -66,7 +67,7 @@ module.exports = {
 Канал: \`${oldM.channel.name}\`
 
 Отключил: ${executor}`)
-                        .setColor(process.env.bot_color)
+                        .setColor(linksInfo.bot_color)
                         .setTimestamp(Date.now())
                         .setThumbnail(newM.member.user.displayAvatarURL())
 
@@ -85,7 +86,7 @@ module.exports = {
                     .setTitle(`✅ Пользователь подключился к голосовому каналу`)
                     .setDescription(`Пользователь: ${newM.member}
 Канал: \`${newM.channel.name}\``)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setThumbnail(newM.member.user.displayAvatarURL())
 
@@ -97,7 +98,7 @@ module.exports = {
                     .setTitle(`❌ Пользователь отключился от голосового канала`)
                     .setDescription(`Пользователь: ${newM.member}
 Канал: \`${oldM.channel.name}\``)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setThumbnail(newM.member.user.displayAvatarURL())
 
@@ -110,7 +111,7 @@ module.exports = {
                     .setDescription(`Пользователь: ${newM.member}
 Старый канал: \`${oldM.channel.name}\`
 Новый канал: \`${newM.channel.name}\``)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setThumbnail(newM.member.user.displayAvatarURL())
 

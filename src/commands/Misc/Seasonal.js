@@ -10,6 +10,7 @@ const ch_list = require(`../../discord structure/channels.json`)
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 const { execute } = require('../../events/client/start_bot/ready');
 const { achievementStats, found } = require(`../../functions`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -191,7 +192,7 @@ module.exports = {
                                 userData.seasonal.halloween.points += 5
                                 userData.save()
                                 const condition_meet = new EmbedBuilder()
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                     .setTitle(`✅ Достижение выполнено!`)
                                     .setTimestamp(Date.now())
@@ -274,7 +275,7 @@ ${member} +50 💠
                                 userData.seasonal.halloween.points += 5
                                 userData.save()
                                 const condition_meet = new EmbedBuilder()
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                     .setTitle(`✅ Достижение выполнено!`)
                                     .setTimestamp(Date.now())
@@ -359,7 +360,7 @@ ${member} +50 💠
                                 userData.seasonal.halloween.points += 5
                                 userData.save()
                                 const condition_meet = new EmbedBuilder()
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                     .setTitle(`✅ Достижение выполнено!`)
                                     .setTimestamp(Date.now())
@@ -440,7 +441,7 @@ ${member} +50 💠
                                 userData.seasonal.halloween.points += 5
                                 userData.save()
                                 const condition_meet = new EmbedBuilder()
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                     .setTitle(`✅ Достижение выполнено!`)
                                     .setTimestamp(Date.now())
@@ -521,7 +522,7 @@ ${member} +50 💠
                                 userData.seasonal.halloween.points += 5
                                 userData.save()
                                 const condition_meet = new EmbedBuilder()
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                     .setTitle(`✅ Достижение выполнено!`)
                                     .setTimestamp(Date.now())
@@ -602,7 +603,7 @@ ${member} +50 💠
                                 userData.seasonal.halloween.points += 5
                                 userData.save()
                                 const condition_meet = new EmbedBuilder()
-                                    .setColor(process.env.bot_color)
+                                    .setColor(linksInfo.bot_color)
                                     .setThumbnail(`https://i.imgur.com/Xa6HxCU.png`)
                                     .setTitle(`✅ Достижение выполнено!`)
                                     .setTimestamp(Date.now())
@@ -674,7 +675,7 @@ ${member} +50 💠
 **Количество на конец квеста**: ${userData.seasonal.halloween.quest.requirement}
 **Статус**: \`${userData.seasonal.halloween.quest.finished ? `Завершено ✅` : `Не завершено ❌`}\``)
                             .setThumbnail(user.displayAvatarURL())
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setTimestamp(Date.now())
 
                         await interaction.reply({
@@ -703,7 +704,7 @@ ${member} +50 💠
 
 
                         const embed = new EmbedBuilder()
-                            .setColor(process.env.bot_color)
+                            .setColor(linksInfo.bot_color)
                             .setAuthor({
                                 name: `Лучшие пользователи по хэллоуинским очкам`
                             })
@@ -751,7 +752,7 @@ ${member} +50 💠
                                 return interaction.reply({
                                     embeds: [
                                         new EmbedBuilder()
-                                            .setColor(process.env.bot_color)
+                                            .setColor(linksInfo.bot_color)
                                             .setAuthor({
                                                 name: `Вы не можете использовать эту команду`
                                             })

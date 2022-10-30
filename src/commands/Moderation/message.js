@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, Attachment, EmbedBuilder } = require('discord.js');
 const { execute } = require('../../events/client/start_bot/ready');
 const { User } = require(`../../schemas/userdata`);
+const linksInfo = require(`../../discord structure/links.json`)
 
 
 module.exports = {

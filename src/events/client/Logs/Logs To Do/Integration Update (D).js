@@ -41,7 +41,7 @@ module.exports = {
         const log = new EmbedBuilder()
             .setTitle(``)
             .setDescription(``)
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setTimestamp(Date.now())
             .setThumbnail(member.user.displayAvatarURL())
 

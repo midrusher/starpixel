@@ -3,6 +3,7 @@ const chalk = require(`chalk`);
 const wait = require("timers/promises").setTimeout;
 const { Collection, EmbedBuilder } = require(`discord.js`);
 const { SearchResultType } = require("distube");
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'finish',
@@ -33,7 +34,7 @@ module.exports = {
             type: SearchResultType.VIDEO
         })
         const playing = new EmbedBuilder()
-            .setColor(process.env.bot_color)
+            .setColor(linksInfo.bot_color)
             .setTitle(`Добавлена песня... 🎶`)
             .setTimestamp(Date.now())
             .setDescription(`**Название**: \`${song[0].name}\`

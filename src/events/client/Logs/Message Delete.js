@@ -4,6 +4,7 @@ const { ChannelType, AuditLogEvent, WebhookClient, EmbedBuilder } = require(`dis
 const ch_list = require(`../../../../src/discord structure/channels.json`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'messageDelete',
@@ -58,7 +59,7 @@ module.exports = {
 Содержимое: \`${message.content}\`
 
 Удалено пользователем: ${executor}`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
                     .setThumbnail(message.author.displayAvatarURL())
 
@@ -75,7 +76,7 @@ module.exports = {
 Содержимое: \`Неизвестно\`
 
 Удалено пользователем: ${executor}`)
-                    .setColor(process.env.bot_color)
+                    .setColor(linksInfo.bot_color)
                     .setTimestamp(Date.now())
 
                 webhook.send({
@@ -94,7 +95,7 @@ module.exports = {
 Содержимое: \`${message.content}\`
 
 Удалено пользователем: \`Неизвестно\``)
-        .setColor(process.env.bot_color)
+        .setColor(linksInfo.bot_color)
         .setTimestamp(Date.now())
         .setThumbnail(message.author.displayAvatarURL())
 
@@ -111,7 +112,7 @@ module.exports = {
 Содержимое: \`Неизвестно\`
 
 Удалено пользователем: \`Неизвестно\``)
-        .setColor(process.env.bot_color)
+        .setColor(linksInfo.bot_color)
         .setTimestamp(Date.now())
 
         webhook.send({

@@ -1,5 +1,6 @@
 const { InteractionType } = require(`discord.js`)
 const { ClientSettings } = require(`../../../schemas/client`)
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     name: 'interactionCreate',

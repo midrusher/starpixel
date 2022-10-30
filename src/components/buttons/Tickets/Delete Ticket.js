@@ -1,6 +1,7 @@
 const { ButtonBuilder, ChannelType, PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
 const { Tickets } = require(`../../../schemas/tickets`)
 const { TicketsUser } = require(`../../../schemas/ticketUser`)
+const linksInfo = require(`../../../discord structure/links.json`)
 
 module.exports = {
     data: {

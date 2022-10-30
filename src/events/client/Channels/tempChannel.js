@@ -1,5 +1,6 @@
 const chalk = require(`chalk`);
 const { User } = require(`../../../schemas/userdata`)
+const linksInfo = require(`../../../discord structure/links.json`)
 const { ReactionCollector, ChannelType, CategoryChannelChildManager, Collection, PermissionsBitField } = require("discord.js");
 
 module.exports = {

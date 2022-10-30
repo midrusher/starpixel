@@ -2,6 +2,7 @@ const { Temp } = require(`../../schemas/temp_items`)
 const chalk = require(`chalk`)
 const { Guild } = require(`../../schemas/guilddata`)
 const { User } = require(`../../schemas/userdata`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.temp_roles = async () => {

@@ -8,6 +8,7 @@ const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const ch_list = require(`../../discord structure/channels.json`)
 const cron = require(`node-cron`)
+const linksInfo = require(`../../discord structure/links.json`)
 
 module.exports = (client) => {
     client.top_3_gexp = async () => {
@@ -98,7 +99,7 @@ module.exports = (client) => {
             const top_3 = new EmbedBuilder()
                 .setTitle(`Топ-3 лучших игрока по GEXP`)
                 .setDescription(`${list.join('\n')}`)
-                .setColor(process.env.bot_color)
+                .setColor(linksInfo.bot_color)
                 .setTimestamp(Date.now())
 
             await msg.edit({

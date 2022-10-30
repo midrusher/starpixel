@@ -169,6 +169,6 @@ const User = new mongoose.Schema({
         role: { type: String },
         created: { type: Boolean, default: false }
     }
-})
+})   
 
 module.exports = { User: mongoose.model(`User`, User) }

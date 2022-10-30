@@ -2,7 +2,6 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require(`discord-api-types/v10`);
 const fs = require('fs');
 const chalk = require(`chalk`)
-let token = process.env.token2+process.env.token1+process.env.token3
 module.exports = (client) => {
     client.handleCommands = async () => {
         const commandFolders = fs.readdirSync('./src/commands');
@@ -24,7 +23,7 @@ module.exports = (client) => {
 
         const clientId = '883421063369859122';
         const guildId = '320193302844669959';
-        const rest = new REST({ version: '9' }).setToken(token);
+        const rest = new REST({ version: '9' }).setToken(process.env.token);
         try {
             console.log(chalk.blue(`[Бот Starpixel] Обновление команд приложения...`));
 

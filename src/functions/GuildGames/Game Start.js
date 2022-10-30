@@ -14,14 +14,7 @@ module.exports = (client) => {
         if (pluginData.plugins.guildgames === false) return
         const guild = await client.guilds.fetch(`320193302844669959`)
         const guildData = await Guild.findOne({ id: guild.id })
-        let startMin = guildData.guildgames.gamestart_min
-        let startHour = guildData.guildgames.gamestart_hour
-        const weekDays = guildData.guildgames.game_days.join(`,`)
-        const scheduleStop = await cron.getTasks().get(`GuildGameStart`)
-        if (scheduleStop) {
-            await scheduleStop.stop()
-        }
-        cron.schedule(`${startMin} ${startHour} * * ${weekDays}`, async () => {
+        
             const gameTypes = [`Традиционная`, `Особая`]
             const gameType = gameTypes[Math.floor(Math.random() * gameTypes.length)]
             const channel = await guild.channels.fetch(ch_list.main)
@@ -29,7 +22,7 @@ module.exports = (client) => {
             guildData.guildgames.started = 2
             guildData.guildgames.gameType = gameType
             guildData.save()
-            const date = new Date()
+            const date = new Date().toLocaleString(`ru-RU`, { timeZone: `Europe/Moscow` })
             const day = date.getDay()
             await voice.members.forEach(async (member) => {
                 await member.voice.setMute(false)
@@ -40,7 +33,7 @@ module.exports = (client) => {
                 await channel.send({
                     content: `Совместная игра в гильдии Starpixel начинается!
 
-**СОВМЕСТНАЯ ИГРА**  :arrow_down: 
+**СОВМЕСТНАЯ ИГРА**  :arrow_down:     
 
 Игру ведет ${member}!     :sunglasses:    
 Ждём Вас в голосовом канале ${voice} с хорошим настроением!
@@ -57,7 +50,7 @@ module.exports = (client) => {
                 await channel.send({
                     content: `Совместная игра в гильдии Starpixel начинается!
 
-**СОВМЕСТНАЯ ИГРА**  :arrow_down: 
+**СОВМЕСТНАЯ ИГРА**  :arrow_down:     
 
 Ждём Вас в голосовом канале ${voice} с хорошим настроением!   
 Тип совместной игры: **${gameType}**.
@@ -70,12 +63,5 @@ module.exports = (client) => {
                     }
                 })
             }
-
-
-        }, {
-            timezone: `Europe/Moscow`,
-            name: `GuildGameStart`,
-            scheduled: true
-        })
     }
 }

@@ -46,6 +46,8 @@ module.exports = (client) => {
 ╚════════════╝◊╚════════════╝`
             })
 
+            guildData.save()
+
         } else if (type.type == `vote`) {
             const game1 = type.games[Math.floor(Math.random() * type.games.length)]
             let game2 = type.games[Math.floor(Math.random() * type.games.length)]
@@ -92,9 +94,11 @@ module.exports = (client) => {
 **СОВМЕСТНАЯ ИГРА**
 Игроки выбрали следующую игру...
 :video_game: **${game1.name}**
-:game_die: Максимум **${suffix(game1.max)}** раз за совместную игру
+:game_die: Максимум **${suffix(game1.max)}** за совместную игру
 ╚════════════╝◊╚════════════╝`
                     })
+
+                    guildData.save()
                 } else if (sort.first().emoji.name == `🔷`) {
                     const gameList = await guildData.guildgames.games.find(gm => gm.id == game2.name)
                     if (!gameList) {
@@ -115,15 +119,17 @@ module.exports = (client) => {
 **СОВМЕСТНАЯ ИГРА**
 Игроки выбрали следующую игру...
 :video_game: **${game2.name}**
-:game_die: Максимум **${suffix(game2.max)}** раз за совместную игру
+:game_die: Максимум **${suffix(game2.max)}** за совместную игру
 ╚════════════╝◊╚════════════╝`
                     })
+
+                    guildData.save()
                 }
             })
         } else if (type.type == `restrictment`) {
             const game = type.games[Math.floor(Math.random() * type.games.length)]
             const gameList = await guildData.guildgames.games.find(gm => gm.id == game.name)
-            const voiceMembers = voice.members.filter(member => member.user.bot === false)
+            const voiceMembers = await voice.members.filter(member => member.user.bot === false)
             if (!gameList) {
                 guildData.guildgames.games.push({
                     id: game.name,
@@ -140,10 +146,12 @@ module.exports = (client) => {
 **СОВМЕСТНАЯ ИГРА**
 Идёт выбор следующей игры...
 :video_game: **${game.name}**
-:game_die: Максимум **${suffix(game.max)}** раз за совместную игру
+:game_die: Максимум **${suffix(game.max)}** за совместную игру
 :warning: Данная игра имеет ограничение. __${game.rest}!__
 ╚════════════╝◊╚════════════╝`
             })
+
+            guildData.save()
         }
 
         if (!rule.restrictment || rule.restrictment == `SkyWars`) {
@@ -155,7 +163,6 @@ ${rule.description}`
             const randomNumber = Math.floor(Math.random() * voice.members.size) + 1
             await channel.send(`:warning: Специальное правило:
 ${rule.description.replace(`%n`, randomNumber)}`)
-        } 
-        guildData.save()
+        }
     }
 }

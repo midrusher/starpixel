@@ -13,29 +13,13 @@ module.exports = (client) => {
         if (pluginData.plugins.guildgames === false) return
         const guild = await client.guilds.fetch(`320193302844669959`)
         const guildData = await Guild.findOne({ id: guild.id })
-        let startMin = guildData.guildgames.gamestart_min
-        let startHour = guildData.guildgames.gamestart_hour
-        let min_remind
-        let hour_remind
-        if (startMin - 10 < 0) {
-            startMin = startMin + 60
-            min_remind = startMin - 10
-            hour_remind = startHour - 1
-        } else {
-            min_remind = startMin - 10
-            hour_remind = startHour
-        }
-        const weekDays = guildData.guildgames.game_days.join(`,`)
-        const scheduleStop = await cron.getTasks().get(`GamePreStart`)
-        if (scheduleStop) {
-            await scheduleStop.stop()
-        }
-        cron.schedule(`${min_remind} ${hour_remind} * * ${weekDays}`, async () => {
+        
+        
             let song = guildData.guildgames.pregame_song
             if (!song) song = `https://www.youtube.com/watch?v=KvAuzChTIJg`
             const channel = await guild.channels.fetch(ch_list.main)
             const MusicCommandsChannel = await guild.channels.fetch(ch_list.music)
-            const date = new Date()
+            const date = new Date().toLocaleString(`ru-RU`, { timeZone: `Europe/Moscow` })
             const day = date.getDay()
             const memberInfo = guildData.guildgames.temp_leader || await guildData.guildgames.officers.find(off => off.day == day).id
             await client.distube.voices.leave(guild)
@@ -48,7 +32,7 @@ module.exports = (client) => {
                 const member = await guild.members.fetch(memberInfo)
                 await channel.send({
                     content: `Скоро совместная игра!    
-Заходите на Hypixel, чтобы успеть принять \`/g party\`.
+Заходите на Hypixel, чтобы успеть принять \`/g party\`.    
 
 :scroll:  ${member} хочет напомнить вам **ПРАВИЛА** совместных игр: 
 • Не нарушать правила гильдии и Hypixel;
@@ -69,7 +53,7 @@ module.exports = (client) => {
                 const clientMember = await guild.members.fetch(client.user.id)
                 await channel.send({
                     content: `Скоро совместная игра!    
-Заходите на Hypixel, чтобы успеть принять \`/g party\`.
+Заходите на Hypixel, чтобы успеть принять \`/g party\`.    
 
 :scroll:  Ведущие хотят напомнить вам **ПРАВИЛА** совместных игр: 
 • Не нарушать правила гильдии и Hypixel;
@@ -89,12 +73,6 @@ module.exports = (client) => {
             }
             guildData.guildgames.started = 1
             guildData.save()
-
-        }, {
-            timezone: `Europe/Moscow`,
-            name: `GamePreStart`,
-            scheduled: true
-        })
 
     }
 }

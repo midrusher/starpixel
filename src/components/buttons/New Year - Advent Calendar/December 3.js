@@ -6,7 +6,7 @@ const { User } = require(`../../../schemas/userdata`)
 
 module.exports = {
     data: {
-        name: `december_1`
+        name: `december_3`
     },
     async execute(interaction, client) {
         const pluginData = await Guild.findOne({ id: interaction.guild.id })
@@ -15,13 +15,13 @@ module.exports = {
         const date = new Date()
         const d = date.getDate()
         const m = date.getMonth() + 1
-        const result = await userData.seasonal.new_year.advent_calendar.find(cal => cal.name = `Dec 1`)
+        const result = await userData.seasonal.new_year.advent_calendar.find(cal => cal.name = `Dec 3`)
         if (result) return interaction.reply({
             content: `Вы уже получили эту награду!`,
             ephemeral: true
         })
-        if (d !== 1 && m !== 12) return interaction.reply({
-            content: `Этот день ещё не наступил. Пожалуйста, нажмите на эту кнопку 2-го декабря!`,
+        if (d !== 3 && m !== 12) return interaction.reply({
+            content: `Этот день ещё не наступил. Пожалуйста, нажмите на эту кнопку 3-го декабря!`,
             ephemeral: true
         })
         const role = await interaction.guild.roles.fetch(`510932601721192458`)
@@ -32,11 +32,11 @@ module.exports = {
         })
         await member.roles.add(role.id)
         await userData.seasonal.new_year.advent_calendar.push({
-            name: `Dec 1`
+            name: `Dec 3`
         })
         userData.save()
         await interaction.reply({
-            content: `Вы получили свою награду за 1-е декабря! Вы можете найти её в своем профиле!`,
+            content: `Вы получили свою награду за 3-е декабря! Вы можете найти её в своем профиле!`,
             ephemeral: true
         })
 

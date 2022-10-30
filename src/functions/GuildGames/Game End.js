@@ -60,7 +60,7 @@ module.exports = (client) => {
         const list = await voiceMembers.map(member => {
             return `**${i++}.** ${member}`
         })
-        const date = new Date()
+        const date = new Date().toLocaleString(`ru-RU`, { timeZone: `Europe/Moscow` })
         const day = date.getDay()
         let memberInfo = guildData.guildgames.temp_leader || await guildData.guildgames.officers.find(off => off.day == day)?.id
         let member
@@ -113,7 +113,12 @@ ${gamesPlayed.join(`\n`)}`)
         await channel.send({
             embeds: [statsEmbed]
         })
-
+        const endMin = date.getMinutes(), endHour = date.getHours();
+        const normEndHour = guildData.guildgames.gameend_hour, normEndMin = guildData.guildgames.gameend_min;
+        const totalMins = endMin + (60 * endHour), normTotalMins = normEndMin + (60 * normEndHour)
+        const avgAge = await voiceMembers.map(async (memb) => {
+            const userData = await Us
+        })
         guildData.guildgames.started = 0
         guildData.guildgames.gameType = ``
         guildData.guildgames.temp_leader = ``

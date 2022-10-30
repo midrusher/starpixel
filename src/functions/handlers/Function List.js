@@ -5,20 +5,26 @@ const wait = require(`node:timers/promises`).setTimeout
 
 module.exports = (client) => {
     client.repeatFunctions = async () => {
-        
-        setInterval(async () => {
+
+        cron.schedule(`*/30 * * * * *`, async () => {
             //Items
             client.ActExp(); //Опыт активности подсчет
 
-        }, 30000);
+        }, {
+            scheduled: true,
+            timezone: `Europe/Moscow`
+        });
 
-        setInterval(async () => {
+        cron.schedule(`*/10 * * * *`, async () => {
             //Items
             client.temp_roles(); //Уборка временных ролей
 
-        }, 60000);
+        }, {
+            scheduled: true,
+            timezone: `Europe/Moscow`
+        });
 
-        setInterval(async () => {
+        cron.schedule(`*/10 * * * *`, async () => {
             //Items
             client.rank_update(); //Обновление рангов
 
@@ -38,8 +44,11 @@ module.exports = (client) => {
             client.statsChannel(); //Обновление каналов со статистикой
             client.update_members(); //Обновление каналов с участниками
 
-        }, 600000);
-        
+        }, {
+            scheduled: true,
+            timezone: `Europe/Moscow`
+        });
+
         // Misc
         client.emojiUpdate(); //Запланированное обновление эмоджи
         client.top_3_gexp(); //Запланированный подсчёт топ-3 по GEXP
@@ -56,11 +65,11 @@ module.exports = (client) => {
         //client.WebsiteMain()
 
         await wait(3000)
-        client.GamePreStart();
-        client.ReminderForOfficer();
-        client.GuildGameStart();
+        client.SchedulerGuildGamesOffs();
+        client.SchedulerGuildGamesRem();
+        client.SchedulerGuildGamesStart();
 
-        
+
 
         console.log(chalk.blue(`[Бот Starpixel] Функции запущены!`))
     };

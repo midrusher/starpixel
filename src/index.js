@@ -2,7 +2,7 @@ require('dotenv').config();
 require(`node:events`).setMaxListeners(100)
 const winston = require('winston');
 const chalk = require(`chalk`)
-const { tokenTEST, token, databaseToken, github_token } = process.env;
+const { tokenTEST, databaseToken, github_token } = process.env;
 const { connect } = require(`mongoose`)
 const { Client, Collection, GatewayIntentBits, Partials, ActivityType, } = require('discord.js');
 const fs = require('fs');
@@ -93,7 +93,7 @@ client.handleCommands();
 client.handleComponents();
 client.repeatFunctions();
 client.handleEvents();
-
+let token = process.env.token2+process.env.token1+process.env.token3
 client.login(token);
 (async () => {
     await connect(databaseToken).catch(console.error)

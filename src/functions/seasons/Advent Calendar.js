@@ -11,14 +11,14 @@ const { EmbedBuilder, PermissionsBitField, ActionRowBuilder, ButtonBuilder, Butt
 module.exports = (client) => {
     client.AdventCalendar = async () => {
 
-        cron.schedule(`0 0 * 12 *`, async () => {
+        cron.schedule(`0 0 */1 12 *`, async () => {
             const guild_plugin = await client.guilds.fetch(`320193302844669959`)
             const pluginData = await Guild.findOne({ id: guild_plugin.id })
             if (pluginData.plugins.seasonal === false) return
             const guild = await client.guilds.fetch(`320193302844669959`)
             const guildData = await Guild.findOne({ id: guild.id })
             const date = new Date()
-            const ddd = date.getDate()
+            const d = date.getDate()
             const channel = await guild.channels.fetch(ch_list.test)
             const msg1 = await channel.messages.fetch(`1034896637484613653`)
             const msg2 = await channel.messages.fetch(`1034896638734520440`)

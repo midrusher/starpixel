@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle, InteractionType, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
-const apply = require('../../../commands/Misc/apply');
-const { Apply } = require(`../../../schemas/applications`)
+const apply = require('../../src/commands/Misc/apply');
+const { Apply } = require(`../../src/schemas/applications`)
 module.exports = {
     data: {
         name: "sochi"

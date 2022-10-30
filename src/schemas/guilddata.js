@@ -91,6 +91,8 @@ const Guild = new mongoose.Schema({
     },
 
     guildgames: {
+        total: { type: Number, default: 0},
+        canceled: { type: Number, default: 0},
         gamestart_min: { type: Number, default: 0 },
         gamestart_hour: { type: Number, default: 0 },
         gameend_min: { type: Number, default: 0 },

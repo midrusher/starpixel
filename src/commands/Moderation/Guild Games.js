@@ -6,6 +6,7 @@ const { daysOfWeek, isURL, secondPage } = require(`../../functions`);
 const { Song, SearchResultType } = require('distube');
 const wait = require(`node:timers/promises`).setTimeout
 const moment = require(`moment`)
+const cron = require(`node-cron`)
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -241,6 +242,18 @@ module.exports = {
         .addSubcommand(sb => sb
             .setName(`becomeleader`)
             .setDescription(`Стать ведущим совместной игры на сегодня`)
+        )
+        .addSubcommand(sb => sb
+            .setName(`cancel`)
+            .setDescription(`Отменить сегодняшнюю совместную игру`)
+        )
+        .addSubcommand(sb => sb
+            .setName(`start`)
+            .setDescription(`Начать совместную игру пораньше`)
+        )
+        .addSubcommand(sb => sb
+            .setName(`end`)
+            .setDescription(`Завершить совместную игру пораньше`)
         ),
 
     async execute(interaction, client) {
@@ -276,7 +289,7 @@ module.exports = {
                         const timeArray = await time.split(`:`, 2)
                         const test = new Date()
                         let date = test.getDate(), month = test.getMonth() + 1, year = test.getFullYear()
-                    
+
                         if (moment(`${year}-${month}-${date} ${time}`, moment.ISO_8601, true).isValid() === false) return interaction.reply({
                             content: `Введённое вами время не является действительным!`,
                             ephemeral: true
@@ -666,8 +679,8 @@ ${listProm.join(`\n`)}`)
                 await interaction.deleteReply()
 
                 const date = new Date()
-                const hour = date.getHours()
-                const minutes = date.getMinutes()
+                const hour = date.getHours().toLocaleString(`ru-RU`, { timeZone: `Europe/Moscow` })
+                const minutes = date.getMinutes().toLocaleString(`ru-RU`, { timeZone: `Europe/Moscow` })
                 if (hour >= guildData.guildgames.gameend_hour) {
                     if (minutes >= guildData.guildgames.gameend_min) {
                         client.GameEnd()
@@ -685,7 +698,7 @@ ${listProm.join(`\n`)}`)
                     ephemeral: true
                 })
                 const date = new Date()
-                if (!guildData.guildgames.game_days.includes(date.getDay())) return interaction.reply({
+                if (!guildData.guildgames.game_days.includes(date.getDay().toLocaleString(`ru-RU`, { timeZone: `Europe/Moscow` }))) return interaction.reply({
                     content: `По расписанию сегодня нет совместной игры! Попросите администратора изменить это в настройках совместной игры!`,
                     ephemeral: true
                 })
@@ -693,6 +706,67 @@ ${listProm.join(`\n`)}`)
                 guildData.save()
                 await interaction.reply({
                     content: `Вы стали ведущим на сегодняшнюю совместную игру!`,
+                    ephemeral: true
+                })
+            }
+                break;
+            case `cancel`: {
+                if (!member.roles.cache.has(`320880176416161802`) && !member.roles.cache.has(`563793535250464809`) && !member.roles.cache.has(`523559726219526184`)) return interaction.reply({
+                    embeds: [err],
+                    ephemeral: true
+                })
+                const date = new Date()
+                if (!guildData.guildgames.game_days.includes(date.getDay().toLocaleString(`ru-RU`, { timeZone: `Europe/Moscow` }))) return interaction.reply({
+                    content: `По расписанию сегодня нет совместной игры! Попросите администратора изменить это в настройках совместной игры!`,
+                    ephemeral: true
+                })
+                guildData.guildgames.temp_leader = member.user.id
+                guildData.save()
+                await interaction.reply({
+                    content: `Вы стали ведущим на сегодняшнюю совместную игру!`,
+                    ephemeral: true
+                })
+            }
+                break;
+            case `end`: {
+                if (!member.roles.cache.has(`320880176416161802`) && !member.roles.cache.has(`563793535250464809`) && !member.roles.cache.has(`523559726219526184`)) return interaction.reply({
+                    embeds: [err],
+                    ephemeral: true
+                })
+                const date = new Date()
+                if (!guildData.guildgames.game_days.includes(date.getDay().toLocaleString(`ru-RU`, { timeZone: `Europe/Moscow` }))) return interaction.reply({
+                    content: `По расписанию сегодня нет совместной игры! Попросите администратора изменить это в настройках совместной игры!`,
+                    ephemeral: true
+                })
+                if (guildData.guildgames.started == 0 || guildData.guildgames.started == 1) return interaction.reply({
+                    content: `Совместная игра ещё не началась! Вы можете прописать эту команду только после начала совместной игры!`,
+                    ephemeral: true
+                })
+                client.GameEnd();
+                await interaction.reply({
+                    content: `Вы завершили совместную игру!`,
+                    ephemeral: true
+                })
+            }
+                break;
+            case `start`: {
+                if (!member.roles.cache.has(`320880176416161802`) && !member.roles.cache.has(`563793535250464809`) && !member.roles.cache.has(`523559726219526184`)) return interaction.reply({
+                    embeds: [err],
+                    ephemeral: true
+                })
+                const date = new Date()
+                if (!guildData.guildgames.game_days.includes(date.getDay().toLocaleString(`ru-RU`, { timeZone: `Europe/Moscow` }))) return interaction.reply({
+                    content: `По расписанию сегодня нет совместной игры! Попросите администратора изменить это в настройках совместной игры!`,
+                    ephemeral: true
+                })
+                if (guildData.guildgames.started == 2) return interaction.reply({
+                    content: `Совместная игра уже началась! Вы можете прописать эту команду только до начала совместной игры!`,
+                    ephemeral: true
+                })
+                const gameStart = await cron.getTasks().get(`GuildGameStart`)
+                await gameStart.start()
+                await interaction.reply({
+                    content: `Вы начали совместную игру!`,
                     ephemeral: true
                 })
             }

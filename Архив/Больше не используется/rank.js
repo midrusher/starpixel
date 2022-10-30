@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, Attachment, EmbedBuilder, AttachmentBuilder } = require('discord.js');
-const { createCanvas, loadImage } = require(`@napi-rs/canvas`)
 const { User } = require(`../../src/schemas/userdata`);
 
 

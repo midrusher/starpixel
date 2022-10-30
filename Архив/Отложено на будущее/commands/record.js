@@ -11,7 +11,6 @@ const fetch = require(`node-fetch`);
 const api = process.env.hypixel_apikey;
 const { User } = require(`../../../src/schemas/userdata`)
 const { Guild } = require(`../../../src/schemas/guilddata`)
-const { loadImage, createCanvas } = require(`@napi-rs/canvas`)
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`); //ДОБАВИТЬ В ДРУГИЕ
 const date = new Date()

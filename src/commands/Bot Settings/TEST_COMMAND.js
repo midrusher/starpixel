@@ -5,7 +5,6 @@ const fetch = require(`node-fetch`);
 const api = process.env.hypixel_apikey;
 const { User } = require(`../../schemas/userdata`)
 const { Guild } = require(`../../schemas/guilddata`)
-const { loadImage, createCanvas } = require(`@napi-rs/canvas`)
 const cron = require(`node-cron`)
 const chalk = require(`chalk`);
 const ch_list = require(`../../discord structure/channels.json`)

@@ -1,7 +1,6 @@
 const { User } = require(`../../../schemas/userdata`)
 const { Guild } = require(`../../../schemas/guilddata`)
 const { ChannelType, AttachmentBuilder, EmbedBuilder } = require(`discord.js`)
-/* const { createCanvas, loadImage } = require(`@napi-rs/canvas`) */
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 

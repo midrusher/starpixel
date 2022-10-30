@@ -1,7 +1,7 @@
 const { User } = require(`../../../schemas/userdata`)
 const { Guild } = require(`../../../schemas/guilddata`)
-const { ChannelType, AttachmentBuilder } = require(`discord.js`)
-const { createCanvas, loadImage } = require(`@napi-rs/canvas`)
+const { ChannelType, AttachmentBuilder, EmbedBuilder } = require(`discord.js`)
+/* const { createCanvas, loadImage } = require(`@napi-rs/canvas`) */
 const chalk = require(`chalk`);
 const prettyMilliseconds = require(`pretty-ms`) //ДОБАВИТЬ В ДРУГИЕ
 
@@ -12,7 +12,15 @@ module.exports = {
         const pluginData = await Guild.findOne({ id: guild_plugin.id })
         if (pluginData.plugins.welcome === false) return
         const guild = member.guild
-        const canvas = createCanvas(1000, 300),
+        const embedJoin = new EmbedBuilder()
+        .setTitle(`Пользователь присоединился`)
+        .setColor(process.env.bot_color)
+        .setDescription(`${member} (${member.user.tag}, ${member.user.id}) присоединился!
+Он является #${member.guild.memberCount}-ым участником сервера!`)
+        .setTimestamp(Date.now())
+        .setThumbnail(member.user.displayAvatarURL())
+
+       /*  const canvas = createCanvas(1000, 300),
             ctx = canvas.getContext('2d'),
             bg = await loadImage(`./src/assets/Cards/Join.png`),
             av = await loadImage(member.user.displayAvatarURL({ format: 'png', dynamic: false }))
@@ -43,12 +51,12 @@ module.exports = {
         ctx.closePath();
         ctx.clip();
 
-        ctx.drawImage(av, 22, 22, 220, 220)
+        ctx.drawImage(av, 22, 22, 220, 220) */
 
         const channel = await guild.channels.cache.get(`849608079691350078`)
 
 
-        const att = new AttachmentBuilder(canvas.toBuffer(), { name: `join.png` })
+        /* const att = new AttachmentBuilder(canvas.toBuffer(), { name: `join.png` }) */
         await channel.send({
             files: [att]
         })
